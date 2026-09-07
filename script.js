@@ -3,79 +3,71 @@
    SCRIPT.JS
    ============================================================ */
 
-document.addEventListener("DOMContentLoaded", () => {
 
-    /* ========================================================
-       LOADER
-       ======================================================== */
+/* ============================================================
+   LOADER
+   ============================================================ */
+
+(function initLoader() {
 
     const loader = document.getElementById("loader");
-    const loaderPercent = document.getElementById("loaderPercent");
-    const loaderProgress = document.getElementById("loaderProgress");
+    const percent = document.getElementById("loaderPercent");
+    const progress = document.getElementById("loaderProgress");
 
-    let loadValue = 0;
+    if (!loader) return;
 
-    function updateLoader() {
+    let value = 0;
 
-        if (!loader || !loaderPercent || !loaderProgress) {
-            return;
-        }
+    const interval = setInterval(() => {
 
-        loadValue += Math.floor(Math.random() * 7) + 4;
+        value += Math.floor(Math.random() * 8) + 3;
 
-        if (loadValue > 100) {
-            loadValue = 100;
-        }
-
-        loaderPercent.textContent =
-            String(loadValue).padStart(2, "0");
-
-        loaderProgress.style.width = `${loadValue}%`;
-
-        if (loadValue < 100) {
-
-            const delay =
-                Math.floor(Math.random() * 100) + 45;
-
-            setTimeout(updateLoader, delay);
-
-        } else {
+        if (value >= 100) {
+            value = 100;
+            clearInterval(interval);
 
             setTimeout(() => {
                 loader.classList.add("loaded");
-            }, 450);
+            }, 250);
         }
-    }
 
-    updateLoader();
+        percent.textContent =
+            String(value).padStart(2, "0");
+
+        progress.style.width = `${value}%`;
+
+    }, 45);
+
+})();
 
 
-    /* ========================================================
-       NAVIGATION
-       ======================================================== */
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
 
-    const navLinks =
-        document.querySelectorAll(".nav-links a[data-target]");
+(function initNavigation() {
+
+    const links =
+        document.querySelectorAll(".nav-links a");
 
     const headerTitle =
-        document.querySelector(".header-title[data-target]");
+        document.querySelector(".header-title");
 
-    function scrollToChapter(id) {
+    function scrollToTarget(target) {
 
-        const target =
-            document.getElementById(id);
+        const element =
+            document.getElementById(target);
 
-        if (!target) {
-            return;
-        }
+        if (!element) return;
 
-        target.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
+        element.scrollIntoView({
+            behavior: "smooth"
         });
+
     }
 
-    navLinks.forEach(link => {
+
+    links.forEach(link => {
 
         link.addEventListener("click", event => {
 
@@ -84,9 +76,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const target =
                 link.dataset.target;
 
-            scrollToChapter(target);
+            scrollToTarget(target);
+
         });
+
     });
+
 
     if (headerTitle) {
 
@@ -94,66 +89,78 @@ document.addEventListener("DOMContentLoaded", () => {
 
             event.preventDefault();
 
-            scrollToChapter("opening");
+            scrollToTarget("opening");
+
         });
+
     }
 
+})();
 
-    /* ========================================================
-       CHAPTER TRACKING
-       ======================================================== */
+
+/* ============================================================
+   CHAPTER OBSERVER
+   ============================================================ */
+
+(function initChapterObserver() {
 
     const chapters =
-        document.querySelectorAll(".chapter[data-chapter]");
+        document.querySelectorAll(".chapter");
 
-    const chapterCurrent =
+    const links =
+        document.querySelectorAll(".nav-links a");
+
+    const current =
         document.getElementById("chapterCurrent");
 
-    const chapterProgress =
+    const progress =
         document.getElementById("chapterProgress");
 
-    function updateChapter(chapter) {
 
-        const chapterNumber =
-            chapter.dataset.chapter;
+    if (!chapters.length) return;
 
-        if (chapterCurrent) {
-            chapterCurrent.textContent =
-                chapterNumber;
-        }
 
-        navLinks.forEach(link => {
-
-            link.classList.toggle(
-                "active",
-                link.dataset.target === chapter.id
-            );
-        });
-
-        if (chapterProgress) {
-
-            const number =
-                parseInt(chapterNumber, 10);
-
-            const total =
-                Math.max(chapters.length - 1, 1);
-
-            const percentage =
-                Math.min((number / total) * 100, 100);
-
-            chapterProgress.style.width =
-                `${percentage}%`;
-        }
-    }
-
-    const chapterObserver =
+    const observer =
         new IntersectionObserver(
             entries => {
 
                 entries.forEach(entry => {
 
-                    if (entry.isIntersecting) {
-                        updateChapter(entry.target);
+                    if (!entry.isIntersecting) return;
+
+                    const chapter =
+                        entry.target;
+
+                    const number =
+                        chapter.dataset.chapter;
+
+                    if (current) {
+                        current.textContent =
+                            number;
+                    }
+
+
+                    const target =
+                        chapter.id;
+
+                    links.forEach(link => {
+
+                        link.classList.toggle(
+                            "active",
+                            link.dataset.target === target
+                        );
+
+                    });
+
+
+                    if (progress) {
+
+                        const percentage =
+                            (parseInt(number, 10) / 5) * 100;
+
+                        progress.style.width =
+                            `${percentage}%`;
+
                     }
 
                 });
@@ -164,458 +171,376 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
 
+
     chapters.forEach(chapter => {
-        chapterObserver.observe(chapter);
+        observer.observe(chapter);
     });
 
+})();
 
-    /* ========================================================
-       PDF VIEWER
-       ======================================================== */
 
-    const PDF_URL = "script.pdf";
+/* ============================================================
+   PDF VIEWER
+   ============================================================ */
 
-    const pdfViewer =
-        document.getElementById("pdfViewer");
+(function initPDFViewer() {
 
-    const pdfStage =
-        document.getElementById("pdfStage");
-
-    const pdfCanvas =
+    const canvas =
         document.getElementById("pdfCanvas");
 
-    const pdfLoading =
+    const stage =
+        document.getElementById("pdfStage");
+
+    const loading =
         document.getElementById("pdfLoading");
 
-    const pdfLoadingProgress =
+    const loadingProgress =
         document.getElementById("pdfLoadingProgress");
 
-    const pdfPrev =
-        document.getElementById("pdfPrev");
-
-    const pdfNext =
-        document.getElementById("pdfNext");
-
-    const pdfFullscreen =
-        document.getElementById("pdfFullscreen");
-
-    const pdfCurrentPage =
+    const currentPage =
         document.getElementById("pdfCurrentPage");
 
-    const pdfTotalPages =
+    const totalPages =
         document.getElementById("pdfTotalPages");
 
-    const pdfHitLeft =
+    const prevButton =
+        document.getElementById("pdfPrev");
+
+    const nextButton =
+        document.getElementById("pdfNext");
+
+    const hitLeft =
         document.getElementById("pdfHitLeft");
 
-    const pdfHitRight =
+    const hitRight =
         document.getElementById("pdfHitRight");
 
-    let pdfDocument = null;
-    let pdfPageNumber = 1;
-    let pdfRendering = false;
-    let pdfPendingPage = null;
+    const fullscreenButton =
+        document.getElementById("pdfFullscreen");
 
 
-    /* --------------------------------------------------------
-       PDF HIT AREAS
-       Position them exactly over the rendered page.
-       -------------------------------------------------------- */
-
-    function positionPDFHitAreas() {
-
-        if (
-            !pdfCanvas ||
-            !pdfStage ||
-            !pdfHitLeft ||
-            !pdfHitRight
-        ) {
-            return;
-        }
-
-        const canvasRect =
-            pdfCanvas.getBoundingClientRect();
-
-        const stageRect =
-            pdfStage.getBoundingClientRect();
-
-        if (
-            canvasRect.width === 0 ||
-            canvasRect.height === 0
-        ) {
-            return;
-        }
-
-        const left =
-            canvasRect.left - stageRect.left;
-
-        const top =
-            canvasRect.top - stageRect.top;
-
-        const width =
-            canvasRect.width;
-
-        const height =
-            canvasRect.height;
-
-        const halfWidth =
-            width / 2;
-
-        pdfHitLeft.style.left =
-            `${left}px`;
-
-        pdfHitLeft.style.top =
-            `${top}px`;
-
-        pdfHitLeft.style.width =
-            `${halfWidth}px`;
-
-        pdfHitLeft.style.height =
-            `${height}px`;
-
-        pdfHitRight.style.left =
-            `${left + halfWidth}px`;
-
-        pdfHitRight.style.top =
-            `${top}px`;
-
-        pdfHitRight.style.width =
-            `${halfWidth}px`;
-
-        pdfHitRight.style.height =
-            `${height}px`;
+    if (
+        !canvas ||
+        !stage ||
+        typeof pdfjsLib === "undefined"
+    ) {
+        return;
     }
 
 
-    /* --------------------------------------------------------
-       RENDER PDF PAGE
-       -------------------------------------------------------- */
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
-    async function renderPDFPage(pageNumber) {
 
-        if (!pdfDocument || !pdfCanvas) {
-            return;
-        }
+    const ctx =
+        canvas.getContext("2d");
 
-        pdfRendering = true;
+    let pdf = null;
+    let pageNumber = 1;
+    let rendering = false;
+    let pendingPage = null;
 
-        const page =
-            await pdfDocument.getPage(pageNumber);
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+
+    function updateHitAreas() {
+
+        const rect =
+            canvas.getBoundingClientRect();
 
         const stageRect =
-            pdfStage.getBoundingClientRect();
+            stage.getBoundingClientRect();
 
-        const stageWidth =
-            stageRect.width;
 
-        const stageHeight =
-            stageRect.height;
+        const left =
+            rect.left - stageRect.left;
 
-        const baseViewport =
+        const top =
+            rect.top - stageRect.top;
+
+        const width =
+            rect.width;
+
+        const height =
+            rect.height;
+
+
+        hitLeft.style.left =
+            `${left}px`;
+
+        hitLeft.style.top =
+            `${top}px`;
+
+        hitLeft.style.width =
+            `${width / 2}px`;
+
+        hitLeft.style.height =
+            `${height}px`;
+
+
+        hitRight.style.left =
+            `${left + width / 2}px`;
+
+        hitRight.style.top =
+            `${top}px`;
+
+        hitRight.style.width =
+            `${width / 2}px`;
+
+        hitRight.style.height =
+            `${height}px`;
+
+    }
+
+
+    async function renderPage(number) {
+
+        if (!pdf) return;
+
+        rendering = true;
+
+        const page =
+            await pdf.getPage(number);
+
+
+        const unscaledViewport =
             page.getViewport({
                 scale: 1
             });
 
-        const widthScale =
-            (stageWidth * 0.90) /
-            baseViewport.width;
 
-        const heightScale =
-            (stageHeight * 0.95) /
-            baseViewport.height;
+        const availableWidth =
+            Math.min(
+                stage.clientWidth,
+                900
+            );
 
-        let scale =
-            Math.min(widthScale, heightScale);
 
-        const devicePixelRatio =
-            Math.min(window.devicePixelRatio || 1, 2);
+        const availableHeight =
+            Math.min(
+                window.innerHeight * 0.72,
+                900
+            );
+
+
+        const scaleByWidth =
+            availableWidth /
+            unscaledViewport.width;
+
+        const scaleByHeight =
+            availableHeight /
+            unscaledViewport.height;
+
+
+        const scale =
+            Math.min(
+                scaleByWidth,
+                scaleByHeight
+            );
+
 
         const viewport =
             page.getViewport({
-                scale: scale
+                scale
             });
 
-        pdfCanvas.width =
-            Math.floor(
-                viewport.width * devicePixelRatio
-            );
 
-        pdfCanvas.height =
-            Math.floor(
-                viewport.height * devicePixelRatio
-            );
+        canvas.width =
+            viewport.width;
 
-        pdfCanvas.style.width =
+        canvas.height =
+            viewport.height;
+
+
+        canvas.style.width =
             `${viewport.width}px`;
 
-        pdfCanvas.style.height =
+        canvas.style.height =
             `${viewport.height}px`;
 
-        const context =
-            pdfCanvas.getContext("2d", {
-                alpha: false
-            });
-
-        context.setTransform(
-            devicePixelRatio,
-            0,
-            0,
-            devicePixelRatio,
-            0,
-            0
-        );
-
-        context.fillStyle = "#e5e0d7";
-
-        context.fillRect(
-            0,
-            0,
-            viewport.width,
-            viewport.height
-        );
 
         await page.render({
-            canvasContext: context,
-            viewport: viewport
+            canvasContext: ctx,
+            viewport
         }).promise;
 
-        pdfPageNumber = pageNumber;
 
-        if (pdfCurrentPage) {
-            pdfCurrentPage.textContent =
-                String(pageNumber).padStart(2, "0");
-        }
+        currentPage.textContent =
+            String(number).padStart(2, "0");
 
-        if (pdfPrev) {
-            pdfPrev.disabled =
-                pageNumber <= 1;
-        }
 
-        if (pdfNext) {
-            pdfNext.disabled =
-                pageNumber >= pdfDocument.numPages;
-        }
+        updateHitAreas();
 
-        pdfRendering = false;
 
-        positionPDFHitAreas();
+        rendering = false;
 
-        if (pdfPendingPage !== null) {
+
+        if (pendingPage !== null) {
 
             const nextPage =
-                pdfPendingPage;
+                pendingPage;
 
-            pdfPendingPage = null;
+            pendingPage = null;
 
-            renderPDFPage(nextPage);
+            renderPage(nextPage);
+
         }
+
     }
 
 
-    /* --------------------------------------------------------
-       QUEUE PDF PAGE
-       -------------------------------------------------------- */
+    function queueRenderPage(number) {
 
-    function queuePDFPage(pageNumber) {
+        if (rendering) {
 
-        if (!pdfDocument) {
-            return;
-        }
-
-        const target =
-            Math.max(
-                1,
-                Math.min(
-                    pageNumber,
-                    pdfDocument.numPages
-                )
-            );
-
-        if (pdfRendering) {
-
-            pdfPendingPage = target;
+            pendingPage = number;
 
         } else {
 
-            renderPDFPage(target);
-        }
-    }
+            renderPage(number);
 
-
-    /* --------------------------------------------------------
-       NEXT / PREVIOUS
-       -------------------------------------------------------- */
-
-    function nextPDFPage() {
-
-        if (!pdfDocument) {
-            return;
         }
 
-        if (pdfPageNumber < pdfDocument.numPages) {
-            queuePDFPage(pdfPageNumber + 1);
+    }
+
+
+    function goToPage(number) {
+
+        if (!pdf) return;
+
+        if (number < 1) {
+            number = pdf.numPages;
         }
-    }
 
-    function previousPDFPage() {
-
-        if (!pdfDocument) {
-            return;
+        if (number > pdf.numPages) {
+            number = 1;
         }
 
-        if (pdfPageNumber > 1) {
-            queuePDFPage(pdfPageNumber - 1);
-        }
+        pageNumber = number;
+
+        queueRenderPage(pageNumber);
+
     }
 
 
-    if (pdfPrev) {
-        pdfPrev.addEventListener(
-            "click",
-            previousPDFPage
-        );
-    }
-
-    if (pdfNext) {
-        pdfNext.addEventListener(
-            "click",
-            nextPDFPage
-        );
-    }
-
-    if (pdfHitLeft) {
-        pdfHitLeft.addEventListener(
-            "click",
-            previousPDFPage
-        );
-    }
-
-    if (pdfHitRight) {
-        pdfHitRight.addEventListener(
-            "click",
-            nextPDFPage
-        );
+    function previousPage() {
+        goToPage(pageNumber - 1);
     }
 
 
-    /* --------------------------------------------------------
-       LOAD PDF
-       -------------------------------------------------------- */
+    function nextPage() {
+        goToPage(pageNumber + 1);
+    }
 
-    async function loadPDF() {
 
-        if (
-            typeof pdfjsLib === "undefined" ||
-            !pdfCanvas ||
-            !pdfStage
-        ) {
-            console.error(
-                "PDF.js is unavailable."
-            );
+    prevButton.addEventListener(
+        "click",
+        previousPage
+    );
 
-            if (pdfLoading) {
-                pdfLoading.style.display = "none";
+    nextButton.addEventListener(
+        "click",
+        nextPage
+    );
+
+    hitLeft.addEventListener(
+        "click",
+        previousPage
+    );
+
+    hitRight.addEventListener(
+        "click",
+        nextPage
+    );
+
+
+    /* KEYBOARD */
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.target.tagName === "INPUT" ||
+                event.target.tagName === "TEXTAREA"
+            ) {
+                return;
             }
 
-            return;
+            if (event.key === "ArrowLeft") {
+                previousPage();
+            }
+
+            if (event.key === "ArrowRight") {
+                nextPage();
+            }
+
         }
+    );
 
-        pdfjsLib.GlobalWorkerOptions.workerSrc =
-            "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
-        try {
+    /* TOUCH */
 
-            const loadingTask =
-                pdfjsLib.getDocument(PDF_URL);
+    stage.addEventListener(
+        "touchstart",
+        event => {
 
-            loadingTask.onProgress = progressData => {
+            const touch =
+                event.changedTouches[0];
 
-                if (
-                    !pdfLoadingProgress ||
-                    !progressData.total
-                ) {
-                    return;
+            touchStartX =
+                touch.clientX;
+
+            touchStartY =
+                touch.clientY;
+
+        },
+        {
+            passive: true
+        }
+    );
+
+
+    stage.addEventListener(
+        "touchend",
+        event => {
+
+            const touch =
+                event.changedTouches[0];
+
+            const deltaX =
+                touch.clientX - touchStartX;
+
+            const deltaY =
+                touch.clientY - touchStartY;
+
+
+            if (
+                Math.abs(deltaX) > 50 &&
+                Math.abs(deltaX) > Math.abs(deltaY)
+            ) {
+
+                if (deltaX > 0) {
+                    previousPage();
+                } else {
+                    nextPage();
                 }
 
-                const percentage =
-                    (progressData.loaded /
-                        progressData.total) *
-                    100;
-
-                pdfLoadingProgress.style.width =
-                    `${percentage}%`;
-            };
-
-            pdfDocument =
-                await loadingTask.promise;
-
-            if (pdfTotalPages) {
-                pdfTotalPages.textContent =
-                    String(pdfDocument.numPages)
-                        .padStart(2, "0");
             }
 
-            await renderPDFPage(1);
-
-            if (pdfLoading) {
-
-                pdfLoading.style.opacity = "0";
-                pdfLoading.style.pointerEvents = "none";
-
-                setTimeout(() => {
-                    pdfLoading.style.display = "none";
-                }, 350);
-            }
-
-        } catch (error) {
-
-            console.error(
-                "Unable to load script.pdf:",
-                error
-            );
-
-            /*
-             * No visible error message.
-             * The page simply removes the loading screen.
-             */
-
-            if (pdfLoading) {
-                pdfLoading.style.display = "none";
-            }
+        },
+        {
+            passive: true
         }
-    }
-
-    loadPDF();
+    );
 
 
-    /* --------------------------------------------------------
-       PDF RESIZE
-       -------------------------------------------------------- */
+    /* FULLSCREEN */
 
-    let pdfResizeTimer = null;
+    if (fullscreenButton) {
 
-    window.addEventListener("resize", () => {
-
-        clearTimeout(pdfResizeTimer);
-
-        pdfResizeTimer =
-            setTimeout(() => {
-
-                if (pdfDocument) {
-                    renderPDFPage(pdfPageNumber);
-                }
-
-            }, 180);
-    });
-
-
-    /* --------------------------------------------------------
-       PDF FULLSCREEN
-       -------------------------------------------------------- */
-
-    if (pdfFullscreen && pdfViewer) {
-
-        pdfFullscreen.addEventListener(
+        fullscreenButton.addEventListener(
             "click",
             async () => {
 
@@ -623,154 +548,140 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     if (!document.fullscreenElement) {
 
-                        await pdfViewer.requestFullscreen();
-
-                        pdfFullscreen.textContent =
-                            "EXIT FULL SCREEN ↙";
+                        await stage.requestFullscreen();
 
                     } else {
 
                         await document.exitFullscreen();
 
-                        pdfFullscreen.textContent =
-                            "FULL SCREEN ↗";
                     }
 
                 } catch (error) {
 
-                    console.error(
-                        "Fullscreen error:",
+                    console.warn(
+                        "Fullscreen unavailable:",
                         error
                     );
+
                 }
+
             }
         );
+
     }
 
-    document.addEventListener(
-        "fullscreenchange",
+
+    /* RESIZE */
+
+    window.addEventListener(
+        "resize",
         () => {
 
-            if (!document.fullscreenElement) {
-
-                if (pdfFullscreen) {
-                    pdfFullscreen.textContent =
-                        "FULL SCREEN ↗";
-                }
-
-            } else {
-
-                if (pdfFullscreen) {
-                    pdfFullscreen.textContent =
-                        "EXIT FULL SCREEN ↙";
-                }
+            if (pdf) {
+                queueRenderPage(pageNumber);
             }
 
-            setTimeout(() => {
-
-                if (pdfDocument) {
-                    renderPDFPage(pdfPageNumber);
-                }
-
-            }, 100);
         }
     );
 
 
-    /* --------------------------------------------------------
-       PDF TOUCH SWIPE
-       -------------------------------------------------------- */
+    /* LOAD PDF */
 
-    let pdfTouchStartX = null;
-    let pdfTouchStartY = null;
+    pdfjsLib
+        .getDocument("script.pdf")
+        .promise
+        .then(loadedPDF => {
 
-    if (pdfStage) {
+            pdf = loadedPDF;
 
-        pdfStage.addEventListener(
-            "touchstart",
-            event => {
+            totalPages.textContent =
+                String(pdf.numPages).padStart(2, "0");
 
-                const touch =
-                    event.changedTouches[0];
-
-                pdfTouchStartX =
-                    touch.clientX;
-
-                pdfTouchStartY =
-                    touch.clientY;
-            },
-            {
-                passive: true
+            if (loadingProgress) {
+                loadingProgress.style.width = "100%";
             }
-        );
 
-        pdfStage.addEventListener(
-            "touchend",
-            event => {
+            return renderPage(pageNumber);
 
-                if (
-                    pdfTouchStartX === null ||
-                    pdfTouchStartY === null
-                ) {
-                    return;
-                }
+        })
+        .then(() => {
 
-                const touch =
-                    event.changedTouches[0];
-
-                const dx =
-                    touch.clientX -
-                    pdfTouchStartX;
-
-                const dy =
-                    touch.clientY -
-                    pdfTouchStartY;
-
-                pdfTouchStartX = null;
-                pdfTouchStartY = null;
-
-                if (
-                    Math.abs(dx) < 50 ||
-                    Math.abs(dx) < Math.abs(dy)
-                ) {
-                    return;
-                }
-
-                if (dx < 0) {
-                    nextPDFPage();
-                } else {
-                    previousPDFPage();
-                }
-            },
-            {
-                passive: true
+            if (loading) {
+                loading.style.display = "none";
             }
-        );
+
+        })
+        .catch(error => {
+
+            console.error(
+                "Unable to load PDF:",
+                error
+            );
+
+            /*
+             * No visible error message is displayed.
+             * This keeps the page clean if the PDF is unavailable.
+             */
+
+            if (loading) {
+                loading.style.display = "none";
+            }
+
+        });
+
+})();
+
+
+/* ============================================================
+   INSPIRATION CAROUSEL
+   MANUAL IMAGE LIST
+   ============================================================ */
+
+(function initInspirationCarousel() {
+
+    const image =
+        document.getElementById("inspirationImage");
+
+    const caption =
+        document.getElementById("inspirationCaption");
+
+    const current =
+        document.getElementById("inspirationCurrent");
+
+    const total =
+        document.getElementById("inspirationTotal");
+
+    const previous =
+        document.getElementById("inspirationPrev");
+
+    const next =
+        document.getElementById("inspirationNext");
+
+
+    if (
+        !image ||
+        !caption ||
+        !current ||
+        !total
+    ) {
+        return;
     }
 
 
-    /* ========================================================
-       INSPIRATION CAROUSEL
-       ======================================================== */
-
     /*
-     * MANUALLY ADD IMAGES HERE.
+     * =========================================================
+     * ADD YOUR INSPIRATION IMAGES HERE
      *
-     * Add as many as you want.
+     * The images are intentionally MANUAL.
      *
-     * Example:
-     *
-     * {
-     *     src: "images/inspiration-05.jpg",
-     *     alt: "Dance Division reference image 05",
-     *     label: "05 / REFERENCE"
-     * },
-     *
+     * Put the image in /images/
+     * then add an object here.
+     * =========================================================
      */
 
     const inspirationImages = [
 
-        {
+ {
             src: "images/inspiration-01.jpg",
             alt: "Dance Division reference image 01",
             label: "01 / REFERENCE"
@@ -872,7 +783,7 @@ document.addEventListener("DOMContentLoaded", () => {
             alt: "Dance Division reference image 17",
             label: "17 / REFERENCE"
         },
-   /*
+
         {
             src: "images/inspiration-18.jpg",
             alt: "Dance Division reference image 18",
@@ -890,7 +801,7 @@ document.addEventListener("DOMContentLoaded", () => {
             alt: "Dance Division reference image 20",
             label: "20 / REFERENCE"
         },
-
+   /*
         {
             src: "images/inspiration-21.jpg",
             alt: "Dance Division reference image 21",
@@ -922,356 +833,747 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         */
 
+
     ];
 
 
-    const inspirationCarousel =
-        document.getElementById(
-            "inspirationCarousel"
-        );
-
-    const inspirationImage =
-        document.getElementById(
-            "inspirationImage"
-        );
-
-    const inspirationCaption =
-        document.getElementById(
-            "inspirationCaption"
-        );
-
-    const inspirationPrev =
-        document.getElementById(
-            "inspirationPrev"
-        );
-
-    const inspirationNext =
-        document.getElementById(
-            "inspirationNext"
-        );
-
-    const inspirationCurrent =
-        document.getElementById(
-            "inspirationCurrent"
-        );
-
-    const inspirationTotal =
-        document.getElementById(
-            "inspirationTotal"
-        );
+    let index = 0;
 
 
-    let inspirationIndex = 0;
-    let inspirationChanging = false;
+    total.textContent =
+        String(inspirationImages.length)
+            .padStart(2, "0");
 
 
-    /* --------------------------------------------------------
-       UPDATE CAROUSEL
-       -------------------------------------------------------- */
+    function showImage(newIndex) {
 
-    function updateInspiration(
-        index,
-        animate = true
-    ) {
+        if (!inspirationImages.length) return;
+
+
+        if (newIndex < 0) {
+            newIndex =
+                inspirationImages.length - 1;
+        }
 
         if (
-            !inspirationImages.length ||
-            !inspirationImage
+            newIndex >=
+            inspirationImages.length
         ) {
-            return;
+            newIndex = 0;
         }
 
-        inspirationIndex =
-            (index + inspirationImages.length) %
-            inspirationImages.length;
+
+        index = newIndex;
+
 
         const item =
-            inspirationImages[inspirationIndex];
+            inspirationImages[index];
 
-        if (animate) {
 
-            inspirationChanging = true;
+        image.classList.remove("loaded");
 
-            inspirationImage.classList.add(
-                "is-changing"
-            );
 
-            setTimeout(() => {
+        image.onload = () => {
 
-                inspirationImage.src =
-                    item.src;
+            image.classList.add("loaded");
 
-                inspirationImage.alt =
-                    item.alt;
+        };
 
-                if (inspirationCaption) {
-                    inspirationCaption.textContent =
-                        item.label || "";
-                }
 
-                inspirationImage.onload = () => {
+        image.src =
+            item.src;
 
-                    inspirationImage.classList.remove(
-                        "is-changing"
-                    );
+        image.alt =
+            item.alt;
 
-                    inspirationChanging = false;
-                };
 
-            }, 180);
+        caption.textContent =
+            item.label;
 
-        } else {
 
-            inspirationImage.src =
-                item.src;
+        current.textContent =
+            String(index + 1)
+                .padStart(2, "0");
 
-            inspirationImage.alt =
-                item.alt;
 
-            if (inspirationCaption) {
-                inspirationCaption.textContent =
-                    item.label || "";
-            }
-        }
+        preloadAdjacentImages();
 
-        if (inspirationCurrent) {
-
-            inspirationCurrent.textContent =
-                String(inspirationIndex + 1)
-                    .padStart(2, "0");
-        }
-
-        if (inspirationTotal) {
-
-            inspirationTotal.textContent =
-                String(inspirationImages.length)
-                    .padStart(2, "0");
-        }
     }
 
 
-    /* --------------------------------------------------------
-       PRELOAD ADJACENT IMAGES
-       -------------------------------------------------------- */
-
-    function preloadInspiration(index) {
+    function preloadAdjacentImages() {
 
         if (!inspirationImages.length) {
             return;
         }
 
-        const normalized =
-            (index + inspirationImages.length) %
+
+        const nextIndex =
+            (index + 1) %
             inspirationImages.length;
 
-        const image =
-            new Image();
+        const previousIndex =
+            (index - 1 +
+                inspirationImages.length) %
+            inspirationImages.length;
 
-        image.src =
-            inspirationImages[normalized].src;
+
+        [
+            inspirationImages[nextIndex],
+            inspirationImages[previousIndex]
+        ].forEach(item => {
+
+            const preload =
+                new Image();
+
+            preload.src =
+                item.src;
+
+        });
+
     }
 
 
-    function preloadNearbyImages() {
-
-        preloadInspiration(
-            inspirationIndex + 1
-        );
-
-        preloadInspiration(
-            inspirationIndex - 1
-        );
+    function previousImage() {
+        showImage(index - 1);
     }
 
 
-    /* --------------------------------------------------------
-       NEXT / PREVIOUS
-       -------------------------------------------------------- */
+    function nextImage() {
+        showImage(index + 1);
+    }
 
-    function nextInspiration() {
 
-        if (
-            inspirationChanging ||
-            !inspirationImages.length
-        ) {
-            return;
+    previous.addEventListener(
+        "click",
+        previousImage
+    );
+
+    next.addEventListener(
+        "click",
+        nextImage
+    );
+
+
+    /* KEYBOARD */
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.target.tagName === "INPUT" ||
+                event.target.tagName === "TEXTAREA"
+            ) {
+                return;
+            }
+
+
+            const carousel =
+                document.getElementById(
+                    "inspirationCarousel"
+                );
+
+
+            if (!carousel) return;
+
+
+            const rect =
+                carousel.getBoundingClientRect();
+
+
+            const visible =
+                rect.top <
+                window.innerHeight &&
+                rect.bottom > 0;
+
+
+            if (!visible) return;
+
+
+            if (event.key === "ArrowLeft") {
+                previousImage();
+            }
+
+            if (event.key === "ArrowRight") {
+                nextImage();
+            }
+
         }
-
-        updateInspiration(
-            inspirationIndex + 1
-        );
-
-        setTimeout(
-            preloadNearbyImages,
-            250
-        );
-    }
+    );
 
 
-    function previousInspiration() {
+    /* TOUCH */
 
-        if (
-            inspirationChanging ||
-            !inspirationImages.length
-        ) {
-            return;
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+
+    image.addEventListener(
+        "touchstart",
+        event => {
+
+            const touch =
+                event.changedTouches[0];
+
+            touchStartX =
+                touch.clientX;
+
+            touchStartY =
+                touch.clientY;
+
+        },
+        {
+            passive: true
         }
-
-        updateInspiration(
-            inspirationIndex - 1
-        );
-
-        setTimeout(
-            preloadNearbyImages,
-            250
-        );
-    }
+    );
 
 
-    if (inspirationNext) {
+    image.addEventListener(
+        "touchend",
+        event => {
 
-        inspirationNext.addEventListener(
-            "click",
-            nextInspiration
-        );
-    }
+            const touch =
+                event.changedTouches[0];
 
-    if (inspirationPrev) {
+            const deltaX =
+                touch.clientX - touchStartX;
 
-        inspirationPrev.addEventListener(
-            "click",
-            previousInspiration
-        );
-    }
+            const deltaY =
+                touch.clientY - touchStartY;
 
 
-    /* --------------------------------------------------------
-       INITIALIZE
-       -------------------------------------------------------- */
+            if (
+                Math.abs(deltaX) > 50 &&
+                Math.abs(deltaX) > Math.abs(deltaY)
+            ) {
+
+                if (deltaX > 0) {
+                    previousImage();
+                } else {
+                    nextImage();
+                }
+
+            }
+
+        },
+        {
+            passive: true
+        }
+    );
+
+
+    showImage(0);
+
+})();
+
+
+/* ============================================================
+   CHARACTERS
+   MANUAL CHARACTER DATA
+   ============================================================ */
+
+(function initCharacters() {
+
+    const image =
+        document.getElementById("characterImage");
+
+    const number =
+        document.getElementById("characterNumber");
+
+    const role =
+        document.getElementById("characterRole");
+
+    const name =
+        document.getElementById("characterName");
+
+    const bio =
+        document.getElementById("characterBio");
+
+    const casting =
+        document.getElementById("characterCasting");
+
+    const footerName =
+        document.getElementById("characterFooterName");
+
+    const current =
+        document.getElementById("characterCurrent");
+
+    const total =
+        document.getElementById("characterTotal");
+
+    const previous =
+        document.getElementById("characterPrev");
+
+    const next =
+        document.getElementById("characterNext");
+
 
     if (
-        inspirationImages.length &&
-        inspirationImage
+        !image ||
+        !number ||
+        !role ||
+        !name ||
+        !bio ||
+        !casting
     ) {
-
-        updateInspiration(
-            0,
-            false
-        );
-
-        preloadNearbyImages();
+        return;
     }
 
 
-    /* --------------------------------------------------------
-       CAROUSEL KEYBOARD
-       -------------------------------------------------------- */
+    /*
+     * =========================================================
+     * CHARACTER DATA
+     *
+     * Replace the placeholder information below.
+     *
+     * Images should live in:
+     *
+     * images/
+     *     character-01-headshot.jpg
+     *     character-02-headshot.jpg
+     *     etc.
+     *
+     * =========================================================
+     */
 
-    if (inspirationCarousel) {
+    const characters = [
 
-        inspirationCarousel.setAttribute(
-            "tabindex",
-            "0"
-        );
+        {
+            image: "images/character-01-headshot.jpg",
 
-        inspirationCarousel.addEventListener(
-            "keydown",
-            event => {
+            name: "LUCY D'ANGELO",
 
-                if (event.key === "ArrowLeft") {
+            role: "CHARACTER 01",
 
-                    event.preventDefault();
+            bio:
+                "A short description of the character. Introduce who they are, where they come from, and the emotional or narrative space they occupy within Dance Division.",
 
-                    previousInspiration();
+            casting:
+                "Potential casting: Emily DeForest (Actor)."
+        },
 
-                } else if (
-                    event.key === "ArrowRight"
-                ) {
 
-                    event.preventDefault();
+        {
+            image: "images/character-02-headshot.jpg",
 
-                    nextInspiration();
-                }
-            }
-        );
+            name: "FRANKIE FLINT",
+
+            role: "CHARACTER 02",
+
+            bio:
+                "A short description of the character. Introduce who they are, where they come from, and the emotional or narrative space they occupy within Dance Division.",
+
+            casting:
+                "Potential casting: Isaac Powell (Actor)."
+        },
+
+
+        {
+            image: "images/character-03-headshot.jpg",
+
+            name: "JONAH LENTZ",
+
+            role: "CHARACTER 03",
+
+            bio:
+                "A short description of the character. Introduce who they are, where they come from, and the emotional or narrative space they occupy within Dance Division.",
+
+            casting:
+                "Potential casting: Yonatan Gebeyahu (Actor)."
+        },
+
+
+        {
+            image: "images/character-04-headshot.jpg",
+
+            name: "JUDE HARRISON",
+
+            role: "CHARACTER 04",
+
+            bio:
+                "A short description of the character. Introduce who they are, where they come from, and the emotional or narrative space they occupy within Dance Division.",
+
+            casting:
+                "Potential casting: Tate Justus (Dancer / Actor / Choreographer)."
+        },
+
+
+        {
+            image: "images/character-05-headshot.jpg",
+
+            name: "JACK ZANE",
+
+            role: "CHARACTER 05",
+
+            bio:
+                "A short description of the character. Introduce who they are, where they come from, and the emotional or narrative space they occupy within Dance Division.",
+
+            casting:
+                "Potential casting: Jack Ferver (Actor / Choreographer / Dancer)."
+        },
+
+
+        {
+            image: "images/character-06-headshot.jpg",
+
+            name: "BODHI D'ANGELO",
+
+            role: "CHARACTER 06",
+
+            bio:
+                "A short description of the character. Introduce who they are, where they come from, and the emotional or narrative space they occupy within Dance Division.",
+
+            casting:
+                "Potential casting: Peter Smith (Actor)."
+        },
+
+
+        {
+            image: "images/character-07-headshot.jpg",
+
+            name: "",
+
+            role: "CHARACTER 07",
+
+            bio:
+                "A short description of the character. Introduce who they are, where they come from, and the emotional or narrative space they occupy within Dance Division.",
+
+            casting:
+                "Potential casting: Becky Abrams (Actor)."
+        },
+
+
+        {
+            image: "images/character-08-headshot.jpg",
+
+            name: "LOUISE FLINT",
+
+            role: "CHARACTER 08",
+
+            bio:
+                "A short description of the character. Introduce who they are, where they come from, and the emotional or narrative space they occupy within Dance Division.",
+
+            casting:
+                "Potential casting: April Mathis (Actor)."
+        },
+
+
+        {
+            image: "images/character-09-headshot.jpg",
+
+            name: "SANDRANA BELL",
+
+            role: "CHARACTER 09",
+
+            bio:
+                "A short description of the character. Introduce who they are, where they come from, and the emotional or narrative space they occupy within Dance Division.",
+
+            casting:
+                "Potential casting: Bobbi Jean Smith (Choreographer/Dancer)."
+        }
+
+    ];
+
+
+    let index = 0;
+
+
+    /* UPDATE TOTAL */
+
+    total.textContent =
+        String(characters.length)
+            .padStart(2, "0");
+
+
+    /* SHOW CHARACTER */
+
+    function showCharacter(newIndex) {
+
+        if (!characters.length) {
+            return;
+        }
+
+
+        if (newIndex < 0) {
+
+            newIndex =
+                characters.length - 1;
+
+        }
+
+
+        if (
+            newIndex >=
+            characters.length
+        ) {
+
+            newIndex = 0;
+
+        }
+
+
+        index = newIndex;
+
+
+        const character =
+            characters[index];
+
+
+        /*
+         * Fade image out before changing source.
+         */
+
+        image.classList.remove("loaded");
+
+
+        image.onload = () => {
+
+            image.classList.add("loaded");
+
+        };
+
+
+        image.src =
+            character.image;
+
+        image.alt =
+            `${character.name} — Dance Division`;
+
+
+        number.textContent =
+            String(index + 1)
+                .padStart(2, "0");
+
+
+        role.textContent =
+            character.role;
+
+
+        name.textContent =
+            character.name;
+
+
+        bio.textContent =
+            character.bio;
+
+
+        casting.textContent =
+            character.casting;
+
+
+        footerName.textContent =
+            character.name;
+
+
+        current.textContent =
+            String(index + 1)
+                .padStart(2, "0");
+
+
+        preloadCharacterImages();
+
     }
 
 
-    /* --------------------------------------------------------
-       CAROUSEL TOUCH SWIPE
-       -------------------------------------------------------- */
+    /* PRELOAD ADJACENT CHARACTERS */
 
-    let inspirationTouchStartX = null;
-    let inspirationTouchStartY = null;
+    function preloadCharacterImages() {
 
-    if (inspirationCarousel) {
+        if (!characters.length) {
+            return;
+        }
 
-        inspirationCarousel.addEventListener(
-            "touchstart",
-            event => {
 
-                const touch =
-                    event.changedTouches[0];
+        const nextIndex =
+            (index + 1) %
+            characters.length;
 
-                inspirationTouchStartX =
-                    touch.clientX;
 
-                inspirationTouchStartY =
-                    touch.clientY;
-            },
-            {
-                passive: true
+        const previousIndex =
+            (index - 1 +
+                characters.length) %
+            characters.length;
+
+
+        [
+            characters[nextIndex],
+            characters[previousIndex]
+        ].forEach(character => {
+
+            const preload =
+                new Image();
+
+            preload.src =
+                character.image;
+
+        });
+
+    }
+
+
+    function previousCharacter() {
+
+        showCharacter(index - 1);
+
+    }
+
+
+    function nextCharacter() {
+
+        showCharacter(index + 1);
+
+    }
+
+
+    previous.addEventListener(
+        "click",
+        previousCharacter
+    );
+
+
+    next.addEventListener(
+        "click",
+        nextCharacter
+    );
+
+
+    /* =========================================================
+       KEYBOARD
+       ========================================================= */
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.target.tagName === "INPUT" ||
+                event.target.tagName === "TEXTAREA"
+            ) {
+                return;
             }
-        );
 
-        inspirationCarousel.addEventListener(
-            "touchend",
-            event => {
 
-                if (
-                    inspirationTouchStartX === null ||
-                    inspirationTouchStartY === null
-                ) {
-                    return;
-                }
+            const browser =
+                document.getElementById(
+                    "characterBrowser"
+                );
 
-                const touch =
-                    event.changedTouches[0];
 
-                const dx =
-                    touch.clientX -
-                    inspirationTouchStartX;
+            if (!browser) return;
 
-                const dy =
-                    touch.clientY -
-                    inspirationTouchStartY;
 
-                inspirationTouchStartX = null;
-                inspirationTouchStartY = null;
+            const rect =
+                browser.getBoundingClientRect();
 
-                if (
-                    Math.abs(dx) < 45 ||
-                    Math.abs(dx) < Math.abs(dy)
-                ) {
-                    return;
-                }
 
-                if (dx < 0) {
-                    nextInspiration();
+            const visible =
+                rect.top <
+                window.innerHeight &&
+                rect.bottom > 0;
+
+
+            if (!visible) return;
+
+
+            if (event.key === "ArrowLeft") {
+
+                previousCharacter();
+
+            }
+
+
+            if (event.key === "ArrowRight") {
+
+                nextCharacter();
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       TOUCH SWIPE
+       ========================================================= */
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+
+    image.addEventListener(
+        "touchstart",
+        event => {
+
+            const touch =
+                event.changedTouches[0];
+
+            touchStartX =
+                touch.clientX;
+
+            touchStartY =
+                touch.clientY;
+
+        },
+        {
+            passive: true
+        }
+    );
+
+
+    image.addEventListener(
+        "touchend",
+        event => {
+
+            const touch =
+                event.changedTouches[0];
+
+            const deltaX =
+                touch.clientX -
+                touchStartX;
+
+            const deltaY =
+                touch.clientY -
+                touchStartY;
+
+
+            if (
+                Math.abs(deltaX) > 50 &&
+                Math.abs(deltaX) >
+                    Math.abs(deltaY)
+            ) {
+
+                if (deltaX > 0) {
+
+                    previousCharacter();
+
                 } else {
-                    previousInspiration();
+
+                    nextCharacter();
+
                 }
-            },
-            {
-                passive: true
+
             }
-        );
-    }
+
+        },
+        {
+            passive: true
+        }
+    );
 
 
-    /* ========================================================
-       AUDIO PLAYER
-       ======================================================== */
+    /* INITIAL CHARACTER */
+
+    showCharacter(0);
+
+})();
+
+
+/* ============================================================
+   AUDIO PLAYER
+   ============================================================ */
+
+(function initAudioPlayer() {
 
     const audio =
         document.getElementById("audio");
@@ -1279,450 +1581,268 @@ document.addEventListener("DOMContentLoaded", () => {
     const playButton =
         document.getElementById("playButton");
 
-    const audioTime =
-        document.getElementById("audioTime");
-
-    const audioDuration =
-        document.getElementById("audioDuration");
-
-    const audioProgress =
-        document.querySelector(".audio-progress");
-
-    const audioProgressFill =
+    const progressFill =
         document.getElementById(
             "audioProgressFill"
         );
 
+    const time =
+        document.getElementById("audioTime");
+
+    const duration =
+        document.getElementById(
+            "audioDuration"
+        );
+
     const trackNumber =
-        document.getElementById("trackNumber");
+        document.getElementById(
+            "trackNumber"
+        );
 
     const trackTitle =
-        document.getElementById("trackTitle");
+        document.getElementById(
+            "trackTitle"
+        );
 
-    const audioItems =
-        document.querySelectorAll(".audio-item");
+    const items =
+        document.querySelectorAll(
+            ".audio-item"
+        );
+
+
+    if (
+        !audio ||
+        !playButton
+    ) {
+        return;
+    }
 
 
     function formatTime(seconds) {
 
-        if (
-            !Number.isFinite(seconds) ||
-            seconds < 0
-        ) {
+        if (!Number.isFinite(seconds)) {
             return "00:00";
         }
+
 
         const minutes =
             Math.floor(seconds / 60);
 
-        const remainingSeconds =
+        const secs =
             Math.floor(seconds % 60);
+
 
         return (
             String(minutes).padStart(2, "0") +
             ":" +
-            String(remainingSeconds).padStart(2, "0")
+            String(secs).padStart(2, "0")
         );
+
     }
 
 
-    function updateAudioUI() {
+    playButton.addEventListener(
+        "click",
+        () => {
 
-        if (!audio) {
-            return;
+            if (audio.paused) {
+
+                audio.play();
+
+            } else {
+
+                audio.pause();
+
+            }
+
         }
+    );
 
-        if (audioTime) {
-            audioTime.textContent =
-                formatTime(audio.currentTime);
+
+    audio.addEventListener(
+        "play",
+        () => {
+
+            playButton.textContent =
+                "PAUSE";
+
         }
+    );
 
-        if (audioDuration) {
-            audioDuration.textContent =
+
+    audio.addEventListener(
+        "pause",
+        () => {
+
+            playButton.textContent =
+                "PLAY";
+
+        }
+    );
+
+
+    audio.addEventListener(
+        "loadedmetadata",
+        () => {
+
+            duration.textContent =
                 formatTime(audio.duration);
-        }
 
-        if (
-            audioProgressFill &&
-            Number.isFinite(audio.duration) &&
-            audio.duration > 0
-        ) {
+        }
+    );
+
+
+    audio.addEventListener(
+        "timeupdate",
+        () => {
+
+            if (!audio.duration) return;
+
 
             const percentage =
                 (audio.currentTime /
                     audio.duration) *
                 100;
 
-            audioProgressFill.style.width =
+
+            progressFill.style.width =
                 `${percentage}%`;
+
+
+            time.textContent =
+                formatTime(audio.currentTime);
+
         }
-
-        if (playButton) {
-
-            playButton.textContent =
-                audio.paused
-                    ? "PLAY"
-                    : "PAUSE";
-        }
-    }
+    );
 
 
-    function loadAudioTrack(item) {
-
-        if (!audio || !item) {
-            return;
-        }
-
-        const src =
-            item.dataset.src;
-
-        const title =
-            item.dataset.title;
-
-        const number =
-            item.dataset.track;
-
-
-        audio.pause();
-
-        audio.src = src;
-
-        audio.load();
-
-        if (trackTitle) {
-            trackTitle.textContent =
-                title || "";
-        }
-
-        if (trackNumber) {
-            trackNumber.textContent =
-                String(
-                    Number(number) + 1
-                ).padStart(2, "0");
-        }
-
-        audioItems.forEach(track => {
-
-            track.classList.toggle(
-                "active",
-                track === item
-            );
-        });
-
-        audio.play()
-            .catch(() => {});
-
-        if (playButton) {
-            playButton.textContent =
-                "PAUSE";
-        }
-    }
-
-
-    if (playButton && audio) {
-
-        playButton.addEventListener(
+    document
+        .querySelector(".audio-progress")
+        .addEventListener(
             "click",
-            () => {
+            event => {
 
-                if (audio.paused) {
-
-                    audio.play()
-                        .catch(() => {});
-
-                } else {
-
-                    audio.pause();
+                if (!audio.duration) {
+                    return;
                 }
+
+
+                const rect =
+                    event.currentTarget
+                        .getBoundingClientRect();
+
+
+                const percentage =
+                    (event.clientX -
+                        rect.left) /
+                    rect.width;
+
+
+                audio.currentTime =
+                    percentage *
+                    audio.duration;
+
             }
         );
-    }
 
 
-    audioItems.forEach(item => {
+    items.forEach(item => {
 
         item.addEventListener(
             "click",
             () => {
 
-                loadAudioTrack(item);
+                const src =
+                    item.dataset.src;
+
+                const title =
+                    item.dataset.title;
+
+                const track =
+                    parseInt(
+                        item.dataset.track,
+                        10
+                    );
+
+
+                audio.pause();
+
+                audio.src = src;
+
+                audio.load();
+
+
+                trackNumber.textContent =
+                    String(track + 1)
+                        .padStart(2, "0");
+
+
+                trackTitle.textContent =
+                    title;
+
+
+                items.forEach(
+                    other => {
+                        other.classList.remove(
+                            "active"
+                        );
+                    }
+                );
+
+
+                item.classList.add("active");
+
+
+                audio.play();
+
             }
         );
+
     });
 
-
-    if (audio) {
-
-        audio.addEventListener(
-            "timeupdate",
-            updateAudioUI
-        );
-
-        audio.addEventListener(
-            "loadedmetadata",
-            updateAudioUI
-        );
-
-        audio.addEventListener(
-            "play",
-            updateAudioUI
-        );
-
-        audio.addEventListener(
-            "pause",
-            updateAudioUI
-        );
-
-        audio.addEventListener(
-            "ended",
-            () => {
-
-                const activeItem =
-                    document.querySelector(
-                        ".audio-item.active"
-                    );
-
-                if (!activeItem) {
-                    return;
-                }
-
-                const currentIndex =
-                    Number(
-                        activeItem.dataset.track
-                    );
-
-                const nextIndex =
-                    currentIndex + 1;
-
-                if (
-                    nextIndex <
-                    audioItems.length
-                ) {
-
-                    loadAudioTrack(
-                        audioItems[nextIndex]
-                    );
-
-                } else {
-
-                    audio.currentTime = 0;
-
-                    if (playButton) {
-                        playButton.textContent =
-                            "PLAY";
-                    }
-                }
-            }
-        );
-    }
+})();
 
 
-    /* --------------------------------------------------------
-       AUDIO PROGRESS CLICK
-       -------------------------------------------------------- */
+/* ============================================================
+   GLOBAL VIMEO SOUND CONTROL
+   ============================================================ */
 
-    if (
-        audioProgress &&
-        audio
-    ) {
+(function initVimeo() {
 
-        audioProgress.addEventListener(
-            "click",
-            event => {
-
-                if (
-                    !Number.isFinite(
-                        audio.duration
-                    ) ||
-                    audio.duration <= 0
-                ) {
-                    return;
-                }
-
-                const rect =
-                    audioProgress.getBoundingClientRect();
-
-                const position =
-                    (event.clientX - rect.left) /
-                    rect.width;
-
-                audio.currentTime =
-                    Math.max(
-                        0,
-                        Math.min(
-                            1,
-                            position
-                        )
-                    ) *
-                    audio.duration;
-            }
-        );
-    }
-
-
-    /* ========================================================
-       VIMEO FILM SOUND
-       ======================================================== */
-
-    const mainFilm =
+    const iframe =
         document.getElementById("mainFilm");
 
-    const filmSound =
-        document.getElementById("filmSound");
+    /*
+     * The old Film section has been replaced by Characters.
+     * Kept intentionally disabled rather than removing the
+     * dependency logic elsewhere in the project.
+     */
 
-    let vimeoPlayer = null;
-
-
-    if (
-        mainFilm &&
-        window.Vimeo &&
-        Vimeo.Player
-    ) {
-
-        vimeoPlayer =
-            new Vimeo.Player(mainFilm);
-
-
-        /* ----------------------------------------------------
-           Initial state
-           ---------------------------------------------------- */
-
-        vimeoPlayer
-            .getMuted()
-            .then(muted => {
-
-                if (filmSound) {
-
-                    filmSound.textContent =
-                        muted
-                            ? "SOUND OFF"
-                            : "SOUND ON";
-                }
-
-            })
-            .catch(() => {});
-
-
-        /* ----------------------------------------------------
-           Toggle sound
-           ---------------------------------------------------- */
-
-        if (filmSound) {
-
-            filmSound.addEventListener(
-                "click",
-                async () => {
-
-                    try {
-
-                        const muted =
-                            await vimeoPlayer.getMuted();
-
-                        await vimeoPlayer.setMuted(
-                            !muted
-                        );
-
-                        filmSound.textContent =
-                            !muted
-                                ? "SOUND OFF"
-                                : "SOUND ON";
-
-                    } catch (error) {
-
-                        console.error(
-                            "Unable to toggle Vimeo sound:",
-                            error
-                        );
-                    }
-                }
-            );
-        }
+    if (!iframe) {
+        return;
     }
 
 
-    /* ========================================================
-       GLOBAL KEYBOARD CONTROLS
-       ======================================================== */
-
-    document.addEventListener(
-        "keydown",
-        event => {
-
-            const activeElement =
-                document.activeElement;
-
-            /*
-             * Don't hijack arrow keys when the
-             * inspiration carousel has focus.
-             */
-
-            if (
-                inspirationCarousel &&
-                inspirationCarousel.contains(
-                    activeElement
-                )
-            ) {
-                return;
-            }
-
-            /*
-             * Don't hijack arrow keys while
-             * typing into a form/input.
-             */
-
-            const tagName =
-                activeElement?.tagName;
-
-            if (
-                tagName === "INPUT" ||
-                tagName === "TEXTAREA" ||
-                tagName === "SELECT"
-            ) {
-                return;
-            }
-
-            if (event.key === "ArrowLeft") {
-
-                if (
-                    pdfViewer &&
-                    pdfViewer.offsetParent !== null
-                ) {
-                    event.preventDefault();
-                    previousPDFPage();
-                }
-
-            } else if (
-                event.key === "ArrowRight"
-            ) {
-
-                if (
-                    pdfViewer &&
-                    pdfViewer.offsetParent !== null
-                ) {
-                    event.preventDefault();
-                    nextPDFPage();
-                }
-            }
-        }
-    );
+    if (
+        typeof Vimeo === "undefined" ||
+        !Vimeo.Player
+    ) {
+        return;
+    }
 
 
-    /* ========================================================
-       FINAL PDF POSITION CHECK
-       ======================================================== */
+    const player =
+        new Vimeo.Player(iframe);
 
-    window.addEventListener(
-        "load",
-        () => {
 
-            setTimeout(() => {
+    player.ready()
+        .catch(error => {
 
-                if (pdfDocument) {
-                    positionPDFHitAreas();
-                }
+            console.warn(
+                "Vimeo player unavailable:",
+                error
+            );
 
-            }, 250);
-        }
-    );
+        });
 
-});
+})();
