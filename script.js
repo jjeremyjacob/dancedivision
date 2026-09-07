@@ -3,1636 +3,737 @@
    SCRIPT.JS
    ============================================================ */
 
+(() => {
 
-/* ============================================================
-   LOADER
-   ============================================================ */
-
-(function initLoader() {
-
-    const loader =
-        document.getElementById("loader");
-
-    const percent =
-        document.getElementById("loaderPercent");
-
-    const progress =
-        document.getElementById("loaderProgress");
-
-    if (!loader) {
-        return;
-    }
-
-    let value = 0;
+    "use strict";
 
 
-    function updateLoader(number) {
+    /* ========================================================
+       LOADER
+       ======================================================== */
 
-        value =
-            Math.min(
-                100,
-                Math.max(0, number)
-            );
+    const loader = document.getElementById("loader");
+    const loaderPercent = document.getElementById("loaderPercent");
+    const loaderProgress = document.getElementById("loaderProgress");
 
+    let loaderValue = 0;
 
-        if (percent) {
+    function updateLoader(value) {
 
-            percent.textContent =
-                String(
-                    Math.round(value)
-                ).padStart(2, "0");
+        loaderValue = Math.min(100, value);
 
+        if (loaderPercent) {
+            loaderPercent.textContent =
+                String(Math.round(loaderValue)).padStart(2, "0");
         }
 
-
-        if (progress) {
-
-            progress.style.width =
-                `${value}%`;
-
+        if (loaderProgress) {
+            loaderProgress.style.width = `${loaderValue}%`;
         }
-
     }
-
-
-    updateLoader(0);
-
-
-    const interval =
-        setInterval(() => {
-
-            value +=
-                Math.random() * 10 + 4;
-
-
-            if (value >= 90) {
-
-                value = 90;
-
-                clearInterval(interval);
-
-            }
-
-
-            updateLoader(value);
-
-        }, 70);
-
 
     function finishLoader() {
 
-        clearInterval(interval);
-
         updateLoader(100);
-
 
         setTimeout(() => {
 
-            loader.classList.add(
-                "is-hidden"
-            );
-
-        }, 300);
-
-    }
-
-
-    if (
-        document.readyState ===
-        "loading"
-    ) {
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            () => {
-
-                setTimeout(
-                    finishLoader,
-                    500
-                );
-
-            },
-            {
-                once: true
+            if (loader) {
+                loader.classList.add("is-hidden");
             }
-        );
 
-    } else {
-
-        setTimeout(
-            finishLoader,
-            500
-        );
-
+        }, 350);
     }
 
-})();
+    let loaderInterval = setInterval(() => {
 
-
-/* ============================================================
-   NAVIGATION
-   ============================================================ */
-
-(function initNavigation() {
-
-    const links =
-        document.querySelectorAll(
-            ".nav-links a"
-        );
-
-    const headerTitle =
-        document.querySelector(
-            ".header-title"
-        );
-
-
-    function scrollToTarget(
-        targetID
-    ) {
-
-        const target =
-            document.getElementById(
-                targetID
-            );
-
-
-        if (!target) {
-            return;
+        if (loaderValue < 90) {
+            updateLoader(loaderValue + Math.random() * 8);
         }
 
+    }, 120);
 
-        target.scrollIntoView({
+    window.addEventListener("load", () => {
+
+        clearInterval(loaderInterval);
+
+        updateLoader(100);
+
+        finishLoader();
+
+    });
+
+
+    /* ========================================================
+       NAVIGATION
+       ======================================================== */
+
+    const navLinks = document.querySelectorAll(".nav-links a");
+    const headerTitle = document.querySelector(".header-title");
+
+    function scrollToSection(id) {
+
+        const section = document.getElementById(id);
+
+        if (!section) return;
+
+        section.scrollIntoView({
             behavior: "smooth",
             block: "start"
         });
-
     }
 
 
-    links.forEach(link => {
+    navLinks.forEach(link => {
 
-        link.addEventListener(
-            "click",
-            event => {
+        link.addEventListener("click", event => {
 
-                event.preventDefault();
+            event.preventDefault();
 
+            const target = link.dataset.target;
 
-                const target =
-                    link.dataset.target;
-
-
-                if (!target) {
-                    return;
-                }
-
-
-                scrollToTarget(
-                    target
-                );
-
+            if (target) {
+                scrollToSection(target);
             }
-        );
+
+        });
 
     });
 
 
     if (headerTitle) {
 
-        headerTitle.addEventListener(
-            "click",
-            event => {
-
-                event.preventDefault();
-
-
-                scrollToTarget(
-                    "opening"
-                );
-
-            }
-        );
+        headerTitle.addEventListener("click", () => {
+            scrollToSection("opening");
+        });
 
     }
 
-})();
 
+    /* ========================================================
+       CHAPTER INDICATOR
+       ======================================================== */
 
-/* ============================================================
-   CHAPTER OBSERVER
-   ============================================================ */
+    const chapters = document.querySelectorAll(".chapter");
+    const chapterCurrent = document.getElementById("chapterCurrent");
+    const chapterProgress = document.getElementById("chapterProgress");
 
-(function initChapterObserver() {
+    const chapterObserver = new IntersectionObserver(
+        entries => {
 
-    const chapters =
-        document.querySelectorAll(
-            ".chapter"
-        );
+            entries.forEach(entry => {
 
-    const links =
-        document.querySelectorAll(
-            ".nav-links a"
-        );
+                if (!entry.isIntersecting) return;
 
-    const current =
-        document.getElementById(
-            "chapterCurrent"
-        );
+                const number =
+                    entry.target.dataset.chapter || "00";
 
-    const progress =
-        document.getElementById(
-            "chapterProgress"
-        );
+                if (chapterCurrent) {
+                    chapterCurrent.textContent = number;
+                }
 
+                navLinks.forEach(link => {
 
-    if (!chapters.length) {
-        return;
-    }
+                    link.classList.toggle(
+                        "active",
+                        link.dataset.target === entry.target.id
+                    );
 
+                });
 
-    const observer =
-        new IntersectionObserver(
-            entries => {
+                const index =
+                    Array.from(chapters).indexOf(entry.target);
 
-                entries.forEach(
-                    entry => {
+                const progress =
+                    chapters.length > 1
+                        ? (index / (chapters.length - 1)) * 100
+                        : 0;
 
-                        if (
-                            !entry.isIntersecting
-                        ) {
-                            return;
-                        }
+                if (chapterProgress) {
+                    chapterProgress.style.width =
+                        `${progress}%`;
+                }
 
+            });
 
-                        const chapter =
-                            entry.target;
-
-
-                        const number =
-                            chapter.dataset.chapter ||
-                            "00";
-
-
-                        const target =
-                            chapter.id;
-
-
-                        if (current) {
-
-                            current.textContent =
-                                number;
-
-                        }
-
-
-                        links.forEach(
-                            link => {
-
-                                link.classList.toggle(
-                                    "active",
-                                    link.dataset.target ===
-                                        target
-                                );
-
-                            }
-                        );
-
-
-                        if (progress) {
-
-                            const numeric =
-                                parseInt(
-                                    number,
-                                    10
-                                );
-
-
-                            const percentage =
-                                (
-                                    numeric /
-                                    5
-                                ) * 100;
-
-
-                            progress.style.width =
-                                `${percentage}%`;
-
-                        }
-
-                    }
-                );
-
-            },
-            {
-                threshold: 0.35
-            }
-        );
-
-
-    chapters.forEach(
-        chapter => {
-
-            observer.observe(
-                chapter
-            );
-
+        },
+        {
+            threshold: 0.35
         }
     );
 
-})();
 
+    chapters.forEach(chapter => {
+        chapterObserver.observe(chapter);
+    });
 
-/* ============================================================
-   PDF VIEWER
-   ============================================================ */
 
-(function initPDFViewer() {
+    /* ========================================================
+       PDF VIEWER
+       ======================================================== */
 
-    const viewer =
-        document.getElementById(
-            "pdfViewer"
-        );
+    const pdfCanvas =
+        document.getElementById("pdfCanvas");
 
-    const stage =
-        document.getElementById(
-            "pdfStage"
-        );
+    const pdfStage =
+        document.getElementById("pdfStage");
 
-    const canvas =
-        document.getElementById(
-            "pdfCanvas"
-        );
+    const pdfLoading =
+        document.getElementById("pdfLoading");
 
-    const loading =
-        document.getElementById(
-            "pdfLoading"
-        );
+    const pdfLoadingProgress =
+        document.getElementById("pdfLoadingProgress");
 
-    const loadingProgress =
-        document.getElementById(
-            "pdfLoadingProgress"
-        );
+    const pdfCurrentPage =
+        document.getElementById("pdfCurrentPage");
 
-    const currentPage =
-        document.getElementById(
-            "pdfCurrentPage"
-        );
+    const pdfTotalPages =
+        document.getElementById("pdfTotalPages");
 
-    const totalPages =
-        document.getElementById(
-            "pdfTotalPages"
-        );
+    const pdfPrev =
+        document.getElementById("pdfPrev");
 
-    const previousButton =
-        document.getElementById(
-            "pdfPrev"
-        );
+    const pdfNext =
+        document.getElementById("pdfNext");
 
-    const nextButton =
-        document.getElementById(
-            "pdfNext"
-        );
+    const pdfFullscreen =
+        document.getElementById("pdfFullscreen");
 
-    const hitLeft =
-        document.getElementById(
-            "pdfHitLeft"
-        );
+    const pdfHitLeft =
+        document.getElementById("pdfHitLeft");
 
-    const hitRight =
-        document.getElementById(
-            "pdfHitRight"
-        );
+    const pdfHitRight =
+        document.getElementById("pdfHitRight");
 
-    const fullscreenButton =
-        document.getElementById(
-            "pdfFullscreen"
-        );
+    let pdfDocument = null;
+    let pdfPageNumber = 1;
+    let pdfRendering = false;
+    let pdfPendingPage = null;
 
 
-    if (
-        !viewer ||
-        !stage ||
-        !canvas
-    ) {
+    if (window.pdfjsLib && pdfCanvas && pdfStage) {
 
-        return;
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+            "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
-    }
 
-
-    if (
-        typeof pdfjsLib ===
-        "undefined"
-    ) {
-
-        console.error(
-            "PDF.js is not loaded."
-        );
-
-        return;
-
-    }
-
-
-    pdfjsLib.GlobalWorkerOptions.workerSrc =
-        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-
-
-    const context =
-        canvas.getContext(
-            "2d"
-        );
-
-
-    let pdf = null;
-
-    let pageNumber = 1;
-
-    let rendering = false;
-
-    let pendingPage = null;
-
-
-    /* ------------------------------------------------------------
-       HIT AREAS
-       ------------------------------------------------------------ */
-
-    function updateHitAreas() {
-
-        if (
-            !hitLeft ||
-            !hitRight
-        ) {
-
-            return;
-
-        }
-
-
-        const canvasRect =
-            canvas.getBoundingClientRect();
-
-        const stageRect =
-            stage.getBoundingClientRect();
-
-
-        const left =
-            canvasRect.left -
-            stageRect.left;
-
-
-        const top =
-            canvasRect.top -
-            stageRect.top;
-
-
-        const width =
-            canvasRect.width;
-
-
-        const height =
-            canvasRect.height;
-
-
-        hitLeft.style.left =
-            `${left}px`;
-
-        hitLeft.style.top =
-            `${top}px`;
-
-        hitLeft.style.width =
-            `${width / 2}px`;
-
-        hitLeft.style.height =
-            `${height}px`;
-
-
-        hitRight.style.left =
-            `${left + width / 2}px`;
-
-        hitRight.style.top =
-            `${top}px`;
-
-        hitRight.style.width =
-            `${width / 2}px`;
-
-        hitRight.style.height =
-            `${height}px`;
-
-    }
-
-
-    /* ------------------------------------------------------------
-       PDF SCALE
-       ------------------------------------------------------------ */
-
-    function getScale(page) {
-
-        const baseViewport =
-            page.getViewport({
-                scale: 1
-            });
-
-
-        const stageWidth =
-            stage.clientWidth ||
-            window.innerWidth;
-
-
-        const stageHeight =
-            stage.clientHeight ||
-            window.innerHeight * 0.78;
-
-
-        /*
-         * Keep only a small amount of space around
-         * the document. The previous version used
-         * a much smaller effective area.
-         */
-
-        const horizontalPadding =
-            window.innerWidth <= 700
-                ? 10
-                : 30;
-
-
-        const verticalPadding =
-            window.innerWidth <= 700
-                ? 10
-                : 20;
-
-
-        const availableWidth =
-            Math.max(
-                200,
-                stageWidth -
-                horizontalPadding
-            );
-
-
-        const availableHeight =
-            Math.max(
-                300,
-                stageHeight -
-                verticalPadding
-            );
-
-
-        const widthScale =
-            availableWidth /
-            baseViewport.width;
-
-
-        const heightScale =
-            availableHeight /
-            baseViewport.height;
-
-
-        return Math.min(
-            widthScale,
-            heightScale
-        );
-
-    }
-
-
-    /* ------------------------------------------------------------
-       RENDER PAGE
-       ------------------------------------------------------------ */
-
-    async function renderPage(
-        number
-    ) {
-
-        if (!pdf) {
-            return;
-        }
-
-
-        if (rendering) {
-
-            pendingPage =
-                number;
-
-            return;
-
-        }
-
-
-        rendering = true;
-
-
-        try {
-
-            const page =
-                await pdf.getPage(
-                    number
-                );
-
-
-            const scale =
-                getScale(page);
-
+        function getPDFScale(page) {
 
             const viewport =
                 page.getViewport({
-                    scale
+                    scale: 1
                 });
 
+            const stageWidth =
+                pdfStage.clientWidth;
 
-            const outputScale =
+            const stageHeight =
+                pdfStage.clientHeight;
+
+            const padding = 20;
+
+            const availableWidth =
                 Math.max(
-                    1,
-                    Math.min(
-                        window.devicePixelRatio ||
-                        1,
-                        2
-                    )
+                    100,
+                    stageWidth - padding
                 );
 
-
-            /*
-             * Actual backing canvas size.
-             */
-
-            canvas.width =
-                Math.floor(
-                    viewport.width *
-                    outputScale
+            const availableHeight =
+                Math.max(
+                    100,
+                    stageHeight - padding
                 );
 
+            const widthScale =
+                availableWidth / viewport.width;
 
-            canvas.height =
-                Math.floor(
-                    viewport.height *
-                    outputScale
-                );
+            const heightScale =
+                availableHeight / viewport.height;
 
-
-            /*
-             * CSS display size.
-             */
-
-            canvas.style.width =
-                `${viewport.width}px`;
-
-
-            canvas.style.height =
-                `${viewport.height}px`;
-
-
-            const renderContext = {
-
-                canvasContext:
-                    context,
-
-                viewport:
-                    viewport,
-
-                transform:
-                    outputScale !== 1
-                        ? [
-                            outputScale,
-                            0,
-                            0,
-                            outputScale,
-                            0,
-                            0
-                        ]
-                        : null
-
-            };
-
-
-            context.clearRect(
-                0,
-                0,
-                canvas.width,
-                canvas.height
+            return Math.min(
+                widthScale,
+                heightScale
             );
+        }
 
 
-            await page.render(
-                renderContext
-            ).promise;
+        async function renderPDFPage(pageNumber) {
 
+            if (!pdfDocument) return;
 
-            if (currentPage) {
+            if (pdfRendering) {
 
-                currentPage.textContent =
-                    String(
-                        number
-                    ).padStart(
-                        2,
-                        "0"
+                pdfPendingPage = pageNumber;
+
+                return;
+            }
+
+            pdfRendering = true;
+
+            try {
+
+                const page =
+                    await pdfDocument.getPage(pageNumber);
+
+                const scale =
+                    getPDFScale(page);
+
+                const viewport =
+                    page.getViewport({
+                        scale
+                    });
+
+                const outputScale =
+                    window.devicePixelRatio || 1;
+
+                pdfCanvas.width =
+                    Math.floor(
+                        viewport.width * outputScale
                     );
 
-            }
+                pdfCanvas.height =
+                    Math.floor(
+                        viewport.height * outputScale
+                    );
 
+                pdfCanvas.style.width =
+                    `${viewport.width}px`;
 
-            updateHitAreas();
+                pdfCanvas.style.height =
+                    `${viewport.height}px`;
 
+                const context =
+                    pdfCanvas.getContext("2d");
 
-        } catch (error) {
-
-            console.error(
-                "PDF render error:",
-                error
-            );
-
-        } finally {
-
-            rendering = false;
-
-
-            if (
-                pendingPage !== null
-            ) {
-
-                const next =
-                    pendingPage;
-
-
-                pendingPage =
-                    null;
-
-
-                renderPage(
-                    next
+                context.setTransform(
+                    outputScale,
+                    0,
+                    0,
+                    outputScale,
+                    0,
+                    0
                 );
 
-            }
+                await page.render({
+                    canvasContext: context,
+                    viewport
+                }).promise;
 
-        }
+                if (pdfCurrentPage) {
 
-    }
+                    pdfCurrentPage.textContent =
+                        String(pageNumber).padStart(2, "0");
 
+                }
 
-    /* ------------------------------------------------------------
-       PAGE NAVIGATION
-       ------------------------------------------------------------ */
+                if (pdfTotalPages) {
 
-    function goToPage(
-        number
-    ) {
+                    pdfTotalPages.textContent =
+                        String(pdfDocument.numPages)
+                            .padStart(2, "0");
 
-        if (!pdf) {
-            return;
-        }
+                }
 
+            } catch (error) {
 
-        number =
-            Math.max(
-                1,
-                Math.min(
-                    pdf.numPages,
-                    number
-                )
-            );
-
-
-        pageNumber =
-            number;
-
-
-        if (currentPage) {
-
-            currentPage.textContent =
-                String(
-                    pageNumber
-                ).padStart(
-                    2,
-                    "0"
+                console.error(
+                    "PDF render error:",
+                    error
                 );
 
-        }
+            } finally {
 
+                pdfRendering = false;
 
-        if (rendering) {
+                if (pdfPendingPage !== null) {
 
-            pendingPage =
-                pageNumber;
+                    const nextPage =
+                        pdfPendingPage;
 
-        } else {
+                    pdfPendingPage = null;
 
-            renderPage(
-                pageNumber
-            );
-
-        }
-
-    }
-
-
-    function previousPage() {
-
-        if (!pdf) {
-            return;
-        }
-
-
-        if (pageNumber > 1) {
-
-            goToPage(
-                pageNumber - 1
-            );
-
-        }
-
-    }
-
-
-    function nextPage() {
-
-        if (!pdf) {
-            return;
-        }
-
-
-        if (
-            pageNumber <
-            pdf.numPages
-        ) {
-
-            goToPage(
-                pageNumber + 1
-            );
-
-        }
-
-    }
-
-
-    /* ------------------------------------------------------------
-       BUTTONS
-       ------------------------------------------------------------ */
-
-    if (previousButton) {
-
-        previousButton.addEventListener(
-            "click",
-            previousPage
-        );
-
-    }
-
-
-    if (nextButton) {
-
-        nextButton.addEventListener(
-            "click",
-            nextPage
-        );
-
-    }
-
-
-    if (hitLeft) {
-
-        hitLeft.addEventListener(
-            "click",
-            previousPage
-        );
-
-    }
-
-
-    if (hitRight) {
-
-        hitRight.addEventListener(
-            "click",
-            nextPage
-        );
-
-    }
-
-
-    /* ------------------------------------------------------------
-       KEYBOARD
-       ------------------------------------------------------------ */
-
-    document.addEventListener(
-        "keydown",
-        event => {
-
-            if (
-                event.target.tagName ===
-                    "INPUT" ||
-                event.target.tagName ===
-                    "TEXTAREA" ||
-                event.target.tagName ===
-                    "SELECT"
-            ) {
-
-                return;
-
-            }
-
-
-            const rect =
-                viewer.getBoundingClientRect();
-
-
-            const visible =
-                rect.top <
-                    window.innerHeight &&
-                rect.bottom > 0;
-
-
-            if (!visible) {
-                return;
-            }
-
-
-            if (
-                event.key ===
-                "ArrowLeft"
-            ) {
-
-                event.preventDefault();
-
-                previousPage();
-
-            }
-
-
-            if (
-                event.key ===
-                "ArrowRight"
-            ) {
-
-                event.preventDefault();
-
-                nextPage();
+                    renderPDFPage(nextPage);
+                }
 
             }
 
         }
-    );
 
 
-    /* ------------------------------------------------------------
-       TOUCH / SWIPE
-       ------------------------------------------------------------ */
+        async function loadPDF() {
 
-    let touchStartX = 0;
+            try {
 
-    let touchStartY = 0;
+                const loadingTask =
+                    pdfjsLib.getDocument("script.pdf");
 
+                loadingTask.onProgress =
+                    progressData => {
 
-    stage.addEventListener(
-        "touchstart",
-        event => {
+                        if (
+                            progressData.total &&
+                            pdfLoadingProgress
+                        ) {
 
-            const touch =
-                event.changedTouches[0];
+                            const percent =
+                                (
+                                    progressData.loaded /
+                                    progressData.total
+                                ) * 100;
 
+                            pdfLoadingProgress.style.width =
+                                `${percent}%`;
+                        }
 
-            touchStartX =
-                touch.clientX;
+                    };
 
+                pdfDocument =
+                    await loadingTask.promise;
 
-            touchStartY =
-                touch.clientY;
+                if (pdfTotalPages) {
 
-        },
-        {
-            passive: true
-        }
-    );
+                    pdfTotalPages.textContent =
+                        String(pdfDocument.numPages)
+                            .padStart(2, "0");
+                }
 
+                await renderPDFPage(pdfPageNumber);
 
-    stage.addEventListener(
-        "touchend",
-        event => {
+                if (pdfLoading) {
+                    pdfLoading.classList.add("is-hidden");
+                }
 
-            const touch =
-                event.changedTouches[0];
+            } catch (error) {
 
+                console.error(
+                    "Unable to load PDF:",
+                    error
+                );
 
-            const deltaX =
-                touch.clientX -
-                touchStartX;
+                if (pdfLoading) {
 
-
-            const deltaY =
-                touch.clientY -
-                touchStartY;
-
-
-            if (
-                Math.abs(deltaX) > 50 &&
-                Math.abs(deltaX) >
-                    Math.abs(deltaY)
-            ) {
-
-                if (
-                    deltaX > 0
-                ) {
-
-                    previousPage();
-
-                } else {
-
-                    nextPage();
+                    pdfLoading.innerHTML = `
+                        <div class="pdf-loading-label">
+                            UNABLE TO LOAD SCRIPT
+                        </div>
+                    `;
 
                 }
 
             }
 
-        },
-        {
-            passive: true
         }
-    );
 
 
-    /* ------------------------------------------------------------
-       FULLSCREEN
-       ------------------------------------------------------------ */
+        function goToPDFPage(pageNumber) {
 
-    if (fullscreenButton) {
+            if (!pdfDocument) return;
 
-        fullscreenButton.addEventListener(
-            "click",
-            async () => {
-
-                try {
-
-                    if (
-                        !document.fullscreenElement
-                    ) {
-
-                        await viewer.requestFullscreen();
-
-                    } else {
-
-                        await document.exitFullscreen();
-
-                    }
-
-                } catch (error) {
-
-                    console.warn(
-                        "Fullscreen unavailable:",
-                        error
-                    );
-
-                }
-
+            if (pageNumber < 1) {
+                pageNumber = 1;
             }
-        );
 
-    }
+            if (pageNumber > pdfDocument.numPages) {
+                pageNumber = pdfDocument.numPages;
+            }
+
+            pdfPageNumber = pageNumber;
+
+            renderPDFPage(pdfPageNumber);
+        }
 
 
-    document.addEventListener(
-        "fullscreenchange",
-        () => {
+        if (pdfPrev) {
 
-            setTimeout(
+            pdfPrev.addEventListener(
+                "click",
                 () => {
+                    goToPDFPage(pdfPageNumber - 1);
+                }
+            );
 
-                    if (
-                        pdf &&
-                        !rendering
-                    ) {
+        }
 
-                        renderPage(
-                            pageNumber
+
+        if (pdfNext) {
+
+            pdfNext.addEventListener(
+                "click",
+                () => {
+                    goToPDFPage(pdfPageNumber + 1);
+                }
+            );
+
+        }
+
+
+        if (pdfHitLeft) {
+
+            pdfHitLeft.addEventListener(
+                "click",
+                () => {
+                    goToPDFPage(pdfPageNumber - 1);
+                }
+            );
+
+        }
+
+
+        if (pdfHitRight) {
+
+            pdfHitRight.addEventListener(
+                "click",
+                () => {
+                    goToPDFPage(pdfPageNumber + 1);
+                }
+            );
+
+        }
+
+
+        if (pdfFullscreen) {
+
+            pdfFullscreen.addEventListener(
+                "click",
+                async () => {
+
+                    const viewer =
+                        document.getElementById("pdfViewer");
+
+                    if (!viewer) return;
+
+                    try {
+
+                        if (!document.fullscreenElement) {
+
+                            await viewer.requestFullscreen();
+
+                        } else {
+
+                            await document.exitFullscreen();
+
+                        }
+
+                    } catch (error) {
+
+                        console.error(
+                            "Fullscreen error:",
+                            error
                         );
 
                     }
 
-                },
-                100
+                }
             );
 
         }
-    );
 
 
-    /* ------------------------------------------------------------
-       RESIZE
-       ------------------------------------------------------------ */
+        document.addEventListener(
+            "fullscreenchange",
+            () => {
 
-    let resizeTimer;
+                if (pdfDocument) {
 
+                    setTimeout(() => {
+                        renderPDFPage(pdfPageNumber);
+                    }, 100);
 
-    window.addEventListener(
-        "resize",
-        () => {
-
-            clearTimeout(
-                resizeTimer
-            );
-
-
-            resizeTimer =
-                setTimeout(
-                    () => {
-
-                        if (
-                            pdf &&
-                            !rendering
-                        ) {
-
-                            renderPage(
-                                pageNumber
-                            );
-
-                        }
-
-                    },
-                    150
-                );
-
-        }
-    );
-
-
-    /* ------------------------------------------------------------
-       LOAD PDF
-       ------------------------------------------------------------ */
-
-    async function loadPDF() {
-
-        try {
-
-            if (loadingProgress) {
-
-                loadingProgress.style.width =
-                    "10%";
+                }
 
             }
+        );
 
 
-            const loadingTask =
-                pdfjsLib.getDocument(
-                    "script.pdf"
-                );
+        window.addEventListener(
+            "resize",
+            () => {
 
-
-            loadingTask.onProgress =
-                progressData => {
-
-                    if (
-                        !loadingProgress ||
-                        !progressData.total
-                    ) {
-
-                        return;
-
-                    }
-
-
-                    const percentage =
-                        (
-                            progressData.loaded /
-                            progressData.total
-                        ) * 100;
-
-
-                    loadingProgress.style.width =
-                        `${Math.min(
-                            100,
-                            percentage
-                        )}%`;
-
-                };
-
-
-            pdf =
-                await loadingTask.promise;
-
-
-            if (totalPages) {
-
-                totalPages.textContent =
-                    String(
-                        pdf.numPages
-                    ).padStart(
-                        2,
-                        "0"
-                    );
+                if (pdfDocument) {
+                    renderPDFPage(pdfPageNumber);
+                }
 
             }
+        );
 
 
-            pageNumber = 1;
-
-
-            await renderPage(
-                pageNumber
-            );
-
-
-            if (loading) {
-
-                loading.classList.add(
-                    "is-hidden"
-                );
-
-            }
-
-
-        } catch (error) {
-
-            console.error(
-                "Unable to load script.pdf:",
-                error
-            );
-
-
-            if (loading) {
-
-                loading.classList.add(
-                    "is-hidden"
-                );
-
-            }
-
-        }
+        loadPDF();
 
     }
 
 
-    loadPDF();
+    /* ========================================================
+       INSPIRATION CAROUSEL
+       ======================================================== */
 
-})();
+    const inspirationTrack =
+        document.getElementById("inspirationTrack");
 
+    const inspirationCaption =
+        document.getElementById("inspirationCaption");
 
-/* ============================================================
-   INSPIRATION CAROUSEL
-   ============================================================ */
+    const inspirationCurrent =
+        document.getElementById("inspirationCurrent");
 
-(function initInspirationCarousel() {
+    const inspirationTotal =
+        document.getElementById("inspirationTotal");
 
-    const track =
-        document.getElementById(
-            "inspirationTrack"
-        );
+    const inspirationPrev =
+        document.getElementById("inspirationPrev");
 
-    const caption =
-        document.getElementById(
-            "inspirationCaption"
-        );
+    const inspirationNext =
+        document.getElementById("inspirationNext");
 
-    const current =
-        document.getElementById(
-            "inspirationCurrent"
-        );
-
-    const total =
-        document.getElementById(
-            "inspirationTotal"
-        );
-
-    const previous =
-        document.getElementById(
-            "inspirationPrev"
-        );
-
-    const next =
-        document.getElementById(
-            "inspirationNext"
-        );
-
-    const stage =
-        document.querySelector(
-            ".inspiration-stage"
-        );
-
-
-    if (
-        !track ||
-        !caption ||
-        !current ||
-        !total ||
-        !stage
-    ) {
-
-        return;
-
-    }
-
-
-    /* ------------------------------------------------------------
-       IMAGE LIST
-       ------------------------------------------------------------ */
-
-    const inspirationImages = [
-
-        {
-            src:
-                "images/inspiration-01.jpg",
-
-            alt:
-                "Dance Division reference image 01",
-
-            label:
-                "01 / REFERENCE"
-        },
-
-        {
-            src:
-                "images/inspiration-02.jpg",
-
-            alt:
-                "Dance Division reference image 02",
-
-            label:
-                "02 / REFERENCE"
-        },
-
-        {
-            src:
-                "images/inspiration-03.jpg",
-
-            alt:
-                "Dance Division reference image 03",
-
-            label:
-                "03 / REFERENCE"
-        },
-
-        {
-            src:
-                "images/inspiration-04.jpg",
-
-            alt:
-                "Dance Division reference image 04",
-
-            label:
-                "04 / REFERENCE"
-        },
-
-        {
-            src:
-                "images/inspiration-05.jpg",
-
-            alt:
-                "Dance Division reference image 05",
-
-            label:
-                "05 / REFERENCE"
-        },
-
-        {
-            src:
-                "images/inspiration-06.jpg",
-
-            alt:
-                "Dance Division reference image 06",
-
-            label:
-                "06 / REFERENCE"
-        },
-
-        {
-            src:
-                "images/inspiration-07.jpg",
-
-            alt:
-                "Dance Division reference image 07",
-
-            label:
-                "07 / REFERENCE"
-        },
-
-        {
-            src:
-                "images/inspiration-08.jpg",
-
-            alt:
-                "Dance Division reference image 08",
-
-            label:
-                "08 / REFERENCE"
-        },
-
-        {
-            src:
-                "images/inspiration-09.jpg",
-
-            alt:
-                "Dance Division reference image 09",
-
-            label:
-                "09 / REFERENCE"
-        },
-
-        {
-            src:
-                "images/inspiration-10.jpg",
-
-            alt:
-                "Dance Division reference image 10",
-
-            label:
-                "10 / REFERENCE"
-        },
-
-        {
-            src:
-                "images/inspiration-11.jpg",
-
-            alt:
-                "Dance Division reference image 11",
-
-            label:
-                "11 / REFERENCE"
-        },
-
-        {
-            src:
-                "images/inspiration-12.jpg",
-
-            alt:
-                "Dance Division reference image 12",
-
-            label:
-                "12 / REFERENCE"
-        },
-
-        {
-            src:
-                "images/inspiration-13.jpg",
-
-            alt:
-                "Dance Division reference image 13",
-
-            label:
-                "13 / REFERENCE"
-        },
-
-        {
-            src:
-                "images/inspiration-14.jpg",
-
-            alt:
-                "Dance Division reference image 14",
-
-            label:
-                "14 / REFERENCE"
-        },
-
-        {
-            src:
-                "images/inspiration-15.jpg",
-
-            alt:
-                "Dance Division reference image 15",
-
-            label:
-                "15 / REFERENCE"
-        },
-
-        {
-            src:
-                "images/inspiration-16.jpg",
-
-            alt:
-                "Dance Division reference image 16",
-
-            label:
-                "16 / REFERENCE"
-        },
-
-        {
-            src:
-                "images/inspiration-17.jpg",
-
-            alt:
-                "Dance Division reference image 17",
-
-            label:
-                "17 / REFERENCE"
-        },
-
-        {
-            src:
-                "images/inspiration-18.jpg",
-
-            alt:
-                "Dance Division reference image 18",
-
-            label:
-                "18 / REFERENCE"
-        },
-
-        {
-            src:
-                "images/inspiration-19.jpg",
-
-            alt:
-                "Dance Division reference image 19",
-
-            label:
-                "19 / REFERENCE"
-        },
-
-        {
-    src:
-        "images/inspiration-20.jpg",
-
-    alt:
-        "Dance Division reference image 20",
-
-    label:
-        "20 / REFERENCE"
-},
-
-{ src: "images/inspiration-21.jpg", title: "INSPIRATION 21" },
-{ src: "images/inspiration-22.jpg", title: "INSPIRATION 22" },
-{ src: "images/inspiration-23.jpg", title: "INSPIRATION 23" },
-{ src: "images/inspiration-24.jpg", title: "INSPIRATION 24" },
-{ src: "images/inspiration-25.jpg", title: "INSPIRATION 25" },
-{ src: "images/inspiration-26.jpg", title: "INSPIRATION 26" },
-{ src: "images/inspiration-27.jpg", title: "INSPIRATION 27" },
-{ src: "images/inspiration-28.jpg", title: "INSPIRATION 28" },
-{ src: "images/inspiration-29.jpg", title: "INSPIRATION 29" },
-{ src: "images/inspiration-30.jpg", title: "INSPIRATION 30" },
-
-    ];
-
-
-    let index = 0;
+    const inspirationStage =
+        document.querySelector(".inspiration-stage");
 
 
     /*
-     * More copies make the looping carousel
-     * stable in both directions.
-     */
+       EXACTLY 30 IMAGES.
+       NO INSTAGRAM SLIDE.
+    */
 
-    const COPIES = 3;
+    const inspirationImages =
+        Array.from(
+            { length: 30 },
+            (_, index) => {
+
+                const number =
+                    String(index + 1).padStart(2, "0");
+
+                return {
+
+                    src:
+                        `images/inspiration-${number}.jpg`,
+
+                    alt:
+                        `Dance Division inspiration reference ${number}`,
+
+                    label:
+                        `${number} / REFERENCE`
+
+                };
+
+            }
+        );
 
 
-    /* ------------------------------------------------------------
-       BUILD
-       ------------------------------------------------------------ */
+    /*
+       Carousel state.
 
-    function buildCarousel() {
+       We use 5 copies:
 
-        track.innerHTML = "";
+       COPY 0 = 01–30
+       COPY 1 = 01–30
+       COPY 2 = 01–30  ← visible starting copy
+       COPY 3 = 01–30
+       COPY 4 = 01–30
+
+       The important part is that we NEVER let the user
+       see the actual edge of the carousel.
+    */
+
+    const INSPIRATION_COPIES = 5;
+    const INSPIRATION_MIDDLE_COPY = 2;
+    const INSPIRATION_TOTAL =
+        inspirationImages.length;
+
+    let inspirationIndex = 0;
+
+    /*
+       Physical position is separate from the visible
+       image number.
+
+       This is what makes the looping seamless.
+    */
+
+    let inspirationPhysicalIndex =
+        INSPIRATION_MIDDLE_COPY *
+        INSPIRATION_TOTAL;
+
+    let inspirationSlides = [];
+
+    let inspirationAnimating = false;
+
+    let inspirationTouchStartX = 0;
+    let inspirationTouchStartY = 0;
 
 
-        const count =
-            inspirationImages.length;
+    if (inspirationTotal) {
+
+        inspirationTotal.textContent =
+            String(INSPIRATION_TOTAL)
+                .padStart(2, "0");
+
+    }
 
 
-        if (!count) {
-            return;
-        }
+    /* --------------------------------------------------------
+       CREATE SLIDES
+       -------------------------------------------------------- */
+
+    function createInspirationSlides() {
+
+        if (!inspirationTrack) return;
+
+        inspirationTrack.innerHTML = "";
+
+        inspirationSlides = [];
 
 
         for (
             let copy = 0;
-            copy < COPIES * 2 + 1;
+            copy < INSPIRATION_COPIES;
             copy++
         ) {
 
             inspirationImages.forEach(
-                (item, itemIndex) => {
+                (image, imageIndex) => {
 
                     const slide =
-                        document.createElement(
-                            "div"
-                        );
-
+                        document.createElement("div");
 
                     slide.className =
                         "inspiration-slide";
 
-
                     slide.dataset.index =
-                        itemIndex;
+                        String(imageIndex);
+
+                    slide.dataset.copy =
+                        String(copy);
 
 
                     const img =
-                        document.createElement(
-                            "img"
-                        );
-
+                        document.createElement("img");
 
                     img.src =
-                        item.src;
-
+                        image.src;
 
                     img.alt =
-                        item.alt;
-
+                        image.alt;
 
                     img.draggable =
                         false;
 
+                    /*
+                       Only the middle copy is eager-loaded.
+                       This avoids creating a huge loading
+                       bottleneck on the initial page load.
+                    */
 
-                    slide.appendChild(
-                        img
+                    img.loading =
+                        copy === INSPIRATION_MIDDLE_COPY
+                            ? "eager"
+                            : "lazy";
+
+
+                    slide.appendChild(img);
+
+                    inspirationTrack.appendChild(
+                        slide
                     );
 
-
-                    track.appendChild(
+                    inspirationSlides.push(
                         slide
                     );
 
@@ -1641,95 +742,161 @@
 
         }
 
+    }
 
-        total.textContent =
-            String(
-                count
-            ).padStart(
-                2,
-                "0"
+
+    /* --------------------------------------------------------
+       GET STEP
+       -------------------------------------------------------- */
+
+    function getInspirationStep() {
+
+        if (!inspirationSlides.length) {
+            return 0;
+        }
+
+        const slide =
+            inspirationSlides[0];
+
+        const rect =
+            slide.getBoundingClientRect();
+
+        const trackStyle =
+            window.getComputedStyle(
+                inspirationTrack
             );
+
+        const gap =
+            parseFloat(
+                trackStyle.columnGap ||
+                trackStyle.gap ||
+                "0"
+            ) || 0;
+
+        return rect.width + gap;
+    }
+
+
+    /* --------------------------------------------------------
+       POSITION TRACK
+       -------------------------------------------------------- */
+
+    function positionInspiration(
+        animate = true
+    ) {
+
+        if (!inspirationTrack) return;
+
+        if (!inspirationStage) return;
+
+        if (!inspirationSlides.length) return;
+
+
+        const step =
+            getInspirationStep();
+
+        if (!step) return;
+
+
+        const slideWidth =
+            inspirationSlides[0]
+                .getBoundingClientRect()
+                .width;
+
+
+        if (!slideWidth) return;
+
+
+        const stageWidth =
+            inspirationStage.clientWidth;
+
+
+        /*
+           Exact center of the carousel.
+        */
+
+        const centerOffset =
+            (
+                stageWidth -
+                slideWidth
+            ) / 2;
+
+
+        const translateX =
+            centerOffset -
+            (
+                inspirationPhysicalIndex *
+                step
+            );
+
+
+        /*
+           IMPORTANT:
+           Transition is controlled ONLY by JS.
+
+           No permanent transition should be applied
+           to .inspiration-track in CSS.
+        */
+
+        if (animate) {
+
+            inspirationTrack.style.transition =
+                "transform 650ms cubic-bezier(.22,.61,.36,1)";
+
+        } else {
+
+            inspirationTrack.style.transition =
+                "none";
+
+        }
+
+
+        inspirationTrack.style.transform =
+            `translate3d(${translateX}px, -50%, 0)`;
+
+
+        updateInspirationClasses();
+
+
+        if (inspirationCurrent) {
+
+            inspirationCurrent.textContent =
+                String(inspirationIndex + 1)
+                    .padStart(2, "0");
+
+        }
+
+
+        if (inspirationCaption) {
+
+            inspirationCaption.textContent =
+                inspirationImages[
+                    inspirationIndex
+                ].label;
+
+        }
 
     }
 
 
-    /* ------------------------------------------------------------
-       UPDATE
-       ------------------------------------------------------------ */
+    /* --------------------------------------------------------
+       UPDATE OPACITY CLASSES
+       -------------------------------------------------------- */
 
-    function updateCarousel(
-        animate = true
-    ) {
+    function updateInspirationClasses() {
 
-        const slides =
-            Array.from(
-                track.children
-            );
+        if (!inspirationSlides.length) return;
 
 
-        const count =
-            inspirationImages.length;
+        inspirationSlides.forEach(
+            (slide, physicalIndex) => {
 
+                const distance =
+                    Math.abs(
+                        physicalIndex -
+                        inspirationPhysicalIndex
+                    );
 
-        if (
-            !slides.length ||
-            !count
-        ) {
-
-            return;
-
-        }
-
-
-        const centerIndex =
-            COPIES * count +
-            index;
-
-
-        const centerSlide =
-            slides[centerIndex];
-
-
-        if (!centerSlide) {
-            return;
-        }
-
-
-        /*
-         * The slide's center position is measured
-         * against the center of the viewport.
-         */
-
-        const stageCenter =
-            stage.clientWidth / 2;
-
-
-        const slideCenter =
-            centerSlide.offsetLeft +
-            centerSlide.offsetWidth / 2;
-
-
-        const offset =
-            stageCenter -
-            slideCenter;
-
-
-        track.style.transition =
-            animate
-                ? "transform 0.8s cubic-bezier(.22,.61,.36,1)"
-                : "none";
-
-
-        track.style.transform =
-            `translate3d(${offset}px, 0, 0)`;
-
-
-        /* --------------------------------------------------------
-           DISTANCE CLASSES
-           -------------------------------------------------------- */
-
-        slides.forEach(
-            (slide, slideIndex) => {
 
                 slide.classList.remove(
                     "is-center",
@@ -1740,40 +907,25 @@
                 );
 
 
-                const distance =
-                    Math.abs(
-                        slideIndex -
-                        centerIndex
-                    );
-
-
-                if (
-                    distance === 0
-                ) {
+                if (distance === 0) {
 
                     slide.classList.add(
                         "is-center"
                     );
 
-                } else if (
-                    distance === 1
-                ) {
+                } else if (distance === 1) {
 
                     slide.classList.add(
                         "distance-1"
                     );
 
-                } else if (
-                    distance === 2
-                ) {
+                } else if (distance === 2) {
 
                     slide.classList.add(
                         "distance-2"
                     );
 
-                } else if (
-                    distance === 3
-                ) {
+                } else if (distance === 3) {
 
                     slide.classList.add(
                         "distance-3"
@@ -1790,146 +942,441 @@
             }
         );
 
-
-        /* --------------------------------------------------------
-           TEXT
-           -------------------------------------------------------- */
-
-        const item =
-            inspirationImages[index];
-
-
-        caption.textContent =
-            item.label;
-
-
-        current.textContent =
-            String(
-                index + 1
-            ).padStart(
-                2,
-                "0"
-            );
-
     }
 
 
-    /* ------------------------------------------------------------
-       NEXT
-       ------------------------------------------------------------ */
+    /* --------------------------------------------------------
+       SILENTLY RECENTER
+       -------------------------------------------------------- */
 
-    function nextImage() {
+    function recenterInspiration() {
 
-        index++;
+        if (!inspirationTrack) return;
+
+
+        const total =
+            INSPIRATION_TOTAL;
+
+
+        /*
+           Current physical index.
+
+           Example:
+
+           01 at position 60
+           30 at position 89
+
+           If we move forward from 30:
+
+           position 90
+
+           That is COPY 3 / IMAGE 01.
+
+           We silently move to:
+
+           position 60
+
+           Same image.
+        */
+
+
+        const currentImage =
+            inspirationIndex;
+
+
+        const idealPosition =
+            (
+                INSPIRATION_MIDDLE_COPY *
+                total
+            ) +
+            currentImage;
 
 
         if (
-            index >=
-            inspirationImages.length
+            inspirationPhysicalIndex ===
+            idealPosition
         ) {
-
-            index = 0;
-
+            return;
         }
 
 
-        updateCarousel(
-            true
+        /*
+           Disable transition BEFORE changing
+           the transform.
+        */
+
+        inspirationTrack.style.transition =
+            "none";
+
+
+        inspirationPhysicalIndex =
+            idealPosition;
+
+
+        positionInspiration(false);
+
+
+        /*
+           Force the browser to commit the new
+           position while transitions are disabled.
+        */
+
+        void inspirationTrack.offsetWidth;
+
+    }
+
+
+    /* --------------------------------------------------------
+       MOVE TO IMAGE
+       -------------------------------------------------------- */
+
+    function goToInspiration(
+        targetIndex
+    ) {
+
+        if (!inspirationTrack) return;
+
+        if (inspirationAnimating) return;
+
+
+        const total =
+            INSPIRATION_TOTAL;
+
+
+        /*
+           Normalize target image number.
+        */
+
+        let normalizedTarget =
+            targetIndex % total;
+
+
+        if (normalizedTarget < 0) {
+            normalizedTarget += total;
+        }
+
+
+        /*
+           Determine shortest circular direction.
+
+           This means:
+
+           30 → 01 = +1
+
+           01 → 30 = -1
+        */
+
+        let delta =
+            normalizedTarget -
+            inspirationIndex;
+
+
+        if (delta > total / 2) {
+            delta -= total;
+        }
+
+
+        if (delta < -total / 2) {
+            delta += total;
+        }
+
+
+        /*
+           If no movement is necessary, don't animate.
+        */
+
+        if (delta === 0) {
+            return;
+        }
+
+
+        inspirationAnimating = true;
+
+
+        /*
+           Update logical image.
+        */
+
+        inspirationIndex =
+            (
+                inspirationIndex +
+                delta +
+                total
+            ) % total;
+
+
+        /*
+           Update physical position.
+
+           THIS is the important part.
+
+           We do not reset the position here.
+
+           We allow the carousel to actually travel
+           from image 30 to the next copy's image 01.
+        */
+
+        inspirationPhysicalIndex +=
+            delta;
+
+
+        positionInspiration(true);
+
+    }
+
+
+    /* --------------------------------------------------------
+       TRANSITION END
+       -------------------------------------------------------- */
+
+    if (inspirationTrack) {
+
+        inspirationTrack.addEventListener(
+            "transitionend",
+            event => {
+
+                if (
+                    event.propertyName !==
+                    "transform"
+                ) {
+                    return;
+                }
+
+
+                /*
+                   Animation has finished.
+
+                   Now silently put the carousel back
+                   into the middle copy.
+
+                   Because the current image is identical,
+                   the user sees absolutely no jump.
+                */
+
+                recenterInspiration();
+
+
+                /*
+                   Recalculate opacity states.
+                */
+
+                updateInspirationClasses();
+
+
+                /*
+                   Unlock controls after the browser
+                   has committed the silent reposition.
+                */
+
+                requestAnimationFrame(() => {
+
+                    inspirationAnimating =
+                        false;
+
+                });
+
+            }
         );
 
     }
 
 
-    /* ------------------------------------------------------------
+    /* --------------------------------------------------------
+       INITIALIZE
+       -------------------------------------------------------- */
+
+    if (inspirationTrack) {
+
+        createInspirationSlides();
+
+
+        /*
+           Wait until the browser has calculated image
+           dimensions before positioning the carousel.
+
+           This is important for avoiding the initial
+           loading/position glitch.
+        */
+
+        requestAnimationFrame(() => {
+
+            requestAnimationFrame(() => {
+
+                positionInspiration(false);
+
+            });
+
+        });
+
+    }
+
+
+    /* --------------------------------------------------------
        PREVIOUS
-       ------------------------------------------------------------ */
+       -------------------------------------------------------- */
 
-    function previousImage() {
+    if (inspirationPrev) {
 
-        index--;
-
-
-        if (index < 0) {
-
-            index =
-                inspirationImages.length -
-                1;
-
-        }
-
-
-        updateCarousel(
-            true
-        );
-
-    }
-
-
-    /* ------------------------------------------------------------
-       BUTTONS
-       ------------------------------------------------------------ */
-
-    if (previous) {
-
-        previous.addEventListener(
+        inspirationPrev.addEventListener(
             "click",
-            previousImage
+            () => {
+
+                goToInspiration(
+                    inspirationIndex - 1
+                );
+
+            }
         );
 
     }
 
 
-    if (next) {
+    /* --------------------------------------------------------
+       NEXT
+       -------------------------------------------------------- */
 
-        next.addEventListener(
+    if (inspirationNext) {
+
+        inspirationNext.addEventListener(
             "click",
-            nextImage
+            () => {
+
+                goToInspiration(
+                    inspirationIndex + 1
+                );
+
+            }
         );
 
     }
 
 
-    /* ------------------------------------------------------------
+    /* --------------------------------------------------------
+       CLICK ON IMAGE
+       -------------------------------------------------------- */
+
+    if (inspirationTrack) {
+
+        inspirationTrack.addEventListener(
+            "click",
+            event => {
+
+                const slide =
+                    event.target.closest(
+                        ".inspiration-slide"
+                    );
+
+                if (!slide) return;
+
+
+                const clickedIndex =
+                    Number(
+                        slide.dataset.index
+                    );
+
+
+                if (
+                    Number.isNaN(
+                        clickedIndex
+                    )
+                ) {
+                    return;
+                }
+
+
+                /*
+                   Find the shortest circular route
+                   to the clicked image.
+                */
+
+                let delta =
+                    clickedIndex -
+                    inspirationIndex;
+
+
+                if (
+                    delta >
+                    INSPIRATION_TOTAL / 2
+                ) {
+
+                    delta -=
+                        INSPIRATION_TOTAL;
+
+                }
+
+
+                if (
+                    delta <
+                    -INSPIRATION_TOTAL / 2
+                ) {
+
+                    delta +=
+                        INSPIRATION_TOTAL;
+
+                }
+
+
+                goToInspiration(
+                    inspirationIndex + delta
+                );
+
+            }
+        );
+
+    }
+
+
+    /* --------------------------------------------------------
        KEYBOARD
-       ------------------------------------------------------------ */
+       -------------------------------------------------------- */
 
     document.addEventListener(
         "keydown",
         event => {
 
+            const active =
+                document.activeElement;
+
+
             if (
-                event.target.tagName ===
-                    "INPUT" ||
-                event.target.tagName ===
-                    "TEXTAREA" ||
-                event.target.tagName ===
-                    "SELECT"
+                active &&
+                (
+                    active.tagName === "INPUT" ||
+                    active.tagName === "TEXTAREA" ||
+                    active.tagName === "SELECT"
+                )
             ) {
-
                 return;
-
             }
 
 
-            const carousel =
+            /*
+               Only use the arrow keys for the inspiration
+               carousel when the inspiration section is
+               actually visible.
+            */
+
+            const inspirationSection =
                 document.getElementById(
-                    "inspirationCarousel"
+                    "inspiration"
                 );
 
 
-            if (!carousel) {
+            if (!inspirationSection) {
                 return;
             }
 
 
             const rect =
-                carousel.getBoundingClientRect();
+                inspirationSection
+                    .getBoundingClientRect();
 
 
             const visible =
                 rect.top <
                     window.innerHeight &&
-                rect.bottom > 0;
+                rect.bottom >
+                    0;
 
 
             if (!visible) {
@@ -1944,7 +1391,9 @@
 
                 event.preventDefault();
 
-                previousImage();
+                goToInspiration(
+                    inspirationIndex - 1
+                );
 
             }
 
@@ -1956,7 +1405,9 @@
 
                 event.preventDefault();
 
-                nextImage();
+                goToInspiration(
+                    inspirationIndex + 1
+                );
 
             }
 
@@ -1964,87 +1415,111 @@
     );
 
 
-    /* ------------------------------------------------------------
+    /* --------------------------------------------------------
        TOUCH
-       ------------------------------------------------------------ */
+       -------------------------------------------------------- */
 
-    let touchStartX = 0;
+    if (inspirationStage) {
 
-    let touchStartY = 0;
+        inspirationStage.addEventListener(
+            "touchstart",
+            event => {
 
-
-    stage.addEventListener(
-        "touchstart",
-        event => {
-
-            const touch =
-                event.changedTouches[0];
+                if (!event.touches.length) {
+                    return;
+                }
 
 
-            touchStartX =
-                touch.clientX;
+                inspirationTouchStartX =
+                    event.touches[0].clientX;
+
+                inspirationTouchStartY =
+                    event.touches[0].clientY;
+
+            },
+            {
+                passive: true
+            }
+        );
 
 
-            touchStartY =
-                touch.clientY;
-
-        },
-        {
-            passive: true
-        }
-    );
-
-
-    stage.addEventListener(
-        "touchend",
-        event => {
-
-            const touch =
-                event.changedTouches[0];
-
-
-            const deltaX =
-                touch.clientX -
-                touchStartX;
-
-
-            const deltaY =
-                touch.clientY -
-                touchStartY;
-
-
-            if (
-                Math.abs(deltaX) > 40 &&
-                Math.abs(deltaX) >
-                    Math.abs(deltaY)
-            ) {
+        inspirationStage.addEventListener(
+            "touchend",
+            event => {
 
                 if (
-                    deltaX < 0
+                    !event.changedTouches.length
                 ) {
+                    return;
+                }
 
-                    nextImage();
+
+                const endX =
+                    event.changedTouches[0]
+                        .clientX;
+
+                const endY =
+                    event.changedTouches[0]
+                        .clientY;
+
+
+                const deltaX =
+                    endX -
+                    inspirationTouchStartX;
+
+                const deltaY =
+                    endY -
+                    inspirationTouchStartY;
+
+
+                /*
+                   Ignore vertical scrolling.
+                */
+
+                if (
+                    Math.abs(deltaX) <
+                    45
+                ) {
+                    return;
+                }
+
+
+                if (
+                    Math.abs(deltaX) <
+                    Math.abs(deltaY)
+                ) {
+                    return;
+                }
+
+
+                if (deltaX < 0) {
+
+                    goToInspiration(
+                        inspirationIndex + 1
+                    );
 
                 } else {
 
-                    previousImage();
+                    goToInspiration(
+                        inspirationIndex - 1
+                    );
 
                 }
 
+            },
+            {
+                passive: true
             }
+        );
 
-        },
-        {
-            passive: true
-        }
-    );
+    }
 
 
-    /* ------------------------------------------------------------
+    /* --------------------------------------------------------
        RESIZE
-       ------------------------------------------------------------ */
+       -------------------------------------------------------- */
 
-    let resizeTimer;
+    let inspirationResizeTimer = null;
 
 
     window.addEventListener(
@@ -2052,125 +1527,292 @@
         () => {
 
             clearTimeout(
-                resizeTimer
+                inspirationResizeTimer
             );
 
 
-            resizeTimer =
-                setTimeout(
-                    () => {
+            inspirationResizeTimer =
+                setTimeout(() => {
 
-                        updateCarousel(
+                    if (
+                        inspirationTrack &&
+                        inspirationSlides.length
+                    ) {
+
+                        /*
+                           Never animate on resize.
+                        */
+
+                        inspirationTrack.style.transition =
+                            "none";
+
+
+                        /*
+                           Keep the current image
+                           centered.
+                        */
+
+                        inspirationPhysicalIndex =
+                            (
+                                INSPIRATION_MIDDLE_COPY *
+                                INSPIRATION_TOTAL
+                            ) +
+                            inspirationIndex;
+
+
+                        positionInspiration(
                             false
                         );
 
-                    },
-                    100
+                    }
+
+                }, 100);
+
+        }
+    );
+
+
+    /* ========================================================
+       CONTENT REFERENCES
+       ======================================================== */
+
+    const inspirationContent = [
+
+        {
+            type:
+                "INSTAGRAM REEL",
+
+            description:
+                "EMILY DEFOREST SUNGLASSES.",
+
+            link:
+                "https://www.instagram.com/p/DaWM3k8HdkH/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="
+        },
+
+        {
+            type:
+                "INSTAGRAM REEL",
+
+            description:
+                "ISAAC POWELL CRUISING.",
+
+            link:
+                "https://www.instagram.com/reel/Dap7SnjxNoi/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="
+        },
+
+        {
+            type:
+                "INSTAGRAM REEL",
+
+            description:
+                "TATE JUSTUS DANCING.",
+
+            link:
+                "https://www.instagram.com/tv/CY5Vkm5lN6d/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="
+        },
+
+        {
+            type:
+                "INSTAGRAM REEL",
+
+            description:
+                "JACK FERVER DRAMATUB.",
+
+            link:
+                "https://www.instagram.com/reel/CpWSn_-j2P4/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="
+        },
+
+        {
+            type:
+                "INSTAGRAM REEL",
+
+            description:
+                "YONATAN GEBEYAHU MOLIERING.",
+
+            link:
+                "https://www.instagram.com/reel/DCE791xvB4l/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="
+        }
+
+    ];
+
+
+    const inspirationReferences =
+        document.getElementById(
+            "inspirationReferences"
+        );
+
+    const inspirationReferencesToggle =
+        document.getElementById(
+            "inspirationReferencesToggle"
+        );
+
+    const inspirationReferencesCount =
+        document.getElementById(
+            "inspirationReferencesCount"
+        );
+
+    const inspirationReferencesIcon =
+        document.getElementById(
+            "inspirationReferencesIcon"
+        );
+
+    const inspirationReferenceList =
+        document.getElementById(
+            "inspirationReferenceList"
+        );
+
+
+    function buildContentReferences() {
+
+        if (!inspirationReferenceList) {
+            return;
+        }
+
+
+        inspirationReferenceList.innerHTML = "";
+
+
+        inspirationContent.forEach(
+            (item, index) => {
+
+                const link =
+                    document.createElement("a");
+
+
+                link.className =
+                    "inspiration-reference";
+
+
+                link.href =
+                    item.link;
+
+
+                link.target =
+                    "_blank";
+
+
+                link.rel =
+                    "noopener noreferrer";
+
+
+                const number =
+                    document.createElement("span");
+
+
+                number.className =
+                    "reference-number";
+
+
+                number.textContent =
+                    String(index + 1)
+                        .padStart(2, "0");
+
+
+                const type =
+                    document.createElement("span");
+
+
+                type.className =
+                    "reference-type";
+
+
+                type.textContent =
+                    item.type;
+
+
+                const description =
+                    document.createElement("span");
+
+
+                description.className =
+                    "reference-description";
+
+
+                description.textContent =
+                    item.description;
+
+
+                const arrow =
+                    document.createElement("span");
+
+
+                arrow.className =
+                    "reference-arrow";
+
+
+                arrow.textContent =
+                    "↗";
+
+
+                link.appendChild(number);
+                link.appendChild(type);
+                link.appendChild(description);
+                link.appendChild(arrow);
+
+
+                inspirationReferenceList.appendChild(
+                    link
                 );
 
-        }
-    );
+            }
+        );
 
 
-    /* ------------------------------------------------------------
-       INITIALIZE
-       ------------------------------------------------------------ */
+        if (inspirationReferencesCount) {
 
-    buildCarousel();
-
-
-    requestAnimationFrame(
-        () => {
-
-            updateCarousel(
-                false
-            );
+            inspirationReferencesCount.textContent =
+                String(inspirationContent.length)
+                    .padStart(2, "0");
 
         }
-    );
-
-})();
-
-
-/* ============================================================
-   CHARACTERS
-   ============================================================ */
-
-(function initCharacters() {
-
-    const image =
-        document.getElementById(
-            "characterImage"
-        );
-
-    const number =
-        document.getElementById(
-            "characterNumber"
-        );
-
-    const role =
-        document.getElementById(
-            "characterRole"
-        );
-
-    const name =
-        document.getElementById(
-            "characterName"
-        );
-
-    const bio =
-        document.getElementById(
-            "characterBio"
-        );
-
-    const casting =
-        document.getElementById(
-            "characterCasting"
-        );
-
-    const footerName =
-        document.getElementById(
-            "characterFooterName"
-        );
-
-    const current =
-        document.getElementById(
-            "characterCurrent"
-        );
-
-    const total =
-        document.getElementById(
-            "characterTotal"
-        );
-
-    const previous =
-        document.getElementById(
-            "characterPrev"
-        );
-
-    const next =
-        document.getElementById(
-            "characterNext"
-        );
-
-
-    if (
-        !image ||
-        !number ||
-        !role ||
-        !name ||
-        !bio ||
-        !casting
-    ) {
-
-        return;
 
     }
 
 
-    /* ------------------------------------------------------------
-       CHARACTER DATA
-       ------------------------------------------------------------ */
+    buildContentReferences();
+
+
+    if (
+        inspirationReferencesToggle &&
+        inspirationReferences
+    ) {
+
+        inspirationReferencesToggle.addEventListener(
+            "click",
+            () => {
+
+                const isOpen =
+                    inspirationReferences
+                        .classList
+                        .toggle("open");
+
+
+                inspirationReferencesToggle
+                    .setAttribute(
+                        "aria-expanded",
+                        String(isOpen)
+                    );
+
+
+                if (inspirationReferencesIcon) {
+
+                    inspirationReferencesIcon
+                        .textContent =
+                        isOpen
+                            ? "−"
+                            : "+";
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* ========================================================
+       CHARACTERS
+       ======================================================== */
 
     const characters = [
 
@@ -2215,13 +1857,13 @@
                 "JONAH LENTZ",
 
             role:
-                "FILM STUDENT - SENIOR",
+                "FILM DIVISION STUDENT - SENIOR",
 
             image:
                 "images/character-03-headshot.jpg",
 
             bio:
-                "Jonah is observant and introverted but overcomes these qualities as the discovery their true place in the world as a filmmaker as this project takes over their life. He understands people through the smallest gestures and often notices what everyone else misses. They are desperate to make a name for themselves before graduating with any prospects.",
+                "Jonah is observant and introverted but overcomes these qualities as they discovery their true place in the world as a filmmaker as this project takes over their life. He understands people through the smallest gestures and often notices what everyone else misses. They are desperate to make a name for themselves before graduating with any prospects.",
 
             casting:
                 "Yonatan Gebeyahu — Actor"
@@ -2233,13 +1875,13 @@
                 "JUDE HARRISON",
 
             role:
-                "CHARACTER",
+                "DANCE DIVISION STUDENT - JUNIOR",
 
             image:
                 "images/character-04-headshot.jpg",
 
             bio:
-                "Jude moves between worlds — a beauty, a talent, and internallly a poet. Their physicality carries both control and vulnerability and leads people to take them for granted by only appreciating them superficially. They begin the season dating Lucy but evolve beyond the smallness of that relationship and being to explore other possibilities (they kiss Frankie, bisexual)",
+                "Jude moves between worlds — a beauty, a talent, and (internallly) a poet. Their physicality carries both control and vulnerability and leads people to take them for granted by only appreciating them superficially. They begin the season dating Lucy but evolve beyond the smallness of that relationship and being to explore other possibilities (they kiss Frankie, bisexual)",
 
             casting:
                 "Tate Justus — Dancer / Actor / Choreographer"
@@ -2269,7 +1911,7 @@
                 "BODHI D'ANGELO",
 
             role:
-                "COMPUTER SCIENCE DIVISION - FRESHMAN / LUCY'S BROTHER",
+                "COMPUTER SCIENCE DIVISION STUDENT - FRESHMAN / LUCY'S BROTHER",
 
             image:
                 "images/character-06-headshot.jpg",
@@ -2287,7 +1929,7 @@
                 "KIM CONRAD",
 
             role:
-                "DUAL DEGREE FILM DIVISION & DANCE DIVISION - JUNIOR",
+                "DUAL DEGREE FILM DIVISION & DANCE DIVISION STUDENT - JUNIOR",
 
             image:
                 "images/character-07-headshot.jpg",
@@ -2333,9 +1975,7 @@
 
             casting:
                 "Bobbi Jean Smith — Choreographer / Dancer"
-        }
-
-        ,
+        },
 
 
         {
@@ -2343,134 +1983,92 @@
                 "REID & HARRIET",
 
             role:
-                "DANCE DIVISION RESIDENT COSTUME DESIGNERS",
+                "FAMOUS CONTEMPORARY DANCE COSTUME DESIGNERS",
 
             image:
                 "images/character-10-headshot.jpg",
 
             bio:
-                "Successful Costume Designers working in the Dance Division.",
+                "Successful costume designers currently in residence at Bardonia.",
 
             casting:
-                "Reid Bartelme and Harriet Jung"
+                "Reid Bartelme & Harriet Jung"
         }
+
 
     ];
 
 
-    let index = 0;
-
-
-    if (total) {
-
-        total.textContent =
-            String(
-                characters.length
-            ).padStart(
-                2,
-                "0"
-            );
-
-    }
-
-
-    /* ------------------------------------------------------------
-       PRELOAD
-       ------------------------------------------------------------ */
-
-    function preloadCharacter(
-        characterIndex
-    ) {
-
-        if (
-            characterIndex < 0 ||
-            characterIndex >=
-                characters.length
-        ) {
-
-            return;
-
-        }
-
-
-        const preload =
-            new Image();
-
-
-        preload.src =
-            characters[
-                characterIndex
-            ].image;
-
-    }
-
-
-    function preloadAdjacent() {
-
-        preloadCharacter(
-            index + 1
+    const characterImage =
+        document.getElementById(
+            "characterImage"
         );
 
-        preloadCharacter(
-            index - 1
+    const characterNumber =
+        document.getElementById(
+            "characterNumber"
         );
+
+    const characterRole =
+        document.getElementById(
+            "characterRole"
+        );
+
+    const characterName =
+        document.getElementById(
+            "characterName"
+        );
+
+    const characterBio =
+        document.getElementById(
+            "characterBio"
+        );
+
+    const characterCasting =
+        document.getElementById(
+            "characterCasting"
+        );
+
+    const characterFooterName =
+        document.getElementById(
+            "characterFooterName"
+        );
+
+    const characterPrev =
+        document.getElementById(
+            "characterPrev"
+        );
+
+    const characterNext =
+        document.getElementById(
+            "characterNext"
+        );
+
+    const characterCurrent =
+        document.getElementById(
+            "characterCurrent"
+        );
+
+    const characterTotal =
+        document.getElementById(
+            "characterTotal"
+        );
+
+
+    let characterIndex = 0;
+
+
+    if (characterTotal) {
+
+        characterTotal.textContent =
+            String(characters.length)
+                .padStart(2, "0");
 
     }
 
 
-    /* ------------------------------------------------------------
-       IMAGE ERROR HANDLER
-       ------------------------------------------------------------ */
-
-    image.addEventListener(
-        "error",
-        () => {
-
-            console.error(
-                "Character image failed to load:",
-                image.src
-            );
-
-
-            image.classList.remove(
-                "loaded"
-            );
-
-            image.classList.remove(
-                "is-changing"
-            );
-
-        }
-    );
-
-
-    /* ------------------------------------------------------------
-       IMAGE LOAD HANDLER
-       ------------------------------------------------------------ */
-
-    image.addEventListener(
-        "load",
-        () => {
-
-            image.classList.remove(
-                "is-changing"
-            );
-
-            image.classList.add(
-                "loaded"
-            );
-
-        }
-    );
-
-
-    /* ------------------------------------------------------------
-       SHOW CHARACTER
-       ------------------------------------------------------------ */
-
-    function showCharacter(
-        newIndex,
-        animate = true
+    function updateCharacter(
+        index
     ) {
 
         if (!characters.length) {
@@ -2478,134 +2076,158 @@
         }
 
 
-        if (
-            newIndex < 0
-        ) {
-
-            newIndex =
-                characters.length - 1;
-
-        }
-
-
-        if (
-            newIndex >=
-            characters.length
-        ) {
-
-            newIndex = 0;
-
-        }
-
-
-        index =
-            newIndex;
+        characterIndex =
+            (
+                index %
+                characters.length +
+                characters.length
+            ) %
+            characters.length;
 
 
         const character =
-            characters[index];
+            characters[characterIndex];
 
 
-        if (animate) {
+        if (characterImage) {
 
-            image.classList.add(
+            characterImage.classList.remove(
+                "loaded"
+            );
+
+
+            characterImage.classList.add(
                 "is-changing"
             );
 
-        } else {
 
-            image.classList.remove(
-                "is-changing"
-            );
-
-        }
+            const preload =
+                new Image();
 
 
-        /*
-         * Remove loaded state before changing
-         * the source so the new image fades in
-         * only after it actually exists.
-         */
+            preload.onload = () => {
 
-        image.classList.remove(
-            "loaded"
-        );
+                characterImage.src =
+                    character.image;
+
+                characterImage.alt =
+                    character.name;
 
 
-        image.src =
-            character.image;
+                requestAnimationFrame(() => {
+
+                    characterImage.classList
+                        .remove(
+                            "is-changing"
+                        );
+
+                    characterImage.classList
+                        .add(
+                            "loaded"
+                        );
+
+                });
+
+            };
 
 
-        image.alt =
-            character.name ||
-            "Dance Division character";
+            preload.onerror = () => {
 
-
-        number.textContent =
-            String(
-                index + 1
-            ).padStart(
-                2,
-                "0"
-            );
-
-
-        role.textContent =
-            character.role;
-
-
-        name.textContent =
-            character.name ||
-            "CHARACTER";
-
-
-        bio.textContent =
-            character.bio;
-
-
-        casting.textContent =
-            character.casting;
-
-
-        if (footerName) {
-
-            footerName.textContent =
-                character.name ||
-                "CHARACTER";
-
-        }
-
-
-        if (current) {
-
-            current.textContent =
-                String(
-                    index + 1
-                ).padStart(
-                    2,
-                    "0"
+                console.error(
+                    "Unable to load character image:",
+                    character.image
                 );
 
+
+                characterImage.src =
+                    character.image;
+
+                characterImage.alt =
+                    character.name;
+
+
+                characterImage.classList
+                    .remove(
+                        "is-changing"
+                    );
+
+            };
+
+
+            preload.src =
+                character.image;
+
         }
 
 
-        preloadAdjacent();
+        if (characterNumber) {
+
+            characterNumber.textContent =
+                String(characterIndex + 1)
+                    .padStart(2, "0");
+
+        }
+
+
+        if (characterCurrent) {
+
+            characterCurrent.textContent =
+                String(characterIndex + 1)
+                    .padStart(2, "0");
+
+        }
+
+
+        if (characterRole) {
+
+            characterRole.textContent =
+                character.role;
+
+        }
+
+
+        if (characterName) {
+
+            characterName.textContent =
+                character.name;
+
+        }
+
+
+        if (characterBio) {
+
+            characterBio.textContent =
+                character.bio;
+
+        }
+
+
+        if (characterCasting) {
+
+            characterCasting.textContent =
+                character.casting;
+
+        }
+
+
+        if (characterFooterName) {
+
+            characterFooterName.textContent =
+                character.name;
+
+        }
 
     }
 
 
-    /* ------------------------------------------------------------
-       BUTTONS
-       ------------------------------------------------------------ */
+    if (characterPrev) {
 
-    if (previous) {
-
-        previous.addEventListener(
+        characterPrev.addEventListener(
             "click",
             () => {
 
-                showCharacter(
-                    index - 1
+                updateCharacter(
+                    characterIndex - 1
                 );
 
             }
@@ -2614,14 +2236,14 @@
     }
 
 
-    if (next) {
+    if (characterNext) {
 
-        next.addEventListener(
+        characterNext.addEventListener(
             "click",
             () => {
 
-                showCharacter(
-                    index + 1
+                updateCharacter(
+                    characterIndex + 1
                 );
 
             }
@@ -2630,214 +2252,51 @@
     }
 
 
-    /* ------------------------------------------------------------
-       KEYBOARD
-       ------------------------------------------------------------ */
+    if (characterImage) {
 
-    document.addEventListener(
-        "keydown",
-        event => {
+        characterImage.addEventListener(
+            "load",
+            () => {
 
-            if (
-                event.target.tagName ===
-                    "INPUT" ||
-                event.target.tagName ===
-                    "TEXTAREA" ||
-                event.target.tagName ===
-                    "SELECT"
-            ) {
-
-                return;
-
-            }
-
-
-            const browser =
-                document.getElementById(
-                    "characterBrowser"
+                characterImage.classList.add(
+                    "loaded"
                 );
 
-
-            if (!browser) {
-                return;
-            }
-
-
-            const rect =
-                browser.getBoundingClientRect();
-
-
-            const visible =
-                rect.top <
-                    window.innerHeight &&
-                rect.bottom > 0;
-
-
-            if (!visible) {
-                return;
-            }
-
-
-            if (
-                event.key ===
-                "ArrowLeft"
-            ) {
-
-                event.preventDefault();
-
-                showCharacter(
-                    index - 1
+                characterImage.classList.remove(
+                    "is-changing"
                 );
 
-            }
-
-
-            if (
-                event.key ===
-                "ArrowRight"
-            ) {
-
-                event.preventDefault();
-
-                showCharacter(
-                    index + 1
-                );
-
-            }
-
-        }
-    );
-
-
-    /* ------------------------------------------------------------
-       TOUCH / SWIPE
-       ------------------------------------------------------------ */
-
-    let touchStartX = 0;
-
-    let touchStartY = 0;
-
-
-    const characterStage =
-        document.querySelector(
-            ".character-stage"
-        );
-
-
-    if (characterStage) {
-
-        characterStage.addEventListener(
-            "touchstart",
-            event => {
-
-                const touch =
-                    event.changedTouches[0];
-
-
-                touchStartX =
-                    touch.clientX;
-
-
-                touchStartY =
-                    touch.clientY;
-
-            },
-            {
-                passive: true
-            }
-        );
-
-
-        characterStage.addEventListener(
-            "touchend",
-            event => {
-
-                const touch =
-                    event.changedTouches[0];
-
-
-                const deltaX =
-                    touch.clientX -
-                    touchStartX;
-
-
-                const deltaY =
-                    touch.clientY -
-                    touchStartY;
-
-
-                if (
-                    Math.abs(deltaX) > 40 &&
-                    Math.abs(deltaX) >
-                        Math.abs(deltaY)
-                ) {
-
-                    if (
-                        deltaX < 0
-                    ) {
-
-                        showCharacter(
-                            index + 1
-                        );
-
-                    } else {
-
-                        showCharacter(
-                            index - 1
-                        );
-
-                    }
-
-                }
-
-            },
-            {
-                passive: true
             }
         );
 
     }
 
 
-    /* ------------------------------------------------------------
-       INITIAL CHARACTER
-       ------------------------------------------------------------ */
-
-    showCharacter(
-        0,
-        false
-    );
-
-})();
+    updateCharacter(0);
 
 
-/* ============================================================
-   AUDIO PLAYER
-   ============================================================ */
-
-(function initAudioPlayer() {
+    /* ========================================================
+       AUDIO
+       ======================================================== */
 
     const audio =
-        document.getElementById(
-            "audio"
-        );
+        document.getElementById("audio");
 
     const playButton =
-        document.getElementById(
-            "playButton"
-        );
+        document.getElementById("playButton");
 
-    const progressFill =
+    const audioProgress =
+        document.querySelector(".audio-progress");
+
+    const audioProgressFill =
         document.getElementById(
             "audioProgressFill"
         );
 
-    const time =
-        document.getElementById(
-            "audioTime"
-        );
+    const audioTime =
+        document.getElementById("audioTime");
 
-    const duration =
+    const audioDuration =
         document.getElementById(
             "audioDuration"
         );
@@ -2852,123 +2311,289 @@
             "trackTitle"
         );
 
-    const items =
-        Array.from(
-            document.querySelectorAll(
-                ".audio-item"
-            )
-        );
-
-    const progressBar =
-        document.querySelector(
-            ".audio-progress"
+    const audioItems =
+        document.querySelectorAll(
+            ".audio-item"
         );
 
 
-    if (!audio) {
-        return;
-    }
+    const tracks = [
+
+        {
+            src:
+                "audio/dns dvsn.mp3",
+
+            title:
+                "DNS DVSN",
+
+            lyrics: [
+
+                "DNS DVSN",
+                "DNS DNS DVSN",
+                "DNS DVSN",
+                "DNS DNS DVSN",
+
+                "",
+
+                "HERE WE ARE",
+                "WE ARE",
+                "FOR YOU",
+                "TO DO WITH US",
+                "WE’LL DO FOR YOU",
+                "ALL DAY FOR YOU",
+                "ALL NIGHT FOR YOU",
+                "WE’LL DO FOR YOU",
+                "DNS D",
+
+                "",
+
+                "DNS DVSN",
+                "DNS DNS DVSN",
+                "DNS DVSN",
+                "DNS DNS DVSN",
+
+                "",
+
+                "HERE WE ARE",
+                "HERE WE ARE",
+                "HERE WE ARE",
+                "FOR YOU",
+                "TO DO",
+                "WITH US",
+                "WE’LL DO",
+                "FOR YOU",
+
+                "",
+
+                "WE’VE BEEN TRAINING",
+                "WE’VE BEEN SPINNING",
+                "WE’RE NOT PLAYIN",
+                "WE’VE BEEN STRAININ",
+                "BUT NOW",
+                "ITS TIME",
+                "FOR YOU",
+                "TO DO",
+                "WITH US",
+                "WE’LL DO",
+                "FOR YOU",
+                "ALL DAY",
+                "FOR YOU",
+                "FOR YOU",
+                "ITS TRUE",
+
+                "",
+
+                "DNS DVSN",
+                "DNS DNS DVSN",
+                "DNS DVSN",
+                "DNS DNS DVSN",
+                "DNS DVSN",
+                "DNS DNS DVSN",
+                "DNS DVSN",
+                "DNS DNS DVSN"
+
+            ]
+
+        },
 
 
-    /* ------------------------------------------------------------
-       TIME FORMAT
-       ------------------------------------------------------------ */
+        {
+            src:
+                "audio/ef you en.mp3",
 
-    function formatTime(
-        seconds
-    ) {
+            title:
+                "EF YOU EN",
+
+            lyrics: [
+
+                "Hey you",
+                "Get over here",
+                "I wanta",
+                "I needa",
+                "I gotta",
+                "Oh pleasa gotta",
+                "ef you en",
+
+                "",
+
+                "At the party",
+                "At the disco",
+                "At the deli",
+                "At the bistro",
+
+                "",
+
+                "I wanta",
+                "I needa",
+                "I gotta",
+                "ef you en",
+                "I needa",
+                "I musta",
+                "I lusta",
+                "ef you en",
+
+                "",
+
+                "Take meeeeee",
+                "Away from heeeeerrrah",
+                "Let’s go as far away as we can",
+                "Take meeeeee",
+                "Away from heeeerraaah",
+                "Let’s go as far away as we can",
+
+                "",
+
+                "To the city",
+                "To the country",
+                "To the walmart",
+                "To the water park",
+
+                "",
+
+                "I wanta",
+                "I needa",
+                "I gotta",
+                "I really do I lusta afta",
+                "ef you en",
+                "I needa",
+                "I musta",
+                "I lusta",
+                "ef you en"
+
+            ]
+
+        },
+
+
+        {
+            src:
+                "audio/star star star.mp3",
+
+            title:
+                "STAR STAR STAR",
+
+            lyrics: []
+
+        }
+
+    ];
+
+
+    let currentTrackIndex = 0;
+    let pendingAutoplay = false;
+
+
+    function formatTime(seconds) {
 
         if (
-            !Number.isFinite(
-                seconds
-            )
+            !Number.isFinite(seconds) ||
+            seconds < 0
         ) {
-
             return "00:00";
-
         }
 
 
         const minutes =
-            Math.floor(
-                seconds / 60
-            );
+            Math.floor(seconds / 60);
 
-
-        const secondsRemaining =
-            Math.floor(
-                seconds % 60
-            );
+        const remaining =
+            Math.floor(seconds % 60);
 
 
         return (
-            String(minutes)
-                .padStart(2, "0") +
+            String(minutes).padStart(2, "0") +
             ":" +
-            String(
-                secondsRemaining
-            ).padStart(2, "0")
+            String(remaining).padStart(2, "0")
         );
 
     }
 
 
-    /* ------------------------------------------------------------
-       DISPLAY
-       ------------------------------------------------------------ */
+    function updateAudioDisplay() {
 
-    function updateDisplay() {
+        const track =
+            tracks[currentTrackIndex];
 
-        if (time) {
 
-            time.textContent =
+        if (trackNumber) {
+
+            trackNumber.textContent =
+                String(currentTrackIndex + 1)
+                    .padStart(2, "0");
+
+        }
+
+
+        if (trackTitle) {
+
+            trackTitle.textContent =
+                track.title;
+
+        }
+
+
+        if (audioTime) {
+
+            audioTime.textContent =
                 formatTime(
-                    audio.currentTime
+                    audio
+                        ? audio.currentTime
+                        : 0
                 );
 
         }
 
 
-        if (duration) {
+        if (audioDuration) {
 
-            duration.textContent =
+            audioDuration.textContent =
                 formatTime(
-                    audio.duration
+                    audio
+                        ? audio.duration
+                        : 0
                 );
 
         }
 
 
-        if (
-            progressFill &&
-            Number.isFinite(
-                audio.duration
-            ) &&
-            audio.duration > 0
-        ) {
+        if (audioProgressFill) {
 
-            const percentage =
-                (
-                    audio.currentTime /
-                    audio.duration
-                ) * 100;
+            const percent =
+                audio &&
+                Number.isFinite(audio.duration) &&
+                audio.duration > 0
+
+                    ? (
+                        audio.currentTime /
+                        audio.duration
+                    ) * 100
+
+                    : 0;
 
 
-            progressFill.style.width =
-                `${percentage}%`;
+            audioProgressFill.style.width =
+                `${percent}%`;
 
         }
+
+
+        audioItems.forEach(
+            (item, index) => {
+
+                item.classList.toggle(
+                    "active",
+                    index === currentTrackIndex
+                );
+
+            }
+        );
 
     }
 
 
-    /* ------------------------------------------------------------
-       PLAY BUTTON
-       ------------------------------------------------------------ */
-
     function updatePlayButton() {
 
-        if (!playButton) {
+        if (!playButton || !audio) {
             return;
         }
 
@@ -2981,27 +2606,192 @@
     }
 
 
-    if (playButton) {
+    function loadTrack(
+        index,
+        autoplay = false
+    ) {
+
+        if (!audio) return;
+
+
+        if (
+            index < 0 ||
+            index >= tracks.length
+        ) {
+            return;
+        }
+
+
+        currentTrackIndex =
+            index;
+
+        pendingAutoplay =
+            autoplay;
+
+
+        audio.pause();
+
+
+        audio.removeAttribute("src");
+
+        audio.load();
+
+
+        audio.src =
+            tracks[index].src;
+
+        audio.preload =
+            "metadata";
+
+
+        updateAudioDisplay();
+
+        updateLyrics();
+
+
+        audio.load();
+
+
+        updatePlayButton();
+
+    }
+
+
+    if (audio) {
+
+        audio.addEventListener(
+            "loadedmetadata",
+            () => {
+
+                updateAudioDisplay();
+
+            }
+        );
+
+
+        audio.addEventListener(
+            "durationchange",
+            () => {
+
+                updateAudioDisplay();
+
+            }
+        );
+
+
+        audio.addEventListener(
+            "timeupdate",
+            () => {
+
+                updateAudioDisplay();
+
+            }
+        );
+
+
+        audio.addEventListener(
+            "play",
+            () => {
+
+                updatePlayButton();
+
+            }
+        );
+
+
+        audio.addEventListener(
+            "pause",
+            () => {
+
+                updatePlayButton();
+
+            }
+        );
+
+
+        audio.addEventListener(
+            "canplay",
+            () => {
+
+                if (!pendingAutoplay) {
+                    return;
+                }
+
+
+                pendingAutoplay =
+                    false;
+
+
+                audio.play()
+                    .catch(error => {
+
+                        console.warn(
+                            "Audio playback was blocked:",
+                            error
+                        );
+
+                    });
+
+            }
+        );
+
+
+        audio.addEventListener(
+            "ended",
+            () => {
+
+                if (
+                    currentTrackIndex <
+                    tracks.length - 1
+                ) {
+
+                    loadTrack(
+                        currentTrackIndex + 1,
+                        true
+                    );
+
+                } else {
+
+                    updatePlayButton();
+
+                }
+
+            }
+        );
+
+
+        audio.addEventListener(
+            "error",
+            () => {
+
+                console.error(
+                    "Audio error:",
+                    audio.error
+                );
+
+            }
+        );
+
+    }
+
+
+    if (playButton && audio) {
 
         playButton.addEventListener(
             "click",
             () => {
 
-                if (
-                    audio.paused
-                ) {
+                if (audio.paused) {
 
                     audio.play()
-                        .catch(
-                            error => {
+                        .catch(error => {
 
-                                console.error(
-                                    "Audio playback error:",
-                                    error
-                                );
+                            console.warn(
+                                "Playback failed:",
+                                error
+                            );
 
-                            }
-                        );
+                        });
 
                 } else {
 
@@ -3015,95 +2805,29 @@
     }
 
 
-    /* ------------------------------------------------------------
-       TRACKS
-       ------------------------------------------------------------ */
-
-    items.forEach(
-        item => {
+    audioItems.forEach(
+        (item, index) => {
 
             item.addEventListener(
                 "click",
                 () => {
 
-                    const source =
-                        item.dataset.src;
-
-
-                    const title =
-                        item.dataset.title ||
-                        "";
-
-
-                    const track =
+                    const dataTrack =
                         Number(
                             item.dataset.track
                         );
 
 
-                    if (!source) {
-                        return;
-                    }
+                    const targetTrack =
+                        Number.isInteger(dataTrack)
+                            ? dataTrack
+                            : index;
 
 
-                    audio.pause();
-
-
-                    audio.src =
-                        source;
-
-
-                    audio.load();
-
-
-                    if (trackNumber) {
-
-                        trackNumber.textContent =
-                            String(
-                                track + 1
-                            ).padStart(
-                                2,
-                                "0"
-                            );
-
-                    }
-
-
-                    if (trackTitle) {
-
-                        trackTitle.textContent =
-                            title;
-
-                    }
-
-
-                    items.forEach(
-                        other => {
-
-                            other.classList.remove(
-                                "active"
-                            );
-
-                        }
+                    loadTrack(
+                        targetTrack,
+                        true
                     );
-
-
-                    item.classList.add(
-                        "active"
-                    );
-
-
-                    audio.play()
-                        .catch(
-                            error => {
-
-                                console.error(
-                                    "Audio playback error:",
-                                    error
-                                );
-
-                            }
-                        );
 
                 }
             );
@@ -3112,13 +2836,9 @@
     );
 
 
-    /* ------------------------------------------------------------
-       PROGRESS BAR
-       ------------------------------------------------------------ */
+    if (audioProgress && audio) {
 
-    if (progressBar) {
-
-        progressBar.addEventListener(
+        audioProgress.addEventListener(
             "click",
             event => {
 
@@ -3128,17 +2848,16 @@
                     ) ||
                     audio.duration <= 0
                 ) {
-
                     return;
-
                 }
 
 
                 const rect =
-                    progressBar.getBoundingClientRect();
+                    audioProgress
+                        .getBoundingClientRect();
 
 
-                const percentage =
+                const ratio =
                     (
                         event.clientX -
                         rect.left
@@ -3151,7 +2870,7 @@
                         0,
                         Math.min(
                             1,
-                            percentage
+                            ratio
                         )
                     ) *
                     audio.duration;
@@ -3162,79 +2881,231 @@
     }
 
 
-    /* ------------------------------------------------------------
-       EVENTS
-       ------------------------------------------------------------ */
+    if (audio && tracks.length) {
 
-    audio.addEventListener(
-        "loadedmetadata",
-        updateDisplay
-    );
+        loadTrack(
+            0,
+            false
+        );
 
-
-    audio.addEventListener(
-        "timeupdate",
-        updateDisplay
-    );
+    }
 
 
-    audio.addEventListener(
-        "play",
-        updatePlayButton
-    );
+    /* ========================================================
+       LYRICS
+       ======================================================== */
+
+    const lyricsPanel =
+        document.getElementById(
+            "lyricsPanel"
+        );
+
+    const lyricsToggle =
+        document.getElementById(
+            "lyricsToggle"
+        );
+
+    const lyricsTrackNumber =
+        document.getElementById(
+            "lyricsTrackNumber"
+        );
+
+    const lyricsToggleIcon =
+        document.getElementById(
+            "lyricsToggleIcon"
+        );
+
+    const lyricsInner =
+        document.getElementById(
+            "lyricsInner"
+        );
 
 
-    audio.addEventListener(
-        "pause",
-        updatePlayButton
-    );
+    function updateLyrics() {
+
+        if (!lyricsInner) {
+            return;
+        }
 
 
-    audio.addEventListener(
-        "ended",
-        () => {
-
-            updatePlayButton();
+        const track =
+            tracks[currentTrackIndex];
 
 
-            if (progressFill) {
+        lyricsInner.innerHTML = "";
 
-                progressFill.style.width =
-                    "0%";
 
-            }
+        if (
+            !track ||
+            !track.lyrics ||
+            track.lyrics.length === 0
+        ) {
+
+            const placeholder =
+                document.createElement(
+                    "div"
+                );
+
+            placeholder.className =
+                "lyrics-placeholder";
+
+            placeholder.textContent =
+                "NO LYRICS AVAILABLE.";
+
+            lyricsInner.appendChild(
+                placeholder
+            );
+
+        } else {
+
+            track.lyrics.forEach(
+                line => {
+
+                    if (line === "") {
+
+                        const spacer =
+                            document.createElement(
+                                "div"
+                            );
+
+                        spacer.className =
+                            "lyrics-spacer";
+
+                        lyricsInner.appendChild(
+                            spacer
+                        );
+
+                    } else {
+
+                        const lyricLine =
+                            document.createElement(
+                                "div"
+                            );
+
+                        lyricLine.className =
+                            "lyrics-line";
+
+                        lyricLine.textContent =
+                            line;
+
+                        lyricsInner.appendChild(
+                            lyricLine
+                        );
+
+                    }
+
+                }
+            );
 
         }
-    );
 
 
-    updateDisplay();
+        if (lyricsTrackNumber) {
 
-    updatePlayButton();
+            lyricsTrackNumber.textContent =
+                String(currentTrackIndex + 1)
+                    .padStart(2, "0");
 
-})();
+        }
+
+    }
 
 
-/* ============================================================
-   REDUCED MOTION
-   ============================================================ */
+    if (
+        lyricsToggle &&
+        lyricsPanel
+    ) {
 
-(function initReducedMotion() {
+        lyricsToggle.addEventListener(
+            "click",
+            () => {
 
-    const mediaQuery =
+                const isOpen =
+                    lyricsPanel.classList
+                        .toggle("open");
+
+
+                lyricsToggle.setAttribute(
+                    "aria-expanded",
+                    String(isOpen)
+                );
+
+
+                if (lyricsToggleIcon) {
+
+                    lyricsToggleIcon.textContent =
+                        isOpen
+                            ? "−"
+                            : "+";
+
+                }
+
+            }
+        );
+
+    }
+
+
+    updateLyrics();
+
+
+    /* ========================================================
+       REDUCED MOTION
+       ======================================================== */
+
+    const reducedMotion =
         window.matchMedia(
             "(prefers-reduced-motion: reduce)"
         );
 
 
-    if (
-        mediaQuery.matches
-    ) {
+    if (reducedMotion.matches) {
 
-        document.documentElement.classList.add(
-            "reduced-motion"
-        );
+        document.documentElement
+            .classList
+            .add("reduced-motion");
 
     }
+
+
+    /* ========================================================
+       FINAL RESIZE POSITION
+       ======================================================== */
+
+    window.addEventListener(
+        "load",
+        () => {
+
+            setTimeout(() => {
+
+                if (
+                    inspirationTrack &&
+                    inspirationSlides.length
+                ) {
+
+                    /*
+                       At page load, always establish the
+                       center position without animation.
+                    */
+
+                    inspirationPhysicalIndex =
+                        (
+                            INSPIRATION_MIDDLE_COPY *
+                            INSPIRATION_TOTAL
+                        ) +
+                        inspirationIndex;
+
+
+                    positionInspiration(
+                        false
+                    );
+
+                }
+
+            }, 100);
+
+        }
+    );
+
 
 })();

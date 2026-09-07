@@ -1,978 +1,1196 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#f4f3ee"
+    >
 
     <title>DANCE DIVISION</title>
 
-    <meta
-        name="description"
-        content="Dance Division — A vertical narrative series in development."
-    >
 
-    <!-- FONTS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- ========================================================
+         FONTS
+         ======================================================== -->
 
     <link
-        href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Manrope:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap"
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap"
         rel="stylesheet"
     >
 
-    <link rel="stylesheet" href="style.css">
+
+    <!-- ========================================================
+         CSS
+         ======================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+
+    <!-- ========================================================
+         PDF.JS
+         ======================================================== -->
+
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"
+        defer
+    ></script>
+
+    <script
+        src="script.js"
+        defer
+    ></script>
+
 </head>
+
 
 <body>
 
-    <!-- ============================================================
-         GRAIN
-         ============================================================ -->
 
-    <div class="grain" aria-hidden="true"></div>
+<!-- ============================================================
+     LOADER
+     ============================================================ -->
+
+<div
+    id="loader"
+    class="loader"
+>
+
+    <div class="loader-inner">
+
+        <div class="loader-top">
+
+            <span>DANCE DIVISION</span>
+
+            <span id="loaderPercent">00</span>
+
+        </div>
+
+        <div class="loader-line">
+
+            <div
+                id="loaderProgress"
+                class="loader-progress"
+            ></div>
+
+        </div>
+
+        <div class="loader-bottom">
+
+            <span>PROJECT DEVELOPMENT</span>
+
+            <span>2026</span>
+
+        </div>
+
+    </div>
+
+</div>
 
 
-    <!-- ============================================================
-         LOADER
-         ============================================================ -->
+<!-- ============================================================
+     SITE HEADER
+     ============================================================ -->
 
-    <div class="loader" id="loader">
+<header class="site-header">
 
-        <div class="loader-inner">
+    <button
+        class="header-title"
+        type="button"
+    >
+        DANCE DIVISION
+    </button>
 
-            <div class="loader-top">
-                DANCE DIVISION
+
+    <div class="header-status">
+        <span class="status-dot"></span>
+        IN DEVELOPMENT
+    </div>
+
+
+    <nav class="nav-links">
+
+        <a
+            href="#opening"
+            data-target="opening"
+            class="active"
+        >
+            <span>00</span>
+            OPENING
+        </a>
+
+        <a
+            href="#script"
+            data-target="script"
+        >
+            <span>01</span>
+            SCRIPT
+        </a>
+
+        <a
+            href="#sound"
+            data-target="sound"
+        >
+            <span>02</span>
+            SOUND
+        </a>
+
+        <a
+            href="#inspiration"
+            data-target="inspiration"
+        >
+            <span>03</span>
+            INSPIRATION
+        </a>
+
+        <a
+            href="#characters"
+            data-target="characters"
+        >
+            <span>04</span>
+            CHARACTERS
+        </a>
+
+        <a
+            href="#closing"
+            data-target="closing"
+        >
+            <span>05</span>
+            END NOTES
+        </a>
+
+    </nav>
+
+
+    <div class="chapter-indicator">
+
+        <span id="chapterCurrent">00</span>
+
+        <span class="chapter-divider">/</span>
+
+        <span>05</span>
+
+        <div class="chapter-progress-track">
+
+            <div
+                id="chapterProgress"
+                class="chapter-progress"
+            ></div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ============================================================
+     MAIN
+     ============================================================ -->
+
+<main>
+
+
+<!-- ============================================================
+     00 — OPENING
+     ============================================================ -->
+
+<section
+    id="opening"
+    class="chapter chapter-opening"
+    data-chapter="00"
+>
+
+    <div class="opening-grid">
+
+        <div class="opening-label">
+            00 / OPENING
+        </div>
+
+
+        <div class="opening-main">
+
+            <p class="eyebrow">
+                A NEW SERIES
+            </p>
+
+            <h1>
+                DANCE<br>
+                <em>DIVISION</em>
+            </h1>
+
+            <p class="opening-description">
+                A story about young artists, ambition,
+                friendship, performance, and the strange
+                collision between the person you are
+                becoming and the person everyone else
+                expects you to be.
+            </p>
+
+        </div>
+
+
+        <div class="opening-side">
+
+            <div class="opening-meta">
+
+                <span>FORMAT</span>
+                <strong>EPISODIC</strong>
+
             </div>
 
-            <div class="loader-center">
+            <div class="opening-meta">
 
-                <div
-                    class="loader-percent"
-                    id="loaderPercent"
-                >
-                    00
+                <span>STATUS</span>
+                <strong>IN DEVELOPMENT</strong>
+
+            </div>
+
+            <div class="opening-meta">
+
+                <span>LOCATION</span>
+                <strong>HUDSON VALLEY / NYC</strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="opening-footer">
+
+        <span>
+            A DOLL'S HOUSE PICTURES
+        </span>
+
+        <span>
+            SCROLL TO EXPLORE
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- ============================================================
+     01 — SCRIPT
+     ============================================================ -->
+
+<section
+    id="script"
+    class="chapter chapter-script"
+    data-chapter="01"
+>
+
+    <div class="section-header">
+
+        <div class="section-number">
+            01
+        </div>
+
+        <div class="section-title">
+            SCRIPT
+        </div>
+
+        <div class="section-description">
+            CURRENT WORKING DRAFT
+        </div>
+
+    </div>
+
+
+    <div
+        id="pdfViewer"
+        class="pdf-viewer"
+    >
+
+        <div
+            id="pdfStage"
+            class="pdf-stage"
+        >
+
+            <div
+                id="pdfLoading"
+                class="pdf-loading"
+            >
+
+                <div class="pdf-loading-label">
+                    LOADING SCRIPT
                 </div>
 
-                <div class="loader-progress">
+                <div class="pdf-loading-track">
 
                     <div
-                        class="loader-progress-fill"
-                        id="loaderProgress"
+                        id="pdfLoadingProgress"
+                        class="pdf-loading-progress"
                     ></div>
 
                 </div>
 
             </div>
 
-            <div class="loader-bottom">
-                A VERTICAL NARRATIVE SERIES
+
+            <canvas
+                id="pdfCanvas"
+                class="pdf-canvas"
+            ></canvas>
+
+
+            <button
+                id="pdfHitLeft"
+                class="pdf-hit-area pdf-hit-left"
+                type="button"
+                aria-label="Previous page"
+            ></button>
+
+
+            <button
+                id="pdfHitRight"
+                class="pdf-hit-area pdf-hit-right"
+                type="button"
+                aria-label="Next page"
+            ></button>
+
+        </div>
+
+
+        <div class="pdf-controls">
+
+            <div class="pdf-page-count">
+
+                <span id="pdfCurrentPage">01</span>
+
+                <span>/</span>
+
+                <span id="pdfTotalPages">00</span>
+
+            </div>
+
+
+            <div class="pdf-buttons">
+
+                <button
+                    id="pdfPrev"
+                    type="button"
+                >
+                    PREVIOUS
+                </button>
+
+                <button
+                    id="pdfNext"
+                    type="button"
+                >
+                    NEXT
+                </button>
+
+                <button
+                    id="pdfFullscreen"
+                    type="button"
+                >
+                    FULLSCREEN
+                </button>
+
             </div>
 
         </div>
 
     </div>
 
+</section>
 
-    <!-- ============================================================
-         HEADER
-         ============================================================ -->
 
-    <header class="site-header">
+<!-- ============================================================
+     02 — SOUND
+     ============================================================ -->
 
-        <a
-            href="#opening"
-            class="header-title"
-            data-target="opening"
-        >
-            DANCE DIVISION
-        </a>
+<section
+    id="sound"
+    class="chapter chapter-sound"
+    data-chapter="02"
+>
 
-        <div class="header-status">
-            IN DEVELOPMENT
+    <div class="section-header">
+
+        <div class="section-number">
+            02
         </div>
 
-    </header>
+        <div class="section-title">
+            SOUND
+        </div>
+
+        <div class="section-description">
+            MUSIC / VOICE / RHYTHM
+        </div>
+
+    </div>
 
 
-    <!-- ============================================================
-         NAVIGATION
-         ============================================================ -->
+    <div class="sound-intro">
 
-    <nav
-        class="navigation"
-        id="navigation"
-        aria-label="Primary navigation"
+        <div class="sound-intro-label">
+            SOUNDTRACK / WORKING MATERIAL
+        </div>
+
+        <p>
+            Music and language are part of the physical
+            architecture of the project. The tracks below
+            are early pieces of the sonic world.
+        </p>
+
+    </div>
+
+
+    <div class="audio-player">
+
+        <div class="audio-topline">
+
+            <div class="audio-track-number">
+                TRACK
+                <span id="trackNumber">01</span>
+            </div>
+
+            <div
+                id="trackTitle"
+                class="audio-track-title"
+            >
+                DNS DVSN
+            </div>
+
+            <button
+                id="playButton"
+                class="audio-play"
+                type="button"
+            >
+                PLAY
+            </button>
+
+        </div>
+
+
+        <div class="audio-progress-row">
+
+            <span
+                id="audioTime"
+                class="audio-time"
+            >
+                00:00
+            </span>
+
+
+            <div
+                class="audio-progress"
+                role="slider"
+                aria-label="Audio progress"
+            >
+
+                <div
+                    id="audioProgressFill"
+                    class="audio-progress-fill"
+                ></div>
+
+            </div>
+
+
+            <span
+                id="audioDuration"
+                class="audio-duration"
+            >
+                00:00
+            </span>
+
+        </div>
+
+
+        <audio
+            id="audio"
+            src="audio/dns dvsn.mp3"
+            preload="metadata"
+        ></audio>
+
+    </div>
+
+
+    <div class="audio-track-list">
+
+        <button
+            class="audio-item active"
+            type="button"
+            data-track="0"
+            data-title="DNS DVSN"
+            data-src="audio/dns dvsn.mp3"
+        >
+
+            <span>01</span>
+
+            <strong>DNS DVSN</strong>
+
+            <small>
+                AUDIO
+            </small>
+
+        </button>
+
+
+        <button
+            class="audio-item"
+            type="button"
+            data-track="1"
+            data-title="EF YOU EN"
+            data-src="audio/ef you en.mp3"
+        >
+
+            <span>02</span>
+
+            <strong>EF YOU EN</strong>
+
+            <small>
+                AUDIO
+            </small>
+
+        </button>
+
+
+        <button
+            class="audio-item"
+            type="button"
+            data-track="2"
+            data-title="STAR STAR STAR"
+            data-src="audio/star star star.mp3"
+        >
+
+            <span>03</span>
+
+            <strong>STAR STAR STAR</strong>
+
+            <small>
+                AUDIO
+            </small>
+
+        </button>
+
+    </div>
+
+
+<!-- ============================================================
+     03 — INSPIRATION
+     ============================================================ -->
+
+<section
+    id="inspiration"
+    class="chapter chapter-inspiration"
+    data-chapter="03"
+>
+
+    <div class="section-header">
+
+        <div class="section-number">
+            03
+        </div>
+
+        <div class="section-title">
+            INSPIRATION
+        </div>
+
+        <div class="section-description">
+            VISUAL RESEARCH
+        </div>
+
+    </div>
+
+
+    <div
+        id="inspirationCarousel"
+        class="inspiration-carousel"
     >
 
-        <div class="nav-inner">
+        <div class="inspiration-stage">
 
-            <div class="nav-links">
-
-                <a
-                    href="#opening"
-                    data-target="opening"
-                    class="active"
-                >
-                    <span>00</span>
-                    OPENING
-                </a>
-
-                <a
-                    href="#script"
-                    data-target="script"
-                >
-                    <span>01</span>
-                    SCRIPT
-                </a>
-
-                <a
-                    href="#sound"
-                    data-target="sound"
-                >
-                    <span>02</span>
-                    SOUND
-                </a>
-
-                <a
-                    href="#inspiration"
-                    data-target="inspiration"
-                >
-                    <span>03</span>
-                    INSPIRATION
-                </a>
-
-                <a
-                    href="#characters"
-                    data-target="characters"
-                >
-                    <span>04</span>
-                    CHARACTERS
-                </a>
-
-                <a
-                    href="#closing"
-                    data-target="closing"
-                >
-                    <span>05</span>
-                    END
-                </a>
-
-            </div>
+            <div
+                id="inspirationTrack"
+                class="inspiration-track"
+            ></div>
 
         </div>
 
-    </nav>
+
+        <div class="inspiration-caption-row">
+
+            <div
+                id="inspirationCaption"
+                class="inspiration-caption"
+            >
+                01 / REFERENCE
+            </div>
 
 
-    <!-- ============================================================
-         CHAPTER INDICATOR
-         ============================================================ -->
+            <div class="inspiration-counter">
 
-    <div class="chapter-indicator">
+                <button
+                    id="inspirationPrev"
+                    type="button"
+                    aria-label="Previous inspiration image"
+                >
+                    ←
+                </button>
 
-        <span id="chapterCurrent">
-            00
-        </span>
+                <span id="inspirationCurrent">
+                    01
+                </span>
 
-        <span class="chapter-divider">
-            /
-        </span>
+                <span>/</span>
 
-        <span>
-            05
-        </span>
+                <span id="inspirationTotal">
+                    30
+                </span>
 
-        <div class="chapter-progress">
+                <button
+                    id="inspirationNext"
+                    type="button"
+                    aria-label="Next inspiration image"
+                >
+                    →
+                </button>
 
-            <div id="chapterProgress"></div>
+            </div>
 
         </div>
 
     </div>
 
 
-    <!-- ============================================================
-         MAIN
-         ============================================================ -->
+    <!-- ========================================================
+         CONTENT REFERENCES
+         ======================================================== -->
 
-    <main>
+    <div
+        id="inspirationReferences"
+        class="inspiration-references"
+    >
 
-
-        <!-- ========================================================
-             00 — OPENING
-             ======================================================== -->
-
-        <section
-            class="chapter chapter-opening"
-            id="opening"
-            data-chapter="00"
+        <button
+            id="inspirationReferencesToggle"
+            class="inspiration-references-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="inspirationReferencesContent"
         >
 
-            <div class="opening-content">
+            <span>
+                VIDEO REFERENCES
+            </span>
 
-                <div class="opening-kicker">
-                    A VERTICAL NARRATIVE SERIES
+            <span
+                id="inspirationReferencesCount"
+                class="inspiration-references-count"
+            >
+                05
+            </span>
+
+            <span
+                id="inspirationReferencesIcon"
+                class="inspiration-references-icon"
+                aria-hidden="true"
+            >
+                +
+            </span>
+
+        </button>
+
+
+        <div
+            id="inspirationReferencesContent"
+            class="inspiration-references-content"
+        >
+
+            <div
+                id="inspirationReferenceList"
+                class="inspiration-reference-list"
+            >
+
+                <a
+                    class="inspiration-reference"
+                    href="https://www.instagram.com/p/DaWM3k8HdkH/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+
+                    <span class="reference-number">
+                        01
+                    </span>
+
+                    <span class="reference-type">
+                        INSTAGRAM REEL
+                    </span>
+
+                    <span class="reference-description">
+                        EMILY DEFOREST SUNGLASSES.
+                    </span>
+
+                    <span class="reference-arrow">
+                        ↗
+                    </span>
+
+                </a>
+
+
+                <a
+                    class="inspiration-reference"
+                    href="https://www.instagram.com/reel/Dap7SnjxNoi/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+
+                    <span class="reference-number">
+                        02
+                    </span>
+
+                    <span class="reference-type">
+                        INSTAGRAM REEL
+                    </span>
+
+                    <span class="reference-description">
+                        ISAAC POWELL CRUISING.
+                    </span>
+
+                    <span class="reference-arrow">
+                        ↗
+                    </span>
+
+                </a>
+
+
+                <a
+                    class="inspiration-reference"
+                    href="https://www.instagram.com/tv/CY5Vkm5lN6d/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+
+                    <span class="reference-number">
+                        03
+                    </span>
+
+                    <span class="reference-type">
+                        INSTAGRAM REEL
+                    </span>
+
+                    <span class="reference-description">
+                        TATE JUSTUS DANCING.
+                    </span>
+
+                    <span class="reference-arrow">
+                        ↗
+                    </span>
+
+                </a>
+
+
+                <a
+                    class="inspiration-reference"
+                    href="https://www.instagram.com/reel/CpWSn_-j2P4/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+
+                    <span class="reference-number">
+                        04
+                    </span>
+
+                    <span class="reference-type">
+                        INSTAGRAM REEL
+                    </span>
+
+                    <span class="reference-description">
+                        JACK FERVER DRAMATUB.
+                    </span>
+
+                    <span class="reference-arrow">
+                        ↗
+                    </span>
+
+                </a>
+
+
+                <a
+                    class="inspiration-reference"
+                    href="https://www.instagram.com/reel/DCE791xvB4l/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+
+                    <span class="reference-number">
+                        05
+                    </span>
+
+                    <span class="reference-type">
+                        INSTAGRAM REEL
+                    </span>
+
+                    <span class="reference-description">
+                        YONATAN GEBEYAHU MOLIERING.
+                    </span>
+
+                    <span class="reference-arrow">
+                        ↗
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ============================================================
+     04 — CHARACTERS
+     ============================================================ -->
+
+<section
+    id="characters"
+    class="chapter chapter-characters"
+    data-chapter="04"
+>
+
+    <div class="section-header">
+
+        <div class="section-number">
+            04
+        </div>
+
+        <div class="section-title">
+            CHARACTERS
+        </div>
+
+        <div class="section-description">
+            CAST / CHARACTER DEVELOPMENT
+        </div>
+
+    </div>
+
+
+    <div
+        id="characterBrowser"
+        class="character-browser"
+    >
+
+        <div class="character-stage">
+
+            <div class="character-image-wrap">
+
+                <img
+                    id="characterImage"
+                    class="character-image"
+                    src=""
+                    alt=""
+                    draggable="false"
+                >
+
+            </div>
+
+
+            <div class="character-image-index">
+
+                <span id="characterNumber">
+                    01
+                </span>
+
+                <span>
+                    /
+                </span>
+
+                <span id="characterTotal">
+                    09
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="character-information">
+
+            <div class="character-information-top">
+
+                <div class="character-role-wrap">
+
+                    <span class="character-small-label">
+                        ROLE
+                    </span>
+
+                    <span
+                        id="characterRole"
+                        class="character-role"
+                    >
+                    </span>
+
                 </div>
 
-                <h1>
-                    DANCE
-                    <br>
-                    <em>DIVISION</em>
-                </h1>
 
-                <div class="opening-meta">
+                <div class="character-nav">
 
-                    <span>
-                        WRITTEN BY
-                        <br>
-                        ELISE SIEVERT BHUSHAN
-                        <br>
-                        &amp; JEREMY JACOB
-                    </span>
+                    <button
+                        id="characterPrev"
+                        type="button"
+                        aria-label="Previous character"
+                    >
+                        ←
+                    </button>
 
                     <span>
-                        IN DEVELOPMENT
-                        <br>
-                        2026
+
+                        <span id="characterCurrent">
+                            01
+                        </span>
+
+                        /
+                        <span>
+                            09
+                        </span>
+
                     </span>
+
+                    <button
+                        id="characterNext"
+                        type="button"
+                        aria-label="Next character"
+                    >
+                        →
+                    </button>
 
                 </div>
 
             </div>
 
-            <div class="opening-bottom">
+
+            <h2
+                id="characterName"
+                class="character-name"
+            >
+                CHARACTER
+            </h2>
+
+
+            <div class="character-copy">
+
+                <div class="character-copy-label">
+                    DESCRIPTION
+                </div>
+
+                <p
+                    id="characterBio"
+                    class="character-bio"
+                ></p>
+
+            </div>
+
+
+            <div class="character-casting">
+
+                <span class="character-copy-label">
+                    CASTING
+                </span>
+
+                <strong
+                    id="characterCasting"
+                ></strong>
+
+            </div>
+
+
+            <div class="character-footer">
+
+                <span
+                    id="characterFooterName"
+                >
+                    CHARACTER
+                </span>
 
                 <span>
                     DANCE DIVISION
                 </span>
 
-                <span>
-                    A DOLL'S HOUSE PICTURES
-                </span>
-
             </div>
 
-        </section>
+        </div>
+
+    </div>
+
+</section>
 
 
-        <!-- ========================================================
-             01 — SCRIPT
-             ======================================================== -->
+<!-- ============================================================
+     05 — END NOTES
+     ============================================================ -->
 
-        <section
-            class="chapter chapter-script"
-            id="script"
-            data-chapter="01"
-        >
+<section
+    id="closing"
+    class="chapter chapter-closing"
+    data-chapter="05"
+>
 
-            <div class="section-heading">
+    <div class="section-header">
 
-                <div class="section-number">
-                    01
-                </div>
+        <div class="section-number">
+            05
+        </div>
 
-                <div>
+        <div class="section-title">
+            END NOTES
+        </div>
 
-                    <div class="section-label">
-                        THE SCRIPT
-                    </div>
+        <div class="section-description">
+            QUESTIONS / NOTES / NEXT STEPS
+        </div>
 
-                    <h2>
-                        DRAFTS,
-                        <br>
-                        FRAGMENTS,
-                        <br>
-                        MOVEMENT.
-                    </h2>
+    </div>
 
-                </div>
 
+    <div class="closing-heading">
+
+        <h2>
+            QUESTIONS,<br>
+            NOTES,<br>
+            <em>NEXT STEPS.</em>
+        </h2>
+
+    </div>
+
+
+    <div class="notes-grid">
+
+        <article class="note-column">
+
+            <div class="note-number">
+                01
             </div>
 
+            <h3>
+                MAJOR QUESTIONS
+            </h3>
 
-            <div class="script-intro">
+            <p>
+                LOCATIONS
+            </p>
 
-                <p>
-                    A working document for a vertical
-                    narrative series.
-                </p>
+            <p>
+                CALENDAR
+            </p>
 
-                <p class="mono-copy">
-                    WRITTEN / DEVELOPING
-                </p>
+            <p>
+                BUDGET
+            </p>
 
+            <p>
+                PRODUCTION MODEL
+            </p>
+
+        </article>
+
+
+        <article class="note-column">
+
+            <div class="note-number">
+                02
             </div>
 
+            <h3>
+                NEXT STEPS
+            </h3>
 
-            <div
-                class="pdf-viewer"
-                id="pdfViewer"
-            >
+            <p>
+                DEVELOP SCRIPT FOR ADJUSTED PLOT POINTS,
+                EPISODIC STRUCTURE, AND BUDGET /
+                PRODUCTION EFFICIENCY.
+            </p>
 
-                <div
-                    class="pdf-loading"
-                    id="pdfLoading"
-                >
+            <p>
+                REFINE CHARACTERS / CAST.
+            </p>
 
-                    <div class="pdf-loading-label">
-                        LOADING SCRIPT
-                    </div>
+            <p>
+                CONTINUE VISUAL RESEARCH.
+            </p>
 
-                    <div class="pdf-loading-line">
-
-                        <div
-                            id="pdfLoadingProgress"
-                        ></div>
-
-                    </div>
-
-                </div>
+        </article>
 
 
-                <div
-                    class="pdf-stage"
-                    id="pdfStage"
-                >
+        <article class="note-column">
 
-                    <div class="pdf-page-shadow"></div>
-
-                    <canvas
-                        id="pdfCanvas"
-                        class="pdf-canvas"
-                    ></canvas>
-
-
-                    <button
-                        class="pdf-hit-area pdf-hit-left"
-                        id="pdfHitLeft"
-                        type="button"
-                        aria-label="Previous page"
-                    ></button>
-
-
-                    <button
-                        class="pdf-hit-area pdf-hit-right"
-                        id="pdfHitRight"
-                        type="button"
-                        aria-label="Next page"
-                    ></button>
-
-                </div>
-
-
-                <div class="pdf-controls">
-
-                    <button
-                        class="pdf-control"
-                        id="pdfPrev"
-                        type="button"
-                    >
-                        ← PREVIOUS
-                    </button>
-
-
-                    <div class="pdf-page-count">
-
-                        <span id="pdfCurrentPage">
-                            01
-                        </span>
-
-                        <span class="pdf-count-divider">
-                            /
-                        </span>
-
-                        <span id="pdfTotalPages">
-                            —
-                        </span>
-
-                    </div>
-
-
-                    <button
-                        class="pdf-control"
-                        id="pdfNext"
-                        type="button"
-                    >
-                        NEXT →
-                    </button>
-
-                </div>
-
-
-                <div class="pdf-actions">
-
-                    <button
-                        class="pdf-action"
-                        id="pdfFullscreen"
-                        type="button"
-                    >
-                        FULL SCREEN ↗
-                    </button>
-
-                </div>
-
+            <div class="note-number">
+                03
             </div>
 
-        </section>
+            <h3>
+                DEVELOPMENT
+            </h3>
 
+            <p>
+                PRODUCTION APPROACH.
+            </p>
 
-        <!-- ========================================================
-             02 — SOUND
-             ======================================================== -->
+            <p>
+                DISTINCT USE OF LANGUAGE AND MUSIC.
+            </p>
 
-        <section
-            class="chapter chapter-sound"
-            id="sound"
-            data-chapter="02"
-        >
+            <p>
+                VISUAL LANGUAGE FOR VARIOUS PLOT STYLES
+                (SUCH AS RE-ENACTMENTS AND FLASHBACKS).
+            </p>
 
-            <div class="section-heading">
+        </article>
 
-                <div class="section-number">
-                    02
-                </div>
+    </div>
 
-                <div>
 
-                    <div class="section-label">
-                        SOUND
-                    </div>
+    <footer class="site-footer">
 
-                    <h2>
-                        MUSIC
-                        <br>
-                        TO MOVE
-                        <br>
-                        THE BODY.
-                    </h2>
+        <span>
+            DANCE DIVISION
+        </span>
 
-                </div>
+        <span>
+            A DOLL'S HOUSE PICTURES
+        </span>
 
-            </div>
+        <span>
+            END
+        </span>
 
+    </footer>
 
-            <div class="sound-layout">
+</section>
 
-                <div class="sound-copy">
 
-                    <p>
-                        Original music and sound studies
-                        developed Dance Division.
-                    </p>
-
-                </div>
-
-
-                <div class="audio-player">
-
-                    <audio
-                        id="audio"
-                        src="audio/dns dvsn.mp3"
-                        preload="metadata"
-                    ></audio>
-
-
-                    <div class="audio-top">
-
-                        <span id="trackNumber">
-                            01
-                        </span>
-
-                        <span id="trackTitle">
-                            DNS DVSN
-                        </span>
-
-                        <button
-                            id="playButton"
-                            class="play-button"
-                            type="button"
-                        >
-                            PLAY
-                        </button>
-
-                    </div>
-
-
-                    <div class="audio-progress">
-
-                        <div
-                            class="audio-progress-fill"
-                            id="audioProgressFill"
-                        ></div>
-
-                    </div>
-
-
-                    <div class="audio-time">
-
-                        <span id="audioTime">
-                            00:00
-                        </span>
-
-                        <span id="audioDuration">
-                            00:00
-                        </span>
-
-                    </div>
-
-
-                    <div class="audio-list">
-
-                        <button
-                            class="audio-item active"
-                            type="button"
-                            data-track="0"
-                            data-src="audio/dns dvsn.mp3"
-                            data-title="DNS DVSN"
-                        >
-
-                            <span>
-                                01
-                            </span>
-
-                            <span>
-                                DNS DVSN
-                            </span>
-
-                        </button>
-
-
-                        <button
-                            class="audio-item"
-                            type="button"
-                            data-track="1"
-                            data-src="audio/ef you en.mp3"
-                            data-title="EF YOU EN"
-                        >
-
-                            <span>
-                                02
-                            </span>
-
-                            <span>
-                                EF YOU EN
-                            </span>
-
-                        </button>
-
-
-                        <button
-                            class="audio-item"
-                            type="button"
-                            data-track="2"
-                            data-src="audio/star star star.mp3"
-                            data-title="STAR STAR STAR"
-                        >
-
-                            <span>
-                                03
-                            </span>
-
-                            <span>
-                                STAR STAR STAR
-                            </span>
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ========================================================
-             03 — INSPIRATION
-             ======================================================== -->
-
-        <section
-            class="chapter chapter-inspiration"
-            id="inspiration"
-            data-chapter="03"
-        >
-
-            <div class="section-heading">
-
-                <div class="section-number">
-                    03
-                </div>
-
-                <div>
-
-                    <div class="section-label">
-                        INSPIRATION
-                    </div>
-
-                    <h2>
-                        MOVING
-                        <br>
-IMAGES                    </h2>
-
-                </div>
-
-            </div>
-
-
-            <div class="inspiration-intro">
-
-                <p>
-                    References, textures, gestures,
-                    places and fragments.
-                </p>
-
-            </div>
-
-
-            <div
-                class="inspiration-carousel"
-                id="inspirationCarousel"
-            >
-
-                <div class="inspiration-stage">
-
-                    <div
-                        class="inspiration-track"
-                        id="inspirationTrack"
-                    ></div>
-
-                </div>
-
-
-                <div class="inspiration-carousel-footer">
-
-                    <div
-                        class="inspiration-caption"
-                        id="inspirationCaption"
-                    >
-                        01 / REFERENCE
-                    </div>
-
-
-                    <div class="inspiration-controls">
-
-                        <button
-                            id="inspirationPrev"
-                            type="button"
-                            aria-label="Previous image"
-                        >
-                            ←
-                        </button>
-
-
-                        <div class="inspiration-count">
-
-                            <span
-                                id="inspirationCurrent"
-                            >
-                                01
-                            </span>
-
-                            <span>
-                                /
-                            </span>
-
-                            <span
-                                id="inspirationTotal"
-                            >
-                                20
-                            </span>
-
-                        </div>
-
-
-                        <button
-                            id="inspirationNext"
-                            type="button"
-                            aria-label="Next image"
-                        >
-                            →
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ========================================================
-             04 — CHARACTERS
-             ======================================================== -->
-
-        <section
-            class="chapter chapter-characters"
-            id="characters"
-            data-chapter="04"
-        >
-
-            <div class="section-heading">
-
-                <div class="section-number">
-                    04
-                </div>
-
-                <div>
-
-                    <div class="section-label">
-                        CHARACTERS
-                    </div>
-
-                    <h2>
-                        CAST of CHARACTERS.
-                    </h2>
-
-                </div>
-
-            </div>
-
-
-            <div class="characters-intro">
-
-                <p class="mono-copy">
-                    CHARACTERS / CASTING
-                </p>
-
-            </div>
-
-
-            <div
-                class="character-browser"
-                id="characterBrowser"
-            >
-
-                <div class="character-stage">
-
-                    <div class="character-image-wrap">
-
-                        <img
-                            id="characterImage"
-                            class="character-image"
-                            src=""
-                            alt=""
-                            draggable="false"
-                        >
-
-                    </div>
-
-
-                    <div class="character-information">
-
-                        <div class="character-topline">
-
-                            <span
-                                id="characterNumber"
-                                class="character-number"
-                            >
-                                01
-                            </span>
-
-                            <span
-                                id="characterRole"
-                                class="character-role"
-                            >
-                                CHARACTER
-                            </span>
-
-                        </div>
-
-
-                        <h3
-                            id="characterName"
-                            class="character-name"
-                        >
-                            CHARACTER
-                        </h3>
-
-
-                        <div class="character-bio">
-
-                            <div class="character-label">
-                                BIO
-                            </div>
-
-                            <p id="characterBio">
-                                Character biography.
-                            </p>
-
-                        </div>
-
-
-                        <div class="character-casting">
-
-                            <div class="character-label">
-                                POTENTIAL CASTING
-                            </div>
-
-                            <p id="characterCasting">
-                                Casting information.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="character-footer">
-
-                    <div class="character-caption">
-
-                        <span
-                            id="characterFooterName"
-                        >
-                            CHARACTER
-                        </span>
-
-                        <span>
-                            DANCE DIVISION
-                        </span>
-
-                    </div>
-
-
-                    <div class="character-controls">
-
-                        <button
-                            id="characterPrev"
-                            type="button"
-                            aria-label="Previous character"
-                        >
-                            ←
-                            <span>
-                                PREVIOUS
-                            </span>
-                        </button>
-
-
-                        <div class="character-count">
-
-                            <span
-                                id="characterCurrent"
-                            >
-                                01
-                            </span>
-
-                            <span>
-                                /
-                            </span>
-
-                            <span
-                                id="characterTotal"
-                            >
-                                09
-                            </span>
-
-                        </div>
-
-
-                        <button
-                            id="characterNext"
-                            type="button"
-                            aria-label="Next character"
-                        >
-
-                            <span>
-                                NEXT
-                            </span>
-
-                            →
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ========================================================
-             05 — END
-             ======================================================== -->
-
-        <section
-            class="chapter chapter-closing"
-            id="closing"
-            data-chapter="05"
-        >
-
-            <div class="closing-content">
-
-                <div class="closing-mark">
-                    05
-                </div>
-
-                <h2>
-                    THE BODY
-                    <br>
-                    REMEMBERS
-                    <br>
-                    WHAT THE CAMERA
-                    <br>
-                    <em>FORGETS.</em>
-                </h2>
-
-
-                <div class="closing-meta">
-
-                    <span>
-                        DANCE DIVISION
-                    </span>
-
-                    <span>
-                        A VERTICAL NARRATIVE SERIES
-                    </span>
-
-                    <span>
-                        2026
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <div class="closing-footer">
-
-                <span>
-                    ELISE SIEVERT BHUSHAN
-                    &amp;
-                    JEREMY JACOB
-                </span>
-
-                <span>
-                    A DOLL'S HOUSE PICTURES
-                </span>
-
-            </div>
-
-        </section>
-
-
-    </main>
-
-
-    <!-- ============================================================
-         LIBRARIES
-         ============================================================ -->
-
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"
-    ></script>
-
-
-    <!-- ============================================================
-         MAIN JAVASCRIPT
-         ============================================================ -->
-
-    <script src="script.js"></script>
+</main>
 
 </body>
+
 </html>
