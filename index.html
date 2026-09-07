@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>DANCE DIVISION</title>
+
+    <meta
+        name="description"
+        content="Dance Division — A vertical narrative series in development."
+    >
+
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Manrope:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="grain" aria-hidden="true"></div>
+
+    <!-- LOADER -->
+    <div class="loader" id="loader">
+        <div class="loader-inner">
+
+            <div class="loader-top">
+                DANCE DIVISION
+            </div>
+
+            <div class="loader-center">
+                <div class="loader-percent" id="loaderPercent">00</div>
+
+                <div class="loader-progress">
+                    <div class="loader-progress-fill" id="loaderProgress"></div>
+                </div>
+            </div>
+
+            <div class="loader-bottom">
+                A VERTICAL NARRATIVE SERIES
+            </div>
+
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="site-header">
+
+        <a
+            href="#opening"
+            class="header-title"
+            data-target="opening"
+        >
+            DANCE DIVISION
+        </a>
+
+        <div class="header-status">
+            IN DEVELOPMENT
+        </div>
+
+    </header>
+
+    <!-- NAVIGATION -->
+    <nav
+        class="navigation"
+        id="navigation"
+        aria-label="Primary navigation"
+    >
+        <div class="nav-inner">
+
+            <div class="nav-links">
+
+                <a href="#opening" data-target="opening" class="active">
+                    <span>00</span>
+                    OPENING
+                </a>
+
+                <a href="#script" data-target="script">
+                    <span>01</span>
+                    SCRIPT
+                </a>
+
+                <a href="#sound" data-target="sound">
+                    <span>02</span>
+                    SOUND
+                </a>
+
+                <a href="#inspiration" data-target="inspiration">
+                    <span>03</span>
+                    INSPIRATION
+                </a>
+
+                <a href="#film" data-target="film">
+                    <span>04</span>
+                    FILM
+                </a>
+
+                <a href="#closing" data-target="closing">
+                    <span>05</span>
+                    END
+                </a>
+
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- CHAPTER INDICATOR -->
+    <div class="chapter-indicator">
+
+        <span id="chapterCurrent">00</span>
+
+        <span class="chapter-divider">/</span>
+
+        <span>05</span>
+
+        <div class="chapter-progress">
+            <div id="chapterProgress"></div>
+        </div>
+
+    </div>
+
+    <main>
+
+        <!-- 00 — OPENING -->
+        <section
+            class="chapter chapter-opening"
+            id="opening"
+            data-chapter="00"
+        >
+
+            <div class="opening-content">
+
+                <div class="opening-kicker">
+                    A VERTICAL NARRATIVE SERIES
+                </div>
+
+                <h1>
+                    DANCE
+                    <br>
+                    <em>DIVISION</em>
+                </h1>
+
+                <div class="opening-meta">
+
+                    <span>
+                        WRITTEN BY
+                        <br>
+                        ELISE SIEVERT BHUSHAN
+                        <br>
+                        &amp; JEREMY JACOB
+                    </span>
+
+                    <span>
+                        IN DEVELOPMENT
+                        <br>
+                        2026
+                    </span>
+
+                </div>
+
+
+
+            </div>
+
+            <div class="opening-bottom">
+                <span>DANCE DIVISION</span>
+                <span>A DOLL'S HOUSE PICTURES</span>
+            </div>
+
+        </section>
+
+        <!-- 01 — SCRIPT -->
+        <section
+            class="chapter chapter-script"
+            id="script"
+            data-chapter="01"
+        >
+
+            <div class="section-heading">
+
+                <div class="section-number">01</div>
+
+                <div>
+                    <div class="section-label">THE SCRIPT</div>
+
+                    <h2>
+                        DRAFTS,
+                        <br>
+                        FRAGMENTS,
+                        <br>
+                        MOVEMENT.
+                    </h2>
+                </div>
+
+            </div>
+
+            <div class="script-intro">
+
+                <p>
+                    A working document for a vertical
+                    narrative series.
+                </p>
+
+                <p class="mono-copy">
+                    WRITTEN / DEVELOPING
+                </p>
+
+            </div>
+
+            <!-- PDF VIEWER -->
+            <div class="pdf-viewer" id="pdfViewer">
+
+                <div class="pdf-loading" id="pdfLoading">
+
+                    <div class="pdf-loading-label">
+                        LOADING SCRIPT
+                    </div>
+
+                    <div class="pdf-loading-line">
+                        <div id="pdfLoadingProgress"></div>
+                    </div>
+
+                </div>
+
+                <div class="pdf-stage" id="pdfStage">
+    <div class="pdf-page-shadow"></div>
+    <canvas id="pdfCanvas" class="pdf-canvas"></canvas>
+
+    <button
+        class="pdf-hit-area pdf-hit-left"
+        id="pdfHitLeft"
+        type="button"
+        aria-label="Previous page">
+    </button>
+
+    <button
+        class="pdf-hit-area pdf-hit-right"
+        id="pdfHitRight"
+        type="button"
+        aria-label="Next page">
+    </button>
+</div>
+
+                <div class="pdf-controls">
+
+                    <button
+                        class="pdf-control"
+                        id="pdfPrev"
+                        type="button"
+                    >
+                        ← PREVIOUS
+                    </button>
+
+                    <div class="pdf-page-count">
+                        <span id="pdfCurrentPage">01</span>
+                        <span class="pdf-count-divider">/</span>
+                        <span id="pdfTotalPages">—</span>
+                    </div>
+
+                    <button
+                        class="pdf-control"
+                        id="pdfNext"
+                        type="button"
+                    >
+                        NEXT →
+                    </button>
+
+                </div>
+
+                <div class="pdf-actions">
+
+                    <button
+                        class="pdf-action"
+                        id="pdfFullscreen"
+                        type="button"
+                    >
+                        FULL SCREEN ↗
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- 02 — SOUND -->
+        <section
+            class="chapter chapter-sound"
+            id="sound"
+            data-chapter="02"
+        >
+
+            <div class="section-heading">
+
+                <div class="section-number">02</div>
+
+                <div>
+                    <div class="section-label">SOUND</div>
+
+                    <h2>
+                        MUSIC</h2>
+                        <br>
+                        <h3>is this a musical?
+                    </h2>
+                </div>
+
+            </div>
+
+            <div class="sound-layout">
+
+                <div class="sound-copy">
+                    <p>
+                        Original music and sounds for Dance Division.
+                    </p>
+                </div>
+
+                <div class="audio-player">
+
+                    <audio
+                        id="audio"
+                        src="audio/dns dvsn.mp3"
+                        preload="metadata"
+                    ></audio>
+
+                    <div class="audio-top">
+
+                        <span id="trackNumber">01</span>
+
+                        <span id="trackTitle">
+                            DNS DVSN
+                        </span>
+
+                        <button
+                            id="playButton"
+                            class="play-button"
+                            type="button"
+                        >
+                            PLAY
+                        </button>
+
+                    </div>
+
+                    <div class="audio-progress">
+                        <div
+                            class="audio-progress-fill"
+                            id="audioProgressFill"
+                        ></div>
+                    </div>
+
+                    <div class="audio-time">
+                        <span id="audioTime">00:00</span>
+                        <span id="audioDuration">00:00</span>
+                    </div>
+
+                    <div class="audio-list">
+
+                        <button
+                            class="audio-item active"
+                            type="button"
+                            data-track="0"
+                            data-src="audio/dns dvsn.mp3"
+                            data-title="DNS DVSN"
+                        >
+                            <span>01</span>
+                            <span>DNS DVSN</span>
+                        </button>
+
+                        <button
+                            class="audio-item"
+                            type="button"
+                            data-track="1"
+                            data-src="audio/ef you en.mp3"
+                            data-title="EF YOU EN"
+                        >
+                            <span>02</span>
+                            <span>EF YOU EN</span>
+                        </button>
+
+                        <button
+                            class="audio-item"
+                            type="button"
+                            data-track="2"
+                            data-src="audio/star star star.mp3"
+                            data-title="STAR STAR STAR"
+                        >
+                            <span>03</span>
+                            <span>STAR STAR STAR</span>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- 03 — INSPIRATION -->
+        <section
+            class="chapter chapter-inspiration"
+            id="inspiration"
+            data-chapter="03"
+        >
+
+            <div class="section-heading">
+
+                <div class="section-number">03</div>
+
+                <div>
+                    <div class="section-label">INSPIRATION</div>
+
+                    <h2>
+                        IMAGES
+                        <br>
+                        BEFORE
+                        <br>
+                        MOVEMENT.
+                    </h2>
+                </div>
+
+            </div>
+
+            <div class="inspiration-intro">
+
+                <p>
+                    References, textures, gestures,
+                    places and fragments.
+                </p>
+
+            </div>
+
+            <!-- INSPIRATION CAROUSEL -->
+            <div
+                class="inspiration-carousel"
+                id="inspirationCarousel"
+            >
+
+                <div class="inspiration-stage">
+
+                    <img
+                        id="inspirationImage"
+                        src=""
+                        alt=""
+                        draggable="false"
+                    >
+
+                </div>
+
+                <div class="inspiration-carousel-footer">
+
+                    <div
+                        class="inspiration-caption"
+                        id="inspirationCaption"
+                    ></div>
+
+                    <div class="inspiration-controls">
+
+                        <button
+                            id="inspirationPrev"
+                            type="button"
+                            aria-label="Previous image"
+                        >
+                            ←
+                        </button>
+
+                        <div class="inspiration-count">
+                            <span id="inspirationCurrent">01</span>
+                            <span>/</span>
+                            <span id="inspirationTotal">10</span>
+                        </div>
+
+                        <button
+                            id="inspirationNext"
+                            type="button"
+                            aria-label="Next image"
+                        >
+                            →
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- 04 — FILM -->
+        <section
+            class="chapter chapter-film"
+            id="film"
+            data-chapter="04"
+        >
+
+            <div class="section-heading film-heading">
+
+                <div class="section-number">04</div>
+
+                <div>
+                    <div class="section-label">FILM</div>
+
+                    <h2>
+                        THE BODY
+                        <br>
+                        IN FRAME.
+                    </h2>
+                </div>
+
+            </div>
+
+            <div class="film-wrap">
+
+                <div class="vertical-film">
+
+                    <iframe
+                        id="mainFilm"
+                        class="main-film"
+                        src="https://player.vimeo.com/video/1203087604?autoplay=1&muted=1&loop=1&autopause=0&controls=0&background=1"
+                        title="Dance Division — Movement Study"
+                        frameborder="0"
+                        allow="autoplay; fullscreen; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+
+                    <button
+                        id="filmSound"
+                        class="film-sound"
+                        type="button"
+                    >
+                        SOUND OFF
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="film-caption">
+
+                <span>DANCE DIVISION</span>
+
+                <span>MOVEMENT STUDY / 01</span>
+
+            </div>
+
+        </section>
+
+        <!-- 05 — END -->
+        <section
+            class="chapter chapter-closing"
+            id="closing"
+            data-chapter="05"
+        >
+
+            <div class="closing-content">
+
+                <div class="closing-mark">05</div>
+
+                <h2>
+                    THE BODY
+                    <br>
+                    REMEMBERS
+                    <br>
+                    WHAT THE CAMERA
+                    <br>
+                    <em>FORGETS.</em>
+                </h2>
+
+                <div class="closing-meta">
+                    <span>DANCE DIVISION</span>
+                    <span>A VERTICAL NARRATIVE SERIES</span>
+                    <span>2026</span>
+                </div>
+
+            </div>
+
+            <div class="closing-footer">
+
+                <span>
+                    ELISE SIEVERT BHUSHAN
+                    &amp;
+                    JEREMY JACOB
+                </span>
+
+                <span>
+                    A DOLL'S HOUSE PICTURES
+                </span>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- PDF.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+    <!-- VIMEO PLAYER API -->
+    <script src="https://player.vimeo.com/api/player.js"></script>
+
+    <!-- SITE JS -->
+    <script src="script.js"></script>
+
+</body>
+</html>
