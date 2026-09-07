@@ -10,33 +10,121 @@
 
 (function initLoader() {
 
-    const loader = document.getElementById("loader");
-    const percent = document.getElementById("loaderPercent");
-    const progress = document.getElementById("loaderProgress");
+    const loader =
+        document.getElementById("loader");
 
-    if (!loader) return;
+    const percent =
+        document.getElementById("loaderPercent");
+
+    const progress =
+        document.getElementById("loaderProgress");
+
+    if (!loader) {
+        return;
+    }
 
     let value = 0;
 
-    const interval = setInterval(() => {
 
-        value += Math.floor(Math.random() * 8) + 3;
+    function updateLoader(number) {
 
-        if (value >= 100) {
-            value = 100;
-            clearInterval(interval);
+        value =
+            Math.min(
+                100,
+                Math.max(0, number)
+            );
 
-            setTimeout(() => {
-                loader.classList.add("loaded");
-            }, 250);
+
+        if (percent) {
+
+            percent.textContent =
+                String(
+                    Math.round(value)
+                ).padStart(2, "0");
+
         }
 
-        percent.textContent =
-            String(value).padStart(2, "0");
 
-        progress.style.width = `${value}%`;
+        if (progress) {
 
-    }, 45);
+            progress.style.width =
+                `${value}%`;
+
+        }
+
+    }
+
+
+    updateLoader(0);
+
+
+    const interval =
+        setInterval(() => {
+
+            value +=
+                Math.random() * 10 + 4;
+
+
+            if (value >= 90) {
+
+                value = 90;
+
+                clearInterval(interval);
+
+            }
+
+
+            updateLoader(value);
+
+        }, 70);
+
+
+    function finishLoader() {
+
+        clearInterval(interval);
+
+        updateLoader(100);
+
+
+        setTimeout(() => {
+
+            loader.classList.add(
+                "is-hidden"
+            );
+
+        }, 300);
+
+    }
+
+
+    if (
+        document.readyState ===
+        "loading"
+    ) {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            () => {
+
+                setTimeout(
+                    finishLoader,
+                    500
+                );
+
+            },
+            {
+                once: true
+            }
+        );
+
+    } else {
+
+        setTimeout(
+            finishLoader,
+            500
+        );
+
+    }
 
 })();
 
@@ -48,20 +136,34 @@
 (function initNavigation() {
 
     const links =
-        document.querySelectorAll(".nav-links a");
+        document.querySelectorAll(
+            ".nav-links a"
+        );
 
     const headerTitle =
-        document.querySelector(".header-title");
+        document.querySelector(
+            ".header-title"
+        );
 
-    function scrollToTarget(target) {
 
-        const element =
-            document.getElementById(target);
+    function scrollToTarget(
+        targetID
+    ) {
 
-        if (!element) return;
+        const target =
+            document.getElementById(
+                targetID
+            );
 
-        element.scrollIntoView({
-            behavior: "smooth"
+
+        if (!target) {
+            return;
+        }
+
+
+        target.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
         });
 
     }
@@ -69,29 +171,47 @@
 
     links.forEach(link => {
 
-        link.addEventListener("click", event => {
+        link.addEventListener(
+            "click",
+            event => {
 
-            event.preventDefault();
+                event.preventDefault();
 
-            const target =
-                link.dataset.target;
 
-            scrollToTarget(target);
+                const target =
+                    link.dataset.target;
 
-        });
+
+                if (!target) {
+                    return;
+                }
+
+
+                scrollToTarget(
+                    target
+                );
+
+            }
+        );
 
     });
 
 
     if (headerTitle) {
 
-        headerTitle.addEventListener("click", event => {
+        headerTitle.addEventListener(
+            "click",
+            event => {
 
-            event.preventDefault();
+                event.preventDefault();
 
-            scrollToTarget("opening");
 
-        });
+                scrollToTarget(
+                    "opening"
+                );
+
+            }
+        );
 
     }
 
@@ -105,65 +225,102 @@
 (function initChapterObserver() {
 
     const chapters =
-        document.querySelectorAll(".chapter");
+        document.querySelectorAll(
+            ".chapter"
+        );
 
     const links =
-        document.querySelectorAll(".nav-links a");
+        document.querySelectorAll(
+            ".nav-links a"
+        );
 
     const current =
-        document.getElementById("chapterCurrent");
+        document.getElementById(
+            "chapterCurrent"
+        );
 
     const progress =
-        document.getElementById("chapterProgress");
+        document.getElementById(
+            "chapterProgress"
+        );
 
 
-    if (!chapters.length) return;
+    if (!chapters.length) {
+        return;
+    }
 
 
     const observer =
         new IntersectionObserver(
             entries => {
 
-                entries.forEach(entry => {
+                entries.forEach(
+                    entry => {
 
-                    if (!entry.isIntersecting) return;
-
-                    const chapter =
-                        entry.target;
-
-                    const number =
-                        chapter.dataset.chapter;
-
-                    if (current) {
-                        current.textContent =
-                            number;
-                    }
+                        if (
+                            !entry.isIntersecting
+                        ) {
+                            return;
+                        }
 
 
-                    const target =
-                        chapter.id;
+                        const chapter =
+                            entry.target;
 
-                    links.forEach(link => {
 
-                        link.classList.toggle(
-                            "active",
-                            link.dataset.target === target
+                        const number =
+                            chapter.dataset.chapter ||
+                            "00";
+
+
+                        const target =
+                            chapter.id;
+
+
+                        if (current) {
+
+                            current.textContent =
+                                number;
+
+                        }
+
+
+                        links.forEach(
+                            link => {
+
+                                link.classList.toggle(
+                                    "active",
+                                    link.dataset.target ===
+                                        target
+                                );
+
+                            }
                         );
 
-                    });
+
+                        if (progress) {
+
+                            const numeric =
+                                parseInt(
+                                    number,
+                                    10
+                                );
 
 
-                    if (progress) {
+                            const percentage =
+                                (
+                                    numeric /
+                                    5
+                                ) * 100;
 
-                        const percentage =
-                            (parseInt(number, 10) / 5) * 100;
 
-                        progress.style.width =
-                            `${percentage}%`;
+                            progress.style.width =
+                                `${percentage}%`;
+
+                        }
 
                     }
-
-                });
+                );
 
             },
             {
@@ -172,9 +329,15 @@
         );
 
 
-    chapters.forEach(chapter => {
-        observer.observe(chapter);
-    });
+    chapters.forEach(
+        chapter => {
+
+            observer.observe(
+                chapter
+            );
+
+        }
+    );
 
 })();
 
@@ -185,46 +348,89 @@
 
 (function initPDFViewer() {
 
-    const canvas =
-        document.getElementById("pdfCanvas");
+    const viewer =
+        document.getElementById(
+            "pdfViewer"
+        );
 
     const stage =
-        document.getElementById("pdfStage");
+        document.getElementById(
+            "pdfStage"
+        );
+
+    const canvas =
+        document.getElementById(
+            "pdfCanvas"
+        );
 
     const loading =
-        document.getElementById("pdfLoading");
+        document.getElementById(
+            "pdfLoading"
+        );
 
     const loadingProgress =
-        document.getElementById("pdfLoadingProgress");
+        document.getElementById(
+            "pdfLoadingProgress"
+        );
 
     const currentPage =
-        document.getElementById("pdfCurrentPage");
+        document.getElementById(
+            "pdfCurrentPage"
+        );
 
     const totalPages =
-        document.getElementById("pdfTotalPages");
+        document.getElementById(
+            "pdfTotalPages"
+        );
 
-    const prevButton =
-        document.getElementById("pdfPrev");
+    const previousButton =
+        document.getElementById(
+            "pdfPrev"
+        );
 
     const nextButton =
-        document.getElementById("pdfNext");
+        document.getElementById(
+            "pdfNext"
+        );
 
     const hitLeft =
-        document.getElementById("pdfHitLeft");
+        document.getElementById(
+            "pdfHitLeft"
+        );
 
     const hitRight =
-        document.getElementById("pdfHitRight");
+        document.getElementById(
+            "pdfHitRight"
+        );
 
     const fullscreenButton =
-        document.getElementById("pdfFullscreen");
+        document.getElementById(
+            "pdfFullscreen"
+        );
 
 
     if (
-        !canvas ||
+        !viewer ||
         !stage ||
-        typeof pdfjsLib === "undefined"
+        !canvas
     ) {
+
         return;
+
+    }
+
+
+    if (
+        typeof pdfjsLib ===
+        "undefined"
+    ) {
+
+        console.error(
+            "PDF.js is not loaded."
+        );
+
+        return;
+
     }
 
 
@@ -232,21 +438,38 @@
         "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
 
-    const ctx =
-        canvas.getContext("2d");
+    const context =
+        canvas.getContext(
+            "2d"
+        );
+
 
     let pdf = null;
+
     let pageNumber = 1;
+
     let rendering = false;
+
     let pendingPage = null;
 
-    let touchStartX = 0;
-    let touchStartY = 0;
 
+    /* ------------------------------------------------------------
+       HIT AREAS
+       ------------------------------------------------------------ */
 
     function updateHitAreas() {
 
-        const rect =
+        if (
+            !hitLeft ||
+            !hitRight
+        ) {
+
+            return;
+
+        }
+
+
+        const canvasRect =
             canvas.getBoundingClientRect();
 
         const stageRect =
@@ -254,16 +477,21 @@
 
 
         const left =
-            rect.left - stageRect.left;
+            canvasRect.left -
+            stageRect.left;
+
 
         const top =
-            rect.top - stageRect.top;
+            canvasRect.top -
+            stageRect.top;
+
 
         const width =
-            rect.width;
+            canvasRect.width;
+
 
         const height =
-            rect.height;
+            canvasRect.height;
 
 
         hitLeft.style.left =
@@ -294,193 +522,463 @@
     }
 
 
-    async function renderPage(number) {
+    /* ------------------------------------------------------------
+       PDF SCALE
+       ------------------------------------------------------------ */
 
-        if (!pdf) return;
+    function getScale(page) {
 
-        rendering = true;
-
-        const page =
-            await pdf.getPage(number);
-
-
-        const unscaledViewport =
+        const baseViewport =
             page.getViewport({
                 scale: 1
             });
 
 
+        const stageWidth =
+            stage.clientWidth ||
+            window.innerWidth;
+
+
+        const stageHeight =
+            stage.clientHeight ||
+            window.innerHeight * 0.78;
+
+
+        /*
+         * Keep only a small amount of space around
+         * the document. The previous version used
+         * a much smaller effective area.
+         */
+
+        const horizontalPadding =
+            window.innerWidth <= 700
+                ? 10
+                : 30;
+
+
+        const verticalPadding =
+            window.innerWidth <= 700
+                ? 10
+                : 20;
+
+
         const availableWidth =
-            Math.min(
-                stage.clientWidth,
-                900
+            Math.max(
+                200,
+                stageWidth -
+                horizontalPadding
             );
 
 
         const availableHeight =
-            Math.min(
-                window.innerHeight * 0.72,
-                900
+            Math.max(
+                300,
+                stageHeight -
+                verticalPadding
             );
 
 
-        const scaleByWidth =
+        const widthScale =
             availableWidth /
-            unscaledViewport.width;
+            baseViewport.width;
 
-        const scaleByHeight =
+
+        const heightScale =
             availableHeight /
-            unscaledViewport.height;
+            baseViewport.height;
 
 
-        const scale =
-            Math.min(
-                scaleByWidth,
-                scaleByHeight
-            );
-
-
-        const viewport =
-            page.getViewport({
-                scale
-            });
-
-
-        canvas.width =
-            viewport.width;
-
-        canvas.height =
-            viewport.height;
-
-
-        canvas.style.width =
-            `${viewport.width}px`;
-
-        canvas.style.height =
-            `${viewport.height}px`;
-
-
-        await page.render({
-            canvasContext: ctx,
-            viewport
-        }).promise;
-
-
-        currentPage.textContent =
-            String(number).padStart(2, "0");
-
-
-        updateHitAreas();
-
-
-        rendering = false;
-
-
-        if (pendingPage !== null) {
-
-            const nextPage =
-                pendingPage;
-
-            pendingPage = null;
-
-            renderPage(nextPage);
-
-        }
+        return Math.min(
+            widthScale,
+            heightScale
+        );
 
     }
 
 
-    function queueRenderPage(number) {
+    /* ------------------------------------------------------------
+       RENDER PAGE
+       ------------------------------------------------------------ */
+
+    async function renderPage(
+        number
+    ) {
+
+        if (!pdf) {
+            return;
+        }
+
 
         if (rendering) {
 
-            pendingPage = number;
+            pendingPage =
+                number;
 
-        } else {
+            return;
 
-            renderPage(number);
+        }
+
+
+        rendering = true;
+
+
+        try {
+
+            const page =
+                await pdf.getPage(
+                    number
+                );
+
+
+            const scale =
+                getScale(page);
+
+
+            const viewport =
+                page.getViewport({
+                    scale
+                });
+
+
+            const outputScale =
+                Math.max(
+                    1,
+                    Math.min(
+                        window.devicePixelRatio ||
+                        1,
+                        2
+                    )
+                );
+
+
+            /*
+             * Actual backing canvas size.
+             */
+
+            canvas.width =
+                Math.floor(
+                    viewport.width *
+                    outputScale
+                );
+
+
+            canvas.height =
+                Math.floor(
+                    viewport.height *
+                    outputScale
+                );
+
+
+            /*
+             * CSS display size.
+             */
+
+            canvas.style.width =
+                `${viewport.width}px`;
+
+
+            canvas.style.height =
+                `${viewport.height}px`;
+
+
+            const renderContext = {
+
+                canvasContext:
+                    context,
+
+                viewport:
+                    viewport,
+
+                transform:
+                    outputScale !== 1
+                        ? [
+                            outputScale,
+                            0,
+                            0,
+                            outputScale,
+                            0,
+                            0
+                        ]
+                        : null
+
+            };
+
+
+            context.clearRect(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+
+            await page.render(
+                renderContext
+            ).promise;
+
+
+            if (currentPage) {
+
+                currentPage.textContent =
+                    String(
+                        number
+                    ).padStart(
+                        2,
+                        "0"
+                    );
+
+            }
+
+
+            updateHitAreas();
+
+
+        } catch (error) {
+
+            console.error(
+                "PDF render error:",
+                error
+            );
+
+        } finally {
+
+            rendering = false;
+
+
+            if (
+                pendingPage !== null
+            ) {
+
+                const next =
+                    pendingPage;
+
+
+                pendingPage =
+                    null;
+
+
+                renderPage(
+                    next
+                );
+
+            }
 
         }
 
     }
 
 
-    function goToPage(number) {
+    /* ------------------------------------------------------------
+       PAGE NAVIGATION
+       ------------------------------------------------------------ */
 
-        if (!pdf) return;
+    function goToPage(
+        number
+    ) {
 
-        if (number < 1) {
-            number = pdf.numPages;
+        if (!pdf) {
+            return;
         }
 
-        if (number > pdf.numPages) {
-            number = 1;
+
+        number =
+            Math.max(
+                1,
+                Math.min(
+                    pdf.numPages,
+                    number
+                )
+            );
+
+
+        pageNumber =
+            number;
+
+
+        if (currentPage) {
+
+            currentPage.textContent =
+                String(
+                    pageNumber
+                ).padStart(
+                    2,
+                    "0"
+                );
+
         }
 
-        pageNumber = number;
 
-        queueRenderPage(pageNumber);
+        if (rendering) {
+
+            pendingPage =
+                pageNumber;
+
+        } else {
+
+            renderPage(
+                pageNumber
+            );
+
+        }
 
     }
 
 
     function previousPage() {
-        goToPage(pageNumber - 1);
+
+        if (!pdf) {
+            return;
+        }
+
+
+        if (pageNumber > 1) {
+
+            goToPage(
+                pageNumber - 1
+            );
+
+        }
+
     }
 
 
     function nextPage() {
-        goToPage(pageNumber + 1);
+
+        if (!pdf) {
+            return;
+        }
+
+
+        if (
+            pageNumber <
+            pdf.numPages
+        ) {
+
+            goToPage(
+                pageNumber + 1
+            );
+
+        }
+
     }
 
 
-    prevButton.addEventListener(
-        "click",
-        previousPage
-    );
+    /* ------------------------------------------------------------
+       BUTTONS
+       ------------------------------------------------------------ */
 
-    nextButton.addEventListener(
-        "click",
-        nextPage
-    );
+    if (previousButton) {
 
-    hitLeft.addEventListener(
-        "click",
-        previousPage
-    );
+        previousButton.addEventListener(
+            "click",
+            previousPage
+        );
 
-    hitRight.addEventListener(
-        "click",
-        nextPage
-    );
+    }
 
 
-    /* KEYBOARD */
+    if (nextButton) {
+
+        nextButton.addEventListener(
+            "click",
+            nextPage
+        );
+
+    }
+
+
+    if (hitLeft) {
+
+        hitLeft.addEventListener(
+            "click",
+            previousPage
+        );
+
+    }
+
+
+    if (hitRight) {
+
+        hitRight.addEventListener(
+            "click",
+            nextPage
+        );
+
+    }
+
+
+    /* ------------------------------------------------------------
+       KEYBOARD
+       ------------------------------------------------------------ */
 
     document.addEventListener(
         "keydown",
         event => {
 
             if (
-                event.target.tagName === "INPUT" ||
-                event.target.tagName === "TEXTAREA"
+                event.target.tagName ===
+                    "INPUT" ||
+                event.target.tagName ===
+                    "TEXTAREA" ||
+                event.target.tagName ===
+                    "SELECT"
             ) {
+
+                return;
+
+            }
+
+
+            const rect =
+                viewer.getBoundingClientRect();
+
+
+            const visible =
+                rect.top <
+                    window.innerHeight &&
+                rect.bottom > 0;
+
+
+            if (!visible) {
                 return;
             }
 
-            if (event.key === "ArrowLeft") {
+
+            if (
+                event.key ===
+                "ArrowLeft"
+            ) {
+
+                event.preventDefault();
+
                 previousPage();
+
             }
 
-            if (event.key === "ArrowRight") {
+
+            if (
+                event.key ===
+                "ArrowRight"
+            ) {
+
+                event.preventDefault();
+
                 nextPage();
+
             }
 
         }
     );
 
 
-    /* TOUCH */
+    /* ------------------------------------------------------------
+       TOUCH / SWIPE
+       ------------------------------------------------------------ */
+
+    let touchStartX = 0;
+
+    let touchStartY = 0;
+
 
     stage.addEventListener(
         "touchstart",
@@ -489,8 +987,10 @@
             const touch =
                 event.changedTouches[0];
 
+
             touchStartX =
                 touch.clientX;
+
 
             touchStartY =
                 touch.clientY;
@@ -509,22 +1009,33 @@
             const touch =
                 event.changedTouches[0];
 
+
             const deltaX =
-                touch.clientX - touchStartX;
+                touch.clientX -
+                touchStartX;
+
 
             const deltaY =
-                touch.clientY - touchStartY;
+                touch.clientY -
+                touchStartY;
 
 
             if (
                 Math.abs(deltaX) > 50 &&
-                Math.abs(deltaX) > Math.abs(deltaY)
+                Math.abs(deltaX) >
+                    Math.abs(deltaY)
             ) {
 
-                if (deltaX > 0) {
+                if (
+                    deltaX > 0
+                ) {
+
                     previousPage();
+
                 } else {
+
                     nextPage();
+
                 }
 
             }
@@ -536,7 +1047,9 @@
     );
 
 
-    /* FULLSCREEN */
+    /* ------------------------------------------------------------
+       FULLSCREEN
+       ------------------------------------------------------------ */
 
     if (fullscreenButton) {
 
@@ -546,9 +1059,11 @@
 
                 try {
 
-                    if (!document.fullscreenElement) {
+                    if (
+                        !document.fullscreenElement
+                    ) {
 
-                        await stage.requestFullscreen();
+                        await viewer.requestFullscreen();
 
                     } else {
 
@@ -571,268 +1086,473 @@
     }
 
 
-    /* RESIZE */
-
-    window.addEventListener(
-        "resize",
+    document.addEventListener(
+        "fullscreenchange",
         () => {
 
-            if (pdf) {
-                queueRenderPage(pageNumber);
-            }
+            setTimeout(
+                () => {
+
+                    if (
+                        pdf &&
+                        !rendering
+                    ) {
+
+                        renderPage(
+                            pageNumber
+                        );
+
+                    }
+
+                },
+                100
+            );
 
         }
     );
 
 
-    /* LOAD PDF */
+    /* ------------------------------------------------------------
+       RESIZE
+       ------------------------------------------------------------ */
 
-    pdfjsLib
-        .getDocument("script.pdf")
-        .promise
-        .then(loadedPDF => {
+    let resizeTimer;
 
-            pdf = loadedPDF;
 
-            totalPages.textContent =
-                String(pdf.numPages).padStart(2, "0");
+    window.addEventListener(
+        "resize",
+        () => {
+
+            clearTimeout(
+                resizeTimer
+            );
+
+
+            resizeTimer =
+                setTimeout(
+                    () => {
+
+                        if (
+                            pdf &&
+                            !rendering
+                        ) {
+
+                            renderPage(
+                                pageNumber
+                            );
+
+                        }
+
+                    },
+                    150
+                );
+
+        }
+    );
+
+
+    /* ------------------------------------------------------------
+       LOAD PDF
+       ------------------------------------------------------------ */
+
+    async function loadPDF() {
+
+        try {
 
             if (loadingProgress) {
-                loadingProgress.style.width = "100%";
+
+                loadingProgress.style.width =
+                    "10%";
+
             }
 
-            return renderPage(pageNumber);
 
-        })
-        .then(() => {
+            const loadingTask =
+                pdfjsLib.getDocument(
+                    "script.pdf"
+                );
+
+
+            loadingTask.onProgress =
+                progressData => {
+
+                    if (
+                        !loadingProgress ||
+                        !progressData.total
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const percentage =
+                        (
+                            progressData.loaded /
+                            progressData.total
+                        ) * 100;
+
+
+                    loadingProgress.style.width =
+                        `${Math.min(
+                            100,
+                            percentage
+                        )}%`;
+
+                };
+
+
+            pdf =
+                await loadingTask.promise;
+
+
+            if (totalPages) {
+
+                totalPages.textContent =
+                    String(
+                        pdf.numPages
+                    ).padStart(
+                        2,
+                        "0"
+                    );
+
+            }
+
+
+            pageNumber = 1;
+
+
+            await renderPage(
+                pageNumber
+            );
+
 
             if (loading) {
-                loading.style.display = "none";
+
+                loading.classList.add(
+                    "is-hidden"
+                );
+
             }
 
-        })
-        .catch(error => {
+
+        } catch (error) {
 
             console.error(
-                "Unable to load PDF:",
+                "Unable to load script.pdf:",
                 error
             );
 
-            /*
-             * No visible error message is displayed.
-             * This keeps the page clean if the PDF is unavailable.
-             */
 
             if (loading) {
-                loading.style.display = "none";
+
+                loading.classList.add(
+                    "is-hidden"
+                );
+
             }
 
-        });
+        }
+
+    }
+
+
+    loadPDF();
 
 })();
 
 
 /* ============================================================
    INSPIRATION CAROUSEL
-   MANUAL IMAGE LIST
    ============================================================ */
 
 (function initInspirationCarousel() {
 
-    const image =
-        document.getElementById("inspirationImage");
+    const track =
+        document.getElementById(
+            "inspirationTrack"
+        );
 
     const caption =
-        document.getElementById("inspirationCaption");
+        document.getElementById(
+            "inspirationCaption"
+        );
 
     const current =
-        document.getElementById("inspirationCurrent");
+        document.getElementById(
+            "inspirationCurrent"
+        );
 
     const total =
-        document.getElementById("inspirationTotal");
+        document.getElementById(
+            "inspirationTotal"
+        );
 
     const previous =
-        document.getElementById("inspirationPrev");
+        document.getElementById(
+            "inspirationPrev"
+        );
 
     const next =
-        document.getElementById("inspirationNext");
+        document.getElementById(
+            "inspirationNext"
+        );
+
+    const stage =
+        document.querySelector(
+            ".inspiration-stage"
+        );
 
 
     if (
-        !image ||
+        !track ||
         !caption ||
         !current ||
-        !total
+        !total ||
+        !stage
     ) {
+
         return;
+
     }
 
 
-    /*
-     * =========================================================
-     * ADD YOUR INSPIRATION IMAGES HERE
-     *
-     * The images are intentionally MANUAL.
-     *
-     * Put the image in /images/
-     * then add an object here.
-     * =========================================================
-     */
+    /* ------------------------------------------------------------
+       IMAGE LIST
+       ------------------------------------------------------------ */
 
     const inspirationImages = [
 
- {
-            src: "images/inspiration-01.jpg",
-            alt: "Dance Division reference image 01",
-            label: "01 / REFERENCE"
+        {
+            src:
+                "images/inspiration-01.jpg",
+
+            alt:
+                "Dance Division reference image 01",
+
+            label:
+                "01 / REFERENCE"
         },
 
         {
-            src: "images/inspiration-02.jpg",
-            alt: "Dance Division reference image 02",
-            label: "02 / REFERENCE"
+            src:
+                "images/inspiration-02.jpg",
+
+            alt:
+                "Dance Division reference image 02",
+
+            label:
+                "02 / REFERENCE"
         },
 
         {
-            src: "images/inspiration-03.jpg",
-            alt: "Dance Division reference image 03",
-            label: "03 / REFERENCE"
+            src:
+                "images/inspiration-03.jpg",
+
+            alt:
+                "Dance Division reference image 03",
+
+            label:
+                "03 / REFERENCE"
         },
 
         {
-            src: "images/inspiration-04.jpg",
-            alt: "Dance Division reference image 04",
-            label: "04 / REFERENCE"
-        },
+            src:
+                "images/inspiration-04.jpg",
 
-  
-        {
-            src: "images/inspiration-05.jpg",
-            alt: "Dance Division reference image 05",
-            label: "05 / REFERENCE"
+            alt:
+                "Dance Division reference image 04",
+
+            label:
+                "04 / REFERENCE"
         },
 
         {
-            src: "images/inspiration-06.jpg",
-            alt: "Dance Division reference image 06",
-            label: "06 / REFERENCE"
+            src:
+                "images/inspiration-05.jpg",
+
+            alt:
+                "Dance Division reference image 05",
+
+            label:
+                "05 / REFERENCE"
         },
 
         {
-            src: "images/inspiration-07.jpg",
-            alt: "Dance Division reference image 07",
-            label: "07 / REFERENCE"
+            src:
+                "images/inspiration-06.jpg",
+
+            alt:
+                "Dance Division reference image 06",
+
+            label:
+                "06 / REFERENCE"
         },
 
         {
-            src: "images/inspiration-08.jpg",
-            alt: "Dance Division reference image 08",
-            label: "08 / REFERENCE"
+            src:
+                "images/inspiration-07.jpg",
+
+            alt:
+                "Dance Division reference image 07",
+
+            label:
+                "07 / REFERENCE"
         },
 
         {
-            src: "images/inspiration-09.jpg",
-            alt: "Dance Division reference image 09",
-            label: "09 / REFERENCE"
+            src:
+                "images/inspiration-08.jpg",
+
+            alt:
+                "Dance Division reference image 08",
+
+            label:
+                "08 / REFERENCE"
         },
 
         {
-            src: "images/inspiration-10.jpg",
-            alt: "Dance Division reference image 10",
-            label: "10 / REFERENCE"
+            src:
+                "images/inspiration-09.jpg",
+
+            alt:
+                "Dance Division reference image 09",
+
+            label:
+                "09 / REFERENCE"
         },
 
         {
-            src: "images/inspiration-11.jpg",
-            alt: "Dance Division reference image 11",
-            label: "11 / REFERENCE"
+            src:
+                "images/inspiration-10.jpg",
+
+            alt:
+                "Dance Division reference image 10",
+
+            label:
+                "10 / REFERENCE"
         },
 
         {
-            src: "images/inspiration-12.jpg",
-            alt: "Dance Division reference image 12",
-            label: "12 / REFERENCE"
+            src:
+                "images/inspiration-11.jpg",
+
+            alt:
+                "Dance Division reference image 11",
+
+            label:
+                "11 / REFERENCE"
         },
 
         {
-            src: "images/inspiration-13.jpg",
-            alt: "Dance Division reference image 13",
-            label: "13 / REFERENCE"
+            src:
+                "images/inspiration-12.jpg",
+
+            alt:
+                "Dance Division reference image 12",
+
+            label:
+                "12 / REFERENCE"
         },
 
         {
-            src: "images/inspiration-14.jpg",
-            alt: "Dance Division reference image 14",
-            label: "14 / REFERENCE"
+            src:
+                "images/inspiration-13.jpg",
+
+            alt:
+                "Dance Division reference image 13",
+
+            label:
+                "13 / REFERENCE"
         },
 
         {
-            src: "images/inspiration-15.jpg",
-            alt: "Dance Division reference image 15",
-            label: "15 / REFERENCE"
-        },
-   
-        {
-            src: "images/inspiration-16.jpg",
-            alt: "Dance Division reference image 16",
-            label: "16 / REFERENCE"
+            src:
+                "images/inspiration-14.jpg",
+
+            alt:
+                "Dance Division reference image 14",
+
+            label:
+                "14 / REFERENCE"
         },
 
         {
-            src: "images/inspiration-17.jpg",
-            alt: "Dance Division reference image 17",
-            label: "17 / REFERENCE"
+            src:
+                "images/inspiration-15.jpg",
+
+            alt:
+                "Dance Division reference image 15",
+
+            label:
+                "15 / REFERENCE"
         },
 
         {
-            src: "images/inspiration-18.jpg",
-            alt: "Dance Division reference image 18",
-            label: "18 / REFERENCE"
+            src:
+                "images/inspiration-16.jpg",
+
+            alt:
+                "Dance Division reference image 16",
+
+            label:
+                "16 / REFERENCE"
         },
 
         {
-            src: "images/inspiration-19.jpg",
-            alt: "Dance Division reference image 19",
-            label: "19 / REFERENCE"
+            src:
+                "images/inspiration-17.jpg",
+
+            alt:
+                "Dance Division reference image 17",
+
+            label:
+                "17 / REFERENCE"
         },
 
         {
-            src: "images/inspiration-20.jpg",
-            alt: "Dance Division reference image 20",
-            label: "20 / REFERENCE"
-        },
-   /*
-        {
-            src: "images/inspiration-21.jpg",
-            alt: "Dance Division reference image 21",
-            label: "21 / REFERENCE"
-        },
+            src:
+                "images/inspiration-18.jpg",
 
-        {
-            src: "images/inspiration-22.jpg",
-            alt: "Dance Division reference image 22",
-            label: "22 / REFERENCE"
+            alt:
+                "Dance Division reference image 18",
+
+            label:
+                "18 / REFERENCE"
         },
 
         {
-            src: "images/inspiration-23.jpg",
-            alt: "Dance Division reference image 23",
-            label: "23 / REFERENCE"
+            src:
+                "images/inspiration-19.jpg",
+
+            alt:
+                "Dance Division reference image 19",
+
+            label:
+                "19 / REFERENCE"
         },
 
         {
-            src: "images/inspiration-24.jpg",
-            alt: "Dance Division reference image 24",
-            label: "24 / REFERENCE"
-        },
+    src:
+        "images/inspiration-20.jpg",
 
-        {
-            src: "images/inspiration-25.jpg",
-            alt: "Dance Division reference image 25",
-            label: "25 / REFERENCE"
-        }
-        */
+    alt:
+        "Dance Division reference image 20",
 
+    label:
+        "20 / REFERENCE"
+},
+
+{ src: "images/inspiration-21.jpg", title: "INSPIRATION 21" },
+{ src: "images/inspiration-22.jpg", title: "INSPIRATION 22" },
+{ src: "images/inspiration-23.jpg", title: "INSPIRATION 23" },
+{ src: "images/inspiration-24.jpg", title: "INSPIRATION 24" },
+{ src: "images/inspiration-25.jpg", title: "INSPIRATION 25" },
+{ src: "images/inspiration-26.jpg", title: "INSPIRATION 26" },
+{ src: "images/inspiration-27.jpg", title: "INSPIRATION 27" },
+{ src: "images/inspiration-28.jpg", title: "INSPIRATION 28" },
+{ src: "images/inspiration-29.jpg", title: "INSPIRATION 29" },
+{ src: "images/inspiration-30.jpg", title: "INSPIRATION 30" },
 
     ];
 
@@ -840,51 +1560,243 @@
     let index = 0;
 
 
-    total.textContent =
-        String(inspirationImages.length)
-            .padStart(2, "0");
+    /*
+     * More copies make the looping carousel
+     * stable in both directions.
+     */
+
+    const COPIES = 3;
 
 
-    function showImage(newIndex) {
+    /* ------------------------------------------------------------
+       BUILD
+       ------------------------------------------------------------ */
 
-        if (!inspirationImages.length) return;
+    function buildCarousel() {
+
+        track.innerHTML = "";
 
 
-        if (newIndex < 0) {
-            newIndex =
-                inspirationImages.length - 1;
+        const count =
+            inspirationImages.length;
+
+
+        if (!count) {
+            return;
         }
+
+
+        for (
+            let copy = 0;
+            copy < COPIES * 2 + 1;
+            copy++
+        ) {
+
+            inspirationImages.forEach(
+                (item, itemIndex) => {
+
+                    const slide =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    slide.className =
+                        "inspiration-slide";
+
+
+                    slide.dataset.index =
+                        itemIndex;
+
+
+                    const img =
+                        document.createElement(
+                            "img"
+                        );
+
+
+                    img.src =
+                        item.src;
+
+
+                    img.alt =
+                        item.alt;
+
+
+                    img.draggable =
+                        false;
+
+
+                    slide.appendChild(
+                        img
+                    );
+
+
+                    track.appendChild(
+                        slide
+                    );
+
+                }
+            );
+
+        }
+
+
+        total.textContent =
+            String(
+                count
+            ).padStart(
+                2,
+                "0"
+            );
+
+    }
+
+
+    /* ------------------------------------------------------------
+       UPDATE
+       ------------------------------------------------------------ */
+
+    function updateCarousel(
+        animate = true
+    ) {
+
+        const slides =
+            Array.from(
+                track.children
+            );
+
+
+        const count =
+            inspirationImages.length;
+
 
         if (
-            newIndex >=
-            inspirationImages.length
+            !slides.length ||
+            !count
         ) {
-            newIndex = 0;
+
+            return;
+
         }
 
 
-        index = newIndex;
+        const centerIndex =
+            COPIES * count +
+            index;
 
+
+        const centerSlide =
+            slides[centerIndex];
+
+
+        if (!centerSlide) {
+            return;
+        }
+
+
+        /*
+         * The slide's center position is measured
+         * against the center of the viewport.
+         */
+
+        const stageCenter =
+            stage.clientWidth / 2;
+
+
+        const slideCenter =
+            centerSlide.offsetLeft +
+            centerSlide.offsetWidth / 2;
+
+
+        const offset =
+            stageCenter -
+            slideCenter;
+
+
+        track.style.transition =
+            animate
+                ? "transform 0.8s cubic-bezier(.22,.61,.36,1)"
+                : "none";
+
+
+        track.style.transform =
+            `translate3d(${offset}px, 0, 0)`;
+
+
+        /* --------------------------------------------------------
+           DISTANCE CLASSES
+           -------------------------------------------------------- */
+
+        slides.forEach(
+            (slide, slideIndex) => {
+
+                slide.classList.remove(
+                    "is-center",
+                    "distance-1",
+                    "distance-2",
+                    "distance-3",
+                    "distance-far"
+                );
+
+
+                const distance =
+                    Math.abs(
+                        slideIndex -
+                        centerIndex
+                    );
+
+
+                if (
+                    distance === 0
+                ) {
+
+                    slide.classList.add(
+                        "is-center"
+                    );
+
+                } else if (
+                    distance === 1
+                ) {
+
+                    slide.classList.add(
+                        "distance-1"
+                    );
+
+                } else if (
+                    distance === 2
+                ) {
+
+                    slide.classList.add(
+                        "distance-2"
+                    );
+
+                } else if (
+                    distance === 3
+                ) {
+
+                    slide.classList.add(
+                        "distance-3"
+                    );
+
+                } else {
+
+                    slide.classList.add(
+                        "distance-far"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* --------------------------------------------------------
+           TEXT
+           -------------------------------------------------------- */
 
         const item =
             inspirationImages[index];
-
-
-        image.classList.remove("loaded");
-
-
-        image.onload = () => {
-
-            image.classList.add("loaded");
-
-        };
-
-
-        image.src =
-            item.src;
-
-        image.alt =
-            item.alt;
 
 
         caption.textContent =
@@ -892,80 +1804,110 @@
 
 
         current.textContent =
-            String(index + 1)
-                .padStart(2, "0");
-
-
-        preloadAdjacentImages();
+            String(
+                index + 1
+            ).padStart(
+                2,
+                "0"
+            );
 
     }
 
 
-    function preloadAdjacentImages() {
+    /* ------------------------------------------------------------
+       NEXT
+       ------------------------------------------------------------ */
 
-        if (!inspirationImages.length) {
-            return;
+    function nextImage() {
+
+        index++;
+
+
+        if (
+            index >=
+            inspirationImages.length
+        ) {
+
+            index = 0;
+
         }
 
 
-        const nextIndex =
-            (index + 1) %
-            inspirationImages.length;
-
-        const previousIndex =
-            (index - 1 +
-                inspirationImages.length) %
-            inspirationImages.length;
-
-
-        [
-            inspirationImages[nextIndex],
-            inspirationImages[previousIndex]
-        ].forEach(item => {
-
-            const preload =
-                new Image();
-
-            preload.src =
-                item.src;
-
-        });
+        updateCarousel(
+            true
+        );
 
     }
 
+
+    /* ------------------------------------------------------------
+       PREVIOUS
+       ------------------------------------------------------------ */
 
     function previousImage() {
-        showImage(index - 1);
+
+        index--;
+
+
+        if (index < 0) {
+
+            index =
+                inspirationImages.length -
+                1;
+
+        }
+
+
+        updateCarousel(
+            true
+        );
+
     }
 
 
-    function nextImage() {
-        showImage(index + 1);
+    /* ------------------------------------------------------------
+       BUTTONS
+       ------------------------------------------------------------ */
+
+    if (previous) {
+
+        previous.addEventListener(
+            "click",
+            previousImage
+        );
+
     }
 
 
-    previous.addEventListener(
-        "click",
-        previousImage
-    );
+    if (next) {
 
-    next.addEventListener(
-        "click",
-        nextImage
-    );
+        next.addEventListener(
+            "click",
+            nextImage
+        );
+
+    }
 
 
-    /* KEYBOARD */
+    /* ------------------------------------------------------------
+       KEYBOARD
+       ------------------------------------------------------------ */
 
     document.addEventListener(
         "keydown",
         event => {
 
             if (
-                event.target.tagName === "INPUT" ||
-                event.target.tagName === "TEXTAREA"
+                event.target.tagName ===
+                    "INPUT" ||
+                event.target.tagName ===
+                    "TEXTAREA" ||
+                event.target.tagName ===
+                    "SELECT"
             ) {
+
                 return;
+
             }
 
 
@@ -975,7 +1917,9 @@
                 );
 
 
-            if (!carousel) return;
+            if (!carousel) {
+                return;
+            }
 
 
             const rect =
@@ -984,40 +1928,62 @@
 
             const visible =
                 rect.top <
-                window.innerHeight &&
+                    window.innerHeight &&
                 rect.bottom > 0;
 
 
-            if (!visible) return;
-
-
-            if (event.key === "ArrowLeft") {
-                previousImage();
+            if (!visible) {
+                return;
             }
 
-            if (event.key === "ArrowRight") {
+
+            if (
+                event.key ===
+                "ArrowLeft"
+            ) {
+
+                event.preventDefault();
+
+                previousImage();
+
+            }
+
+
+            if (
+                event.key ===
+                "ArrowRight"
+            ) {
+
+                event.preventDefault();
+
                 nextImage();
+
             }
 
         }
     );
 
 
-    /* TOUCH */
+    /* ------------------------------------------------------------
+       TOUCH
+       ------------------------------------------------------------ */
 
     let touchStartX = 0;
+
     let touchStartY = 0;
 
 
-    image.addEventListener(
+    stage.addEventListener(
         "touchstart",
         event => {
 
             const touch =
                 event.changedTouches[0];
 
+
             touchStartX =
                 touch.clientX;
+
 
             touchStartY =
                 touch.clientY;
@@ -1029,29 +1995,40 @@
     );
 
 
-    image.addEventListener(
+    stage.addEventListener(
         "touchend",
         event => {
 
             const touch =
                 event.changedTouches[0];
 
+
             const deltaX =
-                touch.clientX - touchStartX;
+                touch.clientX -
+                touchStartX;
+
 
             const deltaY =
-                touch.clientY - touchStartY;
+                touch.clientY -
+                touchStartY;
 
 
             if (
-                Math.abs(deltaX) > 50 &&
-                Math.abs(deltaX) > Math.abs(deltaY)
+                Math.abs(deltaX) > 40 &&
+                Math.abs(deltaX) >
+                    Math.abs(deltaY)
             ) {
 
-                if (deltaX > 0) {
-                    previousImage();
-                } else {
+                if (
+                    deltaX < 0
+                ) {
+
                     nextImage();
+
+                } else {
+
+                    previousImage();
+
                 }
 
             }
@@ -1063,50 +2040,118 @@
     );
 
 
-    showImage(0);
+    /* ------------------------------------------------------------
+       RESIZE
+       ------------------------------------------------------------ */
+
+    let resizeTimer;
+
+
+    window.addEventListener(
+        "resize",
+        () => {
+
+            clearTimeout(
+                resizeTimer
+            );
+
+
+            resizeTimer =
+                setTimeout(
+                    () => {
+
+                        updateCarousel(
+                            false
+                        );
+
+                    },
+                    100
+                );
+
+        }
+    );
+
+
+    /* ------------------------------------------------------------
+       INITIALIZE
+       ------------------------------------------------------------ */
+
+    buildCarousel();
+
+
+    requestAnimationFrame(
+        () => {
+
+            updateCarousel(
+                false
+            );
+
+        }
+    );
 
 })();
 
 
 /* ============================================================
    CHARACTERS
-   MANUAL CHARACTER DATA
    ============================================================ */
 
 (function initCharacters() {
 
     const image =
-        document.getElementById("characterImage");
+        document.getElementById(
+            "characterImage"
+        );
 
     const number =
-        document.getElementById("characterNumber");
+        document.getElementById(
+            "characterNumber"
+        );
 
     const role =
-        document.getElementById("characterRole");
+        document.getElementById(
+            "characterRole"
+        );
 
     const name =
-        document.getElementById("characterName");
+        document.getElementById(
+            "characterName"
+        );
 
     const bio =
-        document.getElementById("characterBio");
+        document.getElementById(
+            "characterBio"
+        );
 
     const casting =
-        document.getElementById("characterCasting");
+        document.getElementById(
+            "characterCasting"
+        );
 
     const footerName =
-        document.getElementById("characterFooterName");
+        document.getElementById(
+            "characterFooterName"
+        );
 
     const current =
-        document.getElementById("characterCurrent");
+        document.getElementById(
+            "characterCurrent"
+        );
 
     const total =
-        document.getElementById("characterTotal");
+        document.getElementById(
+            "characterTotal"
+        );
 
     const previous =
-        document.getElementById("characterPrev");
+        document.getElementById(
+            "characterPrev"
+        );
 
     const next =
-        document.getElementById("characterNext");
+        document.getElementById(
+            "characterNext"
+        );
 
 
     if (
@@ -1117,160 +2162,197 @@
         !bio ||
         !casting
     ) {
+
         return;
+
     }
 
 
-    /*
-     * =========================================================
-     * CHARACTER DATA
-     *
-     * Replace the placeholder information below.
-     *
-     * Images should live in:
-     *
-     * images/
-     *     character-01-headshot.jpg
-     *     character-02-headshot.jpg
-     *     etc.
-     *
-     * =========================================================
-     */
+    /* ------------------------------------------------------------
+       CHARACTER DATA
+       ------------------------------------------------------------ */
 
     const characters = [
 
         {
-            image: "images/character-01-headshot.jpg",
+            name:
+                "LUCY D'ANGELO",
 
-            name: "LUCY D'ANGELO",
+            role:
+                "DANCE DIVISION STUDENT - JUNIOR",
 
-            role: "CHARACTER 01",
+            image:
+                "images/character-01-headshot.jpg",
 
             bio:
-                "A short description of the character. Introduce who they are, where they come from, and the emotional or narrative space they occupy within Dance Division.",
+                "Lucy D'Angelo is at the center of the story — intelligent and determined.",
 
             casting:
-                "Potential casting: Emily DeForest (Actor)."
+                "Emily DeForest — Actor"
         },
 
 
         {
-            image: "images/character-02-headshot.jpg",
+            name:
+                "FRANKIE FLINT",
 
-            name: "FRANKIE FLINT",
+            role:
+                "DANCE DIVISION STUDENT - JUNIOR",
 
-            role: "CHARACTER 02",
+            image:
+                "images/character-02-headshot.jpg",
 
             bio:
-                "A short description of the character. Introduce who they are, where they come from, and the emotional or narrative space they occupy within Dance Division.",
+                "Frankie is the kind of magnetic performer one dreams of being. They are effortless. Frankie is returning to school after disappearing at the end of the sophomore spring semester and missing the fall semester. No one know why... Frankie discovered that her mother (other mother) is the famous Sandrana Bell",
 
             casting:
-                "Potential casting: Isaac Powell (Actor)."
+                "Isaac Powell — Actor"
         },
 
 
         {
-            image: "images/character-03-headshot.jpg",
+            name:
+                "JONAH LENTZ",
 
-            name: "JONAH LENTZ",
+            role:
+                "FILM STUDENT - SENIOR",
 
-            role: "CHARACTER 03",
+            image:
+                "images/character-03-headshot.jpg",
 
             bio:
-                "A short description of the character. Introduce who they are, where they come from, and the emotional or narrative space they occupy within Dance Division.",
+                "Jonah is observant and introverted but overcomes these qualities as the discovery their true place in the world as a filmmaker as this project takes over their life. He understands people through the smallest gestures and often notices what everyone else misses. They are desperate to make a name for themselves before graduating with any prospects.",
 
             casting:
-                "Potential casting: Yonatan Gebeyahu (Actor)."
+                "Yonatan Gebeyahu — Actor"
         },
 
 
         {
-            image: "images/character-04-headshot.jpg",
+            name:
+                "JUDE HARRISON",
 
-            name: "JUDE HARRISON",
+            role:
+                "CHARACTER",
 
-            role: "CHARACTER 04",
+            image:
+                "images/character-04-headshot.jpg",
 
             bio:
-                "A short description of the character. Introduce who they are, where they come from, and the emotional or narrative space they occupy within Dance Division.",
+                "Jude moves between worlds — a beauty, a talent, and internallly a poet. Their physicality carries both control and vulnerability and leads people to take them for granted by only appreciating them superficially. They begin the season dating Lucy but evolve beyond the smallness of that relationship and being to explore other possibilities (they kiss Frankie, bisexual)",
 
             casting:
-                "Potential casting: Tate Justus (Dancer / Actor / Choreographer)."
+                "Tate Justus — Dancer / Actor / Choreographer"
         },
 
 
         {
-            image: "images/character-05-headshot.jpg",
+            name:
+                "JACK ZANE",
 
-            name: "JACK ZANE",
+            role:
+                "DANCE DIVISION PROGRAM DIRECTOR / GRAHAM & DOG OBSESSED / FRANKIE'S FATHER",
 
-            role: "CHARACTER 05",
+            image:
+                "images/character-05-headshot.jpg",
 
             bio:
-                "A short description of the character. Introduce who they are, where they come from, and the emotional or narrative space they occupy within Dance Division.",
+                "Jack is theatrical, complicated and deeply physical. He understands performance as both protection and revelation. A photo of Martha Graham with her dogs hangs on the way behind their desk.",
 
             casting:
-                "Potential casting: Jack Ferver (Actor / Choreographer / Dancer)."
+                "Jack Ferver — Actor / Choreographer / Dancer"
         },
 
 
         {
-            image: "images/character-06-headshot.jpg",
+            name:
+                "BODHI D'ANGELO",
 
-            name: "BODHI D'ANGELO",
+            role:
+                "COMPUTER SCIENCE DIVISION - FRESHMAN / LUCY'S BROTHER",
 
-            role: "CHARACTER 06",
+            image:
+                "images/character-06-headshot.jpg",
 
             bio:
-                "A short description of the character. Introduce who they are, where they come from, and the emotional or narrative space they occupy within Dance Division.",
+                "Bodhi is the spiritually enlightenend character who doesn't know everything.",
 
             casting:
-                "Potential casting: Peter Smith (Actor)."
+                "Peter Smith — Actor"
         },
 
 
         {
-            image: "images/character-07-headshot.jpg",
+            name:
+                "KIM CONRAD",
 
-            name: "",
+            role:
+                "DUAL DEGREE FILM DIVISION & DANCE DIVISION - JUNIOR",
 
-            role: "CHARACTER 07",
+            image:
+                "images/character-07-headshot.jpg",
 
             bio:
-                "A short description of the character. Introduce who they are, where they come from, and the emotional or narrative space they occupy within Dance Division.",
+                "Kim is the most explicitly funny character, she is untethered and it keeps her on the outside. She says things like “You’re half black?” (to Frankie) and “I thought you were gay.” (to moser)",
 
             casting:
-                "Potential casting: Becky Abrams (Actor)."
+                "Becky Abrams — Actor"
         },
 
 
         {
-            image: "images/character-08-headshot.jpg",
+            name:
+                "LOUISE FLINT",
 
-            name: "LOUISE FLINT",
+            role:
+                "COMPUTER SCIENCE PROFESSOR / FRANKIE'S MOTHER",
 
-            role: "CHARACTER 08",
+            image:
+                "images/character-08-headshot.jpg",
 
             bio:
-                "A short description of the character. Introduce who they are, where they come from, and the emotional or narrative space they occupy within Dance Division.",
+                "Louise carries the accumulated history of the people around her. She is perceptive, grounded and emotionally precise.",
 
             casting:
-                "Potential casting: April Mathis (Actor)."
+                "April Mathis — Actor"
         },
 
 
         {
-            image: "images/character-09-headshot.jpg",
+            name:
+                "SANDRANA BELL",
 
-            name: "SANDRANA BELL",
+            role:
+                "FAMOUS CONTEMPORARY CHOREOGRAPHER",
 
-            role: "CHARACTER 09",
+            image:
+                "images/character-09-headshot.jpg",
 
             bio:
-                "A short description of the character. Introduce who they are, where they come from, and the emotional or narrative space they occupy within Dance Division.",
+                "Sandrana is selfish.",
 
             casting:
-                "Potential casting: Bobbi Jean Smith (Choreographer/Dancer)."
+                "Bobbi Jean Smith — Choreographer / Dancer"
+        }
+
+        ,
+
+
+        {
+            name:
+                "REID & HARRIET",
+
+            role:
+                "DANCE DIVISION RESIDENT COSTUME DESIGNERS",
+
+            image:
+                "images/character-10-headshot.jpg",
+
+            bio:
+                "Successful Costume Designers working in the Dance Division.",
+
+            casting:
+                "Reid Bartelme and Harriet Jung"
         }
 
     ];
@@ -1279,23 +2361,126 @@
     let index = 0;
 
 
-    /* UPDATE TOTAL */
+    if (total) {
 
-    total.textContent =
-        String(characters.length)
-            .padStart(2, "0");
+        total.textContent =
+            String(
+                characters.length
+            ).padStart(
+                2,
+                "0"
+            );
+
+    }
 
 
-    /* SHOW CHARACTER */
+    /* ------------------------------------------------------------
+       PRELOAD
+       ------------------------------------------------------------ */
 
-    function showCharacter(newIndex) {
+    function preloadCharacter(
+        characterIndex
+    ) {
+
+        if (
+            characterIndex < 0 ||
+            characterIndex >=
+                characters.length
+        ) {
+
+            return;
+
+        }
+
+
+        const preload =
+            new Image();
+
+
+        preload.src =
+            characters[
+                characterIndex
+            ].image;
+
+    }
+
+
+    function preloadAdjacent() {
+
+        preloadCharacter(
+            index + 1
+        );
+
+        preloadCharacter(
+            index - 1
+        );
+
+    }
+
+
+    /* ------------------------------------------------------------
+       IMAGE ERROR HANDLER
+       ------------------------------------------------------------ */
+
+    image.addEventListener(
+        "error",
+        () => {
+
+            console.error(
+                "Character image failed to load:",
+                image.src
+            );
+
+
+            image.classList.remove(
+                "loaded"
+            );
+
+            image.classList.remove(
+                "is-changing"
+            );
+
+        }
+    );
+
+
+    /* ------------------------------------------------------------
+       IMAGE LOAD HANDLER
+       ------------------------------------------------------------ */
+
+    image.addEventListener(
+        "load",
+        () => {
+
+            image.classList.remove(
+                "is-changing"
+            );
+
+            image.classList.add(
+                "loaded"
+            );
+
+        }
+    );
+
+
+    /* ------------------------------------------------------------
+       SHOW CHARACTER
+       ------------------------------------------------------------ */
+
+    function showCharacter(
+        newIndex,
+        animate = true
+    ) {
 
         if (!characters.length) {
             return;
         }
 
 
-        if (newIndex < 0) {
+        if (
+            newIndex < 0
+        ) {
 
             newIndex =
                 characters.length - 1;
@@ -1313,37 +2498,56 @@
         }
 
 
-        index = newIndex;
+        index =
+            newIndex;
 
 
         const character =
             characters[index];
 
 
+        if (animate) {
+
+            image.classList.add(
+                "is-changing"
+            );
+
+        } else {
+
+            image.classList.remove(
+                "is-changing"
+            );
+
+        }
+
+
         /*
-         * Fade image out before changing source.
+         * Remove loaded state before changing
+         * the source so the new image fades in
+         * only after it actually exists.
          */
 
-        image.classList.remove("loaded");
-
-
-        image.onload = () => {
-
-            image.classList.add("loaded");
-
-        };
+        image.classList.remove(
+            "loaded"
+        );
 
 
         image.src =
             character.image;
 
+
         image.alt =
-            `${character.name} — Dance Division`;
+            character.name ||
+            "Dance Division character";
 
 
         number.textContent =
-            String(index + 1)
-                .padStart(2, "0");
+            String(
+                index + 1
+            ).padStart(
+                2,
+                "0"
+            );
 
 
         role.textContent =
@@ -1351,7 +2555,8 @@
 
 
         name.textContent =
-            character.name;
+            character.name ||
+            "CHARACTER";
 
 
         bio.textContent =
@@ -1362,95 +2567,88 @@
             character.casting;
 
 
-        footerName.textContent =
-            character.name;
+        if (footerName) {
 
+            footerName.textContent =
+                character.name ||
+                "CHARACTER";
 
-        current.textContent =
-            String(index + 1)
-                .padStart(2, "0");
-
-
-        preloadCharacterImages();
-
-    }
-
-
-    /* PRELOAD ADJACENT CHARACTERS */
-
-    function preloadCharacterImages() {
-
-        if (!characters.length) {
-            return;
         }
 
 
-        const nextIndex =
-            (index + 1) %
-            characters.length;
+        if (current) {
+
+            current.textContent =
+                String(
+                    index + 1
+                ).padStart(
+                    2,
+                    "0"
+                );
+
+        }
 
 
-        const previousIndex =
-            (index - 1 +
-                characters.length) %
-            characters.length;
-
-
-        [
-            characters[nextIndex],
-            characters[previousIndex]
-        ].forEach(character => {
-
-            const preload =
-                new Image();
-
-            preload.src =
-                character.image;
-
-        });
+        preloadAdjacent();
 
     }
 
 
-    function previousCharacter() {
+    /* ------------------------------------------------------------
+       BUTTONS
+       ------------------------------------------------------------ */
 
-        showCharacter(index - 1);
+    if (previous) {
+
+        previous.addEventListener(
+            "click",
+            () => {
+
+                showCharacter(
+                    index - 1
+                );
+
+            }
+        );
 
     }
 
 
-    function nextCharacter() {
+    if (next) {
 
-        showCharacter(index + 1);
+        next.addEventListener(
+            "click",
+            () => {
+
+                showCharacter(
+                    index + 1
+                );
+
+            }
+        );
 
     }
 
 
-    previous.addEventListener(
-        "click",
-        previousCharacter
-    );
-
-
-    next.addEventListener(
-        "click",
-        nextCharacter
-    );
-
-
-    /* =========================================================
+    /* ------------------------------------------------------------
        KEYBOARD
-       ========================================================= */
+       ------------------------------------------------------------ */
 
     document.addEventListener(
         "keydown",
         event => {
 
             if (
-                event.target.tagName === "INPUT" ||
-                event.target.tagName === "TEXTAREA"
+                event.target.tagName ===
+                    "INPUT" ||
+                event.target.tagName ===
+                    "TEXTAREA" ||
+                event.target.tagName ===
+                    "SELECT"
             ) {
+
                 return;
+
             }
 
 
@@ -1460,7 +2658,9 @@
                 );
 
 
-            if (!browser) return;
+            if (!browser) {
+                return;
+            }
 
 
             const rect =
@@ -1469,102 +2669,144 @@
 
             const visible =
                 rect.top <
-                window.innerHeight &&
+                    window.innerHeight &&
                 rect.bottom > 0;
 
 
-            if (!visible) return;
-
-
-            if (event.key === "ArrowLeft") {
-
-                previousCharacter();
-
+            if (!visible) {
+                return;
             }
-
-
-            if (event.key === "ArrowRight") {
-
-                nextCharacter();
-
-            }
-
-        }
-    );
-
-
-    /* =========================================================
-       TOUCH SWIPE
-       ========================================================= */
-
-    let touchStartX = 0;
-    let touchStartY = 0;
-
-
-    image.addEventListener(
-        "touchstart",
-        event => {
-
-            const touch =
-                event.changedTouches[0];
-
-            touchStartX =
-                touch.clientX;
-
-            touchStartY =
-                touch.clientY;
-
-        },
-        {
-            passive: true
-        }
-    );
-
-
-    image.addEventListener(
-        "touchend",
-        event => {
-
-            const touch =
-                event.changedTouches[0];
-
-            const deltaX =
-                touch.clientX -
-                touchStartX;
-
-            const deltaY =
-                touch.clientY -
-                touchStartY;
 
 
             if (
-                Math.abs(deltaX) > 50 &&
-                Math.abs(deltaX) >
-                    Math.abs(deltaY)
+                event.key ===
+                "ArrowLeft"
             ) {
 
-                if (deltaX > 0) {
+                event.preventDefault();
 
-                    previousCharacter();
-
-                } else {
-
-                    nextCharacter();
-
-                }
+                showCharacter(
+                    index - 1
+                );
 
             }
 
-        },
-        {
-            passive: true
+
+            if (
+                event.key ===
+                "ArrowRight"
+            ) {
+
+                event.preventDefault();
+
+                showCharacter(
+                    index + 1
+                );
+
+            }
+
         }
     );
 
 
-    /* INITIAL CHARACTER */
+    /* ------------------------------------------------------------
+       TOUCH / SWIPE
+       ------------------------------------------------------------ */
 
-    showCharacter(0);
+    let touchStartX = 0;
+
+    let touchStartY = 0;
+
+
+    const characterStage =
+        document.querySelector(
+            ".character-stage"
+        );
+
+
+    if (characterStage) {
+
+        characterStage.addEventListener(
+            "touchstart",
+            event => {
+
+                const touch =
+                    event.changedTouches[0];
+
+
+                touchStartX =
+                    touch.clientX;
+
+
+                touchStartY =
+                    touch.clientY;
+
+            },
+            {
+                passive: true
+            }
+        );
+
+
+        characterStage.addEventListener(
+            "touchend",
+            event => {
+
+                const touch =
+                    event.changedTouches[0];
+
+
+                const deltaX =
+                    touch.clientX -
+                    touchStartX;
+
+
+                const deltaY =
+                    touch.clientY -
+                    touchStartY;
+
+
+                if (
+                    Math.abs(deltaX) > 40 &&
+                    Math.abs(deltaX) >
+                        Math.abs(deltaY)
+                ) {
+
+                    if (
+                        deltaX < 0
+                    ) {
+
+                        showCharacter(
+                            index + 1
+                        );
+
+                    } else {
+
+                        showCharacter(
+                            index - 1
+                        );
+
+                    }
+
+                }
+
+            },
+            {
+                passive: true
+            }
+        );
+
+    }
+
+
+    /* ------------------------------------------------------------
+       INITIAL CHARACTER
+       ------------------------------------------------------------ */
+
+    showCharacter(
+        0,
+        false
+    );
 
 })();
 
@@ -1576,10 +2818,14 @@
 (function initAudioPlayer() {
 
     const audio =
-        document.getElementById("audio");
+        document.getElementById(
+            "audio"
+        );
 
     const playButton =
-        document.getElementById("playButton");
+        document.getElementById(
+            "playButton"
+        );
 
     const progressFill =
         document.getElementById(
@@ -1587,7 +2833,9 @@
         );
 
     const time =
-        document.getElementById("audioTime");
+        document.getElementById(
+            "audioTime"
+        );
 
     const duration =
         document.getElementById(
@@ -1605,244 +2853,388 @@
         );
 
     const items =
-        document.querySelectorAll(
-            ".audio-item"
+        Array.from(
+            document.querySelectorAll(
+                ".audio-item"
+            )
+        );
+
+    const progressBar =
+        document.querySelector(
+            ".audio-progress"
         );
 
 
-    if (
-        !audio ||
-        !playButton
-    ) {
+    if (!audio) {
         return;
     }
 
 
-    function formatTime(seconds) {
+    /* ------------------------------------------------------------
+       TIME FORMAT
+       ------------------------------------------------------------ */
 
-        if (!Number.isFinite(seconds)) {
+    function formatTime(
+        seconds
+    ) {
+
+        if (
+            !Number.isFinite(
+                seconds
+            )
+        ) {
+
             return "00:00";
+
         }
 
 
         const minutes =
-            Math.floor(seconds / 60);
+            Math.floor(
+                seconds / 60
+            );
 
-        const secs =
-            Math.floor(seconds % 60);
+
+        const secondsRemaining =
+            Math.floor(
+                seconds % 60
+            );
 
 
         return (
-            String(minutes).padStart(2, "0") +
+            String(minutes)
+                .padStart(2, "0") +
             ":" +
-            String(secs).padStart(2, "0")
+            String(
+                secondsRemaining
+            ).padStart(2, "0")
         );
 
     }
 
 
-    playButton.addEventListener(
-        "click",
-        () => {
+    /* ------------------------------------------------------------
+       DISPLAY
+       ------------------------------------------------------------ */
 
-            if (audio.paused) {
+    function updateDisplay() {
 
-                audio.play();
+        if (time) {
 
-            } else {
-
-                audio.pause();
-
-            }
-
-        }
-    );
-
-
-    audio.addEventListener(
-        "play",
-        () => {
-
-            playButton.textContent =
-                "PAUSE";
+            time.textContent =
+                formatTime(
+                    audio.currentTime
+                );
 
         }
-    );
 
 
-    audio.addEventListener(
-        "pause",
-        () => {
-
-            playButton.textContent =
-                "PLAY";
-
-        }
-    );
-
-
-    audio.addEventListener(
-        "loadedmetadata",
-        () => {
+        if (duration) {
 
             duration.textContent =
-                formatTime(audio.duration);
+                formatTime(
+                    audio.duration
+                );
 
         }
-    );
 
 
-    audio.addEventListener(
-        "timeupdate",
-        () => {
-
-            if (!audio.duration) return;
-
+        if (
+            progressFill &&
+            Number.isFinite(
+                audio.duration
+            ) &&
+            audio.duration > 0
+        ) {
 
             const percentage =
-                (audio.currentTime /
-                    audio.duration) *
-                100;
+                (
+                    audio.currentTime /
+                    audio.duration
+                ) * 100;
 
 
             progressFill.style.width =
                 `${percentage}%`;
 
+        }
 
-            time.textContent =
-                formatTime(audio.currentTime);
+    }
+
+
+    /* ------------------------------------------------------------
+       PLAY BUTTON
+       ------------------------------------------------------------ */
+
+    function updatePlayButton() {
+
+        if (!playButton) {
+            return;
+        }
+
+
+        playButton.textContent =
+            audio.paused
+                ? "PLAY"
+                : "PAUSE";
+
+    }
+
+
+    if (playButton) {
+
+        playButton.addEventListener(
+            "click",
+            () => {
+
+                if (
+                    audio.paused
+                ) {
+
+                    audio.play()
+                        .catch(
+                            error => {
+
+                                console.error(
+                                    "Audio playback error:",
+                                    error
+                                );
+
+                            }
+                        );
+
+                } else {
+
+                    audio.pause();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* ------------------------------------------------------------
+       TRACKS
+       ------------------------------------------------------------ */
+
+    items.forEach(
+        item => {
+
+            item.addEventListener(
+                "click",
+                () => {
+
+                    const source =
+                        item.dataset.src;
+
+
+                    const title =
+                        item.dataset.title ||
+                        "";
+
+
+                    const track =
+                        Number(
+                            item.dataset.track
+                        );
+
+
+                    if (!source) {
+                        return;
+                    }
+
+
+                    audio.pause();
+
+
+                    audio.src =
+                        source;
+
+
+                    audio.load();
+
+
+                    if (trackNumber) {
+
+                        trackNumber.textContent =
+                            String(
+                                track + 1
+                            ).padStart(
+                                2,
+                                "0"
+                            );
+
+                    }
+
+
+                    if (trackTitle) {
+
+                        trackTitle.textContent =
+                            title;
+
+                    }
+
+
+                    items.forEach(
+                        other => {
+
+                            other.classList.remove(
+                                "active"
+                            );
+
+                        }
+                    );
+
+
+                    item.classList.add(
+                        "active"
+                    );
+
+
+                    audio.play()
+                        .catch(
+                            error => {
+
+                                console.error(
+                                    "Audio playback error:",
+                                    error
+                                );
+
+                            }
+                        );
+
+                }
+            );
 
         }
     );
 
 
-    document
-        .querySelector(".audio-progress")
-        .addEventListener(
+    /* ------------------------------------------------------------
+       PROGRESS BAR
+       ------------------------------------------------------------ */
+
+    if (progressBar) {
+
+        progressBar.addEventListener(
             "click",
             event => {
 
-                if (!audio.duration) {
+                if (
+                    !Number.isFinite(
+                        audio.duration
+                    ) ||
+                    audio.duration <= 0
+                ) {
+
                     return;
+
                 }
 
 
                 const rect =
-                    event.currentTarget
-                        .getBoundingClientRect();
+                    progressBar.getBoundingClientRect();
 
 
                 const percentage =
-                    (event.clientX -
-                        rect.left) /
+                    (
+                        event.clientX -
+                        rect.left
+                    ) /
                     rect.width;
 
 
                 audio.currentTime =
-                    percentage *
+                    Math.max(
+                        0,
+                        Math.min(
+                            1,
+                            percentage
+                        )
+                    ) *
                     audio.duration;
 
             }
         );
 
-
-    items.forEach(item => {
-
-        item.addEventListener(
-            "click",
-            () => {
-
-                const src =
-                    item.dataset.src;
-
-                const title =
-                    item.dataset.title;
-
-                const track =
-                    parseInt(
-                        item.dataset.track,
-                        10
-                    );
+    }
 
 
-                audio.pause();
+    /* ------------------------------------------------------------
+       EVENTS
+       ------------------------------------------------------------ */
 
-                audio.src = src;
-
-                audio.load();
-
-
-                trackNumber.textContent =
-                    String(track + 1)
-                        .padStart(2, "0");
+    audio.addEventListener(
+        "loadedmetadata",
+        updateDisplay
+    );
 
 
-                trackTitle.textContent =
-                    title;
+    audio.addEventListener(
+        "timeupdate",
+        updateDisplay
+    );
 
 
-                items.forEach(
-                    other => {
-                        other.classList.remove(
-                            "active"
-                        );
-                    }
-                );
+    audio.addEventListener(
+        "play",
+        updatePlayButton
+    );
 
 
-                item.classList.add("active");
+    audio.addEventListener(
+        "pause",
+        updatePlayButton
+    );
 
 
-                audio.play();
+    audio.addEventListener(
+        "ended",
+        () => {
+
+            updatePlayButton();
+
+
+            if (progressFill) {
+
+                progressFill.style.width =
+                    "0%";
 
             }
-        );
 
-    });
+        }
+    );
+
+
+    updateDisplay();
+
+    updatePlayButton();
 
 })();
 
 
 /* ============================================================
-   GLOBAL VIMEO SOUND CONTROL
+   REDUCED MOTION
    ============================================================ */
 
-(function initVimeo() {
+(function initReducedMotion() {
 
-    const iframe =
-        document.getElementById("mainFilm");
-
-    /*
-     * The old Film section has been replaced by Characters.
-     * Kept intentionally disabled rather than removing the
-     * dependency logic elsewhere in the project.
-     */
-
-    if (!iframe) {
-        return;
-    }
+    const mediaQuery =
+        window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        );
 
 
     if (
-        typeof Vimeo === "undefined" ||
-        !Vimeo.Player
+        mediaQuery.matches
     ) {
-        return;
+
+        document.documentElement.classList.add(
+            "reduced-motion"
+        );
+
     }
-
-
-    const player =
-        new Vimeo.Player(iframe);
-
-
-    player.ready()
-        .catch(error => {
-
-            console.warn(
-                "Vimeo player unavailable:",
-                error
-            );
-
-        });
 
 })();

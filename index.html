@@ -25,10 +25,19 @@
 
 <body>
 
+    <!-- ============================================================
+         GRAIN
+         ============================================================ -->
+
     <div class="grain" aria-hidden="true"></div>
 
-    <!-- LOADER -->
+
+    <!-- ============================================================
+         LOADER
+         ============================================================ -->
+
     <div class="loader" id="loader">
+
         <div class="loader-inner">
 
             <div class="loader-top">
@@ -37,15 +46,20 @@
 
             <div class="loader-center">
 
-                <div class="loader-percent" id="loaderPercent">
+                <div
+                    class="loader-percent"
+                    id="loaderPercent"
+                >
                     00
                 </div>
 
                 <div class="loader-progress">
+
                     <div
                         class="loader-progress-fill"
                         id="loaderProgress"
                     ></div>
+
                 </div>
 
             </div>
@@ -55,10 +69,14 @@
             </div>
 
         </div>
+
     </div>
 
 
-    <!-- HEADER -->
+    <!-- ============================================================
+         HEADER
+         ============================================================ -->
+
     <header class="site-header">
 
         <a
@@ -76,7 +94,10 @@
     </header>
 
 
-    <!-- NAVIGATION -->
+    <!-- ============================================================
+         NAVIGATION
+         ============================================================ -->
+
     <nav
         class="navigation"
         id="navigation"
@@ -143,27 +164,43 @@
     </nav>
 
 
-    <!-- CHAPTER INDICATOR -->
+    <!-- ============================================================
+         CHAPTER INDICATOR
+         ============================================================ -->
+
     <div class="chapter-indicator">
 
-        <span id="chapterCurrent">00</span>
+        <span id="chapterCurrent">
+            00
+        </span>
 
-        <span class="chapter-divider">/</span>
+        <span class="chapter-divider">
+            /
+        </span>
 
-        <span>05</span>
+        <span>
+            05
+        </span>
 
         <div class="chapter-progress">
+
             <div id="chapterProgress"></div>
+
         </div>
 
     </div>
 
 
+    <!-- ============================================================
+         MAIN
+         ============================================================ -->
+
     <main>
 
-        <!-- =========================================================
+
+        <!-- ========================================================
              00 — OPENING
-        ========================================================== -->
+             ======================================================== -->
 
         <section
             class="chapter chapter-opening"
@@ -218,9 +255,9 @@
         </section>
 
 
-        <!-- =========================================================
+        <!-- ========================================================
              01 — SCRIPT
-        ========================================================== -->
+             ======================================================== -->
 
         <section
             class="chapter chapter-script"
@@ -267,8 +304,6 @@
             </div>
 
 
-            <!-- PDF VIEWER -->
-
             <div
                 class="pdf-viewer"
                 id="pdfViewer"
@@ -284,7 +319,11 @@
                     </div>
 
                     <div class="pdf-loading-line">
-                        <div id="pdfLoadingProgress"></div>
+
+                        <div
+                            id="pdfLoadingProgress"
+                        ></div>
+
                     </div>
 
                 </div>
@@ -303,14 +342,13 @@
                     ></canvas>
 
 
-                    <!-- CLICK LEFT / RIGHT HALF OF PAGE -->
-
                     <button
                         class="pdf-hit-area pdf-hit-left"
                         id="pdfHitLeft"
                         type="button"
                         aria-label="Previous page"
                     ></button>
+
 
                     <button
                         class="pdf-hit-area pdf-hit-right"
@@ -378,9 +416,9 @@
         </section>
 
 
-        <!-- =========================================================
+        <!-- ========================================================
              02 — SOUND
-        ========================================================== -->
+             ======================================================== -->
 
         <section
             class="chapter chapter-sound"
@@ -403,9 +441,9 @@
                     <h2>
                         MUSIC
                         <br>
-                        FOR THE
+                        TO MOVE
                         <br>
-                        BODY.
+                        THE BODY.
                     </h2>
 
                 </div>
@@ -419,7 +457,7 @@
 
                     <p>
                         Original music and sound studies
-                        developed alongside the series.
+                        developed Dance Division.
                     </p>
 
                 </div>
@@ -487,8 +525,15 @@
                             data-src="audio/dns dvsn.mp3"
                             data-title="DNS DVSN"
                         >
-                            <span>01</span>
-                            <span>DNS DVSN</span>
+
+                            <span>
+                                01
+                            </span>
+
+                            <span>
+                                DNS DVSN
+                            </span>
+
                         </button>
 
 
@@ -499,8 +544,15 @@
                             data-src="audio/ef you en.mp3"
                             data-title="EF YOU EN"
                         >
-                            <span>02</span>
-                            <span>EF YOU EN</span>
+
+                            <span>
+                                02
+                            </span>
+
+                            <span>
+                                EF YOU EN
+                            </span>
+
                         </button>
 
 
@@ -511,8 +563,15 @@
                             data-src="audio/star star star.mp3"
                             data-title="STAR STAR STAR"
                         >
-                            <span>03</span>
-                            <span>STAR STAR STAR</span>
+
+                            <span>
+                                03
+                            </span>
+
+                            <span>
+                                STAR STAR STAR
+                            </span>
+
                         </button>
 
                     </div>
@@ -524,9 +583,9 @@
         </section>
 
 
-        <!-- =========================================================
+        <!-- ========================================================
              03 — INSPIRATION
-        ========================================================== -->
+             ======================================================== -->
 
         <section
             class="chapter chapter-inspiration"
@@ -547,12 +606,9 @@
                     </div>
 
                     <h2>
-                        IMAGES
+                        MOVING
                         <br>
-                        BEFORE
-                        <br>
-                        MOVEMENT.
-                    </h2>
+IMAGES                    </h2>
 
                 </div>
 
@@ -569,8 +625,6 @@
             </div>
 
 
-            <!-- INSPIRATION CAROUSEL -->
-
             <div
                 class="inspiration-carousel"
                 id="inspirationCarousel"
@@ -578,12 +632,10 @@
 
                 <div class="inspiration-stage">
 
-                    <img
-                        id="inspirationImage"
-                        src=""
-                        alt=""
-                        draggable="false"
-                    >
+                    <div
+                        class="inspiration-track"
+                        id="inspirationTrack"
+                    ></div>
 
                 </div>
 
@@ -593,7 +645,9 @@
                     <div
                         class="inspiration-caption"
                         id="inspirationCaption"
-                    ></div>
+                    >
+                        01 / REFERENCE
+                    </div>
 
 
                     <div class="inspiration-controls">
@@ -609,7 +663,9 @@
 
                         <div class="inspiration-count">
 
-                            <span id="inspirationCurrent">
+                            <span
+                                id="inspirationCurrent"
+                            >
                                 01
                             </span>
 
@@ -617,8 +673,10 @@
                                 /
                             </span>
 
-                            <span id="inspirationTotal">
-                                04
+                            <span
+                                id="inspirationTotal"
+                            >
+                                20
                             </span>
 
                         </div>
@@ -641,9 +699,9 @@
         </section>
 
 
-        <!-- =========================================================
+        <!-- ========================================================
              04 — CHARACTERS
-        ========================================================== -->
+             ======================================================== -->
 
         <section
             class="chapter chapter-characters"
@@ -674,16 +732,12 @@
 
             <div class="characters-intro">
 
-            
-
                 <p class="mono-copy">
                     CHARACTERS / CASTING
                 </p>
 
             </div>
 
-
-            <!-- CHARACTER DISPLAY -->
 
             <div
                 class="character-browser"
@@ -730,7 +784,7 @@
                             id="characterName"
                             class="character-name"
                         >
-                            CHARACTER NAME
+                            CHARACTER
                         </h3>
 
 
@@ -768,8 +822,10 @@
 
                     <div class="character-caption">
 
-                        <span id="characterFooterName">
-                            CHARACTER NAME
+                        <span
+                            id="characterFooterName"
+                        >
+                            CHARACTER
                         </span>
 
                         <span>
@@ -787,13 +843,17 @@
                             aria-label="Previous character"
                         >
                             ←
-                            <span>PREVIOUS</span>
+                            <span>
+                                PREVIOUS
+                            </span>
                         </button>
 
 
                         <div class="character-count">
 
-                            <span id="characterCurrent">
+                            <span
+                                id="characterCurrent"
+                            >
                                 01
                             </span>
 
@@ -801,7 +861,9 @@
                                 /
                             </span>
 
-                            <span id="characterTotal">
+                            <span
+                                id="characterTotal"
+                            >
                                 09
                             </span>
 
@@ -813,8 +875,13 @@
                             type="button"
                             aria-label="Next character"
                         >
-                            <span>NEXT</span>
+
+                            <span>
+                                NEXT
+                            </span>
+
                             →
+
                         </button>
 
                     </div>
@@ -826,9 +893,9 @@
         </section>
 
 
-        <!-- =========================================================
+        <!-- ========================================================
              05 — END
-        ========================================================== -->
+             ======================================================== -->
 
         <section
             class="chapter chapter-closing"
@@ -888,16 +955,23 @@
 
         </section>
 
+
     </main>
 
 
-    <!-- PDF.JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <!-- ============================================================
+         LIBRARIES
+         ============================================================ -->
 
-    <!-- VIMEO PLAYER API -->
-    <script src="https://player.vimeo.com/api/player.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"
+    ></script>
 
-    <!-- SITE JS -->
+
+    <!-- ============================================================
+         MAIN JAVASCRIPT
+         ============================================================ -->
+
     <script src="script.js"></script>
 
 </body>
