@@ -1658,73 +1658,70 @@ img {
     color: #66645f;
 }
 
+/* CHARACTER NAVIGATION — CLEAN ARROWS */
 
-/* ============================================================
-   CHARACTER NAVIGATION
-   ============================================================ */
-
-.character-navigation {
+.character-nav {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-
-    width: 100%;
-
-    margin-top: 35px;
-
-    border-top: 1px solid rgba(24, 24, 24, 0.18);
-    border-bottom: 1px solid rgba(24, 24, 24, 0.18);
+    justify-content: center;
+    gap: 18px;
 }
 
-
-/* Navigation buttons */
-
-.character-navigation button {
+.character-nav button {
     appearance: none;
+    -webkit-appearance: none;
 
-    width: 50px;
-    height: 46px;
+    width: auto;
+    height: auto;
 
+    margin: 0;
     padding: 0;
 
-    border: 0;
-    background: transparent;
+    border: 0 !important;
+    outline: 0 !important;
+    border-radius: 0;
 
-    font-family: "DM Mono", monospace;
-    font-size: 10px;
-    font-weight: 500;
+    background: transparent !important;
+    box-shadow: none !important;
 
     color: #181818;
+
+    font-family: "DM Mono", monospace;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1;
 
     cursor: pointer;
 
     transition:
-        background 180ms ease,
-        opacity 180ms ease;
+        opacity 0.2s ease,
+        transform 0.2s ease;
 }
 
-
-.character-navigation button:hover {
-    background: rgba(24, 24, 24, 0.06);
+.character-nav button:hover {
+    background: transparent !important;
+    opacity: 0.45;
 }
 
+.character-nav button:focus,
+.character-nav button:focus-visible {
+    outline: none !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
 
-/* Character counter */
+.character-nav button:active {
+    transform: scale(0.9);
+}
 
-.character-counter {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-
+.character-nav > span {
     font-family: "DM Mono", monospace;
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 500;
-
-    letter-spacing: 0.04em;
-
+    line-height: 1;
+    letter-spacing: 0.06em;
     color: #66645f;
 }
-
 
 /* ============================================================
    CHARACTER FOOTER
