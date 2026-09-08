@@ -1890,7 +1890,7 @@
 
         {
             name:
-                "JACK ZANE",
+                "HENRY ZANE",
 
             role:
                 "DANCE DIVISION PROGRAM DIRECTOR / GRAHAM & DOG OBSESSED / FRANKIE'S FATHER",
@@ -2399,10 +2399,10 @@
 
         {
             src:
-                "audio/ef you en.mp3",
+                "audio/fun.mp3",
 
             title:
-                "EF YOU EN",
+                "F U N",
 
             lyrics: [
 
