@@ -1578,62 +1578,73 @@
 
     const inspirationContent = [
 
-        {
-            type:
-                "INSTAGRAM REEL",
+    {
+        type:
+            "INSTAGRAM REEL",
 
-            description:
-                "EMILY DEFOREST SUNGLASSES.",
+        description:
+            "EMILY DEFOREST SUNGLASSES.",
 
-            link:
-                "https://www.instagram.com/p/DaWM3k8HdkH/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="
-        },
+        link:
+            "https://www.instagram.com/p/DaWM3k8HdkH/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="
+    },
 
-        {
-            type:
-                "INSTAGRAM REEL",
+    {
+        type:
+            "INSTAGRAM REEL",
 
-            description:
-                "ISAAC POWELL CRUISING.",
+        description:
+            "ISAAC POWELL CRUISING.",
 
-            link:
-                "https://www.instagram.com/reel/Dap7SnjxNoi/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="
-        },
+        link:
+            "https://www.instagram.com/reel/Dap7SnjxNoi/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="
+    },
 
-        {
-            type:
-                "INSTAGRAM REEL",
+    {
+        type:
+            "INSTAGRAM REEL",
 
-            description:
-                "TATE JUSTUS DANCING.",
+        description:
+            "TATE JUSTUS DANCING.",
 
-            link:
-                "https://www.instagram.com/tv/CY5Vkm5lN6d/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="
-        },
+        link:
+            "https://www.instagram.com/tv/CY5Vkm5lN6d/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="
+    },
 
-        {
-            type:
-                "INSTAGRAM REEL",
+    {
+        type:
+            "INSTAGRAM REEL",
 
-            description:
-                "JACK FERVER DRAMATUB.",
+        description:
+            "JACK FERVER DRAMATUB.",
 
-            link:
-                "https://www.instagram.com/reel/CpWSn_-j2P4/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="
-        },
+        link:
+            "https://www.instagram.com/reel/CpWSn_-j2P4/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="
+    },
 
-        {
-            type:
-                "INSTAGRAM REEL",
+    {
+        type:
+            "INSTAGRAM REEL",
 
-            description:
-                "YONATAN GEBEYAHU MOLIERING.",
+        description:
+            "YONATAN GEBEYAHU MOLIERING.",
 
-            link:
-                "https://www.instagram.com/reel/DCE791xvB4l/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="
-        }
+        link:
+            "https://www.instagram.com/reel/DCE791xvB4l/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="
+    },
 
-    ];
+    {
+        type:
+            "YOUTUBE",
+
+        description:
+            "SMERZ \"DREAMS\" DANCE VIDEO REFERENCE.",
+
+        link:
+            "https://www.youtube.com/watch?v=Tkyn9CyxIIM"
+    }
+
+];
 
 
     const inspirationReferences =
