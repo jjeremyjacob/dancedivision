@@ -1986,8 +1986,24 @@
 
             casting:
                 "Reid Bartelme & Harriet Jung"
-        }
+        },
 
+         {
+            name:
+                "NOMI",
+
+            role:
+                "ZANE'S DOG",
+
+            image:
+                "images/character-11-headshot.jpg",
+
+            bio:
+                "Perfect dog.",
+
+            casting:
+                "Nomi"
+        }
 
     ];
 
