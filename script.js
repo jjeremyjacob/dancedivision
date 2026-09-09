@@ -1964,7 +1964,7 @@
                 "images/character-08-headshot.jpg",
 
             bio:
-                "Sandrana is a famous choreographer. After giving birth to Frankie, she gets offered a dance contract in Europe and leaves the child with Louise. In the second season we discover that Sandrana isn't actually evil and that she essentially got pregnant for Louise and it was Louise who insisted Sandrana took the job in Europe. Zane however has never been able to reconcile the fact that Sandrana left. Zane being biologically linked to Frankie through Sandrana, they both becomes ghostly spirits to the life of Frankie.",
+                "Sandrana is a famous choreographer. After giving birth to Frankie, she gets offered a dance contract in Europe and leaves the child with Louise. In the second season we discover that Sandrana isn't actually evil and that she essentially got pregnant for Louise and it was Louise who insisted Sandrana take the job in Europe. Zane however has never been able to reconcile the fact that Sandrana left. Zane being biologically linked to Frankie through Sandrana, they both becomes ghostly spirits to the life of Frankie.",
 
             casting:
                 "April Mathis — Actor"
