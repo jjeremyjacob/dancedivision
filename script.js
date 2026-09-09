@@ -1838,7 +1838,7 @@
                 "images/character-01-headshot.jpg",
 
             bio:
-                "Lucy D'Angelo is at the center of the story — intelligent and determined.",
+                "Lucy is ambitious, driven, competitive, and intensely determined to make Dance Division succeed. They are a natural organizer and a forceful creative presence, constantly pushing themselves and everyone around them toward something bigger. Lucy wants to be recognized as exceptional and has a deep need to prove that their vision is worthy of attention. Their confidence often masks insecurity, particularly when they feel overshadowed by Frankie’s seemingly effortless talent. Lucy’s ambition can become controlling, and their desire to shape the project—and the people within it—gradually creates tension with those closest to them.",
 
             casting:
                 "Emily DeForest — Actor"
@@ -1856,7 +1856,7 @@
                 "images/character-02-headshot.jpg",
 
             bio:
-                "Frankie is the kind of magnetic performer one dreams of being. They are effortless. Frankie is returning to school after disappearing at the end of the sophomore spring semester and missing the fall semester. No one know why... Frankie discovered that her mother (other mother) is the famous Sandrana Bell",
+                "Frankie is the kind of magnetic performer one dreams of being. They are effortless. Frankie is returning to school after disappearing at the end of the sophomore spring semester and missing the fall semester. No one know why... Frankie discovered that her mother (other mother) is the famous Sandrana Bell. Frankie is a magnetic, instinctive, and extraordinarily talented dancer. They possess a natural physicality and confidence that makes their movement appear effortless. Unlike Lucy, Frankie doesn't seem driven by the need to prove themselves. Independent, funny, perceptive, and difficult to control, Frankie has a strong sense of their own identity. They quickly recognize the tensions developing around them and are not afraid to challenge people when something feels wrong. Their presence becomes increasingly important to both the project and Lucy's emotional trajectory.",
 
             casting:
                 "Isaac Powell — Actor"
@@ -1874,7 +1874,7 @@
                 "images/character-03-headshot.jpg",
 
             bio:
-                "Jonah is observant and introverted but overcomes these qualities as they discovery their true place in the world as a filmmaker as this project takes over their life. He understands people through the smallest gestures and often notices what everyone else misses. They are desperate to make a name for themselves before graduating with any prospects.",
+                "Jonah is observant and introverted but overcomes these qualities as they discovery their true place in the world as a filmmaker as this project takes over their life. He understands people through the smallest gestures and often notices what everyone else misses. They are desperate to make a name for themselves before graduating with any prospects. Jonah is a serious, observant senior studying film. They wear glasses and tend toward sensible clothing and practical equipment. Their original purpose within Dance Division is to document the dancers for their thesis. As the project develops, Jonah becomes much more than an observer. They are increasingly drawn into the interpersonal dynamics surrounding the dancers and begin to understand how much is happening beneath the surface. Their camera gives them a unique position: they are simultaneously documenting the story and becoming part of it.",
 
             casting:
                 "Yonatan Gebeyahu — Actor"
@@ -1892,7 +1892,7 @@
                 "images/character-04-headshot.jpg",
 
             bio:
-                "Jude moves between worlds — a beauty, a talent, and (internallly) a poet. Their physicality carries both control and vulnerability and leads people to take them for granted by only appreciating them superficially. They begin the season dating Lucy but evolve beyond the smallness of that relationship and being to explore other possibilities (they kiss Frankie, bisexual)",
+                "Jude moves between worlds — a beauty, a talent, and (internallly) a poet. Their physicality carries both control and vulnerability and leads people to take them for granted by only appreciating them superficially. They begin the season dating Lucy but evolve beyond the smallness of that relationship and being to explore other possibilities (they kiss Frankie, bisexual). Jude is talented, charismatic, ambitious, and career-minded. They are deeply invested in the success of Dance Division and initially share Lucy's creative vision and excitement about what the project could become. Their relationship with Lucy is complicated by the pressure of the project and by their own professional ambitions. Jude cares about Lucy but increasingly struggles with the intensity of their relationship. They ultimately offer Lucy genuine encouragement while making clear that their professional goals and personal feelings are not necessarily the same thing.",
 
             casting:
                 "Tate Justus — Dancer / Actor / Choreographer"
@@ -1910,7 +1910,7 @@
                 "images/character-05-headshot.jpg",
 
             bio:
-                "Jack is theatrical, complicated and deeply physical. He understands performance as both protection and revelation. A photo of Martha Graham with her dogs hangs on the way behind their desk.",
+                "Henry is theatrical, complicated and deeply physical. He understands performance as both protection and revelation. A photo of Martha Graham with her dogs hangs on the way behind their desk. Zane is a demanding, sarcastic, and authoritative professor who controls much of the department's access to studios, resources, and opportunities. They are skeptical of Lucy's ambitions and have little patience for unnecessary theatrics. Despite their strict exterior, Zane understands dance deeply and recognizes genuine talent when they see it. Their complicated history with choreographer Sandrana Bell gives them a personal connection to the larger dance world and helps explain some of their resistance to the people and ideas Lucy is pursuing.",
 
             casting:
                 "Jack Ferver — Actor / Choreographer / Dancer"
@@ -1928,7 +1928,7 @@
                 "images/character-06-headshot.jpg",
 
             bio:
-                "Bodhi is the spiritually enlightenend character who doesn't know everything.",
+                "Bodhi is the spiritually enlightenend character who doesn't know everything. Bodhi is Lucy's younger brother and an easygoing, curious, warm presence. They have an analogue soul—someone who is grounded, observant, and genuinely interested in the world around them. Bodhi has a relaxed quality that contrasts with Lucy's intensity. They are loyal and emotionally open without being naive, and their growing connection with Frankie becomes an important part of the story. Bodhi isn't a player; they approach relationships with genuine curiosity and affection.",
 
             casting:
                 "Peter Smith — Actor"
@@ -1946,28 +1946,10 @@
                 "images/character-07-headshot.jpg",
 
             bio:
-                "Kim is the most explicitly funny character, she is untethered and it keeps her on the outside. She says things like “You’re half black?” (to Frankie) and “I thought you were gay.” (to moser)",
+                "Kim is the most explicitly funny character, she is untethered and it keeps her on the outside. She says things like “You’re half black?” (to Frankie) and “I thought you were gay.” (to moser) ",
 
             casting:
                 "Becky Abrams — Actor"
-        },
-
-
-        {
-            name:
-                "LOUISE FLINT",
-
-            role:
-                "COMPUTER SCIENCE PROFESSOR / FRANKIE'S MOTHER",
-
-            image:
-                "images/character-08-headshot.jpg",
-
-            bio:
-                "Louise carries the accumulated history of the people around her. She is perceptive, grounded and emotionally precise.",
-
-            casting:
-                "April Mathis — Actor"
         },
 
 
@@ -1979,13 +1961,13 @@
                 "FAMOUS CONTEMPORARY CHOREOGRAPHER",
 
             image:
-                "images/character-09-headshot.jpg",
+                "images/character-08-headshot.jpg",
 
             bio:
-                "Sandrana is selfish.",
+                "Sandrana is a famous choreographer. After giving birth to Frankie, she gets offered a dance contract in Europe and leaves the child with Louise. In the second season we discover that Sandrana isn't actually evil and that she essentially got pregnant for Louise and it was Louise who insisted Sandrana took the job in Europe. Zane however has never been able to reconcile the fact that Sandrana left. Zane being biologically linked to Frankie through Sandrana, they both becomes ghostly spirits to the life of Frankie.",
 
             casting:
-                "Bobbi Jean Smith — Choreographer / Dancer"
+                "April Mathis — Actor"
         },
 
 
