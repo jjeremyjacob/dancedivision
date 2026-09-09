@@ -2471,3 +2471,108 @@ img {
     font-weight: 400;
     line-height: 1.5;
 }
+
+/* ============================================================
+   SCRIPT ARCHIVE
+   ============================================================ */
+
+.script-archive {
+    width: 100%;
+    max-width: 1100px;
+    margin: 28px auto 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+}
+
+.script-archive-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 14px 0;
+    border: 0;
+    background: transparent;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-align: left;
+    cursor: pointer;
+}
+
+.script-archive-icon {
+    font-size: 16px;
+    line-height: 1;
+    transition: transform 0.25s ease;
+}
+
+.script-archive.open .script-archive-icon {
+    transform: rotate(45deg);
+}
+
+.script-archive-content {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition:
+        grid-template-rows 0.4s ease,
+        opacity 0.3s ease;
+}
+
+.script-archive.open .script-archive-content {
+    grid-template-rows: 1fr;
+    opacity: 1;
+}
+
+.script-archive-list {
+    min-height: 0;
+    overflow: hidden;
+}
+
+.script-archive-item {
+    display: grid;
+    grid-template-columns: 110px 1fr auto;
+    align-items: center;
+    gap: 20px;
+    padding: 13px 0;
+    border-top: 1px solid var(--line);
+    color: var(--ink);
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    transition: padding-left 0.25s ease;
+}
+
+.script-archive-item:hover {
+    padding-left: 10px;
+}
+
+.script-archive-item strong {
+    font-weight: 500;
+}
+
+.script-archive-item small {
+    color: var(--muted);
+    font-size: 8px;
+}
+
+.script-archive-item.current {
+    background: transparent;
+}
+
+@media (max-width: 700px) {
+
+    .script-archive-item {
+        grid-template-columns: 90px 1fr auto;
+        gap: 12px;
+        font-size: 8px;
+    }
+
+    .script-archive-item small {
+        font-size: 7px;
+    }
+
+}

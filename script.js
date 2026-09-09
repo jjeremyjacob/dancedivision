@@ -562,6 +562,32 @@
     }
 
 
+
+
+    /* ========================================================
+       SCRIPT ARCHIVE
+       ======================================================== */
+
+    const scriptArchive = document.getElementById("scriptArchive");
+    const scriptArchiveToggle =
+        document.getElementById("scriptArchiveToggle");
+
+    if (scriptArchive && scriptArchiveToggle) {
+
+        scriptArchiveToggle.addEventListener("click", () => {
+
+            const isOpen =
+                scriptArchive.classList.toggle("open");
+
+            scriptArchiveToggle.setAttribute(
+                "aria-expanded",
+                String(isOpen)
+            );
+
+        });
+
+    }
+
     /* ========================================================
        INSPIRATION CAROUSEL
        ======================================================== */
