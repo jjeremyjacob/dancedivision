@@ -615,13 +615,13 @@
 
 
     /*
-       EXACTLY 40 IMAGES.
+       EXACTLY 54 IMAGES.
        NO INSTAGRAM SLIDE.
     */
 
     const inspirationImages =
         Array.from(
-            { length: 40 },
+            { length: 54 },
             (_, index) => {
 
                 const number =
@@ -2055,7 +2055,7 @@
 
                  {
             name:
-                "DANNY",
+                "FILM DIVISION JUNIOR - CAMERA 1",
 
             role:
                 "DANNY - CAMERA GUY",
@@ -2064,7 +2064,7 @@
                 "images/character-12-headshot.jpg",
 
             bio:
-                "Camera Guy who also lives with Bodhi. Film Division Junior. Daniel Rampulla is the DP of Dance Division.",
+                "Camera person who lives in same house as Bodhi. Daniel Rampulla is the DP of Dance Division.",
 
             casting:
                 "Daniel Rampulla"
@@ -2072,7 +2072,7 @@
 
                  {
             name:
-                "JAKE",
+                "SCIENCE DIVISION JUNIOR - AUDIO GUY",
 
             role:
                 "JAKE - AUDIO GUY",
@@ -2081,10 +2081,27 @@
                 "images/character-13-headshot.jpg",
 
             bio:
-                "Audio guy who also lives with Bodhi. Science Division - Junior.",
+                "Audio person who lives in same house as Bodhi.",
 
             casting:
                 "Jacob Robert van Winkle"
+        },
+
+                 {
+            name:
+                "FILM DIVISION JUNIOR - CAMERA 2",
+
+            role:
+                "STANLEY - CAMERA GUY",
+
+            image:
+                "images/character-14-headshot.jpg",
+
+            bio:
+                "Camera person who lives in same house as Kim.",
+
+            casting:
+                "Jeremy Jacob - Director"
         }
 
     ];
