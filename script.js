@@ -621,7 +621,7 @@
 
     const inspirationImages =
         Array.from(
-            { length: 30 },
+            { length: 40 },
             (_, index) => {
 
                 const number =
@@ -1668,6 +1668,28 @@
 
         link:
             "https://www.youtube.com/watch?v=Tkyn9CyxIIM"
+    },
+
+    {
+        type:
+            "YOUTUBE",
+
+        description:
+            "\"NOUVELLE VAGUE\" NARRATIVE CINEMA VERITE .",
+
+        link:
+            "https://www.youtube.com/watch?v=UufRzKVFseg"
+    }   ,
+
+    {
+        type:
+            "YOUTUBE",
+
+        description:
+            "\"BAND A PART\" DANCING IN CAFE .",
+
+        link:
+            "https://www.youtube.com/watch?v=J1q9G2YmVqI"
     }
 
 ];
@@ -2029,6 +2051,40 @@
 
             casting:
                 "Nomi"
+        },
+
+                 {
+            name:
+                "DANNY",
+
+            role:
+                "DANNY - CAMERA GUY",
+
+            image:
+                "images/character-12-headshot.jpg",
+
+            bio:
+                "Camera Guy who also lives with Bodhi. Film Division Junior. Daniel Rampulla is the DP of Dance Division.",
+
+            casting:
+                "Daniel Rampulla"
+        },
+
+                 {
+            name:
+                "JAKE",
+
+            role:
+                "JAKE - AUDIO GUY",
+
+            image:
+                "images/character-13-headshot.jpg",
+
+            bio:
+                "Audio guy who also lives with Bodhi. Science Division - Junior.",
+
+            casting:
+                "Jacob Robert van Winkle"
         }
 
     ];
@@ -2361,74 +2417,6 @@
             title:
                 "DNS DVSN",
 
-            lyrics: [
-
-                "DNS DVSN",
-                "DNS DNS DVSN",
-                "DNS DVSN",
-                "DNS DNS DVSN",
-
-                "",
-
-                "HERE WE ARE",
-                "WE ARE",
-                "FOR YOU",
-                "TO DO WITH US",
-                "WE’LL DO FOR YOU",
-                "ALL DAY FOR YOU",
-                "ALL NIGHT FOR YOU",
-                "WE’LL DO FOR YOU",
-                "DNS D",
-
-                "",
-
-                "DNS DVSN",
-                "DNS DNS DVSN",
-                "DNS DVSN",
-                "DNS DNS DVSN",
-
-                "",
-
-                "HERE WE ARE",
-                "HERE WE ARE",
-                "HERE WE ARE",
-                "FOR YOU",
-                "TO DO",
-                "WITH US",
-                "WE’LL DO",
-                "FOR YOU",
-
-                "",
-
-                "WE’VE BEEN TRAINING",
-                "WE’VE BEEN SPINNING",
-                "WE’RE NOT PLAYIN",
-                "WE’VE BEEN STRAININ",
-                "BUT NOW",
-                "ITS TIME",
-                "FOR YOU",
-                "TO DO",
-                "WITH US",
-                "WE’LL DO",
-                "FOR YOU",
-                "ALL DAY",
-                "FOR YOU",
-                "FOR YOU",
-                "ITS TRUE",
-
-                "",
-
-                "DNS DVSN",
-                "DNS DNS DVSN",
-                "DNS DVSN",
-                "DNS DNS DVSN",
-                "DNS DVSN",
-                "DNS DNS DVSN",
-                "DNS DVSN",
-                "DNS DNS DVSN"
-
-            ]
-
         },
 
 
@@ -2439,63 +2427,17 @@
             title:
                 "F U N",
 
-            lyrics: [
+        },
 
-                "Hey you",
-                "Get over here",
-                "I wanta",
-                "I needa",
-                "I gotta",
-                "Oh pleasa gotta",
-                "ef you en",
 
-                "",
+        {
+            src:
+                "audio/starstarstar2.mp3",
 
-                "At the party",
-                "At the disco",
-                "At the deli",
-                "At the bistro",
+            title:
+                "STAR STAR STAR (BEATS VERSION)",
 
-                "",
 
-                "I wanta",
-                "I needa",
-                "I gotta",
-                "ef you en",
-                "I needa",
-                "I musta",
-                "I lusta",
-                "ef you en",
-
-                "",
-
-                "Take meeeeee",
-                "Away from heeeeerrrah",
-                "Let’s go as far away as we can",
-                "Take meeeeee",
-                "Away from heeeerraaah",
-                "Let’s go as far away as we can",
-
-                "",
-
-                "To the city",
-                "To the country",
-                "To the walmart",
-                "To the water park",
-
-                "",
-
-                "I wanta",
-                "I needa",
-                "I gotta",
-                "I really do I lusta afta",
-                "ef you en",
-                "I needa",
-                "I musta",
-                "I lusta",
-                "ef you en"
-
-            ]
 
         },
 
@@ -2505,7 +2447,7 @@
                 "audio/star star star.mp3",
 
             title:
-                "STAR STAR STAR",
+                "STAR STAR STAR (ACOUSTIC)",
 
             lyrics: []
 
