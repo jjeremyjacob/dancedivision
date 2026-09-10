@@ -615,7 +615,7 @@
 
 
     /*
-       EXACTLY 30 IMAGES.
+       EXACTLY 40 IMAGES.
        NO INSTAGRAM SLIDE.
     */
 
