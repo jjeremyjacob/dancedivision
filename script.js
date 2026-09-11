@@ -1686,10 +1686,55 @@
             "YOUTUBE",
 
         description:
-            "\"BAND A PART\" DANCING IN CAFE .",
+            "\"BAND A PART\" DANCING IN CAFE.",
 
         link:
             "https://www.youtube.com/watch?v=J1q9G2YmVqI"
+    },
+
+    {
+        type:
+            "YOUTUBE",
+
+        description:
+            "\"PEN15\" TRAILER.",
+
+        link:
+            "https://www.youtube.com/watch?v=VMVoOZ0fKGI"
+    },
+    
+
+    {
+        type:
+            "YOUTUBE",
+
+        description:
+            "\"EUPHORIA\" TRAILER.",
+
+        link:
+            "https://www.youtube.com/watch?v=UR4Pxgnm-GA"
+    },
+
+    {
+        type:
+            "YOUTUBE",
+
+        description:
+            "\"WE ARE WHO WE ARE\" TRAILER.",
+
+        link:
+            "https://www.youtube.com/watch?v=7DSZaNHckv8"
+    },
+
+    {
+        type:
+            "YOUTUBE",
+
+        description:
+            "\"SUSPIRIA\" 1977 FULL FILM.",
+
+        link:
+            "https://www.youtube.com/watch?v=AmEtccHsw1k"
     }
 
 ];
