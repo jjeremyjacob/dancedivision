@@ -1702,6 +1702,28 @@
         link:
             "https://www.youtube.com/watch?v=VMVoOZ0fKGI"
     },
+
+    {
+        type:
+            "YOUTUBE",
+
+        description:
+            "\"PRETTY IN PINK\" TRAILER.",
+
+        link:
+            "https://www.youtube.com/watch?v=mRLQUGq8eE8"
+    },
+
+    {
+        type:
+            "YOUTUBE",
+
+        description:
+            "\"THE BREAKFAST CLUB\" TRAILER.",
+
+        link:
+            "https://www.youtube.com/watch?v=BSXBvor47Zs"
+    },
     
 
     {
@@ -1875,6 +1897,11 @@
 
     buildContentReferences();
 
+       if (inspirationReferences) {
+
+        inspirationReferences.classList.add("open");
+
+    }
 
     if (
         inspirationReferencesToggle &&
