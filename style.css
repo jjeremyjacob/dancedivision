@@ -3,7 +3,6 @@
    STYLE.CSS
    ============================================================ */
 
-
 /* ============================================================
    RESET
    ============================================================ */
@@ -58,7 +57,6 @@ img {
     color: #f4f3ee;
 }
 
-
 /* ============================================================
    ROOT VARIABLES
    ============================================================ */
@@ -69,20 +67,16 @@ img {
     --muted: #77766f;
     --line: rgba(21, 21, 21, 0.18);
     --line-strong: rgba(21, 21, 21, 0.42);
-
     --mono:
         "DM Mono",
         monospace;
-
     --sans:
         "Manrope",
         sans-serif;
-
     --serif:
         "Playfair Display",
         serif;
 }
-
 
 /* ============================================================
    LOADER
@@ -137,7 +131,6 @@ img {
     background: var(--ink);
     transition: width 0.15s linear;
 }
-
 
 /* ============================================================
    HEADER
@@ -248,7 +241,6 @@ img {
     transition: width 0.5s ease;
 }
 
-
 /* ============================================================
    CHAPTERS
    ============================================================ */
@@ -289,7 +281,6 @@ img {
     font-weight: 500;
     letter-spacing: 0.08em;
 }
-
 
 /* ============================================================
    OPENING
@@ -389,7 +380,6 @@ img {
     border-top: 1px solid var(--line);
     padding-top: 15px;
 }
-
 
 /* ============================================================
    PDF
@@ -518,7 +508,6 @@ img {
     background: var(--ink);
     color: var(--paper);
 }
-
 
 /* ============================================================
    SOUND
@@ -678,7 +667,6 @@ img {
     color: var(--muted);
 }
 
-
 /* ============================================================
    LYRICS
    ============================================================ */
@@ -759,7 +747,6 @@ img {
     font-size: 10px;
     font-weight: 500;
 }
-
 
 /* ============================================================
    INSPIRATION — CLEAN CAROUSEL / NO FADE
@@ -863,7 +850,6 @@ img {
     cursor: pointer;
 }
 
-
 /* ============================================================
    CONTENT REFERENCES
    ============================================================ */
@@ -964,7 +950,6 @@ img {
     text-align: right;
     font-size: 14px;
 }
-
 
 /* ============================================================
    CHARACTERS
@@ -1122,7 +1107,6 @@ img {
     border-top: 1px solid var(--line);
 }
 
-
 /* ============================================================
    CHARACTERS — TABLET / MOBILE
    ============================================================ */
@@ -1131,14 +1115,34 @@ img {
 
     .character-browser {
         display: block;
+        width: 100%;
     }
 
     .character-stage {
+        width: 100%;
         max-width: 450px;
+        height: auto;
+        min-height: 0;
         margin: 0 auto;
     }
 
+    .character-image-wrap {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 9 / 16;
+        overflow: hidden;
+    }
+
+    .character-image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
     .character-information {
+        width: 100%;
+        min-height: 0;
+        height: auto;
         margin-top: 40px;
     }
 
@@ -1146,7 +1150,6 @@ img {
         margin-top: 40px;
     }
 }
-
 
 /* ============================================================
    END NOTES
@@ -1229,7 +1232,6 @@ img {
     letter-spacing: 0.06em;
 }
 
-
 /* ============================================================
    FULLSCREEN PDF
    ============================================================ */
@@ -1247,7 +1249,6 @@ img {
     min-height: 0;
 }
 
-
 /* ============================================================
    REDUCED MOTION
    ============================================================ */
@@ -1260,7 +1261,6 @@ img {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
 }
-
 
 /* ============================================================
    TABLET
@@ -1311,7 +1311,8 @@ img {
     }
 
     .character-stage {
-        height: min(70vh, 700px);
+        height: auto;
+        min-height: 0;
     }
 
     .character-information {
@@ -1322,7 +1323,6 @@ img {
         margin-top: 50px;
     }
 }
-
 
 /* ============================================================
    MOBILE
@@ -1394,7 +1394,6 @@ img {
         font-size: 11px;
     }
 
-
     /* --------------------------------------------------------
        OPENING
        -------------------------------------------------------- */
@@ -1423,7 +1422,6 @@ img {
         font-size: 8px;
     }
 
-
     /* --------------------------------------------------------
        PDF
        -------------------------------------------------------- */
@@ -1448,7 +1446,6 @@ img {
         font-size: 8px;
         padding: 7px 9px;
     }
-
 
     /* --------------------------------------------------------
        SOUND
@@ -1496,7 +1493,6 @@ img {
         font-size: 16px;
     }
 
-
     /* --------------------------------------------------------
        INSPIRATION — MOBILE / NO FADE
        -------------------------------------------------------- */
@@ -1508,7 +1504,6 @@ img {
     /*
        The track is absolutely positioned, so it does not
        contribute height to the stage.
-
        The stage therefore gets an explicit responsive height
        so the images remain visible on mobile.
     */
@@ -1559,7 +1554,6 @@ img {
         font-size: 9px;
     }
 
-
     /* --------------------------------------------------------
        REFERENCES
        -------------------------------------------------------- */
@@ -1592,7 +1586,6 @@ img {
         font-size: 8px;
     }
 
-
     /* --------------------------------------------------------
        CHARACTERS
        -------------------------------------------------------- */
@@ -1600,12 +1593,6 @@ img {
     .character-browser {
         gap: 35px;
         margin-top: 30px;
-    }
-
-    .character-stage {
-        height:
-            min(68vh, 620px);
-        min-height: 420px;
     }
 
     .character-name {
@@ -1631,7 +1618,6 @@ img {
     .character-role-wrap {
         max-width: 70%;
     }
-
 
     /* --------------------------------------------------------
        END NOTES
@@ -1681,7 +1667,6 @@ img {
     }
 }
 
-
 /* ============================================================
    SMALL MOBILE
    ============================================================ */
@@ -1699,6 +1684,7 @@ img {
 
     /*
        Maintain a real viewing area on very small screens.
+
        Do not allow the absolute carousel track to collapse
        the stage to zero height.
     */
@@ -1725,11 +1711,6 @@ img {
         transform: none;
     }
 
-    .character-stage {
-        min-height: 380px;
-        height: 58vh;
-    }
-
     .character-name {
         font-size: 39px;
     }
@@ -1738,7 +1719,6 @@ img {
         font-size: 15px;
     }
 }
-
 
 /* ============================================================
    VIDEO
@@ -1799,7 +1779,6 @@ img {
     font-weight: 400;
     line-height: 1.5;
 }
-
 
 /* ============================================================
    SCRIPT ARCHIVE
