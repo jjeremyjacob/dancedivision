@@ -1731,7 +1731,7 @@ const characters = [
             "Jude moves between worlds — a beauty, a talent, and (internallly) a poet. Their physicality carries both control and vulnerability and leads people to take them for granted by only appreciating them superficially. They begin the season dating Lucy but evolve beyond the smallness of that relationship and being to explore other possibilities (they kiss Frankie, bisexual). Jude is talented, charismatic, ambitious, and career-minded. They are deeply invested in the success of Dance Division and initially share Lucy's creative vision and excitement about what the project could become. Their relationship with Lucy is complicated by the pressure of the project and by their own professional ambitions. Jude cares about Lucy but increasingly struggles with the intensity of their relationship. They ultimately offer Lucy genuine encouragement while making clear that their professional goals and personal feelings are not necessarily the same thing.",
 
         casting:
-            "Tate Justus — Dancer / Actor / Choreographer"
+            "Isaac Powell — Dancer / Actor / Choreographer"
     },
 
 
