@@ -611,7 +611,7 @@ const inspirationTotal =
     document.getElementById("inspirationTotal");
 
 
-const INSPIRATION_IMAGE_COUNT = 343;
+const INSPIRATION_IMAGE_COUNT = 358;
 
 const INSPIRATION_EXTENSIONS = [
     "jpg",
