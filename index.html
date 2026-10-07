@@ -63,6 +63,114 @@
         defer
     ></script>
 
+<style>
+/* ============================================================
+   DESIGN
+   ============================================================ */
+
+.design-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+    width: 100%;
+}
+
+.design-image {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background: none;
+    cursor: zoom-in;
+    overflow: hidden;
+    text-align: left;
+}
+
+.design-image img {
+display: block;
+width: 100%;
+height: auto;
+aspect-ratio: 9 / 16;
+object-fit: cover;
+}
+
+.design-image:hover img {
+    transform: scale(1.02);
+}
+
+.design-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.92);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 200ms ease, visibility 200ms ease;
+}
+
+.design-lightbox.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.design-lightbox img {
+    display: block;
+    max-width: 92vw;
+    max-height: 92vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+.design-lightbox-close {
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #f4f3ee;
+    font-family: Arial, sans-serif;
+    font-size: 34px;
+    font-weight: 300;
+    line-height: 1;
+    cursor: pointer;
+}
+
+@media (max-width: 800px) {
+    .design-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .design-image img {
+        aspect-ratio: 4 / 5;
+    }
+
+    .design-lightbox {
+        padding: 16px;
+    }
+
+    .design-lightbox img {
+        max-width: 96vw;
+        max-height: 90vh;
+    }
+
+    .design-lightbox-close {
+        top: 10px;
+        right: 14px;
+    }
+}
+</style>
 </head>
 
 
@@ -173,10 +281,18 @@
 </a>
 
 <a
+    href="#design"
+    data-target="design"
+>
+    <span>06</span>
+    DESIGN
+</a>
+
+<a
     href="#closing"
     data-target="closing"
 >
-    <span>06</span>
+    <span>07</span>
     END NOTES
 </a>
 
@@ -1047,6 +1163,89 @@
 
 </section>
 
+
+
+<!-- ============================================================
+     06 — DESIGN
+     ============================================================ -->
+
+<section
+    id="design"
+    class="chapter chapter-design"
+    data-chapter="06"
+>
+
+    <div class="section-header">
+
+        <div class="section-number">
+            06
+        </div>
+
+        <div class="section-title">
+            DESIGN
+        </div>
+
+        <div class="section-description">
+            VISUAL DEVELOPMENT
+        </div>
+
+    </div>
+
+    <div class="design-grid">
+
+        <button class="design-image" type="button" data-design-image="images/artboard1.jpg" aria-label="Enlarge design image 01">
+            <img src="images/artboard1.jpg" alt="Design 01" loading="lazy">
+        </button>
+
+        <button class="design-image" type="button" data-design-image="images/artboard2.jpg" aria-label="Enlarge design image 02">
+            <img src="images/artboard2.jpg" alt="Design 02" loading="lazy">
+        </button>
+
+        <button class="design-image" type="button" data-design-image="images/artboard3.jpg" aria-label="Enlarge design image 03">
+            <img src="images/artboard3.jpg" alt="Design 03" loading="lazy">
+        </button>
+
+        <button class="design-image" type="button" data-design-image="images/artboard4.jpg" aria-label="Enlarge design image 04">
+            <img src="images/artboard4.jpg" alt="Design 04" loading="lazy">
+        </button>
+
+        <button class="design-image" type="button" data-design-image="images/artboard5.jpg" aria-label="Enlarge design image 05">
+            <img src="images/artboard5.jpg" alt="Design 05" loading="lazy">
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ============================================================
+     DESIGN LIGHTBOX
+     ============================================================ -->
+
+<div
+    class="design-lightbox"
+    id="designLightbox"
+    aria-hidden="true"
+>
+
+    <button
+        class="design-lightbox-close"
+        id="designLightboxClose"
+        type="button"
+        aria-label="Close image"
+    >
+        ×
+    </button>
+
+    <img
+        id="designLightboxImage"
+        src=""
+        alt=""
+    >
+
+</div>
+
+
 <!-- ============================================================
      06 — END NOTES
      ============================================================ -->
@@ -1054,13 +1253,13 @@
 <section
     id="closing"
     class="chapter chapter-closing"
-    data-chapter="05"
+    data-chapter="07"
 >
 
     <div class="section-header">
 
         <div class="section-number">
-            05
+            07
         </div>
 
         <div class="section-title">
@@ -1181,6 +1380,57 @@
 
 </main>
 
+
+<script>
+/* ============================================================
+   DESIGN LIGHTBOX
+   ============================================================ */
+
+(() => {
+
+    const lightbox = document.getElementById("designLightbox");
+    const lightboxImage = document.getElementById("designLightboxImage");
+    const closeButton = document.getElementById("designLightboxClose");
+    const designImages = document.querySelectorAll(".design-image");
+
+    if (!lightbox || !lightboxImage || !closeButton) return;
+
+    const closeLightbox = () => {
+        lightbox.classList.remove("is-open");
+        lightbox.setAttribute("aria-hidden", "true");
+        lightboxImage.src = "";
+        document.body.style.overflow = "";
+    };
+
+    designImages.forEach((button) => {
+        button.addEventListener("click", () => {
+            const image = button.querySelector("img");
+            const source = button.dataset.designImage;
+
+            lightboxImage.src = source;
+            lightboxImage.alt = image ? image.alt : "Design image";
+            lightbox.classList.add("is-open");
+            lightbox.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+        });
+    });
+
+    closeButton.addEventListener("click", closeLightbox);
+
+    lightbox.addEventListener("click", (event) => {
+        if (event.target === lightbox) {
+            closeLightbox();
+        }
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
+            closeLightbox();
+        }
+    });
+
+})();
+</script>
 
 </body>
 
