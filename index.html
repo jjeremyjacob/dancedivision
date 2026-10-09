@@ -70,7 +70,7 @@
 
 .design-grid {
     display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 12px;
     width: 100%;
 }
@@ -146,6 +146,50 @@ object-fit: cover;
     cursor: pointer;
 }
 
+.design-lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 64px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #f4f3ee;
+    font-family: Arial, sans-serif;
+    font-size: 34px;
+    font-weight: 300;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 160ms ease;
+}
+
+.design-lightbox-nav:hover {
+    opacity: 1;
+}
+
+.design-lightbox-prev {
+    left: 18px;
+}
+
+.design-lightbox-next {
+    right: 18px;
+}
+
+.design-lightbox-counter {
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #f4f3ee;
+    font-family: "DM Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+}
+
 @media (max-width: 800px) {
     .design-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -168,6 +212,25 @@ object-fit: cover;
     .design-lightbox-close {
         top: 10px;
         right: 14px;
+    }
+
+    .design-lightbox-nav {
+        width: 36px;
+        height: 52px;
+        font-size: 28px;
+        background: rgba(0, 0, 0, 0.22);
+    }
+
+    .design-lightbox-prev {
+        left: 2px;
+    }
+
+    .design-lightbox-next {
+        right: 2px;
+    }
+
+    .design-lightbox-counter {
+        bottom: 12px;
     }
 }
 </style>
@@ -231,40 +294,39 @@ object-fit: cover;
 
     <nav class="nav-links">
 
-        <a
+<a
             href="#opening"
-            data-target="opening"
-            class="active"
+            data-target="opening" class="active"
         >
             <span>00</span>
             INFORMATION
         </a>
 
-        <a
+<a
+    href="#design"
+    data-target="design"
+>
+    <span>01</span>
+    DESIGN
+</a>
+
+<a
             href="#script"
             data-target="script"
         >
-            <span>01</span>
+            <span>02</span>
             SCRIPT
         </a>
 
-        <a
+<a
             href="#sound"
             data-target="sound"
         >
-            <span>02</span>
+            <span>03</span>
             SOUND
         </a>
 
-        <a
-            href="#inspiration"
-            data-target="inspiration"
-        >
-            <span>03</span>
-            INSPIRATION
-        </a>
-
-        <a
+<a
             href="#characters"
             data-target="characters"
         >
@@ -281,12 +343,12 @@ object-fit: cover;
 </a>
 
 <a
-    href="#design"
-    data-target="design"
->
-    <span>06</span>
-    DESIGN
-</a>
+            href="#inspiration"
+            data-target="inspiration"
+        >
+            <span>06</span>
+            INSPIRATION
+        </a>
 
 <a
     href="#closing"
@@ -428,12 +490,12 @@ object-fit: cover;
 
 
 <!-- ============================================================
-     01 — SCRIPT
+     01 — DESIGN
      ============================================================ -->
 
 <section
-    id="script"
-    class="chapter chapter-script"
+    id="design"
+    class="chapter chapter-design"
     data-chapter="01"
 >
 
@@ -441,6 +503,128 @@ object-fit: cover;
 
         <div class="section-number">
             01
+        </div>
+
+        <div class="section-title">
+            DESIGN
+        </div>
+
+        <div class="section-description">
+            VISUAL DEVELOPMENT
+        </div>
+
+    </div>
+
+    <div class="design-grid">
+
+        <button class="design-image" type="button" data-design-image="images/artboard1.jpg" aria-label="Enlarge design image 01">
+            <img src="images/artboard1.jpg" alt="Design 01" loading="lazy">
+        </button>
+
+        <button class="design-image" type="button" data-design-image="images/artboard2.jpg" aria-label="Enlarge design image 02">
+            <img src="images/artboard2.jpg" alt="Design 02" loading="lazy">
+        </button>
+
+        <button class="design-image" type="button" data-design-image="images/artboard3.jpg" aria-label="Enlarge design image 03">
+            <img src="images/artboard3.jpg" alt="Design 03" loading="lazy">
+        </button>
+
+        <button class="design-image" type="button" data-design-image="images/artboard4.jpg" aria-label="Enlarge design image 04">
+            <img src="images/artboard4.jpg" alt="Design 04" loading="lazy">
+        </button>
+
+        <button class="design-image" type="button" data-design-image="images/artboard5.jpg" aria-label="Enlarge design image 05">
+            <img src="images/artboard5.jpg" alt="Design 05" loading="lazy">
+        </button>
+
+                <button class="design-image" type="button" data-design-image="images/artboard6.jpg" aria-label="Enlarge design image 01">
+            <img src="images/artboard6.jpg" alt="Design 01" loading="lazy">
+        </button>
+
+
+                <button class="design-image" type="button" data-design-image="images/artboard7.jpg" aria-label="Enlarge design image 01">
+            <img src="images/artboard7.jpg" alt="Design 01" loading="lazy">
+        </button>
+
+
+                <button class="design-image" type="button" data-design-image="images/artboard8.jpg" aria-label="Enlarge design image 01">
+            <img src="images/artboard8.jpg" alt="Design 01" loading="lazy">
+        </button>
+
+
+                <button class="design-image" type="button" data-design-image="images/artboard9.jpg" aria-label="Enlarge design image 01">
+            <img src="images/artboard9.jpg" alt="Design 01" loading="lazy">
+        </button>
+
+
+                <button class="design-image" type="button" data-design-image="images/artboard10.jpg" aria-label="Enlarge design image 01">
+            <img src="images/artboard10.jpg" alt="Design 01" loading="lazy">
+        </button>
+
+
+    </div>
+
+</section>
+
+
+<!-- ============================================================
+     DESIGN LIGHTBOX
+     ============================================================ -->
+
+<div
+    class="design-lightbox"
+    id="designLightbox"
+    aria-hidden="true"
+>
+
+    <button
+        class="design-lightbox-close"
+        id="designLightboxClose"
+        type="button"
+        aria-label="Close image"
+    >
+        ×
+    </button>
+
+    <button
+        class="design-lightbox-nav design-lightbox-prev"
+        id="designLightboxPrev"
+        type="button"
+        aria-label="Previous design image"
+    >←</button>
+
+    <img
+        id="designLightboxImage"
+        src=""
+        alt=""
+    >
+
+    <button
+        class="design-lightbox-nav design-lightbox-next"
+        id="designLightboxNext"
+        type="button"
+        aria-label="Next design image"
+    >→</button>
+
+    <div class="design-lightbox-counter" id="designLightboxCounter" aria-live="polite">01 / 10</div>
+
+</div>
+
+
+<!-- ============================================================
+     02 — SCRIPT
+     ============================================================ -->
+
+<section
+    id="script"
+    class="chapter chapter-script"
+    data-chapter="02"
+>
+
+    <div class="section-header">
+
+        <div class="section-number">
+            02
         </div>
 
         <div class="section-title">
@@ -620,19 +804,19 @@ object-fit: cover;
 
 
 <!-- ============================================================
-     02 — SOUND
+     03 — SOUND
      ============================================================ -->
 
 <section
     id="sound"
     class="chapter chapter-sound"
-    data-chapter="02"
+    data-chapter="03"
 >
 
     <div class="section-header">
 
         <div class="section-number">
-            02
+            03
         </div>
 
         <div class="section-title">
@@ -783,149 +967,6 @@ object-fit: cover;
     <strong>STAR STAR STAR (ACOUSTIC)</strong>
     <small>AUDIO</small>
 </button>
-
-    </div>
-
-</section>
-
-
-<!-- ============================================================
-     03 — INSPIRATION
-     ============================================================ -->
-
-<section
-    id="inspiration"
-    class="chapter chapter-inspiration"
-    data-chapter="03"
->
-
-    <div class="section-header">
-
-        <div class="section-number">
-            03
-        </div>
-
-        <div class="section-title">
-            INSPIRATION
-        </div>
-
-        <div class="section-description">
-            VISUAL RESEARCH
-        </div>
-
-    </div>
-
-
-    <div
-        id="inspirationCarousel"
-        class="inspiration-carousel"
-    >
-
-        <div class="inspiration-stage">
-
-            <div
-                id="inspirationTrack"
-                class="inspiration-track"
-            ></div>
-
-        </div>
-
-
-        <div class="inspiration-caption-row">
-
-            <div
-                id="inspirationCaption"
-                class="inspiration-caption"
-            >
-                01 / REFERENCE
-            </div>
-
-
-            <div class="inspiration-counter">
-
-                <button
-                    id="inspirationPrev"
-                    type="button"
-                    aria-label="Previous inspiration image"
-                >
-                    ←
-                </button>
-
-                <span id="inspirationCurrent">
-                    01
-                </span>
-
-                <span>/</span>
-
-                <span id="inspirationTotal">
-                    30
-                </span>
-
-                <button
-                    id="inspirationNext"
-                    type="button"
-                    aria-label="Next inspiration image"
-                >
-                    →
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- ========================================================
-         CONTENT REFERENCES
-         ======================================================== -->
-
-    <div
-        id="inspirationReferences"
-        class="inspiration-references"
-    >
-
-        <button
-            id="inspirationReferencesToggle"
-            class="inspiration-references-toggle"
-            type="button"
-            aria-expanded="false"
-            aria-controls="inspirationReferencesContent"
-        >
-
-            <span>
-                VIDEO REFERENCES
-            </span>
-
-            <span
-                id="inspirationReferencesCount"
-                class="inspiration-references-count"
-            >
-                06
-            </span>
-
-            <span
-                id="inspirationReferencesIcon"
-                class="inspiration-references-icon"
-                aria-hidden="true"
-            >
-                +
-            </span>
-
-        </button>
-
-
-        <div
-            id="inspirationReferencesContent"
-            class="inspiration-references-content"
-        >
-
-            <div
-                id="inspirationReferenceList"
-                class="inspiration-reference-list"
-            ></div>
-
-        </div>
 
     </div>
 
@@ -1145,19 +1186,7 @@ object-fit: cover;
             01 / LOCATION
         </div>
 
-        <div class="location-counter">
 
-            <span id="locationCurrent">
-                01
-            </span>
-
-            <span>/</span>
-
-            <span id="locationTotal">
-                00
-            </span>
-
-        </div>
 
     </div>
 
@@ -1166,12 +1195,12 @@ object-fit: cover;
 
 
 <!-- ============================================================
-     06 — DESIGN
+     06 — INSPIRATION
      ============================================================ -->
 
 <section
-    id="design"
-    class="chapter chapter-design"
+    id="inspiration"
+    class="chapter chapter-inspiration"
     data-chapter="06"
 >
 
@@ -1182,46 +1211,97 @@ object-fit: cover;
         </div>
 
         <div class="section-title">
-            DESIGN
+            INSPIRATION
         </div>
 
         <div class="section-description">
-            VISUAL DEVELOPMENT
+            VISUAL RESEARCH
         </div>
 
     </div>
 
-    <div class="design-grid">
 
-        <button class="design-image" type="button" data-design-image="images/artboard1.jpg" aria-label="Enlarge design image 01">
-            <img src="images/artboard1.jpg" alt="Design 01" loading="lazy">
+    <div
+        id="inspirationCarousel"
+        class="inspiration-carousel"
+    >
+
+        <div class="inspiration-stage">
+
+            <div
+                id="inspirationTrack"
+                class="inspiration-track"
+            ></div>
+
+        </div>
+
+
+        <div class="inspiration-caption-row">
+
+            <div
+                id="inspirationCaption"
+                class="inspiration-caption"
+            >
+                01 / REFERENCE
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================================
+         CONTENT REFERENCES
+         ======================================================== -->
+
+    <div
+        id="inspirationReferences"
+        class="inspiration-references"
+    >
+
+        <button
+            id="inspirationReferencesToggle"
+            class="inspiration-references-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="inspirationReferencesContent"
+        >
+
+            <span>
+                VIDEO REFERENCES
+            </span>
+
+            <span
+                id="inspirationReferencesCount"
+                class="inspiration-references-count"
+            >
+                06
+            </span>
+
+            <span
+                id="inspirationReferencesIcon"
+                class="inspiration-references-icon"
+                aria-hidden="true"
+            >
+                +
+            </span>
+
         </button>
 
-        <button class="design-image" type="button" data-design-image="images/artboard2.jpg" aria-label="Enlarge design image 02">
-            <img src="images/artboard2.jpg" alt="Design 02" loading="lazy">
-        </button>
 
-        <button class="design-image" type="button" data-design-image="images/artboard3.jpg" aria-label="Enlarge design image 03">
-            <img src="images/artboard3.jpg" alt="Design 03" loading="lazy">
-        </button>
+        <div
+            id="inspirationReferencesContent"
+            class="inspiration-references-content"
+        >
 
-        <button class="design-image" type="button" data-design-image="images/artboard4.jpg" aria-label="Enlarge design image 04">
-            <img src="images/artboard4.jpg" alt="Design 04" loading="lazy">
-        </button>
+            <div
+                id="inspirationReferenceList"
+                class="inspiration-reference-list"
+            ></div>
 
-        <button class="design-image" type="button" data-design-image="images/artboard5.jpg" aria-label="Enlarge design image 05">
-            <img src="images/artboard5.jpg" alt="Design 05" loading="lazy">
-        </button>
-
-                <button class="design-image" type="button" data-design-image="images/artboard6.jpg" aria-label="Enlarge design image 01">
-            <img src="images/artboard6.jpg" alt="Design 01" loading="lazy">
-        </button>
-
-
-                <button class="design-image" type="button" data-design-image="images/artboard7.jpg" aria-label="Enlarge design image 01">
-            <img src="images/artboard7.jpg" alt="Design 01" loading="lazy">
-        </button>
-
+        </div>
 
     </div>
 
@@ -1229,35 +1309,7 @@ object-fit: cover;
 
 
 <!-- ============================================================
-     DESIGN LIGHTBOX
-     ============================================================ -->
-
-<div
-    class="design-lightbox"
-    id="designLightbox"
-    aria-hidden="true"
->
-
-    <button
-        class="design-lightbox-close"
-        id="designLightboxClose"
-        type="button"
-        aria-label="Close image"
-    >
-        ×
-    </button>
-
-    <img
-        id="designLightboxImage"
-        src=""
-        alt=""
-    >
-
-</div>
-
-
-<!-- ============================================================
-     06 — END NOTES
+     07 — END NOTES
      ============================================================ -->
 
 <section
@@ -1397,13 +1449,42 @@ object-fit: cover;
    ============================================================ */
 
 (() => {
-
     const lightbox = document.getElementById("designLightbox");
     const lightboxImage = document.getElementById("designLightboxImage");
     const closeButton = document.getElementById("designLightboxClose");
-    const designImages = document.querySelectorAll(".design-image");
+    const previousButton = document.getElementById("designLightboxPrev");
+    const nextButton = document.getElementById("designLightboxNext");
+    const counter = document.getElementById("designLightboxCounter");
+    const designButtons = Array.from(document.querySelectorAll(".design-image"));
 
-    if (!lightbox || !lightboxImage || !closeButton) return;
+    if (!lightbox || !lightboxImage || !closeButton || !previousButton || !nextButton) return;
+
+    let currentIndex = 0;
+
+    const showImage = (index) => {
+        if (!designButtons.length) return;
+
+        currentIndex = (index + designButtons.length) % designButtons.length;
+
+        const button = designButtons[currentIndex];
+        const thumbnail = button.querySelector("img");
+        const source = button.dataset.designImage || (thumbnail && thumbnail.src);
+
+        lightboxImage.src = source;
+        lightboxImage.alt = thumbnail ? thumbnail.alt : `Design ${currentIndex + 1}`;
+        if (counter) {
+            counter.textContent =
+                `${String(currentIndex + 1).padStart(2, "0")} / ${String(designButtons.length).padStart(2, "0")}`;
+        }
+    };
+
+    const openLightbox = (index) => {
+        showImage(index);
+        lightbox.classList.add("is-open");
+        lightbox.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+        closeButton.focus();
+    };
 
     const closeLightbox = () => {
         lightbox.classList.remove("is-open");
@@ -1412,33 +1493,31 @@ object-fit: cover;
         document.body.style.overflow = "";
     };
 
-    designImages.forEach((button) => {
-        button.addEventListener("click", () => {
-            const image = button.querySelector("img");
-            const source = button.dataset.designImage;
-
-            lightboxImage.src = source;
-            lightboxImage.alt = image ? image.alt : "Design image";
-            lightbox.classList.add("is-open");
-            lightbox.setAttribute("aria-hidden", "false");
-            document.body.style.overflow = "hidden";
-        });
+    designButtons.forEach((button, index) => {
+        button.addEventListener("click", () => openLightbox(index));
     });
 
+    previousButton.addEventListener("click", () => showImage(currentIndex - 1));
+    nextButton.addEventListener("click", () => showImage(currentIndex + 1));
     closeButton.addEventListener("click", closeLightbox);
 
     lightbox.addEventListener("click", (event) => {
-        if (event.target === lightbox) {
-            closeLightbox();
-        }
+        if (event.target === lightbox) closeLightbox();
     });
 
     document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
+        if (!lightbox.classList.contains("is-open")) return;
+
+        if (event.key === "Escape") {
             closeLightbox();
+        } else if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            showImage(currentIndex - 1);
+        } else if (event.key === "ArrowRight") {
+            event.preventDefault();
+            showImage(currentIndex + 1);
         }
     });
-
 })();
 </script>
 

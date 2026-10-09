@@ -1806,6 +1806,23 @@ const characters = [
             "April Mathis — Actor"
     },
 
+        {
+        name:
+            "LOUISE FLINT",
+
+        role:
+            "FRANKIE'S MOM - CHEMISTRY TEACHER",
+
+        image:
+            "images/character-15-headshot.jpg",
+
+        bio:
+            "Frankie's Mother. Part of trio of friends with Sandrana and Zane. She is a chemistry teacher at Bardonia and is the one who raised Frankie after Sandrana left.",
+
+        casting:
+            "Erin Markey — Actor"
+    },
+
 
     {
         name:
