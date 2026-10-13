@@ -2190,235 +2190,405 @@ updateCharacter(0);
 
 
 /* ========================================================
-LOCATION
-======================================================== */
+   LOCATION
+   ======================================================== */
 
-const locationTrack = document.getElementById("locationTrack");
-const locationCaption = document.getElementById("locationCaption");
-const locationCurrent = document.getElementById("locationCurrent");
-const locationTotal = document.getElementById("locationTotal");
+const locationTrack =
+    document.getElementById("locationTrack");
 
-const LOCATION_IMAGE_COUNT = 11;
+const locationCaption =
+    document.getElementById("locationCaption");
+
+const locationCurrent =
+    document.getElementById("locationCurrent");
+
+const locationTotal =
+    document.getElementById("locationTotal");
+
+const LOCATION_IMAGE_COUNT = 13;
 
 const LOCATION_EXTENSIONS = [
-"jpg",
-"jpeg",
-"png",
-"gif"
+    "webp",
+    "jpg",
+    "jpeg",
+    "png",
+    "gif"
 ];
 
-function createLocationGrid() {
+let locationLightbox = null;
+let locationLightboxImage = null;
+let locationLightboxCurrent = null;
+let locationLightboxTotal = null;
+let locationLightboxIndex = 0;
 
 
-if (!locationTrack) return;
+/* --------------------------------------------------------
+   CREATE LOCATION LIGHTBOX
+   -------------------------------------------------------- */
 
-locationTrack.innerHTML = "";
+function createLocationLightbox() {
+
+    if (locationLightbox) return;
+
+    locationLightbox =
+        document.createElement("div");
+
+    locationLightbox.className =
+        "inspiration-lightbox location-lightbox";
+
+    locationLightbox.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+    locationLightbox.innerHTML = `
+        <button
+            class="inspiration-lightbox-close"
+            type="button"
+            aria-label="Close image"
+        >×</button>
+
+        <button
+            class="inspiration-lightbox-prev"
+            type="button"
+            aria-label="Previous image"
+        >←</button>
+
+        <div class="inspiration-lightbox-content">
+            <img
+                class="inspiration-lightbox-image"
+                src=""
+                alt=""
+            >
+
+            <div class="inspiration-lightbox-info">
+                <span class="inspiration-lightbox-current">01</span>
+                <span>/</span>
+                <span class="inspiration-lightbox-total">13</span>
+            </div>
+        </div>
+
+        <button
+            class="inspiration-lightbox-next"
+            type="button"
+            aria-label="Next image"
+        >→</button>
+    `;
+
+    document.body.appendChild(locationLightbox);
+
+    locationLightboxImage =
+        locationLightbox.querySelector(
+            ".inspiration-lightbox-image"
+        );
+
+    locationLightboxCurrent =
+        locationLightbox.querySelector(
+            ".inspiration-lightbox-current"
+        );
+
+    locationLightboxTotal =
+        locationLightbox.querySelector(
+            ".inspiration-lightbox-total"
+        );
+
+    locationLightbox.querySelector(
+        ".inspiration-lightbox-total"
+    ).textContent =
+        String(LOCATION_IMAGE_COUNT).padStart(2, "0");
+
+    locationLightbox.querySelector(
+        ".inspiration-lightbox-close"
+    ).addEventListener(
+        "click",
+        closeLocationLightbox
+    );
+
+    locationLightbox.querySelector(
+        ".inspiration-lightbox-prev"
+    ).addEventListener(
+        "click",
+        event => {
+            event.stopPropagation();
+
+            showLocationLightboxImage(
+                locationLightboxIndex - 1
+            );
+        }
+    );
+
+    locationLightbox.querySelector(
+        ".inspiration-lightbox-next"
+    ).addEventListener(
+        "click",
+        event => {
+            event.stopPropagation();
+
+            showLocationLightboxImage(
+                locationLightboxIndex + 1
+            );
+        }
+    );
+
+    locationLightbox.addEventListener(
+        "click",
+        event => {
+            if (event.target === locationLightbox) {
+                closeLocationLightbox();
+            }
+        }
+    );
+
+    locationLightbox.querySelector(
+        ".inspiration-lightbox-content"
+    ).addEventListener(
+        "click",
+        event => event.stopPropagation()
+    );
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                !locationLightbox ||
+                !locationLightbox.classList.contains("open")
+            ) {
+                return;
+            }
+
+            if (event.key === "Escape") {
+                event.preventDefault();
+                closeLocationLightbox();
+            }
+
+            if (event.key === "ArrowLeft") {
+                event.preventDefault();
+
+                showLocationLightboxImage(
+                    locationLightboxIndex - 1
+                );
+            }
+
+            if (event.key === "ArrowRight") {
+                event.preventDefault();
+
+                showLocationLightboxImage(
+                    locationLightboxIndex + 1
+                );
+            }
+        }
+    );
+}
 
 
-for (
-    let imageIndex = 0;
-    imageIndex < LOCATION_IMAGE_COUNT;
-    imageIndex++
-) {
+/* --------------------------------------------------------
+   LOAD LOCATION IMAGE
+   -------------------------------------------------------- */
 
-    const number = imageIndex + 1;
-
-
-    const slide = document.createElement("button");
-
-    slide.type = "button";
-
-    slide.className = "location-slide";
-
-    slide.dataset.index =
-        String(imageIndex);
-
-
-    const img = document.createElement("img");
-
-    img.alt =
-        `Dance Division location ${number}`;
-
-    img.loading =
-        imageIndex === 0
-            ? "eager"
-            : "lazy";
-
-    img.decoding = "async";
-
-    img.draggable = false;
-
-
-    const numberLabel =
-        document.createElement("span");
-
-    numberLabel.className =
-        "location-slide-number";
-
-    numberLabel.textContent =
-        String(number).padStart(2, "0");
-
-
-    slide.appendChild(img);
-
-    slide.appendChild(numberLabel);
-
-    locationTrack.appendChild(slide);
-
+function loadLocationImage(imageElement, number) {
 
     let extensionIndex = 0;
 
+    imageElement.onerror = () => {
 
-    function tryNextExtension() {
-
-        if (
-            extensionIndex >=
-            LOCATION_EXTENSIONS.length
-        ) {
-
-            slide.classList.add(
-                "image-missing"
-            );
+        if (extensionIndex >= LOCATION_EXTENSIONS.length) {
+            imageElement.onerror = null;
 
             console.error(
-                `Location image ${number} not found`
+                "Unable to load location image:",
+                number
             );
 
             return;
-
         }
 
+        imageElement.src =
+            `images/location-${number}.${LOCATION_EXTENSIONS[extensionIndex++]}`;
+    };
 
-        const extension =
-            LOCATION_EXTENSIONS[
-                extensionIndex
-            ];
-
-        extensionIndex++;
+    imageElement.src =
+        `images/location-${number}.${LOCATION_EXTENSIONS[extensionIndex++]}`;
+}
 
 
-        img.src =
-            `images/location-${number}.${extension}`;
+/* --------------------------------------------------------
+   CREATE LOCATION GRID
+   -------------------------------------------------------- */
 
+function createLocationGrid() {
+
+    if (!locationTrack) return;
+
+    locationTrack.innerHTML = "";
+
+    for (
+        let imageIndex = 0;
+        imageIndex < LOCATION_IMAGE_COUNT;
+        imageIndex++
+    ) {
+
+        const number = imageIndex + 1;
+
+        const slide =
+            document.createElement("button");
+
+        slide.type = "button";
+        slide.className = "location-slide";
+        slide.dataset.index = String(imageIndex);
+
+        slide.setAttribute(
+            "aria-label",
+            `Open location image ${number}`
+        );
+
+        const img =
+            document.createElement("img");
+
+        img.alt = `Dance Division location ${number}`;
+        img.loading = imageIndex < 6 ? "eager" : "lazy";
+        img.decoding = "async";
+        img.draggable = false;
+
+        loadLocationImage(img, number);
+
+        const numberLabel =
+            document.createElement("span");
+
+        numberLabel.className = "location-slide-number";
+
+        numberLabel.textContent =
+            String(number).padStart(2, "0");
+
+        slide.appendChild(img);
+        slide.appendChild(numberLabel);
+
+        slide.addEventListener(
+            "click",
+            () => openLocationLightbox(imageIndex)
+        );
+
+        locationTrack.appendChild(slide);
     }
 
+    if (locationTotal) {
+        locationTotal.textContent =
+            String(LOCATION_IMAGE_COUNT).padStart(2, "0");
+    }
 
-    img.addEventListener(
-        "error",
-        tryNextExtension
+    if (locationCurrent) {
+        locationCurrent.textContent = "01";
+    }
+
+    if (locationCaption) {
+        locationCaption.textContent = "01 / LOCATION";
+    }
+}
+
+
+/* --------------------------------------------------------
+   OPEN LOCATION LIGHTBOX
+   -------------------------------------------------------- */
+
+function openLocationLightbox(index) {
+
+    createLocationLightbox();
+
+    locationLightboxIndex = index;
+
+    showLocationLightboxImage(index);
+
+    locationLightbox.classList.add("open");
+
+    locationLightbox.setAttribute(
+        "aria-hidden",
+        "false"
     );
 
-
-    /*
-     * Use the existing inspiration
-     * lightbox system.
-     *
-     * The actual function name in the
-     * existing script is checked first.
-     */
-
-    slide.addEventListener(
-        "click",
-        () => {
-
-            if (
-                typeof openInspirationLightbox ===
-                "function"
-            ) {
-
-                openInspirationLightbox(
-                    imageIndex
-                );
-
-                return;
-
-            }
-
-
-            /*
-             * Fallback:
-             * find the existing inspiration
-             * lightbox elements and open them.
-             */
-
-            const lightbox =
-                document.querySelector(
-                    ".inspiration-lightbox"
-                );
-
-            const lightboxImage =
-                document.querySelector(
-                    ".inspiration-lightbox-image"
-                );
-
-
-            if (
-                lightbox &&
-                lightboxImage
-            ) {
-
-                lightboxImage.src =
-                    img.src;
-
-                lightboxImage.alt =
-                    img.alt;
-
-                lightbox.classList.add(
-                    "open"
-                );
-
-                document.body.classList.add(
-                    "inspiration-lightbox-open"
-                );
-
-            }
-
-        }
+    document.body.classList.add(
+        "inspiration-lightbox-open"
     );
 
-
-    tryNextExtension();
-
+    document.body.style.overflow = "hidden";
 }
 
 
-if (locationTotal) {
+/* --------------------------------------------------------
+   SHOW LOCATION LIGHTBOX IMAGE
+   -------------------------------------------------------- */
 
-    locationTotal.textContent =
-        String(LOCATION_IMAGE_COUNT)
-            .padStart(2, "0");
+function showLocationLightboxImage(index) {
 
+    if (!locationLightboxImage) return;
+
+    locationLightboxIndex =
+        (
+            index % LOCATION_IMAGE_COUNT +
+            LOCATION_IMAGE_COUNT
+        ) % LOCATION_IMAGE_COUNT;
+
+    const number = locationLightboxIndex + 1;
+
+    loadLocationImage(
+        locationLightboxImage,
+        number
+    );
+
+    locationLightboxImage.alt =
+        `Dance Division location ${number}`;
+
+    if (locationLightboxCurrent) {
+        locationLightboxCurrent.textContent =
+            String(number).padStart(2, "0");
+    }
+
+    if (locationLightboxTotal) {
+        locationLightboxTotal.textContent =
+            String(LOCATION_IMAGE_COUNT).padStart(2, "0");
+    }
+
+    if (locationCurrent) {
+        locationCurrent.textContent =
+            String(number).padStart(2, "0");
+    }
+
+    if (locationCaption) {
+        locationCaption.textContent =
+            `${String(number).padStart(2, "0")} / LOCATION`;
+    }
 }
 
 
-if (locationCurrent) {
+/* --------------------------------------------------------
+   CLOSE LOCATION LIGHTBOX
+   -------------------------------------------------------- */
 
-    locationCurrent.textContent = "01";
+function closeLocationLightbox() {
 
+    if (!locationLightbox) return;
+
+    locationLightbox.classList.remove("open");
+
+    locationLightbox.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+    document.body.classList.remove(
+        "inspiration-lightbox-open"
+    );
+
+    document.body.style.overflow = "";
 }
 
 
-if (locationCaption) {
-
-    locationCaption.textContent =
-        "01 / LOCATION";
-
-}
-
-
-}
+/* --------------------------------------------------------
+   INITIALIZE LOCATION
+   -------------------------------------------------------- */
 
 if (locationTrack) {
-
-
-createLocationGrid();
-
-
+    createLocationGrid();
 }
-
-
-
-
 
 
 /* ========================================================
