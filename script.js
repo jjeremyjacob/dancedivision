@@ -1674,7 +1674,7 @@ const characters = [
             "images/character-01-headshot.jpg",
 
         bio:
-            "Lucy is ambitious, driven, competitive, and intensely determined to make Dance Division succeed. They are a natural organizer and a forceful creative presence, constantly pushing themselves and everyone around them toward something bigger. Lucy wants to be recognized as exceptional and has a deep need to prove that their vision is worthy of attention. Their confidence often masks insecurity, particularly when they feel overshadowed by Frankie’s seemingly effortless talent. Lucy’s ambition can become controlling, and their desire to shape the project—and the people within it—gradually creates tension with those closest to them.",
+            "Lucy is ambitious, driven, competitive, and intensely determined to succeed in realizing childhood dreams. They are a natural organizer and a forceful creative presence, constantly pushing themselves and everyone around them toward something bigger. Lucy wants to be recognized as exceptional and has a deep need to prove that their vision is worthy of attention. Their confidence often masks insecurity, particularly when they feel overshadowed by Frankie’s seemingly effortless talent. Lucy’s ambition can become controlling, and their desire to shape the project—and the people within it—gradually creates tension with those closest to them.",
 
         casting:
             "Emily DeForest — Actor"
@@ -1746,7 +1746,7 @@ const characters = [
             "images/character-05-headshot.jpg",
 
         bio:
-            "Henry is theatrical, complicated and deeply physical. He understands performance as both protection and revelation. A photo of Martha Graham with her dogs hangs on the way behind their desk. Zane is a demanding, sarcastic, and authoritative professor who controls much of the department's access to studios, resources, and opportunities. They are skeptical of Lucy's ambitions and have little patience for unnecessary theatrics. Despite their strict exterior, Zane understands dance deeply and recognizes genuine talent when they see it. Their complicated history with choreographer Sandrana Bell gives them a personal connection to the larger dance world and helps explain some of their resistance to the people and ideas Lucy is pursuing.",
+            "Henry is theatrical, complicated and deeply physical. They understand performance as both protection and revelation. A photo of Martha Graham with her dogs hangs on the wall behind their desk. Zane is a demanding, sarcastic, and authoritative professor who controls much of the department's access to studios, resources, and opportunities. They are skeptical of Lucy's ambitions and have little patience for unnecessary theatrics. Despite their strict exterior, Zane understands dance deeply and recognizes genuine talent when they see it. Their complicated history with choreographer Sandrana Bell gives them a personal connection to the larger dance world and helps explain some of their resistance to the people and ideas Lucy is pursuing.",
 
         casting:
             "Jack Ferver — Actor / Choreographer / Dancer"
@@ -1776,13 +1776,13 @@ const characters = [
             "KIM CONRAD",
 
         role:
-            "DUAL DEGREE FILM DIVISION & DANCE DIVISION STUDENT - JUNIOR",
+            "FILM MAJOR & DANCE MINOR STUDENT - JUNIOR",
 
         image:
             "images/character-07-headshot.jpg",
 
         bio:
-            "Kim is the most explicitly funny character, she is untethered and it keeps her on the outside. She says things like “You’re half black?” (to Frankie) and “I thought you were gay.” (to moser)",
+            "Kim is the most explicitly funny character. Kim is untethered and it keeps her on the outside. She says things like “You’re half black?” (to Frankie) and “I thought you were gay.” (to moser)",
 
         casting:
             "Becky Abrams — Actor"
