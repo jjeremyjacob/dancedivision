@@ -351,5 +351,22 @@
       "description": ""
     }
   ],
-  "january": []
+  "january": [
+    {
+      "id": "f4469c6c-7993-4a9b-aa16-9c9e5aba5f36",
+      "date": "2027-01-11",
+      "title": "DAY ONE KAATSBAAN",
+      "time": "",
+      "location": "",
+      "description": ""
+    },
+    {
+      "id": "8656b311-ade7-4282-b43c-1e77e072f4d4",
+      "date": "2027-01-26",
+      "title": "LAST DAY AVAILABLE KAATSBAAN",
+      "time": "",
+      "location": "",
+      "description": ""
+    }
+  ]
 }
