@@ -315,121 +315,162 @@ object-fit: cover;
 
 
 /* RESPONSIVE TOP NAVIGATION DROPDOWN */
+
+/* ============================================================
+   RESPONSIVE HEADER AND SECTIONS DROPDOWN
+   ============================================================ */
+
 .nav-dropdown-toggle {
     display: none;
     align-items: center;
     justify-content: space-between;
-    gap: 22px;
-    padding: 10px 12px;
+    gap: 18px;
+    width: 112px;
+    min-width: 112px;
+    margin: 0;
+    padding: 9px 0 9px 10px;
     border: 0;
     border-radius: 0;
     background: transparent;
     color: inherit;
     font: 10px "DM Mono", monospace;
     letter-spacing: .08em;
+    text-align: left;
     text-transform: uppercase;
     cursor: pointer;
 }
+
 .nav-dropdown-indicator {
     display: inline-block;
     font: 16px/1 "DM Mono", monospace;
     transition: transform 160ms ease;
 }
+
 .nav-dropdown-toggle[aria-expanded="true"] .nav-dropdown-indicator {
     transform: rotate(45deg);
 }
+
 @media (max-width: 1250px) {
-    .site-header {
+    header.site-header {
         position: relative;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto auto;
+        align-items: center;
+        column-gap: 24px;
+        row-gap: 0;
+        flex-wrap: unset;
+        box-sizing: border-box;
     }
-    .site-header .header-status {
-        margin-left: auto;
+
+    header.site-header > .header-title {
+        grid-column: 1;
+        grid-row: 1;
+        min-width: 0;
+        max-width: 100%;
+        margin: 0;
     }
-    .nav-dropdown-toggle {
+
+    header.site-header > .header-status {
+        grid-column: 2;
+        grid-row: 1;
+        margin: 0;
+        white-space: nowrap;
+    }
+
+    header.site-header > .nav-dropdown-toggle {
         display: inline-flex;
-        margin-left: 16px;
-        margin-right: 0;
-        flex: 0 0 auto;
+        grid-column: 3;
+        grid-row: 1;
+        position: relative;
+        inset: auto;
+        justify-self: end;
         align-self: center;
+        width: 112px;
+        min-width: 112px;
+        margin: 0;
+        padding: 9px 0 9px 10px;
+        transform: none;
+        z-index: 1002;
+        box-sizing: border-box;
     }
-    .site-header .nav-links {
+
+    header.site-header > .nav-links {
         display: none;
         position: absolute;
-        z-index: 1000;
-        top: calc(100% + 1px);
+        top: 100%;
         right: 0;
         left: auto;
-        width: max-content;
-        min-width: 220px;
-        max-width: min(90vw, 360px);
+        z-index: 1001;
+        width: 240px;
+        min-width: 0;
+        max-width: calc(100vw - 32px);
         max-height: min(70vh, 560px);
+        overflow-x: hidden;
         overflow-y: auto;
-        padding: 12px 0;
+        box-sizing: border-box;
+        padding: 8px 0;
+        margin: 0;
         flex-direction: column;
         align-items: stretch;
         gap: 0;
         background: #f4f3ee;
         color: #171714;
         border: 1px solid #d8d7d0;
-        box-shadow: 0 12px 28px rgba(0,0,0,.08);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, .08);
     }
-    .site-header .nav-links.is-dropdown-open {
+
+    header.site-header > .nav-links.is-dropdown-open {
         display: flex;
     }
-    .site-header .nav-links a {
-        display: flex;
+
+    header.site-header > .nav-links a {
+        display: grid;
+        grid-template-columns: 24px minmax(0, 1fr);
         align-items: center;
-        gap: 12px;
-        padding: 12px 16px;
+        gap: 10px;
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        padding: 12px 14px;
         border-bottom: 1px solid #e4e2da;
+        text-align: left;
     }
-    .site-header .nav-links a:last-child {
+
+    header.site-header > .nav-links a:last-child {
         border-bottom: 0;
     }
 }
-@media (max-width: 520px) {
-    .site-header {
-        position: relative;
+
+@media (max-width: 700px) {
+    header.site-header {
+        grid-template-columns: minmax(0, 1fr) auto;
+        column-gap: 12px;
     }
-    .site-header .header-title {
-        max-width: calc(100% - 132px);
+
+    header.site-header > .header-title {
+        grid-column: 1;
+        grid-row: 1;
+        max-width: 100%;
     }
-    .site-header .nav-dropdown-toggle {
-        position: absolute;
-        top: 0;
-        right: 0;
-        margin: 0;
-        padding: 9px 10px;
-        gap: 12px;
-        align-self: auto;
+
+    header.site-header > .header-status {
+        display: none;
+    }
+
+    header.site-header > .nav-dropdown-toggle {
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: end;
+        width: 112px;
+        min-width: 112px;
+    }
+
+    header.site-header > .nav-links {
+        width: 240px;
+        max-width: calc(100vw - 32px);
     }
 }
 
-/* FINAL MOBILE HEADER POSITION OVERRIDE */
-@media (max-width: 520px) {
-    header.site-header {
-        position: relative !important;
-        width: 100%;
-        box-sizing: border-box;
-    }
-    header.site-header > .nav-dropdown-toggle {
-        display: inline-flex !important;
-        position: absolute !important;
-        top: 0 !important;
-        right: 0 !important;
-        left: auto !important;
-        bottom: auto !important;
-        margin: 0 !important;
-        transform: none !important;
-        z-index: 1002 !important;
-        flex: none !important;
-    }
-    header.site-header > .header-title {
-        max-width: calc(100% - 150px) !important;
-        margin-right: 0 !important;
-    }
-}
 
 </style>
 
@@ -661,8 +702,18 @@ object-fit: cover;
 </div>
 
 <div class="opening-meta">
+    <span>for ALL ARTS</span>
+    <strong>EXECUTIVES IN CHARGE: DIANE MASCIALE, EDWARD F. O'KEEFE</strong>
+</div>
+
+<div class="opening-meta">
     <span>LINE PRODUCER</span>
     <strong>JACOB VAN WINKLE</strong>
+</div>
+
+<div class="opening-meta">
+    <span>CREATED BY</span>
+    <strong>ELISE SIEVERT BHUSAN</strong>
 </div>
 
 <div class="opening-meta">
@@ -687,6 +738,8 @@ object-fit: cover;
 </div>
 
 
+
+
 </div>
 
 
@@ -696,11 +749,11 @@ object-fit: cover;
     <div class="opening-footer">
 
         <span>
-            A DOLL'S HOUSE PICTURES
+            DANCE DIVISION 
         </span>
 
         <span>
-            SCROLL TO EXPLORE
+            SCROLL DOWN TO EXPLORE
         </span>
 
     </div>
