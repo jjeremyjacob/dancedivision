@@ -1,0 +1,572 @@
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#f4f3ee"
+    >
+
+    <title>DANCE DIVISION — Calendars</title>
+
+
+    <!-- ========================================================
+         FONTS
+         ======================================================== -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- ========================================================
+         CSS
+         ======================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+
+    <!-- ========================================================
+         PDF.JS
+         ======================================================== -->
+
+<style>
+/* ============================================================
+   DESIGN
+   ============================================================ */
+
+.design-grid {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 12px;
+    width: 100%;
+}
+
+.design-image {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background: none;
+    cursor: zoom-in;
+    overflow: hidden;
+    text-align: left;
+}
+
+.design-image img {
+display: block;
+width: 100%;
+height: auto;
+aspect-ratio: 9 / 16;
+object-fit: cover;
+}
+
+.design-image:hover img {
+    transform: scale(1.02);
+}
+
+.design-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.92);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 200ms ease, visibility 200ms ease;
+}
+
+.design-lightbox.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.design-lightbox img {
+    display: block;
+    max-width: 92vw;
+    max-height: 92vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+.design-lightbox-close {
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #f4f3ee;
+    font-family: Arial, sans-serif;
+    font-size: 34px;
+    font-weight: 300;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.design-lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 64px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #f4f3ee;
+    font-family: Arial, sans-serif;
+    font-size: 34px;
+    font-weight: 300;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 160ms ease;
+}
+
+.design-lightbox-nav:hover {
+    opacity: 1;
+}
+
+.design-lightbox-prev {
+    left: 18px;
+}
+
+.design-lightbox-next {
+    right: 18px;
+}
+
+.design-lightbox-counter {
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #f4f3ee;
+    font-family: "DM Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+}
+
+@media (max-width: 800px) {
+    .design-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .design-image img {
+        aspect-ratio: 9 / 16;
+    }
+
+    .design-lightbox {
+        padding: 16px;
+    }
+
+    .design-lightbox img {
+        max-width: 96vw;
+        max-height: 90vh;
+    }
+
+    .design-lightbox-close {
+        top: 10px;
+        right: 14px;
+    }
+
+    .design-lightbox-nav {
+        width: 36px;
+        height: 52px;
+        font-size: 28px;
+        background: rgba(0, 0, 0, 0.22);
+    }
+
+    .design-lightbox-prev {
+        left: 2px;
+    }
+
+    .design-lightbox-next {
+        right: 2px;
+    }
+
+    .design-lightbox-counter {
+        bottom: 12px;
+    }
+}
+
+/* JANUARY 2027 CALENDAR */
+.calendar-section-intro{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin:0 0 28px}
+.calendar-toolbar-actions{display:flex;flex-wrap:wrap;gap:8px}
+.calendar-month-title{margin:0;font-family:"Playfair Display",Georgia,serif;font-size:clamp(36px,6vw,68px);line-height:.98;font-weight:400;letter-spacing:-.045em}
+.calendar-month-title span{margin-left:10px;color:#77766f;font-family:"DM Mono",monospace;font-size:14px;letter-spacing:.04em;vertical-align:middle}
+.calendar-add-global,.calendar-action{border:1px solid #171714;border-radius:0;background:transparent;color:#171714;padding:12px 15px;font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.07em;text-transform:uppercase;cursor:pointer}
+.calendar-add-global:hover,.calendar-action:hover{background:#171714;color:#f4f3ee}
+.calendar-weekdays,.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+.calendar-weekdays{border-bottom:1px solid #171714}.calendar-weekday{padding:12px 8px;color:#77766f;font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+.calendar-grid{border-left:1px solid #d8d7d0}.calendar-day{min-width:0;min-height:145px;padding:10px;border-right:1px solid #d8d7d0;border-bottom:1px solid #d8d7d0;display:flex;flex-direction:column;gap:10px}
+.calendar-day.is-empty{background:rgba(0,0,0,.025)}.calendar-day-top{display:flex;align-items:center;justify-content:space-between;gap:5px;min-height:24px}.calendar-day-number{font-family:"DM Mono",monospace;font-size:12px}
+.calendar-day-add{border:0;padding:0 3px;background:transparent;color:#77766f;font-size:18px;cursor:pointer;opacity:0}.calendar-day:hover .calendar-day-add,.calendar-day-add:focus-visible{opacity:1}
+.calendar-events{display:flex;flex-direction:column;gap:5px}.calendar-event{width:100%;min-width:0;border:0;border-left:2px solid #b84c35;border-radius:0;padding:7px 8px;background:rgba(184,76,53,.08);color:#171714;text-align:left;overflow-wrap:anywhere;cursor:pointer}.calendar-event:hover{background:rgba(184,76,53,.17)}
+.calendar-event-title{display:block;font-family:"Manrope",sans-serif;font-size:11px;font-weight:600;line-height:1.4}.calendar-event-time{display:block;margin-top:3px;color:#77766f;font-family:"DM Mono",monospace;font-size:9px}
+.calendar-overlay{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.78)}.calendar-overlay.is-open{display:flex}
+.calendar-dialog{position:relative;width:min(540px,100%);max-height:90vh;overflow-y:auto;padding:32px;background:#f4f3ee;color:#171714}.calendar-dialog-close{position:absolute;top:12px;right:16px;border:0;background:transparent;color:#77766f;font-size:28px;cursor:pointer}
+.calendar-dialog-heading{margin:0 30px 24px 0;font-family:"Playfair Display",Georgia,serif;font-size:30px;font-weight:400;letter-spacing:-.035em}.calendar-form label{display:block;margin:17px 0 7px;color:#77766f;font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase}
+.calendar-form input,.calendar-form textarea{display:block;width:100%;border:1px solid #d8d7d0;border-radius:0;padding:11px;background:transparent;color:#171714;font:13px "Manrope",sans-serif}.calendar-form textarea{min-height:130px;resize:vertical;line-height:1.6}
+.calendar-dialog-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}.calendar-action.is-primary{background:#171714;color:#f4f3ee}.calendar-action.is-primary:hover{background:#b84c35;border-color:#b84c35}.calendar-action.is-delete{margin-left:auto;border-color:#a33;color:#a33}
+.calendar-detail-date{margin-bottom:14px;color:#77766f;font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase}.calendar-detail-title{margin-bottom:12px;font-family:"Playfair Display",Georgia,serif;font-size:34px;line-height:1.1;overflow-wrap:anywhere}
+.calendar-detail-time,.calendar-detail-location{margin-bottom:20px;color:#77766f;font-family:"DM Mono",monospace;font-size:11px}.calendar-detail-description{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;line-height:1.8}
+@media(max-width:800px){.calendar-day{min-height:105px;padding:7px 4px;gap:7px}.calendar-weekday{padding:10px 2px;font-size:9px;letter-spacing:0}.calendar-day-top{justify-content:center}.calendar-day-add{display:none}.calendar-event{padding:5px 4px}.calendar-event-title{font-size:9px;font-weight:500}.calendar-event-time{display:none}.calendar-dialog{padding:26px 22px}}
+@media(max-width:520px){.calendar-section-intro{align-items:flex-start;flex-direction:column}.calendar-toolbar-actions{width:100%}.calendar-day{min-height:82px}.calendar-day-number{font-size:10px}}
+
+
+/* ============================================================
+   FEBRUARY 2027 PLOT CALENDAR
+   ============================================================ */
+#plot-calendar-section .plot-intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,320px);gap:40px;align-items:end;padding:30px 0 26px}
+#plot-calendar-section .plot-eyebrow{margin-bottom:14px;color:#77766f;font:10px "DM Mono",monospace;letter-spacing:.1em;text-transform:uppercase}
+#plot-calendar-section .plot-heading{margin:0;font-family:"Manrope",sans-serif;font-size:clamp(34px,5.5vw,64px);font-weight:500;line-height:.98;letter-spacing:-.055em}
+#plot-calendar-section .plot-heading em{font-family:"Playfair Display",Georgia,serif;font-weight:400}
+#plot-calendar-section .plot-intro-copy{color:#4e4d47;font-size:12px;line-height:1.8}
+#plot-calendar-section .plot-intro-copy p{margin:0 0 10px}
+#plot-calendar-section .plot-toolbar{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:26px 0 18px}
+#plot-calendar-section .plot-toolbar-actions{display:flex;flex-wrap:wrap;gap:8px}
+#plot-calendar-section .plot-month-heading{display:flex;align-items:baseline;gap:12px}
+#plot-calendar-section .plot-month-heading h3{margin:0;font-family:"Playfair Display",Georgia,serif;font-size:clamp(30px,4vw,46px);font-weight:400;letter-spacing:-.05em}
+#plot-calendar-section .plot-month-heading span{color:#77766f;font:12px "DM Mono",monospace}
+#plot-calendar-section .plot-button{border:1px solid #171714;border-radius:0;background:transparent;color:#171714;padding:11px 14px;cursor:pointer;font:10px "DM Mono",monospace;letter-spacing:.05em;text-transform:uppercase}
+#plot-calendar-section .plot-button:hover{background:#171714;color:#f4f3ee}
+#plot-calendar-section .plot-weekdays,#plot-calendar-section .plot-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+#plot-calendar-section .plot-weekdays{border-bottom:1px solid #171714}
+#plot-calendar-section .plot-weekday{padding:12px 8px;color:#77766f;font:10px "DM Mono",monospace;letter-spacing:.08em}
+#plot-calendar-section .plot-grid{border-left:1px solid #d8d7d0}
+#plot-calendar-section .plot-day{display:flex;min-width:0;min-height:145px;flex-direction:column;gap:10px;padding:10px;border-right:1px solid #d8d7d0;border-bottom:1px solid #d8d7d0}
+#plot-calendar-section .plot-day.plot-empty{background:rgba(0,0,0,.025)}
+#plot-calendar-section .plot-day-top{display:flex;min-height:24px;align-items:center;justify-content:space-between;gap:5px}
+#plot-calendar-section .plot-day-number{font:12px "DM Mono",monospace}
+#plot-calendar-section .plot-day-add{border:0;padding:0 3px;background:transparent;color:#77766f;font-size:18px;cursor:pointer;opacity:0}
+#plot-calendar-section .plot-day:hover .plot-day-add,#plot-calendar-section .plot-day-add:focus-visible{opacity:1}
+#plot-calendar-section .plot-events{display:flex;flex-direction:column;gap:5px}
+#plot-calendar-section .plot-event{width:100%;min-width:0;border:0;border-left:2px solid #b84c35;border-radius:0;padding:7px 8px;background:rgba(184,76,53,.08);color:#171714;text-align:left;overflow-wrap:anywhere;cursor:pointer}
+#plot-calendar-section .plot-event:hover{background:rgba(184,76,53,.17)}
+#plot-calendar-section .plot-event-title{display:block;font:600 11px/1.4 "Manrope",sans-serif}
+#plot-calendar-section .plot-event-meta{display:block;margin-top:4px;color:#77766f;font:9px/1.5 "DM Mono",monospace}
+#plot-calendar-section .plot-calendar-note{display:flex;justify-content:space-between;gap:20px;padding:14px 0 42px;color:#77766f;font:10px/1.7 "DM Mono",monospace}
+.plot-overlay{position:fixed;inset:0;z-index:10001;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(15,15,14,.72)}
+.plot-overlay.plot-open{display:flex}
+.plot-dialog{position:relative;width:min(560px,100%);max-height:90vh;overflow-y:auto;padding:32px;background:#f4f3ee;color:#151515}
+.plot-dialog-close{position:absolute;top:12px;right:16px;border:0;background:transparent;color:#77766f;font-size:28px;cursor:pointer}
+.plot-dialog-kicker{margin:0 35px 12px 0;color:#77766f;font:10px "DM Mono",monospace;letter-spacing:.1em;text-transform:uppercase}
+.plot-dialog-heading{margin:0 35px 24px 0;font-family:"Playfair Display",Georgia,serif;font-size:30px;line-height:1.1;font-weight:400;letter-spacing:-.04em}
+.plot-dialog label{display:block;margin:17px 0 7px;color:#77766f;font:9px "DM Mono",monospace;letter-spacing:.1em;text-transform:uppercase}
+.plot-dialog input,.plot-dialog textarea{display:block;width:100%;border:1px solid #d8d7d0;border-radius:0;padding:11px;background:transparent;color:#171714;font:13px "Manrope",sans-serif}
+.plot-dialog textarea{min-height:130px;resize:vertical;line-height:1.6}
+.plot-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.plot-dialog-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.plot-dialog-actions .plot-button.is-primary{background:#171714;color:#f4f3ee}
+.plot-dialog-actions .plot-button.is-primary:hover{background:#b84c35;border-color:#b84c35}
+.plot-dialog-actions .plot-button.is-delete{margin-left:auto;border-color:#a33;color:#a33}
+.plot-detail-date{margin-bottom:14px;color:#77766f;font:10px "DM Mono",monospace;letter-spacing:.1em;text-transform:uppercase}
+.plot-detail-title{margin-bottom:12px;font-family:"Playfair Display",Georgia,serif;font-size:34px;line-height:1.1;overflow-wrap:anywhere}
+.plot-detail-meta{margin-top:12px;color:#77766f;font:11px/1.7 "DM Mono",monospace;white-space:pre-wrap}
+.plot-detail-description{margin-top:20px;font-size:13px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere}
+@media(max-width:800px){#plot-calendar-section .plot-intro{grid-template-columns:1fr;gap:18px;padding-top:25px}#plot-calendar-section .plot-day{min-height:105px;padding:7px 4px;gap:7px}#plot-calendar-section .plot-weekday{padding:10px 2px;font-size:9px;letter-spacing:0}#plot-calendar-section .plot-day-top{justify-content:center}#plot-calendar-section .plot-day-add{display:none}#plot-calendar-section .plot-event{padding:5px 4px}#plot-calendar-section .plot-event-title{font-size:9px;font-weight:500}#plot-calendar-section .plot-event-meta{display:none}#plot-calendar-section .plot-calendar-note{flex-direction:column;gap:5px}.plot-dialog{padding:26px 22px}.plot-form-grid{grid-template-columns:1fr}}
+@media(max-width:520px){#plot-calendar-section .plot-day{min-height:82px}#plot-calendar-section .plot-day-number{font-size:10px}#plot-calendar-section .plot-toolbar{align-items:flex-start;flex-direction:column}#plot-calendar-section .plot-toolbar-actions{width:100%}}
+
+
+/* STANDALONE CALENDARS PAGE */
+html { scroll-behavior: smooth; }
+body { min-height: 100vh; background: #f4f3ee; color: #171714; }
+main.calendars-page { display: block !important; width: min(1440px, calc(100% - 64px)); margin: 0 auto; padding: 30px 0 70px; }
+.chapter { display: block !important; visibility: visible !important; opacity: 1 !important; }
+.calendar-page-header { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; padding: 12px 0 28px; border-bottom:1px solid #171714; margin-bottom:34px; }
+.calendar-page-kicker { margin:0 0 10px; color:#77766f; font:10px "DM Mono",monospace; letter-spacing:.1em; text-transform:uppercase; }
+.calendar-page-title { margin:0; font:500 clamp(34px,5vw,62px)/.98 "Manrope",sans-serif; letter-spacing:-.055em; }
+.calendar-page-title em { font-family:"Playfair Display",Georgia,serif; font-weight:400; }
+.calendar-save-button { border:1px solid #171714; border-radius:0; background:#171714; color:#f4f3ee; padding:13px 16px; cursor:pointer; font:10px "DM Mono",monospace; letter-spacing:.06em; text-transform:uppercase; white-space:nowrap; }
+.calendar-save-button:hover { background:#b84c35; border-color:#b84c35; }
+.calendar-header-actions { display:flex; gap:8px; flex-wrap:wrap; }
+@media(max-width:700px) { .calendar-header-actions { width:100%; } .calendar-header-actions .calendar-save-button { flex:1; } }
+.calendar-save-notice { margin:0; padding:12px 0 24px; color:#77766f; font:10px/1.7 "DM Mono",monospace; }
+@media(max-width:700px) { main.calendars-page { width:calc(100% - 28px); padding-top:18px; } .calendar-page-header { align-items:flex-start; flex-direction:column; gap:18px; } .calendar-save-button { width:100%; } }
+</style>
+</head>
+<body>
+<main class="calendars-page">
+  <header class="calendar-page-header">
+    <div>
+      <p class="calendar-page-kicker">DANCE DIVISION / CALENDAR EDITOR</p>
+      <h1 class="calendar-page-title">The <em>Calendars</em></h1>
+    </div>
+    <div class="calendar-header-actions">
+      <button class="calendar-save-button calendar-import-button" id="importCalendarJsonButton" type="button">Import JSON</button>
+      <button class="calendar-save-button" id="exportCalendarJson" type="button">Export JSON</button>
+      <input id="importCalendarJsonFile" type="file" accept="application/json,.json" hidden>
+    </div>
+  </header>
+  <p class="calendar-save-notice">EDITOR / Changes are saved in this browser. Use IMPORT JSON to load your latest data, make edits, then EXPORT JSON. Upload the exported calendars.json alongside the read-only calendars.html page on GitHub Pages.</p>
+<section id="plot-calendar-section" class="chapter chapter-plot-calendar" data-chapter="07">
+  <div class="section-header">
+    <div class="section-number">07</div>
+    <div class="section-title">PLOT CALENDAR</div>
+    <div class="section-description">FEBRUARY 2027 / STORY BEATS</div>
+  </div>
+  <div class="plot-intro">
+    <div>
+      <div class="plot-eyebrow">STORY DEVELOPMENT / FEBRUARY 2027</div>
+      <h2 class="plot-heading">DANCE<br><em>DIVISION PLOT</em></h2>
+    </div>
+    <div class="plot-intro-copy">
+      <p>A working calendar for the story. Use each date to map plot beats, episode turns, character decisions, reveals, and the consequences that carry the series forward.</p>
+      <p>Entries are editable. Click any item to open its full notes. Changes are saved in this browser only until you save and publish an updated page.</p>
+    </div>
+  </div>
+  <div class="plot-toolbar">
+    <div class="plot-month-heading"><h3>February</h3><span>2027</span></div>
+    <div class="plot-toolbar-actions"><button class="plot-button" id="plotAddGlobal" type="button">+ Add plot item</button></div>
+  </div>
+  <div class="plot-weekdays" aria-hidden="true"><div class="plot-weekday">SUN</div><div class="plot-weekday">MON</div><div class="plot-weekday">TUE</div><div class="plot-weekday">WED</div><div class="plot-weekday">THU</div><div class="plot-weekday">FRI</div><div class="plot-weekday">SAT</div></div>
+  <div class="plot-grid" id="plotGrid" aria-label="February 2027 plot calendar"></div>
+  <div class="plot-calendar-note"><span>CLICK + TO ADD A STORY BEAT</span><span>CLICK AN ITEM TO VIEW / EDIT FULL NOTES</span><span>EDITABLE / LOCAL BROWSER</span></div>
+</section>
+
+<div class="plot-overlay" id="plotFormOverlay" aria-hidden="true">
+  <section class="plot-dialog" role="dialog" aria-modal="true" aria-labelledby="plotFormHeading">
+    <button class="plot-dialog-close" type="button" data-plot-close="plotFormOverlay" aria-label="Close">×</button>
+    <p class="plot-dialog-kicker">STORY DEVELOPMENT / FEBRUARY 2027</p>
+    <h2 class="plot-dialog-heading" id="plotFormHeading">Add a plot item</h2>
+    <form id="plotEventForm">
+      <input type="hidden" id="plotEventId">
+      <label for="plotEventDate">Date</label><input type="date" id="plotEventDate" min="2027-02-01" max="2027-02-28" required>
+      <label for="plotEventTitle">Plot beat / event title</label><input type="text" id="plotEventTitle" placeholder="What happens?" required>
+      <div class="plot-form-grid">
+        <div><label for="plotEventEpisode">Episode / sequence</label><input type="text" id="plotEventEpisode" placeholder="e.g. Episode 01"></div>
+        <div><label for="plotEventCharacters">Characters involved</label><input type="text" id="plotEventCharacters" placeholder="Names or group"></div>
+      </div>
+      <label for="plotEventTime">Story time / order (optional)</label><input type="text" id="plotEventTime" placeholder="e.g. Opening scene / later that night">
+      <label for="plotEventLocation">Location (optional)</label><input type="text" id="plotEventLocation" placeholder="Where does it happen?">
+      <label for="plotEventDescription">Full plot notes</label><textarea id="plotEventDescription" placeholder="Beat details, motivation, conflict, reveal, consequence, continuity notes..."></textarea>
+      <div class="plot-dialog-actions"><button class="plot-button is-primary" type="submit">Save plot item</button><button class="plot-button" type="button" data-plot-close="plotFormOverlay">Cancel</button></div>
+    </form>
+  </section>
+</div>
+<div class="plot-overlay" id="plotDetailOverlay" aria-hidden="true">
+  <section class="plot-dialog" role="dialog" aria-modal="true" aria-labelledby="plotDetailTitle">
+    <button class="plot-dialog-close" type="button" data-plot-close="plotDetailOverlay" aria-label="Close">×</button>
+    <div class="plot-detail-date" id="plotDetailDate"></div><div class="plot-detail-title" id="plotDetailTitle"></div><div class="plot-detail-meta" id="plotDetailMeta"></div><div class="plot-detail-description" id="plotDetailDescription"></div>
+    <div class="plot-dialog-actions"><button class="plot-button is-primary" type="button" id="plotEditEvent">Edit</button><button class="plot-button" type="button" data-plot-close="plotDetailOverlay">Close</button><button class="plot-button is-delete" type="button" id="plotDeleteEvent">Delete</button></div>
+  </section>
+</div>
+<script>
+(() => {
+  "use strict";
+  const STORAGE_KEY = "danceDivisionPlotFebruary2027";
+  const grid = document.getElementById("plotGrid");
+  const formOverlay = document.getElementById("plotFormOverlay");
+  const detailOverlay = document.getElementById("plotDetailOverlay");
+  const form = document.getElementById("plotEventForm");
+  if (!grid || !formOverlay || !detailOverlay || !form) return;
+  let events = [];
+  let activeEventId = null;
+  try { const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); events = Array.isArray(saved) ? saved : []; } catch (_) { events = []; }
+  const dateKey = day => `2027-02-${String(day).padStart(2, "0")}`;
+  const byId = id => events.find(item => item.id === id);
+  function saveEvents() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(events)); } catch (_) { alert("The browser could not save this plot calendar. Check browser storage settings."); } }
+  function closeOverlay(overlay) { overlay.classList.remove("plot-open"); overlay.setAttribute("aria-hidden", "true"); if (!formOverlay.classList.contains("plot-open") && !detailOverlay.classList.contains("plot-open")) document.body.style.overflow = ""; }
+  function openOverlay(overlay) { overlay.classList.add("plot-open"); overlay.setAttribute("aria-hidden", "false"); document.body.style.overflow = "hidden"; }
+  function formatDate(value) { return new Date(value + "T12:00:00").toLocaleDateString("en-US", {weekday:"long",month:"long",day:"numeric",year:"numeric"}); }
+  function render() {
+    grid.innerHTML = "";
+    const firstDay = new Date(2027, 1, 1).getDay();
+    for (let i = 0; i < firstDay; i++) { const blank = document.createElement("div"); blank.className = "plot-day plot-empty"; blank.setAttribute("aria-hidden", "true"); grid.appendChild(blank); }
+    for (let day = 1; day <= 28; day++) {
+      const cell = document.createElement("div"); cell.className = "plot-day";
+      const top = document.createElement("div"); top.className = "plot-day-top";
+      const number = document.createElement("span"); number.className = "plot-day-number"; number.textContent = String(day).padStart(2, "0"); top.appendChild(number);
+      const add = document.createElement("button"); add.type = "button"; add.className = "plot-day-add"; add.textContent = "+"; add.title = `Add a plot item on February ${day}`; add.setAttribute("aria-label", add.title); add.addEventListener("click", () => openForm(dateKey(day))); top.appendChild(add); cell.appendChild(top);
+      const list = document.createElement("div"); list.className = "plot-events";
+      events.filter(item => item.date === dateKey(day)).forEach(item => { const button = document.createElement("button"); button.type = "button"; button.className = "plot-event"; const title = document.createElement("span"); title.className = "plot-event-title"; title.textContent = item.title; button.appendChild(title); const metaText = [item.episode, item.characters].filter(Boolean).join(" · "); if (metaText) { const meta = document.createElement("span"); meta.className = "plot-event-meta"; meta.textContent = metaText; button.appendChild(meta); } button.addEventListener("click", () => openDetail(item.id)); list.appendChild(button); });
+      cell.appendChild(list); grid.appendChild(cell);
+    }
+  }
+  function openForm(date = dateKey(1), item = null) {
+    form.reset(); document.getElementById("plotEventId").value = item ? item.id : ""; document.getElementById("plotEventDate").value = item ? item.date : date; document.getElementById("plotEventTitle").value = item ? item.title : ""; document.getElementById("plotEventEpisode").value = item ? item.episode || "" : ""; document.getElementById("plotEventCharacters").value = item ? item.characters || "" : ""; document.getElementById("plotEventTime").value = item ? item.time || "" : ""; document.getElementById("plotEventLocation").value = item ? item.location || "" : ""; document.getElementById("plotEventDescription").value = item ? item.description || "" : ""; document.getElementById("plotFormHeading").textContent = item ? "Edit plot item" : "Add a plot item"; closeOverlay(detailOverlay); openOverlay(formOverlay); document.getElementById("plotEventTitle").focus();
+  }
+  function openDetail(id) {
+    const item = byId(id); if (!item) return; activeEventId = id; document.getElementById("plotDetailDate").textContent = formatDate(item.date); document.getElementById("plotDetailTitle").textContent = item.title;
+    document.getElementById("plotDetailMeta").textContent = [item.episode && `EPISODE / SEQUENCE: ${item.episode}`, item.characters && `CHARACTERS: ${item.characters}`, item.time && `STORY ORDER: ${item.time}`, item.location && `LOCATION: ${item.location}`].filter(Boolean).join("\n");
+    document.getElementById("plotDetailDescription").textContent = item.description || "No additional plot notes."; openOverlay(detailOverlay);
+  }
+  form.addEventListener("submit", event => { event.preventDefault(); const existingId = document.getElementById("plotEventId").value; const item = {id: existingId || (window.crypto && crypto.randomUUID ? crypto.randomUUID() : String(Date.now())), date: document.getElementById("plotEventDate").value, title: document.getElementById("plotEventTitle").value.trim(), episode: document.getElementById("plotEventEpisode").value.trim(), characters: document.getElementById("plotEventCharacters").value.trim(), time: document.getElementById("plotEventTime").value.trim(), location: document.getElementById("plotEventLocation").value.trim(), description: document.getElementById("plotEventDescription").value}; const index = events.findIndex(entry => entry.id === item.id); if (index >= 0) events[index] = item; else events.push(item); events.sort((a,b) => a.date.localeCompare(b.date)); saveEvents(); render(); closeOverlay(formOverlay); });
+  document.getElementById("plotAddGlobal").addEventListener("click", () => openForm(dateKey(1)));
+  document.getElementById("plotEditEvent").addEventListener("click", () => { const item = byId(activeEventId); if (item) openForm(item.date, item); });
+  document.getElementById("plotDeleteEvent").addEventListener("click", () => { if (!activeEventId || !confirm("Delete this plot item?")) return; events = events.filter(item => item.id !== activeEventId); saveEvents(); render(); closeOverlay(detailOverlay); activeEventId = null; });
+  document.querySelectorAll("[data-plot-close]").forEach(button => button.addEventListener("click", () => closeOverlay(document.getElementById(button.dataset.plotClose))));
+  [formOverlay, detailOverlay].forEach(overlay => overlay.addEventListener("click", event => { if (event.target === overlay) closeOverlay(overlay); }));
+  document.addEventListener("keydown", event => { if (event.key === "Escape") { closeOverlay(formOverlay); closeOverlay(detailOverlay); } });
+  render();
+})();
+</script>
+
+<section id="calendar" class="chapter chapter-calendar" data-chapter="08">
+    <div class="section-header">
+        <div class="section-number">08</div>
+        <div class="section-title">CALENDAR</div>
+        <div class="section-description">JANUARY 2027 / SCHEDULE &amp; NOTES</div>
+    </div>
+    <div class="calendar-section-intro">
+        <h2 class="calendar-month-title">January<span>2027</span></h2>
+        <div class="calendar-toolbar-actions"><button class="calendar-add-global" id="calendarAddGlobal" type="button">+ Add an item</button></div>
+    </div>
+    <div class="calendar-weekdays" aria-hidden="true"><div class="calendar-weekday">SUN</div><div class="calendar-weekday">MON</div><div class="calendar-weekday">TUE</div><div class="calendar-weekday">WED</div><div class="calendar-weekday">THU</div><div class="calendar-weekday">FRI</div><div class="calendar-weekday">SAT</div></div>
+    <div class="calendar-grid" id="calendarGrid"></div>
+</section>
+
+<div class="calendar-overlay" id="calendarFormOverlay" aria-hidden="true">
+  <section class="calendar-dialog" role="dialog" aria-modal="true" aria-labelledby="calendarFormHeading">
+    <button class="calendar-dialog-close" type="button" data-calendar-close="calendarFormOverlay" aria-label="Close">×</button>
+    <h2 class="calendar-dialog-heading" id="calendarFormHeading">Add an item</h2>
+    <form class="calendar-form" id="calendarEventForm">
+      <input type="hidden" id="calendarEventId">
+      <label for="calendarEventDate">Date</label><input type="date" id="calendarEventDate" min="2027-01-01" max="2027-01-31" required>
+      <label for="calendarEventTitle">Title</label><input type="text" id="calendarEventTitle" placeholder="What's happening?" required>
+      <label for="calendarEventTime">Time (optional)</label><input type="text" id="calendarEventTime" placeholder="e.g. 2:00 PM">
+      <label for="calendarEventLocation">Location (optional)</label><input type="text" id="calendarEventLocation" placeholder="Where?">
+      <label for="calendarEventDescription">Full information</label><textarea id="calendarEventDescription" placeholder="Add notes, details, links, or anything else..."></textarea>
+      <div class="calendar-dialog-actions"><button class="calendar-action is-primary" type="submit">Save item</button><button class="calendar-action" type="button" data-calendar-close="calendarFormOverlay">Cancel</button></div>
+    </form>
+  </section>
+</div>
+
+<div class="calendar-overlay" id="calendarDetailOverlay" aria-hidden="true">
+  <section class="calendar-dialog" role="dialog" aria-modal="true" aria-labelledby="calendarDetailTitle">
+    <button class="calendar-dialog-close" type="button" data-calendar-close="calendarDetailOverlay" aria-label="Close">×</button>
+    <div class="calendar-detail-date" id="calendarDetailDate"></div><div class="calendar-detail-title" id="calendarDetailTitle"></div><div class="calendar-detail-time" id="calendarDetailTime"></div><div class="calendar-detail-description" id="calendarDetailDescription"></div><div class="calendar-detail-location" id="calendarDetailLocation"></div>
+    <div class="calendar-dialog-actions"><button class="calendar-action is-primary" type="button" id="calendarEditEvent">Edit</button><button class="calendar-action" type="button" data-calendar-close="calendarDetailOverlay">Close</button><button class="calendar-action is-delete" type="button" id="calendarDeleteEvent">Delete</button></div>
+  </section>
+</div>
+
+<script>
+/* JANUARY 2027 CALENDAR */
+(() => {
+  "use strict";
+  const STORAGE_KEY = "danceDivisionJanuary2027Calendar";
+  const grid = document.getElementById("calendarGrid");
+  const formOverlay = document.getElementById("calendarFormOverlay");
+  const detailOverlay = document.getElementById("calendarDetailOverlay");
+  const form = document.getElementById("calendarEventForm");
+  if (!grid || !formOverlay || !detailOverlay || !form) return;
+  let items = [];
+  let activeItemId = null;
+  try { const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); items = Array.isArray(saved) ? saved : []; } catch (_) { items = []; }
+  const dateKey = day => `2027-01-${String(day).padStart(2,"0")}`;
+  const byId = id => items.find(item => item.id === id);
+  function saveItems() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch (_) { alert("The browser could not save this calendar. Check your browser storage settings."); } }
+  function closeOverlay(overlay) { overlay.classList.remove("is-open"); overlay.setAttribute("aria-hidden","true"); if (!formOverlay.classList.contains("is-open") && !detailOverlay.classList.contains("is-open")) document.body.style.overflow = ""; }
+  function openOverlay(overlay) { overlay.classList.add("is-open"); overlay.setAttribute("aria-hidden","false"); document.body.style.overflow = "hidden"; }
+  function formatDate(value) { return new Date(value+"T12:00:00").toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"}); }
+  function render() {
+    grid.innerHTML = "";
+    for (let i=0;i<new Date(2027,0,1).getDay();i++) { const blank=document.createElement("div"); blank.className="calendar-day is-empty"; blank.setAttribute("aria-hidden","true"); grid.appendChild(blank); }
+    for (let day=1;day<=31;day++) {
+      const cell=document.createElement("div"); cell.className="calendar-day";
+      const top=document.createElement("div"); top.className="calendar-day-top";
+      const number=document.createElement("span"); number.className="calendar-day-number"; number.textContent=String(day).padStart(2,"0"); top.appendChild(number);
+      const add=document.createElement("button"); add.type="button"; add.className="calendar-day-add"; add.textContent="+"; add.title=`Add an item on January ${day}`; add.setAttribute("aria-label",add.title); add.addEventListener("click",()=>openForm(dateKey(day))); top.appendChild(add); cell.appendChild(top);
+      const list=document.createElement("div"); list.className="calendar-events";
+      items.filter(item=>item.date===dateKey(day)).forEach(item=>{ const button=document.createElement("button"); button.type="button"; button.className="calendar-event"; const title=document.createElement("span"); title.className="calendar-event-title"; title.textContent=item.title; button.appendChild(title); if(item.time){const time=document.createElement("span");time.className="calendar-event-time";time.textContent=item.time;button.appendChild(time);} button.addEventListener("click",()=>openDetails(item.id));list.appendChild(button); });
+      cell.appendChild(list); grid.appendChild(cell);
+    }
+  }
+  function openForm(date,item=null) {
+    form.reset(); document.getElementById("calendarEventId").value=item?item.id:""; document.getElementById("calendarEventDate").value=item?item.date:date; document.getElementById("calendarEventTitle").value=item?item.title:""; document.getElementById("calendarEventTime").value=item?item.time:""; document.getElementById("calendarEventLocation").value=item?item.location:""; document.getElementById("calendarEventDescription").value=item?item.description:""; document.getElementById("calendarFormHeading").textContent=item?"Edit item":"Add an item"; closeOverlay(detailOverlay); openOverlay(formOverlay); document.getElementById("calendarEventTitle").focus();
+  }
+  function openDetails(id) { const item=byId(id); if(!item)return; activeItemId=id; document.getElementById("calendarDetailDate").textContent=formatDate(item.date); document.getElementById("calendarDetailTitle").textContent=item.title; document.getElementById("calendarDetailTime").textContent=item.time||""; document.getElementById("calendarDetailDescription").textContent=item.description||"No additional information."; document.getElementById("calendarDetailLocation").textContent=item.location?"LOCATION / "+item.location:""; openOverlay(detailOverlay); }
+  form.addEventListener("submit",event=>{ event.preventDefault(); const existingId=document.getElementById("calendarEventId").value; const item={id:existingId||(window.crypto&&crypto.randomUUID?crypto.randomUUID():String(Date.now())),date:document.getElementById("calendarEventDate").value,title:document.getElementById("calendarEventTitle").value.trim(),time:document.getElementById("calendarEventTime").value.trim(),location:document.getElementById("calendarEventLocation").value.trim(),description:document.getElementById("calendarEventDescription").value}; const index=items.findIndex(entry=>entry.id===item.id); if(index>=0)items[index]=item;else items.push(item);items.sort((a,b)=>a.date.localeCompare(b.date));saveItems();render();closeOverlay(formOverlay); });
+  document.getElementById("calendarAddGlobal").addEventListener("click",()=>openForm(dateKey(1)));
+  document.getElementById("calendarEditEvent").addEventListener("click",()=>{const item=byId(activeItemId);if(item)openForm(item.date,item);});
+  document.getElementById("calendarDeleteEvent").addEventListener("click",()=>{if(!activeItemId)return;if(confirm("Delete this calendar item?")){items=items.filter(item=>item.id!==activeItemId);saveItems();render();closeOverlay(detailOverlay);activeItemId=null;}});
+  document.querySelectorAll("[data-calendar-close]").forEach(button=>button.addEventListener("click",()=>closeOverlay(document.getElementById(button.dataset.calendarClose))));
+  [formOverlay,detailOverlay].forEach(overlay=>overlay.addEventListener("click",event=>{if(event.target===overlay)closeOverlay(overlay);}));
+  document.addEventListener("keydown",event=>{if(event.key==="Escape"){closeOverlay(formOverlay);closeOverlay(detailOverlay);}});
+  render();
+})();
+</script>
+<script>
+(() => {
+  "use strict";
+  const button = document.getElementById("exportCalendarJson");
+  const importButton = document.getElementById("importCalendarJsonButton");
+  const importFile = document.getElementById("importCalendarJsonFile");
+  if (importButton && importFile) {
+    importButton.addEventListener("click", () => importFile.click());
+    importFile.addEventListener("change", async () => {
+      const file = importFile.files && importFile.files[0];
+      if (!file) return;
+      try {
+        const data = JSON.parse(await file.text());
+        if (!data || !Array.isArray(data.plot) || !Array.isArray(data.january)) throw new Error("Expected plot and january arrays.");
+        localStorage.setItem("danceDivisionPlotFebruary2027", JSON.stringify(data.plot));
+        localStorage.setItem("danceDivisionJanuary2027Calendar", JSON.stringify(data.january));
+        alert("Calendar JSON imported. The page will reload with the imported information.");
+        window.location.reload();
+      } catch (error) {
+        alert("Could not import this file. Choose a calendars.json export containing both plot and january arrays.");
+        importFile.value = "";
+      }
+    });
+  }
+  if (!button) return;
+  button.addEventListener("click", () => {
+    let plot = [], january = [];
+    try {
+      const savedPlot = localStorage.getItem("danceDivisionPlotFebruary2027");
+      const savedJanuary = localStorage.getItem("danceDivisionJanuary2027Calendar");
+      plot = savedPlot ? JSON.parse(savedPlot) : [];
+      january = savedJanuary ? JSON.parse(savedJanuary) : [];
+      if (!Array.isArray(plot) || !Array.isArray(january)) throw new Error("Calendar data is not an array.");
+    } catch (error) {
+      alert("The calendar data could not be read. Nothing was downloaded.");
+      return;
+    }
+    const blob = new Blob([JSON.stringify({ plot, january }, null, 2) + "\n"], { type: "application/json;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "calendars.json";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1500);
+  });
+})();
+</script>
+</main>
+</body>
+</html>

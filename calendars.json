@@ -1,0 +1,355 @@
+{
+  "plot": [
+    {
+      "id": "f692d1f2-7a07-43c7-aaeb-f14215771add",
+      "date": "2027-02-01",
+      "title": "Opening Dance (Day)",
+      "episode": "Episode 1",
+      "characters": "",
+      "time": "Opening Dance Class Scene",
+      "location": "Kaatsbaan",
+      "description": ""
+    },
+    {
+      "id": "cbf09a82-3066-458d-a970-af7981c1a578",
+      "date": "2027-02-01",
+      "title": "Hallway Fight with Zane (cont)",
+      "episode": "Episode 2",
+      "characters": "",
+      "time": "Hallway Fight With Zane",
+      "location": "Kaatsbaan Hallway",
+      "description": ""
+    },
+    {
+      "id": "e3d2d7ec-072b-4da9-b65c-d02e03152bc2",
+      "date": "2027-02-01",
+      "title": "Lucy Audition Reel (Night)",
+      "episode": "Episode 3",
+      "characters": "",
+      "time": "Lucy Dance Division Audition Announcement",
+      "location": "Lucy's Dorm Room",
+      "description": ""
+    },
+    {
+      "id": "a33626ff-8f4d-467c-bc79-00c54fe361f8",
+      "date": "2027-02-02",
+      "title": "Auditions",
+      "episode": "Episodes 4-12",
+      "characters": "",
+      "time": "Auditions",
+      "location": "Lucy's Dorm",
+      "description": ""
+    },
+    {
+      "id": "69c3b241-63ef-4441-b1f6-1664edb8387c",
+      "date": "2027-02-02",
+      "title": "Audition List / Graham Class (Day)",
+      "episode": "Episode 13",
+      "characters": "",
+      "time": "",
+      "location": "Kaatsbaan Studio South",
+      "description": ""
+    },
+    {
+      "id": "1e8b0962-8220-419f-9a48-9d7c8d107c74",
+      "date": "2027-02-05",
+      "title": "Costume Scene",
+      "episode": "Episode 14",
+      "characters": "",
+      "time": "",
+      "location": "Kaatsbaan Dressing Room",
+      "description": ""
+    },
+    {
+      "id": "9ca87059-16fd-4f3e-88c7-2b32389d358a",
+      "date": "2027-02-08",
+      "title": "Dance (Day / Sunny)",
+      "episode": "Episode 15",
+      "characters": "",
+      "time": "",
+      "location": "Kaatsbaan - Studio West",
+      "description": ""
+    },
+    {
+      "id": "3bc3190d-ef2c-4521-8be2-941729d712ef",
+      "date": "2027-02-08",
+      "title": "Bodhi (Day / Sunny)",
+      "episode": "Episode 18",
+      "characters": "",
+      "time": "",
+      "location": "Kaatsbaan Exterior",
+      "description": ""
+    },
+    {
+      "id": "60126232-f427-4dc0-b55a-457e91ab0753",
+      "date": "2027-02-08",
+      "title": "Lucy and Frankie Outside",
+      "episode": "Episode 19",
+      "characters": "",
+      "time": "",
+      "location": "Outside South Studio",
+      "description": ""
+    },
+    {
+      "id": "069e598f-1866-4e42-92fe-2c77156e0fbb",
+      "date": "2027-02-08",
+      "title": "Bodhi  Enters Studio",
+      "episode": "Episode 20",
+      "characters": "",
+      "time": "",
+      "location": "SOUTH STUDIO",
+      "description": ""
+    },
+    {
+      "id": "2697811a-0861-4ab7-92a8-e539681701f3",
+      "date": "2027-02-08",
+      "title": "FUN at the Mall",
+      "episode": "Episode 21",
+      "characters": "",
+      "time": "",
+      "location": "Driving / Gas Station / Kingston Mall / Target",
+      "description": "https://jjeremyjacob.github.io/dancedivision/audio/fun.mp3"
+    },
+    {
+      "id": "ee53b8ca-a4bd-4e0f-a227-a59257140c21",
+      "date": "2027-02-10",
+      "title": "Locked Out",
+      "episode": "Episode 22",
+      "characters": "",
+      "time": "Early Morning",
+      "location": "South Studio Hallway",
+      "description": ""
+    },
+    {
+      "id": "42661fbe-a311-4253-b34d-04d7bb93b5e9",
+      "date": "2027-02-10",
+      "title": "Library Sandwich",
+      "episode": "Epiosde 23",
+      "characters": "",
+      "time": "Early Morning",
+      "location": "Library",
+      "description": ""
+    },
+    {
+      "id": "bafe6f66-7239-4815-a494-6a2239755fd4",
+      "date": "2027-02-10",
+      "title": "Locked Out (Cont)",
+      "episode": "Episode 24",
+      "characters": "",
+      "time": "",
+      "location": "South Studio Hallway",
+      "description": ""
+    },
+    {
+      "id": "59aa0487-6838-477f-9c61-abb742287ef5",
+      "date": "2027-02-10",
+      "title": "In Studio",
+      "episode": "Episode 25",
+      "characters": "",
+      "time": "",
+      "location": "SOUTH STUDIO",
+      "description": ""
+    },
+    {
+      "id": "abcf8341-caa3-4ad1-8e37-74229dae4164",
+      "date": "2027-02-14",
+      "title": "Rehearsal for Zane",
+      "episode": "Episode 26",
+      "characters": "",
+      "time": "",
+      "location": "THEATER",
+      "description": ""
+    },
+    {
+      "id": "ce0a82cd-673a-45ff-a6f0-2b3c29ddb551",
+      "date": "2027-02-14",
+      "title": "Zane Feedback",
+      "episode": "Episode 27",
+      "characters": "",
+      "time": "",
+      "location": "South Studio",
+      "description": ""
+    },
+    {
+      "id": "a53e72a4-17f1-4484-a57a-8437d6c054ec",
+      "date": "2027-02-14",
+      "title": "Sandrana Is Out",
+      "episode": "Episode 28",
+      "characters": "",
+      "time": "",
+      "location": "South Studio Hallway",
+      "description": ""
+    },
+    {
+      "id": "083d8c0b-2eca-4b1e-bbe4-16206f994f22",
+      "date": "2027-02-14",
+      "title": "Lucy Devastated",
+      "episode": "Episode 29",
+      "characters": "",
+      "time": "",
+      "location": "Lucy's Dorm",
+      "description": ""
+    },
+    {
+      "id": "c95f33b0-49d9-4786-ac21-3de1db25601b",
+      "date": "2027-02-14",
+      "title": "Jude & Kim",
+      "episode": "Episode 30",
+      "characters": "",
+      "time": "",
+      "location": "South Studio",
+      "description": "Jude and Kim discuss breakup leading to NYC parody episode"
+    },
+    {
+      "id": "727df45e-2d90-46cd-b6e8-67afb2ed85f6",
+      "date": "2027-02-14",
+      "title": "NYC Parody History",
+      "episode": "Episode 31",
+      "characters": "",
+      "time": "",
+      "location": "New York City",
+      "description": ""
+    },
+    {
+      "id": "ee0be2f7-6ce8-4147-a11c-d1fe8be7e8dc",
+      "date": "2027-02-14",
+      "title": "Lucy Dorm with Jonah",
+      "episode": "Episode 32",
+      "characters": "",
+      "time": "",
+      "location": "Lucy's Dorm Room",
+      "description": ""
+    },
+    {
+      "id": "98cda58d-8415-431c-9c0e-22b535655091",
+      "date": "2027-02-14",
+      "title": "Frankie Live",
+      "episode": "Episode 33",
+      "characters": "",
+      "time": "",
+      "location": "Briggs House - Bodhi's House",
+      "description": "Sandwich Making"
+    },
+    {
+      "id": "b5b4f1fa-f793-4c62-8505-42feb235a66e",
+      "date": "2027-02-14",
+      "title": "Suspiria Sandwich",
+      "episode": "Episode 34",
+      "characters": "",
+      "time": "",
+      "location": "Briggs House / Bodhi's House",
+      "description": ""
+    },
+    {
+      "id": "b6e78572-b2a2-4ad2-8862-d1313873bfa5",
+      "date": "2027-02-14",
+      "title": "Break In",
+      "episode": "Episode 35",
+      "characters": "",
+      "time": "",
+      "location": "Studio Building",
+      "description": ""
+    },
+    {
+      "id": "4cc547d3-aa2b-40bf-a9a1-cd11b56227ce",
+      "date": "2027-02-14",
+      "title": "Zane's Dog",
+      "episode": "Episode 36",
+      "characters": "",
+      "time": "",
+      "location": "Zane's Office",
+      "description": ""
+    },
+    {
+      "id": "b9040ef3-938c-4c87-831b-619ca0990c7b",
+      "date": "2027-02-14",
+      "title": "Trio Revelation",
+      "episode": "Episode 37",
+      "characters": "",
+      "time": "",
+      "location": "Zane's Office / Shortcut through North Woods",
+      "description": ""
+    },
+    {
+      "id": "b8b21514-213c-448f-b6d7-8622bfe63ec2",
+      "date": "2027-02-14",
+      "title": "Razor Wire",
+      "episode": "Episode 38",
+      "characters": "",
+      "time": "",
+      "location": "Briggs House / Bodhi's House",
+      "description": ""
+    },
+    {
+      "id": "ada290e6-d659-4df1-884f-448935a5d368",
+      "date": "2027-02-14",
+      "title": "Lucy Dream Ballet",
+      "episode": "Episode 39",
+      "characters": "",
+      "time": "",
+      "location": "North Woods",
+      "description": ""
+    },
+    {
+      "id": "90b19cf2-2aea-4d9a-96b5-680f48c7f3d2",
+      "date": "2027-02-14",
+      "title": "Lucy & Jonah Notice Lights",
+      "episode": "Episode 40",
+      "characters": "",
+      "time": "",
+      "location": "North Woods near Lucy's Room",
+      "description": ""
+    },
+    {
+      "id": "ee4486a2-bbfd-4b61-ab96-24bd15176e0c",
+      "date": "2027-02-14",
+      "title": "Arrive at Lucy's Room",
+      "episode": "Episode 41",
+      "characters": "",
+      "time": "",
+      "location": "Clean up with DD",
+      "description": ""
+    },
+    {
+      "id": "3eb4c83f-35a5-43cc-99e4-5a96055ad89e",
+      "date": "2027-02-14",
+      "title": "Revelation",
+      "episode": "Episode 42",
+      "characters": "",
+      "time": "",
+      "location": "Lucy's Dorm Room",
+      "description": ""
+    },
+    {
+      "id": "0eb9475c-7eee-4684-ba1d-f5193ebc4916",
+      "date": "2027-02-14",
+      "title": "Back On?",
+      "episode": "Episode 43",
+      "characters": "",
+      "time": "",
+      "location": "Lucy's Dorm Room",
+      "description": ""
+    },
+    {
+      "id": "fefb069f-ebd4-4bc9-a3af-606370640758",
+      "date": "2027-02-19",
+      "title": "Big Dance",
+      "episode": "Episode 44",
+      "characters": "",
+      "time": "",
+      "location": "Theater",
+      "description": ""
+    },
+    {
+      "id": "ae635ee2-7924-4eb7-820f-1f84f3e8ad70",
+      "date": "2027-02-19",
+      "title": "Finale",
+      "episode": "Episode 45",
+      "characters": "",
+      "time": "",
+      "location": "Theater",
+      "description": ""
+    }
+  ],
+  "january": []
+}
