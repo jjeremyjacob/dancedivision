@@ -1323,6 +1323,17 @@ const inspirationContent = [
 
     {
         type:
+            "VERTICAL SERIES",
+
+        description:
+            "ALEXIS BITTAR NARRATIVE SERIES (FASHION).",
+
+        link:
+            "https://www.instagram.com/reel/DcG3as-OCQw/?utm_source=ig_web_copy_link&dlrf=MzRlODBiNWFlZA==&srtk=MzRlODBiNWFlZA=="
+    },
+    
+    {
+        type:
             "INSTAGRAM REEL",
 
         description:
