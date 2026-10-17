@@ -1,0 +1,458 @@
+/* DANCE DIVISION — CALENDAR PAGE STYLES */
+
+.calendar-section-intro{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin:0 0 28px}
+
+.calendar-toolbar-actions{display:flex;flex-wrap:wrap;gap:8px}
+
+.calendar-month-title{margin:0;font-family:"Playfair Display",Georgia,serif;font-size:clamp(36px,6vw,68px);line-height:.98;font-weight:400;letter-spacing:-.045em}
+
+.calendar-month-title span{margin-left:10px;color:#77766f;font-family:"DM Mono",monospace;font-size:14px;letter-spacing:.04em;vertical-align:middle}
+
+.calendar-add-global,.calendar-action{border:1px solid #171714;border-radius:0;background:transparent;color:#171714;padding:12px 15px;font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.07em;text-transform:uppercase;cursor:pointer}
+
+.calendar-add-global:hover,.calendar-action:hover{background:#171714;color:#f4f3ee}
+
+.calendar-weekdays,.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+
+.calendar-weekdays{border-bottom:1px solid #171714}
+
+.calendar-weekday{padding:12px 8px;color:#77766f;font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+
+.calendar-grid{border-left:1px solid #d8d7d0}
+
+.calendar-day{min-width:0;min-height:145px;padding:10px;border-right:1px solid #d8d7d0;border-bottom:1px solid #d8d7d0;display:flex;flex-direction:column;gap:10px}
+
+.calendar-day.is-empty{background:rgba(0,0,0,.025)}
+
+.calendar-day-top{display:flex;align-items:center;justify-content:space-between;gap:5px;min-height:24px}
+
+.calendar-day-number{font-family:"DM Mono",monospace;font-size:12px}
+
+.calendar-day-add{border:0;padding:0 3px;background:transparent;color:#77766f;font-size:18px;cursor:pointer;opacity:0}
+
+.calendar-day:hover .calendar-day-add,.calendar-day-add:focus-visible{opacity:1}
+
+.calendar-events{display:flex;flex-direction:column;gap:5px}
+
+.calendar-event{width:100%;min-width:0;border:0;border-left:2px solid #b84c35;border-radius:0;padding:7px 8px;background:rgba(184,76,53,.08);color:#171714;text-align:left;overflow-wrap:anywhere;cursor:pointer}
+
+.calendar-event:hover{background:rgba(184,76,53,.17)}
+
+.calendar-event-title{display:block;font-family:"Manrope",sans-serif;font-size:11px;font-weight:600;line-height:1.4}
+
+.calendar-event-time{display:block;margin-top:3px;color:#77766f;font-family:"DM Mono",monospace;font-size:9px}
+
+.calendar-overlay{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.78)}
+
+.calendar-overlay.is-open{display:flex}
+
+.calendar-dialog{position:relative;width:min(540px,100%);max-height:90vh;overflow-y:auto;padding:32px;background:#f4f3ee;color:#171714}
+
+.calendar-dialog-close{position:absolute;top:12px;right:16px;border:0;background:transparent;color:#77766f;font-size:28px;cursor:pointer}
+
+.calendar-dialog-heading{margin:0 30px 24px 0;font-family:"Playfair Display",Georgia,serif;font-size:30px;font-weight:400;letter-spacing:-.035em}
+
+.calendar-form label{display:block;margin:17px 0 7px;color:#77766f;font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase}
+
+.calendar-form input,.calendar-form textarea{display:block;width:100%;border:1px solid #d8d7d0;border-radius:0;padding:11px;background:transparent;color:#171714;font:13px "Manrope",sans-serif}
+
+.calendar-form textarea{min-height:130px;resize:vertical;line-height:1.6}
+
+.calendar-dialog-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+
+.calendar-action.is-primary{background:#171714;color:#f4f3ee}
+
+.calendar-action.is-primary:hover{background:#b84c35;border-color:#b84c35}
+
+.calendar-action.is-delete{margin-left:auto;border-color:#a33;color:#a33}
+
+.calendar-detail-date{margin-bottom:14px;color:#77766f;font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+
+.calendar-detail-title{margin-bottom:12px;font-family:"Playfair Display",Georgia,serif;font-size:34px;line-height:1.1;overflow-wrap:anywhere}
+
+.calendar-detail-time,.calendar-detail-location{margin-bottom:20px;color:#77766f;font-family:"DM Mono",monospace;font-size:11px}
+
+.calendar-detail-description{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;line-height:1.8}
+
+@media (max-width:800px) {
+    .calendar-day{min-height:105px;padding:7px 4px;gap:7px}
+    .calendar-weekday{padding:10px 2px;font-size:9px;letter-spacing:0}
+    .calendar-day-top{justify-content:center}
+    .calendar-day-add{display:none}
+    .calendar-event{padding:5px 4px}
+    .calendar-event-title{font-size:9px;font-weight:500}
+    .calendar-event-time{display:none}
+    .calendar-dialog{padding:26px 22px}
+}
+
+@media (max-width:520px) {
+    .calendar-section-intro{align-items:flex-start;flex-direction:column}
+    .calendar-toolbar-actions{width:100%}
+    .calendar-day{min-height:82px}
+    .calendar-day-number{font-size:10px}
+}
+
+#plot-calendar-section .plot-intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,320px);gap:40px;align-items:end;padding:30px 0 26px}
+
+#plot-calendar-section .plot-eyebrow{margin-bottom:14px;color:#77766f;font:10px "DM Mono",monospace;letter-spacing:.1em;text-transform:uppercase}
+
+#plot-calendar-section .plot-heading{margin:0;font-family:"Manrope",sans-serif;font-size:clamp(34px,5.5vw,64px);font-weight:500;line-height:.98;letter-spacing:-.055em}
+
+#plot-calendar-section .plot-heading em{font-family:"Playfair Display",Georgia,serif;font-weight:400}
+
+#plot-calendar-section .plot-intro-copy{color:#4e4d47;font-size:12px;line-height:1.8}
+
+#plot-calendar-section .plot-intro-copy p{margin:0 0 10px}
+
+#plot-calendar-section .plot-toolbar{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:26px 0 18px}
+
+#plot-calendar-section .plot-toolbar-actions{display:flex;flex-wrap:wrap;gap:8px}
+
+#plot-calendar-section .plot-month-heading{display:flex;align-items:baseline;gap:12px}
+
+#plot-calendar-section .plot-month-heading h3{margin:0;font-family:"Playfair Display",Georgia,serif;font-size:clamp(30px,4vw,46px);font-weight:400;letter-spacing:-.05em}
+
+#plot-calendar-section .plot-month-heading span{color:#77766f;font:12px "DM Mono",monospace}
+
+#plot-calendar-section .plot-button{border:1px solid #171714;border-radius:0;background:transparent;color:#171714;padding:11px 14px;cursor:pointer;font:10px "DM Mono",monospace;letter-spacing:.05em;text-transform:uppercase}
+
+#plot-calendar-section .plot-button:hover{background:#171714;color:#f4f3ee}
+
+#plot-calendar-section .plot-weekdays,#plot-calendar-section .plot-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+
+#plot-calendar-section .plot-weekdays{border-bottom:1px solid #171714}
+
+#plot-calendar-section .plot-weekday{padding:12px 8px;color:#77766f;font:10px "DM Mono",monospace;letter-spacing:.08em}
+
+#plot-calendar-section .plot-grid{border-left:1px solid #d8d7d0}
+
+#plot-calendar-section .plot-day{display:flex;min-width:0;min-height:145px;flex-direction:column;gap:10px;padding:10px;border-right:1px solid #d8d7d0;border-bottom:1px solid #d8d7d0}
+
+#plot-calendar-section .plot-day.plot-empty{background:rgba(0,0,0,.025)}
+
+#plot-calendar-section .plot-day-top{display:flex;min-height:24px;align-items:center;justify-content:space-between;gap:5px}
+
+#plot-calendar-section .plot-day-number{font:12px "DM Mono",monospace}
+
+#plot-calendar-section .plot-day-add{border:0;padding:0 3px;background:transparent;color:#77766f;font-size:18px;cursor:pointer;opacity:0}
+
+#plot-calendar-section .plot-day:hover .plot-day-add,#plot-calendar-section .plot-day-add:focus-visible{opacity:1}
+
+#plot-calendar-section .plot-events{display:flex;flex-direction:column;gap:5px}
+
+#plot-calendar-section .plot-event{width:100%;min-width:0;border:0;border-left:2px solid #b84c35;border-radius:0;padding:7px 8px;background:rgba(184,76,53,.08);color:#171714;text-align:left;overflow-wrap:anywhere;cursor:pointer}
+
+#plot-calendar-section .plot-event:hover{background:rgba(184,76,53,.17)}
+
+#plot-calendar-section .plot-event-title{display:block;font:600 11px/1.4 "Manrope",sans-serif}
+
+#plot-calendar-section .plot-event-meta{display:block;margin-top:4px;color:#77766f;font:9px/1.5 "DM Mono",monospace}
+
+#plot-calendar-section .plot-calendar-note{display:flex;justify-content:space-between;gap:20px;padding:14px 0 42px;color:#77766f;font:10px/1.7 "DM Mono",monospace}
+
+.plot-overlay{position:fixed;inset:0;z-index:10001;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(15,15,14,.72)}
+
+.plot-overlay.plot-open{display:flex}
+
+.plot-dialog{position:relative;width:min(560px,100%);max-height:90vh;overflow-y:auto;padding:32px;background:#f4f3ee;color:#151515}
+
+.plot-dialog-close{position:absolute;top:12px;right:16px;border:0;background:transparent;color:#77766f;font-size:28px;cursor:pointer}
+
+.plot-dialog-kicker{margin:0 35px 12px 0;color:#77766f;font:10px "DM Mono",monospace;letter-spacing:.1em;text-transform:uppercase}
+
+.plot-dialog-heading{margin:0 35px 24px 0;font-family:"Playfair Display",Georgia,serif;font-size:30px;line-height:1.1;font-weight:400;letter-spacing:-.04em}
+
+.plot-dialog label{display:block;margin:17px 0 7px;color:#77766f;font:9px "DM Mono",monospace;letter-spacing:.1em;text-transform:uppercase}
+
+.plot-dialog input,.plot-dialog textarea{display:block;width:100%;border:1px solid #d8d7d0;border-radius:0;padding:11px;background:transparent;color:#171714;font:13px "Manrope",sans-serif}
+
+.plot-dialog textarea{min-height:130px;resize:vertical;line-height:1.6}
+
+.plot-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+
+.plot-dialog-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+
+.plot-dialog-actions .plot-button.is-primary{background:#171714;color:#f4f3ee}
+
+.plot-dialog-actions .plot-button.is-primary:hover{background:#b84c35;border-color:#b84c35}
+
+.plot-dialog-actions .plot-button.is-delete{margin-left:auto;border-color:#a33;color:#a33}
+
+.plot-detail-date{margin-bottom:14px;color:#77766f;font:10px "DM Mono",monospace;letter-spacing:.1em;text-transform:uppercase}
+
+.plot-detail-title{margin-bottom:12px;font-family:"Playfair Display",Georgia,serif;font-size:34px;line-height:1.1;overflow-wrap:anywhere}
+
+.plot-detail-meta{margin-top:12px;color:#77766f;font:11px/1.7 "DM Mono",monospace;white-space:pre-wrap}
+
+.plot-detail-description{margin-top:20px;font-size:13px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere}
+
+@media (max-width:800px) {
+    #plot-calendar-section .plot-intro{grid-template-columns:1fr;gap:18px;padding-top:25px}
+    #plot-calendar-section .plot-day{min-height:105px;padding:7px 4px;gap:7px}
+    #plot-calendar-section .plot-weekday{padding:10px 2px;font-size:9px;letter-spacing:0}
+    #plot-calendar-section .plot-day-top{justify-content:center}
+    #plot-calendar-section .plot-day-add{display:none}
+    #plot-calendar-section .plot-event{padding:5px 4px}
+    #plot-calendar-section .plot-event-title{font-size:9px;font-weight:500}
+    #plot-calendar-section .plot-event-meta{display:none}
+    #plot-calendar-section .plot-calendar-note{flex-direction:column;gap:5px}
+    .plot-dialog{padding:26px 22px}
+    .plot-form-grid{grid-template-columns:1fr}
+}
+
+@media (max-width:520px) {
+    #plot-calendar-section .plot-day{min-height:82px}
+    #plot-calendar-section .plot-day-number{font-size:10px}
+    #plot-calendar-section .plot-toolbar{align-items:flex-start;flex-direction:column}
+    #plot-calendar-section .plot-toolbar-actions{width:100%}
+}
+
+.calendar-save-notice {
+    margin: 0 0 14px;
+    padding: 10px 0;
+    color: #77766f;
+    font: 10px/1.7 "DM Mono", monospace;
+    letter-spacing: .025em;
+}
+
+#plot-calendar-section .plot-calendar-note {
+    margin-top: 16px;
+}
+
+.calendar-page-main{width:100%;padding:36px 3.2vw 0;background:#f4f3ee;color:#171714;min-height:calc(100vh - 80px)}
+
+.calendar-page-heading{display:grid;grid-template-columns:70px minmax(0,1fr) minmax(180px,auto);align-items:baseline;gap:18px;padding:8px 0 30px;border-bottom:1px solid #d8d7d0}
+
+.calendar-page-heading .section-number,.calendar-page-heading .section-description{font:10px "DM Mono",monospace;letter-spacing:.08em;color:#77766f}
+
+.calendar-page-heading .section-title{font:500 clamp(22px,3vw,36px)/1 "Manrope",sans-serif;letter-spacing:-.04em}
+
+.calendar-page-section{padding-top:28px}
+
+.calendar-page-section + .calendar-page-section{margin-top:54px;border-top:1px solid #d8d7d0}
+
+.calendar-page-footer{display:flex;justify-content:space-between;gap:20px;padding:28px 0 24px;margin-top:30px;border-top:1px solid #d8d7d0;font:10px "DM Mono",monospace;letter-spacing:.06em}
+
+.calendar-page-footer a{color:inherit;text-decoration:none}
+
+.calendar-page-footer a:hover{text-decoration:underline}
+
+.calendar-site-header .header-title{text-decoration:none;color:inherit}
+
+@media (max-width:800px) {
+    .calendar-page-main{padding:26px 18px 0}
+    .calendar-page-heading{grid-template-columns:38px minmax(0,1fr);gap:10px}
+    .calendar-page-heading .section-description{grid-column:2}
+    .calendar-page-footer{font-size:9px}
+}
+
+.calendar-section-intro{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin:0 0 28px}
+
+.calendar-toolbar-actions{display:flex;flex-wrap:wrap;gap:8px}
+
+.calendar-month-title{margin:0;font-family:"Playfair Display",Georgia,serif;font-size:clamp(36px,6vw,68px);line-height:.98;font-weight:400;letter-spacing:-.045em}
+
+.calendar-month-title span{margin-left:10px;color:#77766f;font-family:"DM Mono",monospace;font-size:14px;letter-spacing:.04em;vertical-align:middle}
+
+.calendar-add-global,.calendar-action{border:1px solid #171714;border-radius:0;background:transparent;color:#171714;padding:12px 15px;font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.07em;text-transform:uppercase;cursor:pointer}
+
+.calendar-add-global:hover,.calendar-action:hover{background:#171714;color:#f4f3ee}
+
+.calendar-weekdays,.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+
+.calendar-weekdays{border-bottom:1px solid #171714}
+
+.calendar-weekday{padding:12px 8px;color:#77766f;font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+
+.calendar-grid{border-left:1px solid #d8d7d0}
+
+.calendar-day{min-width:0;min-height:145px;padding:10px;border-right:1px solid #d8d7d0;border-bottom:1px solid #d8d7d0;display:flex;flex-direction:column;gap:10px}
+
+.calendar-day.is-empty{background:rgba(0,0,0,.025)}
+
+.calendar-day-top{display:flex;align-items:center;justify-content:space-between;gap:5px;min-height:24px}
+
+.calendar-day-number{font-family:"DM Mono",monospace;font-size:12px}
+
+.calendar-day-add{border:0;padding:0 3px;background:transparent;color:#77766f;font-size:18px;cursor:pointer;opacity:0}
+
+.calendar-day:hover .calendar-day-add,.calendar-day-add:focus-visible{opacity:1}
+
+.calendar-events{display:flex;flex-direction:column;gap:5px}
+
+.calendar-event{width:100%;min-width:0;border:0;border-left:2px solid #b84c35;border-radius:0;padding:7px 8px;background:rgba(184,76,53,.08);color:#171714;text-align:left;overflow-wrap:anywhere;cursor:pointer}
+
+.calendar-event:hover{background:rgba(184,76,53,.17)}
+
+.calendar-event-title{display:block;font-family:"Manrope",sans-serif;font-size:11px;font-weight:600;line-height:1.4}
+
+.calendar-event-time{display:block;margin-top:3px;color:#77766f;font-family:"DM Mono",monospace;font-size:9px}
+
+.calendar-overlay{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.78)}
+
+.calendar-overlay.is-open{display:flex}
+
+.calendar-dialog{position:relative;width:min(540px,100%);max-height:90vh;overflow-y:auto;padding:32px;background:#f4f3ee;color:#171714}
+
+.calendar-dialog-close{position:absolute;top:12px;right:16px;border:0;background:transparent;color:#77766f;font-size:28px;cursor:pointer}
+
+.calendar-dialog-heading{margin:0 30px 24px 0;font-family:"Playfair Display",Georgia,serif;font-size:30px;font-weight:400;letter-spacing:-.035em}
+
+.calendar-form label{display:block;margin:17px 0 7px;color:#77766f;font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase}
+
+.calendar-form input,.calendar-form textarea{display:block;width:100%;border:1px solid #d8d7d0;border-radius:0;padding:11px;background:transparent;color:#171714;font:13px "Manrope",sans-serif}
+
+.calendar-form textarea{min-height:130px;resize:vertical;line-height:1.6}
+
+.calendar-dialog-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+
+.calendar-action.is-primary{background:#171714;color:#f4f3ee}
+
+.calendar-action.is-primary:hover{background:#b84c35;border-color:#b84c35}
+
+.calendar-action.is-delete{margin-left:auto;border-color:#a33;color:#a33}
+
+.calendar-detail-date{margin-bottom:14px;color:#77766f;font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+
+.calendar-detail-title{margin-bottom:12px;font-family:"Playfair Display",Georgia,serif;font-size:34px;line-height:1.1;overflow-wrap:anywhere}
+
+.calendar-detail-time,.calendar-detail-location{margin-bottom:20px;color:#77766f;font-family:"DM Mono",monospace;font-size:11px}
+
+.calendar-detail-description{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;line-height:1.8}
+
+@media (max-width:800px) {
+    .calendar-day{min-height:105px;padding:7px 4px;gap:7px}
+    .calendar-weekday{padding:10px 2px;font-size:9px;letter-spacing:0}
+    .calendar-day-top{justify-content:center}
+    .calendar-day-add{display:none}
+    .calendar-event{padding:5px 4px}
+    .calendar-event-title{font-size:9px;font-weight:500}
+    .calendar-event-time{display:none}
+    .calendar-dialog{padding:26px 22px}
+}
+
+@media (max-width:520px) {
+    .calendar-section-intro{align-items:flex-start;flex-direction:column}
+    .calendar-toolbar-actions{width:100%}
+    .calendar-day{min-height:82px}
+    .calendar-day-number{font-size:10px}
+}
+
+#plot-calendar-section .plot-intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,320px);gap:40px;align-items:end;padding:30px 0 26px}
+
+#plot-calendar-section .plot-eyebrow{margin-bottom:14px;color:#77766f;font:10px "DM Mono",monospace;letter-spacing:.1em;text-transform:uppercase}
+
+#plot-calendar-section .plot-heading{margin:0;font-family:"Manrope",sans-serif;font-size:clamp(34px,5.5vw,64px);font-weight:500;line-height:.98;letter-spacing:-.055em}
+
+#plot-calendar-section .plot-heading em{font-family:"Playfair Display",Georgia,serif;font-weight:400}
+
+#plot-calendar-section .plot-intro-copy{color:#4e4d47;font-size:12px;line-height:1.8}
+
+#plot-calendar-section .plot-intro-copy p{margin:0 0 10px}
+
+#plot-calendar-section .plot-toolbar{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:26px 0 18px}
+
+#plot-calendar-section .plot-toolbar-actions{display:flex;flex-wrap:wrap;gap:8px}
+
+#plot-calendar-section .plot-month-heading{display:flex;align-items:baseline;gap:12px}
+
+#plot-calendar-section .plot-month-heading h3{margin:0;font-family:"Playfair Display",Georgia,serif;font-size:clamp(30px,4vw,46px);font-weight:400;letter-spacing:-.05em}
+
+#plot-calendar-section .plot-month-heading span{color:#77766f;font:12px "DM Mono",monospace}
+
+#plot-calendar-section .plot-button{border:1px solid #171714;border-radius:0;background:transparent;color:#171714;padding:11px 14px;cursor:pointer;font:10px "DM Mono",monospace;letter-spacing:.05em;text-transform:uppercase}
+
+#plot-calendar-section .plot-button:hover{background:#171714;color:#f4f3ee}
+
+#plot-calendar-section .plot-weekdays,#plot-calendar-section .plot-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+
+#plot-calendar-section .plot-weekdays{border-bottom:1px solid #171714}
+
+#plot-calendar-section .plot-weekday{padding:12px 8px;color:#77766f;font:10px "DM Mono",monospace;letter-spacing:.08em}
+
+#plot-calendar-section .plot-grid{border-left:1px solid #d8d7d0}
+
+#plot-calendar-section .plot-day{display:flex;min-width:0;min-height:145px;flex-direction:column;gap:10px;padding:10px;border-right:1px solid #d8d7d0;border-bottom:1px solid #d8d7d0}
+
+#plot-calendar-section .plot-day.plot-empty{background:rgba(0,0,0,.025)}
+
+#plot-calendar-section .plot-day-top{display:flex;min-height:24px;align-items:center;justify-content:space-between;gap:5px}
+
+#plot-calendar-section .plot-day-number{font:12px "DM Mono",monospace}
+
+#plot-calendar-section .plot-day-add{border:0;padding:0 3px;background:transparent;color:#77766f;font-size:18px;cursor:pointer;opacity:0}
+
+#plot-calendar-section .plot-day:hover .plot-day-add,#plot-calendar-section .plot-day-add:focus-visible{opacity:1}
+
+#plot-calendar-section .plot-events{display:flex;flex-direction:column;gap:5px}
+
+#plot-calendar-section .plot-event{width:100%;min-width:0;border:0;border-left:2px solid #b84c35;border-radius:0;padding:7px 8px;background:rgba(184,76,53,.08);color:#171714;text-align:left;overflow-wrap:anywhere;cursor:pointer}
+
+#plot-calendar-section .plot-event:hover{background:rgba(184,76,53,.17)}
+
+#plot-calendar-section .plot-event-title{display:block;font:600 11px/1.4 "Manrope",sans-serif}
+
+#plot-calendar-section .plot-event-meta{display:block;margin-top:4px;color:#77766f;font:9px/1.5 "DM Mono",monospace}
+
+#plot-calendar-section .plot-calendar-note{display:flex;justify-content:space-between;gap:20px;padding:14px 0 42px;color:#77766f;font:10px/1.7 "DM Mono",monospace}
+
+.plot-overlay{position:fixed;inset:0;z-index:10001;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(15,15,14,.72)}
+
+.plot-overlay.plot-open{display:flex}
+
+.plot-dialog{position:relative;width:min(560px,100%);max-height:90vh;overflow-y:auto;padding:32px;background:#f4f3ee;color:#151515}
+
+.plot-dialog-close{position:absolute;top:12px;right:16px;border:0;background:transparent;color:#77766f;font-size:28px;cursor:pointer}
+
+.plot-dialog-kicker{margin:0 35px 12px 0;color:#77766f;font:10px "DM Mono",monospace;letter-spacing:.1em;text-transform:uppercase}
+
+.plot-dialog-heading{margin:0 35px 24px 0;font-family:"Playfair Display",Georgia,serif;font-size:30px;line-height:1.1;font-weight:400;letter-spacing:-.04em}
+
+.plot-dialog label{display:block;margin:17px 0 7px;color:#77766f;font:9px "DM Mono",monospace;letter-spacing:.1em;text-transform:uppercase}
+
+.plot-dialog input,.plot-dialog textarea{display:block;width:100%;border:1px solid #d8d7d0;border-radius:0;padding:11px;background:transparent;color:#171714;font:13px "Manrope",sans-serif}
+
+.plot-dialog textarea{min-height:130px;resize:vertical;line-height:1.6}
+
+.plot-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+
+.plot-dialog-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+
+.plot-dialog-actions .plot-button.is-primary{background:#171714;color:#f4f3ee}
+
+.plot-dialog-actions .plot-button.is-primary:hover{background:#b84c35;border-color:#b84c35}
+
+.plot-dialog-actions .plot-button.is-delete{margin-left:auto;border-color:#a33;color:#a33}
+
+.plot-detail-date{margin-bottom:14px;color:#77766f;font:10px "DM Mono",monospace;letter-spacing:.1em;text-transform:uppercase}
+
+.plot-detail-title{margin-bottom:12px;font-family:"Playfair Display",Georgia,serif;font-size:34px;line-height:1.1;overflow-wrap:anywhere}
+
+.plot-detail-meta{margin-top:12px;color:#77766f;font:11px/1.7 "DM Mono",monospace;white-space:pre-wrap}
+
+.plot-detail-description{margin-top:20px;font-size:13px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere}
+
+@media (max-width:800px) {
+    #plot-calendar-section .plot-intro{grid-template-columns:1fr;gap:18px;padding-top:25px}
+    #plot-calendar-section .plot-day{min-height:105px;padding:7px 4px;gap:7px}
+    #plot-calendar-section .plot-weekday{padding:10px 2px;font-size:9px;letter-spacing:0}
+    #plot-calendar-section .plot-day-top{justify-content:center}
+    #plot-calendar-section .plot-day-add{display:none}
+    #plot-calendar-section .plot-event{padding:5px 4px}
+    #plot-calendar-section .plot-event-title{font-size:9px;font-weight:500}
+    #plot-calendar-section .plot-event-meta{display:none}
+    #plot-calendar-section .plot-calendar-note{flex-direction:column;gap:5px}
+    .plot-dialog{padding:26px 22px}
+    .plot-form-grid{grid-template-columns:1fr}
+}
+
+@media (max-width:520px) {
+    #plot-calendar-section .plot-day{min-height:82px}
+    #plot-calendar-section .plot-day-number{font-size:10px}
+    #plot-calendar-section .plot-toolbar{align-items:flex-start;flex-direction:column}
+    #plot-calendar-section .plot-toolbar-actions{width:100%}
+}
+
+.calendar-save-notice{margin:0 0 14px;padding:10px 0;color:#77766f;font:10px/1.7 "DM Mono",monospace;letter-spacing:.025em}
+
+#plot-calendar-section .plot-calendar-note{margin-top:16px}

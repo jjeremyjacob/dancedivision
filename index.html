@@ -63,421 +63,63 @@
         defer
     ></script>
 
-<style>
-/* ============================================================
-   DESIGN
-   ============================================================ */
 
-.design-grid {
-    display: grid;
-    grid-template-columns: repeat(8, minmax(0, 1fr));
-    gap: 12px;
-    width: 100%;
+<style id="persistent-header-overrides">
+/* Pin the navigation to the viewport; tuck it away while scrolling down and
+   bring it back as soon as the visitor scrolls upward. */
+header.site-header {
+    position: sticky !important;
+    top: 0;
+    z-index: 1100;
+    flex-shrink: 0;
+    transform: translateY(0);
+    transition: transform 220ms ease;
+    will-change: transform;
 }
-
-.design-image {
-    display: block;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    border: 0;
-    background: none;
-    cursor: zoom-in;
-    overflow: hidden;
-    text-align: left;
+.section-subheader {
+    position: sticky !important;
+    top: var(--site-header-height, 64px);
+    z-index: 1090;
+    transform: translateY(0);
+    transition: transform 220ms ease;
+    will-change: transform;
 }
-
-.design-image img {
-display: block;
-width: 100%;
-height: auto;
-aspect-ratio: 9 / 16;
-object-fit: cover;
+body.headers-hidden header.site-header {
+    transform: translateY(-105%);
 }
-
-.design-image:hover img {
-    transform: scale(1.02);
+body.headers-hidden .section-subheader {
+    transform: translateY(calc(-1 * (var(--site-header-height, 64px) + var(--section-subheader-height, 44px) + 2px)));
 }
-
-.design-lightbox {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
+header.site-header > .header-status {
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 30px;
-    background: rgba(0, 0, 0, 0.92);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 200ms ease, visibility 200ms ease;
+    white-space: nowrap;
 }
-
-.design-lightbox.is-open {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-}
-
-.design-lightbox img {
-    display: block;
-    max-width: 92vw;
-    max-height: 92vh;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-}
-
-.design-lightbox-close {
-    position: absolute;
-    top: 18px;
-    right: 24px;
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    border: 0;
-    background: none;
-    color: #f4f3ee;
-    font-family: Arial, sans-serif;
-    font-size: 34px;
-    font-weight: 300;
-    line-height: 1;
-    cursor: pointer;
-}
-
-.design-lightbox-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 64px;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    color: #f4f3ee;
-    font-family: Arial, sans-serif;
-    font-size: 34px;
-    font-weight: 300;
-    cursor: pointer;
-    opacity: 0.8;
-    transition: opacity 160ms ease;
-}
-
-.design-lightbox-nav:hover {
-    opacity: 1;
-}
-
-.design-lightbox-prev {
-    left: 18px;
-}
-
-.design-lightbox-next {
-    right: 18px;
-}
-
-.design-lightbox-counter {
-    position: absolute;
-    bottom: 18px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: #f4f3ee;
-    font-family: "DM Mono", monospace;
-    font-size: 11px;
-    letter-spacing: 0.08em;
-}
-
-@media (max-width: 800px) {
-    .design-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
-    }
-
-    .design-image img {
-        aspect-ratio: 9 / 16;
-    }
-
-    .design-lightbox {
-        padding: 16px;
-    }
-
-    .design-lightbox img {
-        max-width: 96vw;
-        max-height: 90vh;
-    }
-
-    .design-lightbox-close {
-        top: 10px;
-        right: 14px;
-    }
-
-    .design-lightbox-nav {
-        width: 36px;
-        height: 52px;
-        font-size: 28px;
-        background: rgba(0, 0, 0, 0.22);
-    }
-
-    .design-lightbox-prev {
-        left: 2px;
-    }
-
-    .design-lightbox-next {
-        right: 2px;
-    }
-
-    .design-lightbox-counter {
-        bottom: 12px;
-    }
-}
-
-/* JANUARY 2027 CALENDAR */
-.calendar-section-intro{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin:0 0 28px}
-.calendar-toolbar-actions{display:flex;flex-wrap:wrap;gap:8px}
-.calendar-month-title{margin:0;font-family:"Playfair Display",Georgia,serif;font-size:clamp(36px,6vw,68px);line-height:.98;font-weight:400;letter-spacing:-.045em}
-.calendar-month-title span{margin-left:10px;color:#77766f;font-family:"DM Mono",monospace;font-size:14px;letter-spacing:.04em;vertical-align:middle}
-.calendar-add-global,.calendar-action{border:1px solid #171714;border-radius:0;background:transparent;color:#171714;padding:12px 15px;font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.07em;text-transform:uppercase;cursor:pointer}
-.calendar-add-global:hover,.calendar-action:hover{background:#171714;color:#f4f3ee}
-.calendar-weekdays,.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
-.calendar-weekdays{border-bottom:1px solid #171714}.calendar-weekday{padding:12px 8px;color:#77766f;font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
-.calendar-grid{border-left:1px solid #d8d7d0}.calendar-day{min-width:0;min-height:145px;padding:10px;border-right:1px solid #d8d7d0;border-bottom:1px solid #d8d7d0;display:flex;flex-direction:column;gap:10px}
-.calendar-day.is-empty{background:rgba(0,0,0,.025)}.calendar-day-top{display:flex;align-items:center;justify-content:space-between;gap:5px;min-height:24px}.calendar-day-number{font-family:"DM Mono",monospace;font-size:12px}
-.calendar-day-add{border:0;padding:0 3px;background:transparent;color:#77766f;font-size:18px;cursor:pointer;opacity:0}.calendar-day:hover .calendar-day-add,.calendar-day-add:focus-visible{opacity:1}
-.calendar-events{display:flex;flex-direction:column;gap:5px}.calendar-event{width:100%;min-width:0;border:0;border-left:2px solid #b84c35;border-radius:0;padding:7px 8px;background:rgba(184,76,53,.08);color:#171714;text-align:left;overflow-wrap:anywhere;cursor:pointer}.calendar-event:hover{background:rgba(184,76,53,.17)}
-.calendar-event-title{display:block;font-family:"Manrope",sans-serif;font-size:11px;font-weight:600;line-height:1.4}.calendar-event-time{display:block;margin-top:3px;color:#77766f;font-family:"DM Mono",monospace;font-size:9px}
-.calendar-overlay{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.78)}.calendar-overlay.is-open{display:flex}
-.calendar-dialog{position:relative;width:min(540px,100%);max-height:90vh;overflow-y:auto;padding:32px;background:#f4f3ee;color:#171714}.calendar-dialog-close{position:absolute;top:12px;right:16px;border:0;background:transparent;color:#77766f;font-size:28px;cursor:pointer}
-.calendar-dialog-heading{margin:0 30px 24px 0;font-family:"Playfair Display",Georgia,serif;font-size:30px;font-weight:400;letter-spacing:-.035em}.calendar-form label{display:block;margin:17px 0 7px;color:#77766f;font-family:"DM Mono",monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase}
-.calendar-form input,.calendar-form textarea{display:block;width:100%;border:1px solid #d8d7d0;border-radius:0;padding:11px;background:transparent;color:#171714;font:13px "Manrope",sans-serif}.calendar-form textarea{min-height:130px;resize:vertical;line-height:1.6}
-.calendar-dialog-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}.calendar-action.is-primary{background:#171714;color:#f4f3ee}.calendar-action.is-primary:hover{background:#b84c35;border-color:#b84c35}.calendar-action.is-delete{margin-left:auto;border-color:#a33;color:#a33}
-.calendar-detail-date{margin-bottom:14px;color:#77766f;font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase}.calendar-detail-title{margin-bottom:12px;font-family:"Playfair Display",Georgia,serif;font-size:34px;line-height:1.1;overflow-wrap:anywhere}
-.calendar-detail-time,.calendar-detail-location{margin-bottom:20px;color:#77766f;font-family:"DM Mono",monospace;font-size:11px}.calendar-detail-description{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;line-height:1.8}
-@media(max-width:800px){.calendar-day{min-height:105px;padding:7px 4px;gap:7px}.calendar-weekday{padding:10px 2px;font-size:9px;letter-spacing:0}.calendar-day-top{justify-content:center}.calendar-day-add{display:none}.calendar-event{padding:5px 4px}.calendar-event-title{font-size:9px;font-weight:500}.calendar-event-time{display:none}.calendar-dialog{padding:26px 22px}}
-@media(max-width:520px){.calendar-section-intro{align-items:flex-start;flex-direction:column}.calendar-toolbar-actions{width:100%}.calendar-day{min-height:82px}.calendar-day-number{font-size:10px}}
-
-
-/* ============================================================
-   FEBRUARY 2027 PLOT CALENDAR
-   ============================================================ */
-#plot-calendar-section .plot-intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,320px);gap:40px;align-items:end;padding:30px 0 26px}
-#plot-calendar-section .plot-eyebrow{margin-bottom:14px;color:#77766f;font:10px "DM Mono",monospace;letter-spacing:.1em;text-transform:uppercase}
-#plot-calendar-section .plot-heading{margin:0;font-family:"Manrope",sans-serif;font-size:clamp(34px,5.5vw,64px);font-weight:500;line-height:.98;letter-spacing:-.055em}
-#plot-calendar-section .plot-heading em{font-family:"Playfair Display",Georgia,serif;font-weight:400}
-#plot-calendar-section .plot-intro-copy{color:#4e4d47;font-size:12px;line-height:1.8}
-#plot-calendar-section .plot-intro-copy p{margin:0 0 10px}
-#plot-calendar-section .plot-toolbar{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:26px 0 18px}
-#plot-calendar-section .plot-toolbar-actions{display:flex;flex-wrap:wrap;gap:8px}
-#plot-calendar-section .plot-month-heading{display:flex;align-items:baseline;gap:12px}
-#plot-calendar-section .plot-month-heading h3{margin:0;font-family:"Playfair Display",Georgia,serif;font-size:clamp(30px,4vw,46px);font-weight:400;letter-spacing:-.05em}
-#plot-calendar-section .plot-month-heading span{color:#77766f;font:12px "DM Mono",monospace}
-#plot-calendar-section .plot-button{border:1px solid #171714;border-radius:0;background:transparent;color:#171714;padding:11px 14px;cursor:pointer;font:10px "DM Mono",monospace;letter-spacing:.05em;text-transform:uppercase}
-#plot-calendar-section .plot-button:hover{background:#171714;color:#f4f3ee}
-#plot-calendar-section .plot-weekdays,#plot-calendar-section .plot-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
-#plot-calendar-section .plot-weekdays{border-bottom:1px solid #171714}
-#plot-calendar-section .plot-weekday{padding:12px 8px;color:#77766f;font:10px "DM Mono",monospace;letter-spacing:.08em}
-#plot-calendar-section .plot-grid{border-left:1px solid #d8d7d0}
-#plot-calendar-section .plot-day{display:flex;min-width:0;min-height:145px;flex-direction:column;gap:10px;padding:10px;border-right:1px solid #d8d7d0;border-bottom:1px solid #d8d7d0}
-#plot-calendar-section .plot-day.plot-empty{background:rgba(0,0,0,.025)}
-#plot-calendar-section .plot-day-top{display:flex;min-height:24px;align-items:center;justify-content:space-between;gap:5px}
-#plot-calendar-section .plot-day-number{font:12px "DM Mono",monospace}
-#plot-calendar-section .plot-day-add{border:0;padding:0 3px;background:transparent;color:#77766f;font-size:18px;cursor:pointer;opacity:0}
-#plot-calendar-section .plot-day:hover .plot-day-add,#plot-calendar-section .plot-day-add:focus-visible{opacity:1}
-#plot-calendar-section .plot-events{display:flex;flex-direction:column;gap:5px}
-#plot-calendar-section .plot-event{width:100%;min-width:0;border:0;border-left:2px solid #b84c35;border-radius:0;padding:7px 8px;background:rgba(184,76,53,.08);color:#171714;text-align:left;overflow-wrap:anywhere;cursor:pointer}
-#plot-calendar-section .plot-event:hover{background:rgba(184,76,53,.17)}
-#plot-calendar-section .plot-event-title{display:block;font:600 11px/1.4 "Manrope",sans-serif}
-#plot-calendar-section .plot-event-meta{display:block;margin-top:4px;color:#77766f;font:9px/1.5 "DM Mono",monospace}
-#plot-calendar-section .plot-calendar-note{display:flex;justify-content:space-between;gap:20px;padding:14px 0 42px;color:#77766f;font:10px/1.7 "DM Mono",monospace}
-.plot-overlay{position:fixed;inset:0;z-index:10001;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(15,15,14,.72)}
-.plot-overlay.plot-open{display:flex}
-.plot-dialog{position:relative;width:min(560px,100%);max-height:90vh;overflow-y:auto;padding:32px;background:#f4f3ee;color:#151515}
-.plot-dialog-close{position:absolute;top:12px;right:16px;border:0;background:transparent;color:#77766f;font-size:28px;cursor:pointer}
-.plot-dialog-kicker{margin:0 35px 12px 0;color:#77766f;font:10px "DM Mono",monospace;letter-spacing:.1em;text-transform:uppercase}
-.plot-dialog-heading{margin:0 35px 24px 0;font-family:"Playfair Display",Georgia,serif;font-size:30px;line-height:1.1;font-weight:400;letter-spacing:-.04em}
-.plot-dialog label{display:block;margin:17px 0 7px;color:#77766f;font:9px "DM Mono",monospace;letter-spacing:.1em;text-transform:uppercase}
-.plot-dialog input,.plot-dialog textarea{display:block;width:100%;border:1px solid #d8d7d0;border-radius:0;padding:11px;background:transparent;color:#171714;font:13px "Manrope",sans-serif}
-.plot-dialog textarea{min-height:130px;resize:vertical;line-height:1.6}
-.plot-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
-.plot-dialog-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
-.plot-dialog-actions .plot-button.is-primary{background:#171714;color:#f4f3ee}
-.plot-dialog-actions .plot-button.is-primary:hover{background:#b84c35;border-color:#b84c35}
-.plot-dialog-actions .plot-button.is-delete{margin-left:auto;border-color:#a33;color:#a33}
-.plot-detail-date{margin-bottom:14px;color:#77766f;font:10px "DM Mono",monospace;letter-spacing:.1em;text-transform:uppercase}
-.plot-detail-title{margin-bottom:12px;font-family:"Playfair Display",Georgia,serif;font-size:34px;line-height:1.1;overflow-wrap:anywhere}
-.plot-detail-meta{margin-top:12px;color:#77766f;font:11px/1.7 "DM Mono",monospace;white-space:pre-wrap}
-.plot-detail-description{margin-top:20px;font-size:13px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere}
-@media(max-width:800px){#plot-calendar-section .plot-intro{grid-template-columns:1fr;gap:18px;padding-top:25px}#plot-calendar-section .plot-day{min-height:105px;padding:7px 4px;gap:7px}#plot-calendar-section .plot-weekday{padding:10px 2px;font-size:9px;letter-spacing:0}#plot-calendar-section .plot-day-top{justify-content:center}#plot-calendar-section .plot-day-add{display:none}#plot-calendar-section .plot-event{padding:5px 4px}#plot-calendar-section .plot-event-title{font-size:9px;font-weight:500}#plot-calendar-section .plot-event-meta{display:none}#plot-calendar-section .plot-calendar-note{flex-direction:column;gap:5px}.plot-dialog{padding:26px 22px}.plot-form-grid{grid-template-columns:1fr}}
-@media(max-width:520px){#plot-calendar-section .plot-day{min-height:82px}#plot-calendar-section .plot-day-number{font-size:10px}#plot-calendar-section .plot-toolbar{align-items:flex-start;flex-direction:column}#plot-calendar-section .plot-toolbar-actions{width:100%}}
-
-
-
-/* RESPONSIVE TOP NAVIGATION DROPDOWN */
-
-/* ============================================================
-   RESPONSIVE HEADER AND SECTIONS DROPDOWN
-   ============================================================ */
-
-.nav-dropdown-toggle {
-    display: none;
-    align-items: center;
-    justify-content: space-between;
-    gap: 18px;
-    width: 112px;
-    min-width: 112px;
-    margin: 0;
-    padding: 9px 0 9px 10px;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
-    color: inherit;
-    font: 10px "DM Mono", monospace;
-    letter-spacing: .08em;
-    text-align: left;
-    text-transform: uppercase;
-    cursor: pointer;
-}
-
-.nav-dropdown-indicator {
-    display: inline-block;
-    font: 16px/1 "DM Mono", monospace;
-    transition: transform 160ms ease;
-}
-
-.nav-dropdown-toggle[aria-expanded="true"] .nav-dropdown-indicator {
-    transform: rotate(45deg);
-}
-
-@media (max-width: 1250px) {
-    header.site-header {
-        position: relative;
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) auto auto;
-        align-items: center;
-        column-gap: 24px;
-        row-gap: 0;
-        flex-wrap: unset;
-        box-sizing: border-box;
-    }
-
-    header.site-header > .header-title {
-        grid-column: 1;
-        grid-row: 1;
-        min-width: 0;
-        max-width: 100%;
-        margin: 0;
-    }
-
-    header.site-header > .header-status {
-        grid-column: 2;
-        grid-row: 1;
-        margin: 0;
-        white-space: nowrap;
-    }
-
-    header.site-header > .nav-dropdown-toggle {
-        display: inline-flex;
-        grid-column: 3;
-        grid-row: 1;
-        position: relative;
-        inset: auto;
-        justify-self: end;
-        align-self: center;
-        width: 112px;
-        min-width: 112px;
-        margin: 0;
-        padding: 9px 0 9px 10px;
-        transform: none;
-        z-index: 1002;
-        box-sizing: border-box;
-    }
-
-    header.site-header > .nav-links {
-        display: none;
-        position: absolute;
-        top: 100%;
-        right: 0;
-        left: auto;
-        z-index: 1001;
-        width: 240px;
-        min-width: 0;
-        max-width: calc(100vw - 32px);
-        max-height: min(70vh, 560px);
-        overflow-x: hidden;
-        overflow-y: auto;
-        box-sizing: border-box;
-        padding: 8px 0;
-        margin: 0;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0;
-        background: #f4f3ee;
-        color: #171714;
-        border: 1px solid #d8d7d0;
-        box-shadow: 0 12px 28px rgba(0, 0, 0, .08);
-    }
-
-    header.site-header > .nav-links.is-dropdown-open {
-        display: flex;
-    }
-
-    header.site-header > .nav-links a {
-        display: grid;
-        grid-template-columns: 24px minmax(0, 1fr);
-        align-items: center;
-        gap: 10px;
-        width: 100%;
-        min-width: 0;
-        box-sizing: border-box;
-        padding: 12px 14px;
-        border-bottom: 1px solid #e4e2da;
-        text-align: left;
-    }
-
-    header.site-header > .nav-links a:last-child {
-        border-bottom: 0;
-    }
-}
-
 @media (max-width: 700px) {
     header.site-header {
         grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-rows: auto auto;
         column-gap: 12px;
+        row-gap: 5px;
+        min-height: 64px;
+        padding: 10px 16px 8px;
     }
-
-    header.site-header > .header-title {
-        grid-column: 1;
-        grid-row: 1;
-        max-width: 100%;
-    }
-
+    header.site-header > .header-title { grid-column: 1; grid-row: 1; }
+    header.site-header > .page-nav-toggle { grid-column: 2; grid-row: 1; justify-self: end; }
     header.site-header > .header-status {
-        display: none;
+        display: flex;
+        grid-column: 1 / -1;
+        grid-row: 2;
+        font-size: 8px;
+        line-height: 1.4;
     }
-
-    header.site-header > .nav-dropdown-toggle {
-        grid-column: 2;
-        grid-row: 1;
-        justify-self: end;
-        width: 112px;
-        min-width: 112px;
-    }
-
-    header.site-header > .nav-links {
-        width: 240px;
-        max-width: calc(100vw - 32px);
-    }
+    .section-subheader { min-height: 40px; }
 }
-
-
+@media (prefers-reduced-motion: reduce) {
+    header.site-header, .section-subheader { transition: none; }
+}
 </style>
 
-<style>
-.calendar-save-notice{margin:0 0 14px;padding:10px 0;color:#77766f;font:10px/1.7 "DM Mono",monospace;letter-spacing:.025em}
-#plot-calendar-section .plot-calendar-note{margin-top:16px}
-</style>
 </head>
 
 
@@ -536,8 +178,21 @@ object-fit: cover;
     </div>
 
 
+    <button class="nav-dropdown-toggle page-nav-toggle" id="pageDropdownToggle" type="button" aria-expanded="false" aria-controls="pageNavigation">
+        <span>PAGES</span><span class="nav-dropdown-indicator" aria-hidden="true">+</span>
+    </button>
+    <nav class="nav-links page-nav-links" id="pageNavigation" aria-label="Project pages">
+        <a href="index.html" class="active" aria-current="page"><span>01</span> HOME</a>
+        <a href="shotbook.html"><span>02</span> SHOT BOOK</a>
+        <a href="calendars.html"><span>03</span> CALENDARS</a>
+    </nav>
+
+</header>
+
+<div class="section-subheader" id="sectionSubheader">
+    <span class="section-subheader-label" aria-hidden="true">SECTIONS</span>
     <button
-        class="nav-dropdown-toggle"
+        class="nav-dropdown-toggle section-nav-toggle"
         id="navDropdownToggle"
         type="button"
         aria-expanded="false"
@@ -547,7 +202,7 @@ object-fit: cover;
         <span class="nav-dropdown-indicator" aria-hidden="true">+</span>
     </button>
 
-    <nav class="nav-links" id="siteNavigation" aria-label="Site sections">
+    <nav class="nav-links section-nav-links" id="siteNavigation" aria-label="Site sections">
 
 <a
             href="#opening"
@@ -605,11 +260,6 @@ object-fit: cover;
             INSPIRATION
         </a>
 
-<a href="#plot-calendar-section" data-target="plot-calendar-section">
-    <span>07</span>
-    CALENDARS
-</a>
-
 <a
     href="#closing"
     data-target="closing"
@@ -619,8 +269,8 @@ object-fit: cover;
 </a>
 
     </nav>
+</div>
 
-</header>
 
 
 <!-- ============================================================
@@ -1321,22 +971,6 @@ object-fit: cover;
                     draggable="false"
                 >
 
-            </div>
-
-
-            <div class="character-image-index">
-
-                <span id="characterNumber">
-                    01
-                </span>
-
-                <span>
-                    /
-                </span>
-
-                <span id="characterTotal">
-                    14
-                </span>
 
             </div>
 
@@ -1612,133 +1246,6 @@ object-fit: cover;
 </section>
 
 
-<script>
-window.calendarDataPromise = fetch("./calendars.json", { cache: "no-store" })
-  .then(response => { if (!response.ok) throw new Error("HTTP " + response.status); return response.json(); })
-  .then(data => {
-    if (!data || !Array.isArray(data.plot) || !Array.isArray(data.january)) throw new Error("The JSON must contain plot and january arrays.");
-    const status = document.getElementById("calendarDataStatus");
-    if (status) status.textContent = "READ-ONLY / Calendar information is loaded from calendars.json.";
-    return data;
-  })
-  .catch(error => {
-    console.error("Could not load calendars.json", error);
-    const status = document.getElementById("calendarDataStatus");
-    if (status) status.textContent = "Could not load calendars.json. Upload the exported JSON file next to this page on GitHub Pages.";
-    return { plot: [], january: [] };
-  });
-</script>
-<section id="plot-calendar-section" class="chapter chapter-plot-calendar" data-chapter="07">
-  <div class="section-header">
-    <div class="section-number">07</div>
-    <div class="section-title">PLOT CALENDAR</div>
-    <div class="section-description">FEBRUARY 2027 / STORY BEATS</div>
-  </div>
-  <p class="calendar-save-notice" id="calendarDataStatus">Loading calendar information…</p>
-  <div class="plot-intro">
-    <div>
-      <div class="plot-eyebrow">STORY DEVELOPMENT / FEBRUARY 2027</div>
-      <h2 class="plot-heading">DANCE<br><em>DIVISION PLOT</em></h2>
-    </div>
-    <div class="plot-intro-copy">
-      <p>A working calendar for the story. Use each date to map plot beats, episode turns, character decisions, reveals, and the consequences that carry the series forward.</p>
-      <p>Select any story beat to read its full notes.</p>
-    </div>
-  </div>
-  <div class="plot-toolbar">
-    <div class="plot-month-heading"><h3>February</h3><span>2027</span></div>
-    
-  </div>
-  <div class="plot-weekdays" aria-hidden="true"><div class="plot-weekday">SUN</div><div class="plot-weekday">MON</div><div class="plot-weekday">TUE</div><div class="plot-weekday">WED</div><div class="plot-weekday">THU</div><div class="plot-weekday">FRI</div><div class="plot-weekday">SAT</div></div>
-  <div class="plot-grid" id="plotGrid" aria-label="February 2027 plot calendar"></div>
-  <div class="plot-calendar-note"><span>FEBRUARY 2027</span><span>SELECT AN ITEM TO VIEW FULL NOTES</span><span>READ-ONLY</span></div>
-</section>
-
-<div class="plot-overlay" id="plotDetailOverlay" aria-hidden="true">
-  <section class="plot-dialog" role="dialog" aria-modal="true" aria-labelledby="plotDetailTitle">
-    <button class="plot-dialog-close" type="button" data-plot-close="plotDetailOverlay" aria-label="Close">×</button>
-    <div class="plot-detail-date" id="plotDetailDate"></div><div class="plot-detail-title" id="plotDetailTitle"></div><div class="plot-detail-meta" id="plotDetailMeta"></div><div class="plot-detail-description" id="plotDetailDescription"></div>
-    <div class="plot-dialog-actions"><button class="plot-button" type="button" data-plot-close="plotDetailOverlay">Close</button></div>
-  </section>
-</div>
-<script>
-(async () => {
-  "use strict";
-  const grid = document.getElementById("plotGrid");
-  const overlay = document.getElementById("plotDetailOverlay");
-  const status = document.getElementById("calendarDataStatus");
-  const data = await window.calendarDataPromise;
-  const events = Array.isArray(data.plot) ? data.plot : [];
-  const dateKey = day => `2027-02-${String(day).padStart(2, "0")}`;
-  const byId = id => events.find(item => String(item.id) === String(id));
-  const formatDate = value => new Date(value + "T12:00:00").toLocaleDateString("en-US", {weekday:"long",month:"long",day:"numeric",year:"numeric"});
-  function closeOverlay() { overlay.classList.remove("plot-open"); overlay.setAttribute("aria-hidden", "true"); document.body.style.overflow = ""; }
-  function openDetail(id) {
-    const item = byId(id); if (!item) return;
-    document.getElementById("plotDetailDate").textContent = formatDate(item.date);
-    document.getElementById("plotDetailTitle").textContent = item.title || "Untitled plot item";
-    document.getElementById("plotDetailMeta").textContent = [item.episode && `EPISODE / SEQUENCE: ${item.episode}`, item.characters && `CHARACTERS: ${item.characters}`, item.time && `STORY ORDER: ${item.time}`, item.location && `LOCATION: ${item.location}`].filter(Boolean).join("\n");
-    document.getElementById("plotDetailDescription").textContent = item.description || "No additional plot notes.";
-    overlay.classList.add("plot-open"); overlay.setAttribute("aria-hidden", "false"); document.body.style.overflow = "hidden";
-  }
-  grid.innerHTML = "";
-  for (let i=0; i<new Date(2027,1,1).getDay(); i++) { const blank=document.createElement("div"); blank.className="plot-day plot-empty"; blank.setAttribute("aria-hidden","true"); grid.appendChild(blank); }
-  for (let day=1; day<=28; day++) {
-    const cell=document.createElement("div"); cell.className="plot-day";
-    const top=document.createElement("div"); top.className="plot-day-top";
-    const number=document.createElement("span"); number.className="plot-day-number"; number.textContent=String(day).padStart(2,"0"); top.appendChild(number); cell.appendChild(top);
-    const list=document.createElement("div"); list.className="plot-events";
-    events.filter(item=>item.date===dateKey(day)).forEach(item=>{ const button=document.createElement("button"); button.type="button"; button.className="plot-event"; const title=document.createElement("span"); title.className="plot-event-title"; title.textContent=item.title||"Untitled plot item"; button.appendChild(title); const metaText=[item.episode,item.characters].filter(Boolean).join(" · "); if(metaText){const meta=document.createElement("span");meta.className="plot-event-meta";meta.textContent=metaText;button.appendChild(meta);} button.addEventListener("click",()=>openDetail(item.id)); list.appendChild(button); });
-    cell.appendChild(list); grid.appendChild(cell);
-  }
-  document.querySelectorAll("[data-plot-close]").forEach(button=>button.addEventListener("click",closeOverlay));
-  overlay.addEventListener("click",event=>{if(event.target===overlay)closeOverlay();});
-  document.addEventListener("keydown",event=>{if(event.key==="Escape")closeOverlay();});
-})();
-</script>
-
-<section id="calendar" class="chapter chapter-calendar" data-chapter="08">
-    <div class="section-header">
-        <div class="section-number">08</div>
-        <div class="section-title">PRODUCTION CALENDAR</div>
-        <div class="section-description">JANUARY 2027 / SCHEDULE &amp; NOTES</div>
-    </div>
-    <div class="calendar-section-intro">
-        <h2 class="calendar-month-title">January<span>2027</span></h2>
-        
-    </div>
-    <div class="calendar-weekdays" aria-hidden="true"><div class="calendar-weekday">SUN</div><div class="calendar-weekday">MON</div><div class="calendar-weekday">TUE</div><div class="calendar-weekday">WED</div><div class="calendar-weekday">THU</div><div class="calendar-weekday">FRI</div><div class="calendar-weekday">SAT</div></div>
-    <div class="calendar-grid" id="calendarGrid"></div>
-</section>
-
-<div class="calendar-overlay" id="calendarDetailOverlay" aria-hidden="true">
-  <section class="calendar-dialog" role="dialog" aria-modal="true" aria-labelledby="calendarDetailTitle">
-    <button class="calendar-dialog-close" type="button" data-calendar-close="calendarDetailOverlay" aria-label="Close">×</button>
-    <div class="calendar-detail-date" id="calendarDetailDate"></div><div class="calendar-detail-title" id="calendarDetailTitle"></div><div class="calendar-detail-time" id="calendarDetailTime"></div><div class="calendar-detail-description" id="calendarDetailDescription"></div><div class="calendar-detail-location" id="calendarDetailLocation"></div>
-    <div class="calendar-dialog-actions"><button class="calendar-action" type="button" data-calendar-close="calendarDetailOverlay">Close</button></div>
-  </section>
-</div>
-
-<script>
-(async () => {
-  "use strict";
-  const grid=document.getElementById("calendarGrid");
-  const overlay=document.getElementById("calendarDetailOverlay");
-  const data=await window.calendarDataPromise;
-  const items=Array.isArray(data.january)?data.january:[];
-  const dateKey=day=>`2027-01-${String(day).padStart(2,"0")}`;
-  const byId=id=>items.find(item=>String(item.id)===String(id));
-  const formatDate=value=>new Date(value+"T12:00:00").toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"});
-  function closeOverlay(){overlay.classList.remove("is-open");overlay.setAttribute("aria-hidden","true");document.body.style.overflow="";}
-  function openDetails(id){const item=byId(id);if(!item)return;document.getElementById("calendarDetailDate").textContent=formatDate(item.date);document.getElementById("calendarDetailTitle").textContent=item.title||"Untitled item";document.getElementById("calendarDetailTime").textContent=item.time||"";document.getElementById("calendarDetailDescription").textContent=item.description||"No additional information.";document.getElementById("calendarDetailLocation").textContent=item.location?"LOCATION / "+item.location:"";overlay.classList.add("is-open");overlay.setAttribute("aria-hidden","false");document.body.style.overflow="hidden";}
-  grid.innerHTML="";
-  for(let i=0;i<new Date(2027,0,1).getDay();i++){const blank=document.createElement("div");blank.className="calendar-day is-empty";blank.setAttribute("aria-hidden","true");grid.appendChild(blank);}
-  for(let day=1;day<=31;day++){const cell=document.createElement("div");cell.className="calendar-day";const top=document.createElement("div");top.className="calendar-day-top";const number=document.createElement("span");number.className="calendar-day-number";number.textContent=String(day).padStart(2,"0");top.appendChild(number);cell.appendChild(top);const list=document.createElement("div");list.className="calendar-events";items.filter(item=>item.date===dateKey(day)).forEach(item=>{const button=document.createElement("button");button.type="button";button.className="calendar-event";const title=document.createElement("span");title.className="calendar-event-title";title.textContent=item.title||"Untitled item";button.appendChild(title);if(item.time){const time=document.createElement("span");time.className="calendar-event-time";time.textContent=item.time;button.appendChild(time);}button.addEventListener("click",()=>openDetails(item.id));list.appendChild(button);});cell.appendChild(list);grid.appendChild(cell);}
-  document.querySelectorAll("[data-calendar-close]").forEach(button=>button.addEventListener("click",closeOverlay));
-  overlay.addEventListener("click",event=>{if(event.target===overlay)closeOverlay();});
-  document.addEventListener("keydown",event=>{if(event.key==="Escape")closeOverlay();});
-})();
-</script>
 
 
 <!-- ============================================================
@@ -1872,9 +1379,7 @@ window.calendarDataPromise = fetch("./calendars.json", { cache: "no-store" })
 
 </section>
 
-
 </main>
-
 
 <script>
 /* ============================================================
@@ -1956,133 +1461,68 @@ window.calendarDataPromise = fetch("./calendars.json", { cache: "no-store" })
 
 
 <script>
-/* JANUARY 2027 CALENDAR */
-(() => {
-  "use strict";
-  const STORAGE_KEY = "danceDivisionJanuary2027Calendar";
-  const grid = document.getElementById("calendarGrid");
-  const formOverlay = document.getElementById("calendarFormOverlay");
-  const detailOverlay = document.getElementById("calendarDetailOverlay");
-  const form = document.getElementById("calendarEventForm");
-  if (!grid || !formOverlay || !detailOverlay || !form) return;
-  let items = [];
-  let activeItemId = null;
-  try { const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); items = Array.isArray(saved) ? saved : []; } catch (_) { items = []; }
-  const dateKey = day => `2027-01-${String(day).padStart(2,"0")}`;
-  const byId = id => items.find(item => item.id === id);
-  function saveItems() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch (_) { alert("The browser could not save this calendar. Check your browser storage settings."); } }
-  function closeOverlay(overlay) { overlay.classList.remove("is-open"); overlay.setAttribute("aria-hidden","true"); if (!formOverlay.classList.contains("is-open") && !detailOverlay.classList.contains("is-open")) document.body.style.overflow = ""; }
-  function openOverlay(overlay) { overlay.classList.add("is-open"); overlay.setAttribute("aria-hidden","false"); document.body.style.overflow = "hidden"; }
-  function formatDate(value) { return new Date(value+"T12:00:00").toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"}); }
-  function render() {
-    grid.innerHTML = "";
-    for (let i=0;i<new Date(2027,0,1).getDay();i++) { const blank=document.createElement("div"); blank.className="calendar-day is-empty"; blank.setAttribute("aria-hidden","true"); grid.appendChild(blank); }
-    for (let day=1;day<=31;day++) {
-      const cell=document.createElement("div"); cell.className="calendar-day";
-      const top=document.createElement("div"); top.className="calendar-day-top";
-      const number=document.createElement("span"); number.className="calendar-day-number"; number.textContent=String(day).padStart(2,"0"); top.appendChild(number);
-      const add=document.createElement("button"); add.type="button"; add.className="calendar-day-add"; add.textContent="+"; add.title=`Add an item on January ${day}`; add.setAttribute("aria-label",add.title); add.addEventListener("click",()=>openForm(dateKey(day))); top.appendChild(add); cell.appendChild(top);
-      const list=document.createElement("div"); list.className="calendar-events";
-      items.filter(item=>item.date===dateKey(day)).forEach(item=>{ const button=document.createElement("button"); button.type="button"; button.className="calendar-event"; const title=document.createElement("span"); title.className="calendar-event-title"; title.textContent=item.title; button.appendChild(title); if(item.time){const time=document.createElement("span");time.className="calendar-event-time";time.textContent=item.time;button.appendChild(time);} button.addEventListener("click",()=>openDetails(item.id));list.appendChild(button); });
-      cell.appendChild(list); grid.appendChild(cell);
-    }
-  }
-  function openForm(date,item=null) {
-    form.reset(); document.getElementById("calendarEventId").value=item?item.id:""; document.getElementById("calendarEventDate").value=item?item.date:date; document.getElementById("calendarEventTitle").value=item?item.title:""; document.getElementById("calendarEventTime").value=item?item.time:""; document.getElementById("calendarEventLocation").value=item?item.location:""; document.getElementById("calendarEventDescription").value=item?item.description:""; document.getElementById("calendarFormHeading").textContent=item?"Edit item":"Add an item"; closeOverlay(detailOverlay); openOverlay(formOverlay); document.getElementById("calendarEventTitle").focus();
-  }
-  function openDetails(id) { const item=byId(id); if(!item)return; activeItemId=id; document.getElementById("calendarDetailDate").textContent=formatDate(item.date); document.getElementById("calendarDetailTitle").textContent=item.title; document.getElementById("calendarDetailTime").textContent=item.time||""; document.getElementById("calendarDetailDescription").textContent=item.description||"No additional information."; document.getElementById("calendarDetailLocation").textContent=item.location?"LOCATION / "+item.location:""; openOverlay(detailOverlay); }
-  form.addEventListener("submit",event=>{ event.preventDefault(); const existingId=document.getElementById("calendarEventId").value; const item={id:existingId||(window.crypto&&crypto.randomUUID?crypto.randomUUID():String(Date.now())),date:document.getElementById("calendarEventDate").value,title:document.getElementById("calendarEventTitle").value.trim(),time:document.getElementById("calendarEventTime").value.trim(),location:document.getElementById("calendarEventLocation").value.trim(),description:document.getElementById("calendarEventDescription").value}; const index=items.findIndex(entry=>entry.id===item.id); if(index>=0)items[index]=item;else items.push(item);items.sort((a,b)=>a.date.localeCompare(b.date));saveItems();render();closeOverlay(formOverlay); });
-  document.getElementById("calendarAddGlobal").addEventListener("click",()=>openForm(dateKey(1)));
-  document.getElementById("calendarEditEvent").addEventListener("click",()=>{const item=byId(activeItemId);if(item)openForm(item.date,item);});
-  document.getElementById("calendarDeleteEvent").addEventListener("click",()=>{if(!activeItemId)return;if(confirm("Delete this calendar item?")){items=items.filter(item=>item.id!==activeItemId);saveItems();render();closeOverlay(detailOverlay);activeItemId=null;}});
-  document.querySelectorAll("[data-calendar-close]").forEach(button=>button.addEventListener("click",()=>closeOverlay(document.getElementById(button.dataset.calendarClose))));
-  [formOverlay,detailOverlay].forEach(overlay=>overlay.addEventListener("click",event=>{if(event.target===overlay)closeOverlay(overlay);}));
-  document.addEventListener("keydown",event=>{if(event.key==="Escape"){closeOverlay(formOverlay);closeOverlay(detailOverlay);}});
-  render();
-})();
-</script>
-
-
-<script>
-/* EXPORT CALENDAR DATA */
-(() => {
-  "use strict";
-  function exportCalendar(buttonId, storageKey, filename, label) {
-    const button = document.getElementById(buttonId);
-    if (!button) return;
-    button.addEventListener("click", () => {
-      let entries = [];
-      try {
-        const saved = localStorage.getItem(storageKey);
-        const parsed = saved ? JSON.parse(saved) : [];
-        entries = Array.isArray(parsed) ? parsed : [];
-      } catch (error) {
-        alert("The calendar data could not be read from this browser.");
-        return;
-      }
-      const backup = {
-        calendar: label,
-        exportedAt: new Date().toISOString(),
-        storageKey,
-        entries
-      };
-      const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-    });
-  }
-  exportCalendar("plotExport", "danceDivisionPlotFebruary2027", "dance-division-plot-february-2027.json", "Dance Division Plot Calendar — February 2027");
-  exportCalendar("calendarExport", "danceDivisionJanuary2027Calendar", "dance-division-calendar-january-2027.json", "Dance Division Calendar — January 2027");
-})();
-</script>
-
-
-<script>
 (() => {
     "use strict";
-    const header = document.querySelector(".site-header");
-    const toggle = document.getElementById("navDropdownToggle");
-    const nav = document.getElementById("siteNavigation");
-    if (!header || !toggle || !nav) return;
+    function setupDropdown(toggleId, navId, boundarySelector) {
+        const toggle = document.getElementById(toggleId);
+        const nav = document.getElementById(navId);
+        const boundary = document.querySelector(boundarySelector);
+        if (!toggle || !nav || !boundary) return;
+        const closeMenu = () => { toggle.setAttribute("aria-expanded", "false"); nav.classList.remove("is-dropdown-open"); };
+        toggle.addEventListener("click", () => {
+            const open = toggle.getAttribute("aria-expanded") !== "true";
+            toggle.setAttribute("aria-expanded", String(open));
+            nav.classList.toggle("is-dropdown-open", open);
+        });
+        nav.querySelectorAll("a").forEach(link => link.addEventListener("click", closeMenu));
+        document.addEventListener("click", event => { if (!boundary.contains(event.target)) closeMenu(); });
+        document.addEventListener("keydown", event => { if (event.key === "Escape") { closeMenu(); toggle.focus(); } });
+        const desktopQuery = window.matchMedia("(min-width: 1251px)");
+        const resetForViewport = () => { if (desktopQuery.matches) closeMenu(); };
+        if (desktopQuery.addEventListener) desktopQuery.addEventListener("change", resetForViewport);
+        else desktopQuery.addListener(resetForViewport);
+    }
+    setupDropdown("navDropdownToggle", "siteNavigation", ".section-subheader");
+    setupDropdown("pageDropdownToggle", "pageNavigation", ".site-header");
+})();
+</script>
+<script id="scroll-reveal-headers">
+(() => {
+    const header = document.querySelector('header.site-header');
+    const subheader = document.querySelector('.section-subheader');
+    if (!header) return;
 
-    const closeMenu = () => {
-        toggle.setAttribute("aria-expanded", "false");
-        nav.classList.remove("is-dropdown-open");
-    };
-
-    toggle.addEventListener("click", () => {
-        const isOpen = toggle.getAttribute("aria-expanded") === "true";
-        toggle.setAttribute("aria-expanded", String(!isOpen));
-        nav.classList.toggle("is-dropdown-open", !isOpen);
-    });
-
-    nav.querySelectorAll("a").forEach(link => {
-        link.addEventListener("click", closeMenu);
-    });
-
-    document.addEventListener("click", event => {
-        if (!header.contains(event.target)) closeMenu();
-    });
-
-    document.addEventListener("keydown", event => {
-        if (event.key === "Escape") {
-            closeMenu();
-            toggle.focus();
+    let previousY = window.scrollY || 0;
+    let scheduled = false;
+    const measure = () => {
+        document.documentElement.style.setProperty('--site-header-height', `${header.getBoundingClientRect().height}px`);
+        if (subheader) {
+            document.documentElement.style.setProperty('--section-subheader-height', `${subheader.getBoundingClientRect().height}px`);
         }
-    });
-
-    const desktopQuery = window.matchMedia("(min-width: 1251px)");
-    const resetForViewport = () => {
-        if (desktopQuery.matches) closeMenu();
     };
-    if (desktopQuery.addEventListener) desktopQuery.addEventListener("change", resetForViewport);
-    else desktopQuery.addListener(resetForViewport);
+    const update = () => {
+        const currentY = Math.max(0, window.scrollY || 0);
+        const delta = currentY - previousY;
+        const menuOpen = !!document.querySelector('.is-dropdown-open');
+        if (currentY < 80 || menuOpen) {
+            document.body.classList.remove('headers-hidden');
+        } else if (delta > 4 && currentY > 120) {
+            document.body.classList.add('headers-hidden');
+        } else if (delta < -4) {
+            document.body.classList.remove('headers-hidden');
+        }
+        previousY = currentY;
+        scheduled = false;
+    };
+    window.addEventListener('scroll', () => {
+        if (!scheduled) {
+            scheduled = true;
+            window.requestAnimationFrame(update);
+        }
+    }, { passive: true });
+    window.addEventListener('resize', measure, { passive: true });
+    window.addEventListener('load', measure, { once: true });
+    measure();
 })();
 </script>
 </body>

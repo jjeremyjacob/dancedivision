@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f4f3ee">
+<meta name="description" content="DANCE DIVISION — visual shot book and directing references.">
+<title>DANCE DIVISION — Shot Book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+:root{--paper:#f4f3ee;--ink:#171714;--muted:#77766f;--line:#d8d7d0;--accent:#b84c35}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink)}
+.site-header .header-title{cursor:pointer}
+.shotbook-main{width:100%;padding:0 4.2vw 80px}
+.shotbook-hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,330px);gap:40px;align-items:end;padding:56px 0 38px;border-bottom:1px solid var(--ink)}
+.eyebrow,.micro,.shot-meta,.shot-number,.shotbook-footer,.field-label{font:10px/1.6 "DM Mono",monospace;letter-spacing:.08em;text-transform:uppercase}
+.eyebrow{color:var(--muted);margin-bottom:16px}
+.hero-title{margin:0;font:400 clamp(58px,10vw,140px)/.82 "Playfair Display",Georgia,serif;letter-spacing:-.075em}
+.hero-title em{font-weight:400}
+.hero-copy{font:12px/1.9 "Manrope",sans-serif;color:#4e4d47;max-width:340px}
+.hero-copy p{margin:0 0 12px}
+.shot-toolbar{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0 20px;border-bottom:1px solid var(--line)}
+.toolbar-left,.toolbar-right{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.shot-button,.filter-button{border:1px solid var(--ink);border-radius:0;background:transparent;color:var(--ink);padding:10px 13px;font:10px "DM Mono",monospace;letter-spacing:.045em;text-transform:uppercase;cursor:pointer}
+.shot-button:hover,.filter-button:hover,.filter-button.is-active{background:var(--ink);color:var(--paper)}
+.shot-button.primary{background:var(--ink);color:var(--paper)}
+.shot-button.primary:hover{background:var(--accent);border-color:var(--accent)}
+.shot-search{width:min(230px,55vw);padding:10px 0;border:0;border-bottom:1px solid var(--ink);border-radius:0;background:transparent;color:var(--ink);font:11px "DM Mono",monospace;outline-offset:4px}
+.shot-count{color:var(--muted);font:10px "DM Mono",monospace;letter-spacing:.06em;white-space:nowrap}
+.shot-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:26px 12px;padding-top:18px}
+.shot-card{min-width:0;cursor:pointer;outline-offset:4px}
+.shot-image-wrap{position:relative;overflow:hidden;background:#e6e4dc;aspect-ratio:3/4}
+.shot-image-wrap img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 250ms ease;}
+.shot-card:hover .shot-image-wrap img{transform:scale(1.025)}
+.shot-index{position:absolute;left:10px;top:10px;padding:5px 7px;background:var(--paper);color:var(--ink);font:9px "DM Mono",monospace;letter-spacing:.06em}
+.shot-open{position:absolute;right:10px;bottom:10px;width:30px;height:30px;display:grid;place-items:center;background:var(--paper);color:var(--ink);font:18px "DM Mono",monospace;opacity:0;transition:opacity 150ms ease}
+.shot-card:hover .shot-open,.shot-card:focus-visible .shot-open{opacity:1}
+.shot-card-title{margin:11px 0 4px;font:500 13px/1.35 "Manrope",sans-serif;overflow-wrap:anywhere}
+.shot-card-subtitle{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font:9px/1.6 "DM Mono",monospace;text-transform:uppercase;letter-spacing:.045em}
+.shot-card-note{margin-top:7px;color:#5b5a54;font:11px/1.65 "Manrope",sans-serif;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.empty-state{padding:70px 0;color:var(--muted);font:11px/1.8 "DM Mono",monospace}
+.shotbook-footer{display:flex;justify-content:space-between;gap:20px;margin-top:60px;padding-top:14px;border-top:1px solid var(--ink);color:var(--muted)}
+.overlay{position:fixed;inset:0;z-index:20000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(23,23,20,.78)}
+.overlay.is-open{display:flex}
+.dialog{position:relative;width:min(1080px,100%);max-height:92vh;overflow:auto;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);background:var(--paper);color:var(--ink)}
+.dialog-image{min-height:420px;background:#e6e4dc;display:flex;align-items:center;justify-content:center}
+.dialog-image img{display:block;width:100%;height:100%;max-height:92vh;object-fit:contain}
+.dialog-content{padding:34px 32px 28px;min-width:0}
+.dialog-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px}
+.dialog-top .micro{color:var(--muted)}
+.close-button{border:0;background:none;color:var(--ink);font:30px/1 Arial,sans-serif;cursor:pointer;padding:0 2px}
+.dialog-title{font:400 clamp(32px,4vw,50px)/.98 "Playfair Display",Georgia,serif;letter-spacing:-.045em;margin:0 0 26px;overflow-wrap:anywhere}
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+.field{min-width:0;margin-bottom:17px}
+.field.full{grid-column:1/-1}
+.field-label{display:block;margin-bottom:7px;color:var(--muted);font-size:9px}
+.field input,.field select,.field textarea{display:block;width:100%;min-width:0;padding:10px 0;border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent;color:var(--ink);font:12px/1.6 "Manrope",sans-serif;outline-offset:3px}
+.field textarea{min-height:95px;resize:vertical}
+.dialog-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.dialog-actions .delete{margin-left:auto;color:#9c3827;border-color:#9c3827}
+.dialog-note{margin-top:16px;color:var(--muted);font:9px/1.7 "DM Mono",monospace}
+.add-dialog{display:block;width:min(560px,100%);padding:32px}
+.add-dialog .dialog-title{font-size:42px}
+.import-input{display:none}
+@media(max-width:900px){.shot-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.shotbook-hero{grid-template-columns:1fr minmax(190px,280px)}.dialog{grid-template-columns:1fr 1fr}.dialog-content{padding:26px 22px}}
+@media(max-width:650px){.shotbook-main{padding:0 16px 48px}.shotbook-hero{grid-template-columns:1fr;gap:24px;padding:38px 0 26px}.hero-title{font-size:clamp(64px,18vw,100px)}.hero-copy{max-width:460px}.shot-toolbar{align-items:flex-start;flex-direction:column}.toolbar-left,.toolbar-right{width:100%}.toolbar-right{justify-content:space-between}.shot-search{flex:1;width:auto}.shot-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 9px}.shot-card-title{font-size:12px}.shot-card-note{font-size:10px}.shot-open{opacity:1}.shotbook-footer{flex-direction:column;gap:5px}.dialog{display:block;max-height:94vh}.dialog-image{height:36vh;min-height:180px}.dialog-image img{max-height:36vh}.dialog-content{padding:22px 18px}.dialog-title{font-size:38px}.field-grid{grid-template-columns:1fr 1fr}.add-dialog{padding:26px 20px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;scroll-behavior:auto!important}}
+/* PAGE AND SECTION NAVIGATION */
+.nav-dropdown-toggle {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    width: 112px;
+    min-width: 112px;
+    margin: 0;
+    padding: 9px 0 9px 10px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+    font: 10px "DM Mono", monospace;
+    letter-spacing: .08em;
+    text-align: left;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+.nav-dropdown-indicator { display:inline-block; font:16px/1 "DM Mono",monospace; transition:transform 160ms ease; }
+.nav-dropdown-toggle[aria-expanded="true"] .nav-dropdown-indicator { transform:rotate(45deg); }
+
+/* The page links live in the main header and use its existing link styling. */
+header.site-header > .page-nav-links { display:flex; }
+header.site-header > .page-nav-toggle { display:none; }
+
+/* Section links occupy their own strip directly below the main header. */
+.section-subheader {
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    min-height:44px;
+    padding:0 3.2vw;
+    border-bottom:1px solid #d8d7d0;
+    background:#f4f3ee;
+    color:#171714;
+    box-sizing:border-box;
+}
+.section-subheader .section-nav-toggle { display:none; }
+.section-subheader .section-nav-links {
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:clamp(12px,1.6vw,25px);
+    width:100%;
+    margin:0;
+    padding:0;
+}
+.section-subheader .section-nav-links a {
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:14px 0 12px;
+    border-bottom:2px solid transparent;
+    color:#77766f;
+    text-decoration:none;
+    white-space:nowrap;
+    font:9px/1.4 "DM Mono",monospace;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+}
+.section-subheader .section-nav-links a:hover,
+.section-subheader .section-nav-links a.active { color:#171714; }
+.section-subheader .section-nav-links a.active { border-bottom-color:#171714; }
+.section-subheader .section-nav-links a span { color:#77766f; }
+
+@media (max-width:1250px) {
+    header.site-header { position:relative; display:grid; grid-template-columns:minmax(0,1fr) auto auto; align-items:center; column-gap:24px; row-gap:0; flex-wrap:unset; box-sizing:border-box; }
+    header.site-header > .header-title { grid-column:1; grid-row:1; min-width:0; max-width:100%; margin:0; }
+    header.site-header > .header-status { grid-column:2; grid-row:1; margin:0; white-space:nowrap; }
+    header.site-header > .page-nav-toggle { display:inline-flex; grid-column:3; grid-row:1; justify-self:end; align-self:center; position:relative; z-index:1002; box-sizing:border-box; }
+    header.site-header > .page-nav-links { display:none; position:absolute; top:100%; right:0; left:auto; z-index:1001; width:240px; min-width:0; max-width:calc(100vw - 32px); max-height:min(70vh,560px); overflow-x:hidden; overflow-y:auto; box-sizing:border-box; padding:8px 0; margin:0; flex-direction:column; align-items:stretch; gap:0; background:#f4f3ee; color:#171714; border:1px solid #d8d7d0; box-shadow:0 12px 28px rgba(0,0,0,.08); }
+    header.site-header > .page-nav-links.is-dropdown-open { display:flex; }
+    header.site-header > .page-nav-links a { display:grid; grid-template-columns:24px minmax(0,1fr); align-items:center; gap:10px; width:100%; min-width:0; box-sizing:border-box; padding:12px 14px; border-bottom:1px solid #e4e2da; text-align:left; }
+    header.site-header > .page-nav-links a:last-child { border-bottom:0; }
+    .section-subheader { justify-content:flex-end; padding:0 3.2vw; }
+    .section-subheader .section-nav-toggle { display:inline-flex; margin-left:auto; }
+    .section-subheader .section-nav-links { display:none; position:absolute; top:100%; right:16px; z-index:1001; width:260px; max-width:calc(100vw - 32px); max-height:min(70vh,560px); overflow-y:auto; padding:8px 0; border:1px solid #d8d7d0; background:#f4f3ee; box-shadow:0 12px 28px rgba(0,0,0,.08); flex-direction:column; align-items:stretch; justify-content:flex-start; gap:0; }
+    .section-subheader .section-nav-links.is-dropdown-open { display:flex; }
+    .section-subheader .section-nav-links a { display:grid; grid-template-columns:24px minmax(0,1fr); gap:10px; width:100%; box-sizing:border-box; padding:12px 14px; border-bottom:1px solid #e4e2da; }
+    .section-subheader .section-nav-links a:last-child { border-bottom:0; }
+}
+@media (max-width:700px) {
+    header.site-header { grid-template-columns:minmax(0,1fr) auto; column-gap:12px; }
+    header.site-header > .header-title { grid-column:1; grid-row:1; max-width:100%; }
+    header.site-header > .header-status { display:none; }
+    header.site-header > .page-nav-toggle { grid-column:2; grid-row:1; justify-self:end; }
+    .section-subheader { min-height:40px; padding:0 16px; }
+}
+
+</style>
+
+<style id="persistent-header-overrides">
+/* Pin the navigation to the viewport; tuck it away while scrolling down and
+   bring it back as soon as the visitor scrolls upward. */
+header.site-header {
+    position: sticky !important;
+    top: 0;
+    z-index: 1100;
+    flex-shrink: 0;
+    transform: translateY(0);
+    transition: transform 220ms ease;
+    will-change: transform;
+}
+.section-subheader {
+    position: sticky !important;
+    top: var(--site-header-height, 64px);
+    z-index: 1090;
+    transform: translateY(0);
+    transition: transform 220ms ease;
+    will-change: transform;
+}
+body.headers-hidden header.site-header {
+    transform: translateY(-105%);
+}
+body.headers-hidden .section-subheader {
+    transform: translateY(calc(-1 * (var(--site-header-height, 64px) + var(--section-subheader-height, 44px) + 2px)));
+}
+header.site-header > .header-status {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+@media (max-width: 700px) {
+    header.site-header {
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-rows: auto auto;
+        column-gap: 12px;
+        row-gap: 5px;
+        min-height: 64px;
+        padding: 10px 16px 8px;
+    }
+    header.site-header > .header-title { grid-column: 1; grid-row: 1; }
+    header.site-header > .page-nav-toggle { grid-column: 2; grid-row: 1; justify-self: end; }
+    header.site-header > .header-status {
+        display: flex;
+        grid-column: 1 / -1;
+        grid-row: 2;
+        font-size: 8px;
+        line-height: 1.4;
+    }
+    .section-subheader { min-height: 40px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    header.site-header, .section-subheader { transition: none; }
+}
+</style>
+
+</head>
+<body>
+<header class="site-header">
+  <a class="header-title" href="index.html" style="text-decoration:none;color:inherit">DANCE DIVISION</a>
+  <div class="header-status"><span class="status-dot"></span> STATUS: IN DEVELOPMENT</div>
+  <button class="nav-dropdown-toggle page-nav-toggle" id="pageDropdownToggle" type="button" aria-expanded="false" aria-controls="pageNavigation"><span>PAGES</span><span class="nav-dropdown-indicator" aria-hidden="true">+</span></button>
+  <nav class="nav-links page-nav-links" id="pageNavigation" aria-label="Project pages">
+    <a href="index.html"><span>01</span> HOME</a>
+    <a href="shotbook.html" class="active" aria-current="page"><span>02</span> SHOT BOOK</a>
+    <a href="calendars.html"><span>03</span> CALENDARS</a>
+  </nav>
+</header>
+<div class="section-subheader" id="sectionSubheader">
+  <button class="nav-dropdown-toggle section-nav-toggle" id="navDropdownToggle" type="button" aria-expanded="false" aria-controls="siteNavigation"><span>SECTIONS</span><span class="nav-dropdown-indicator" aria-hidden="true">+</span></button>
+  <nav class="nav-links section-nav-links" id="siteNavigation" aria-label="Site sections">
+    <a href="index.html#opening"><span>00</span> INFORMATION</a>
+    <a href="index.html#design"><span>01</span> DESIGN</a>
+    <a href="index.html#script"><span>02</span> SCRIPT</a>
+    <a href="index.html#sound"><span>03</span> SOUND</a>
+    <a href="index.html#characters"><span>04</span> CHARACTERS</a>
+    <a href="index.html#location"><span>05</span> LOCATION</a>
+    <a href="index.html#inspiration"><span>06</span> INSPIRATION</a>
+    <a href="calendars.html"><span>07</span> CALENDARS</a>
+    <a href="index.html#closing"><span>09</span> END NOTES</a>
+  </nav>
+</div>
+
+<main class="shotbook-main">
+  <section class="shotbook-hero">
+    <div><div class="eyebrow">DANCE DIVISION / VISUAL DEVELOPMENT / 08</div><h1 class="hero-title">The <em>Shot</em><br>Book.</h1></div>
+    <div class="hero-copy"><p>A working visual notebook for the series. Collect frames, compositions, camera ideas, lighting references, and the details that make a shot feel right.</p><p>Open any reference to add directing notes. Changes are saved in this browser; export the shot book to carry them between devices.</p></div>
+  </section>
+  <section class="shot-toolbar" aria-label="Shot book controls">
+    <div class="toolbar-left"><button class="filter-button is-active" data-filter="all" type="button">ALL REFERENCES</button><button class="filter-button" data-filter="composition" type="button">COMPOSITION</button><button class="filter-button" data-filter="camera" type="button">CAMERA</button><button class="filter-button" data-filter="light" type="button">LIGHT / TEXTURE</button></div>
+    <div class="toolbar-right"><input class="shot-search" id="shotSearch" type="search" placeholder="SEARCH REFERENCES" aria-label="Search references"><span class="shot-count" id="shotCount">16 REFERENCES</span><button class="shot-button primary" id="addReferenceButton" type="button">+ ADD REFERENCE</button><button class="shot-button" id="exportButton" type="button">EXPORT JSON</button><button class="shot-button" id="importButton" type="button">IMPORT JSON</button><input class="import-input" id="importFile" type="file" accept="application/json,.json"></div>
+  </section>
+  <section class="shot-grid" id="shotGrid" aria-label="Shot references"></section>
+  <div class="empty-state" id="emptyState" hidden>NO REFERENCES MATCH THIS SEARCH.<br>Try another term or add a new reference.</div>
+  <footer class="shotbook-footer"><span>DANCE DIVISION / SHOT BOOK</span><span>WORKING ARCHIVE / 2026</span><a href="index.html" style="color:inherit;text-decoration:none">← RETURN TO PROJECT INDEX</a></footer>
+</main>
+<div class="overlay" id="shotOverlay" aria-hidden="true">
+  <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="editTitle">
+    <div class="dialog-image"><img id="dialogImage" src="" alt="Selected visual reference"></div>
+    <div class="dialog-content">
+      <div class="dialog-top"><span class="micro" id="dialogNumber">REFERENCE 01</span><button class="close-button" id="closeDialog" type="button" aria-label="Close reference">×</button></div>
+      <h2 class="dialog-title" id="editTitle">Reference</h2>
+      <form id="shotForm">
+        <div class="field-grid">
+          <div class="field full"><label class="field-label" for="shotTitle">REFERENCE TITLE</label><input id="shotTitle" name="title" required></div>
+          <div class="field"><label class="field-label" for="shotScene">SCENE / EPISODE</label><input id="shotScene" name="scene" placeholder="e.g. Episode 01"></div>
+          <div class="field"><label class="field-label" for="shotCategory">CATEGORY</label><select id="shotCategory" name="category"><option value="composition">Composition</option><option value="camera">Camera</option><option value="light">Light / Texture</option><option value="performance">Performance</option><option value="other">Other</option></select></div>
+          <div class="field"><label class="field-label" for="shotFraming">FRAMING</label><input id="shotFraming" name="framing" placeholder="Wide, close-up, insert…"></div>
+          <div class="field"><label class="field-label" for="shotLens">LENS / FORMAT</label><input id="shotLens" name="lens" placeholder="e.g. 35mm, 4:3, phone"></div>
+          <div class="field"><label class="field-label" for="shotMovement">CAMERA MOVEMENT</label><input id="shotMovement" name="movement" placeholder="Locked, handheld, push-in…"></div>
+          <div class="field"><label class="field-label" for="shotLighting">LIGHTING</label><input id="shotLighting" name="lighting" placeholder="Source, quality, contrast…"></div>
+          <div class="field full"><label class="field-label" for="shotSource">IMAGE PATH OR URL</label><input id="shotSource" name="image" placeholder="images/reference-01.jpg or https://…"></div>
+          <div class="field full"><label class="field-label" for="shotNotes">DIRECTING NOTES</label><textarea id="shotNotes" name="notes" placeholder="What is useful about this image? How could it translate to DANCE DIVISION?"></textarea></div>
+        </div>
+        <div class="dialog-actions"><button class="shot-button primary" type="submit">SAVE NOTES</button><button class="shot-button" id="cancelDialog" type="button">CLOSE</button><button class="shot-button delete" id="deleteReference" type="button">DELETE</button></div>
+      </form>
+      <p class="dialog-note">SAVED IN THIS BROWSER ONLY. EXPORT JSON TO BACK UP OR MOVE YOUR REFERENCES.</p>
+    </div>
+  </section>
+</div>
+<div class="overlay" id="addOverlay" aria-hidden="true">
+  <section class="dialog add-dialog" role="dialog" aria-modal="true" aria-labelledby="addTitle">
+    <div class="dialog-top"><span class="micro">SHOT BOOK / NEW ENTRY</span><button class="close-button" id="closeAdd" type="button" aria-label="Close add reference">×</button></div>
+    <h2 class="dialog-title" id="addTitle">Add a reference.</h2>
+    <form id="addForm">
+      <div class="field"><label class="field-label" for="newTitle">REFERENCE TITLE</label><input id="newTitle" name="title" required placeholder="e.g. Overhead rehearsal"></div>
+      <div class="field"><label class="field-label" for="newImage">IMAGE PATH OR URL</label><input id="newImage" name="image" required placeholder="images/reference-01.jpg"></div>
+      <p class="dialog-note">Upload the image into your repository first, then enter its path here. Remote image URLs also work when the host permits embedding.</p>
+      <div class="dialog-actions"><button class="shot-button primary" type="submit">CREATE REFERENCE</button><button class="shot-button" id="cancelAdd" type="button">CANCEL</button></div>
+    </form>
+  </section>
+</div>
+<script>
+(() => {
+  'use strict';
+  const STORAGE_KEY = 'danceDivisionShotBookV1';
+  const initial = Array.from({length:16}, (_,i) => ({
+    id:'artboard-'+(i+1), title:'Artboard '+String(i+1).padStart(2,'0'), image:'images/artboard'+(i+1)+'.jpg',
+    scene:'', category:'composition', framing:'', lens:'', movement:'', lighting:'', notes:'', seeded:true
+  }));
+  let shots = initial;
+  try { const saved = JSON.parse(localStorage.getItem(STORAGE_KEY)); if (Array.isArray(saved)) shots = saved; } catch(e) {}
+  let activeId = null;
+  let activeFilter = 'all';
+  const grid = document.getElementById('shotGrid');
+  const overlay = document.getElementById('shotOverlay');
+  const addOverlay = document.getElementById('addOverlay');
+  const form = document.getElementById('shotForm');
+  const fields = ['title','scene','category','framing','lens','movement','lighting','image','notes'];
+  const $ = id => document.getElementById(id);
+  const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function persist(){ try { localStorage.setItem(STORAGE_KEY, JSON.stringify(shots)); } catch(e) { alert('This browser could not save the shot book locally. Please export a JSON backup.'); } }
+  function labelCategory(value){ return ({composition:'COMPOSITION',camera:'CAMERA',light:'LIGHT / TEXTURE',performance:'PERFORMANCE',other:'OTHER'})[value] || 'REFERENCE'; }
+  function render(){
+    const query = $('shotSearch').value.trim().toLowerCase();
+    const filtered = shots.filter(s => (activeFilter==='all' || s.category===activeFilter) && [s.title,s.scene,s.framing,s.lens,s.movement,s.lighting,s.notes,s.image].join(' ').toLowerCase().includes(query));
+    grid.innerHTML = filtered.map(s => { const idx=shots.findIndex(x=>x.id===s.id)+1; return `<article class="shot-card" tabindex="0" role="button" data-id="${escapeHtml(s.id)}" aria-label="Edit ${escapeHtml(s.title)}"><div class="shot-image-wrap"><img src="${escapeHtml(s.image)}" alt="${escapeHtml(s.title)}" loading="lazy" onerror="this.style.opacity='.12';this.alt='Image not found: '+${JSON.stringify(s.image)}"><span class="shot-index">${String(idx).padStart(2,'0')}</span><span class="shot-open" aria-hidden="true">↗</span></div><h3 class="shot-card-title">${escapeHtml(s.title || 'Untitled reference')}</h3><div class="shot-card-subtitle"><span>${escapeHtml(labelCategory(s.category))}</span><span>${escapeHtml(s.scene || 'NO SCENE ASSIGNED')}</span></div>${s.notes ? `<p class="shot-card-note">${escapeHtml(s.notes)}</p>`:''}</article>`; }).join('');
+    $('shotCount').textContent = `${filtered.length} / ${shots.length} REFERENCES`;
+    $('emptyState').hidden = filtered.length>0;
+    grid.querySelectorAll('.shot-card').forEach(card=>{const open=()=>openShot(card.dataset.id);card.addEventListener('click',open);card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}})});
+  }
+  function show(el){el.classList.add('is-open');el.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
+  function hide(el){el.classList.remove('is-open');el.setAttribute('aria-hidden','true');if(!document.querySelector('.overlay.is-open'))document.body.style.overflow='';}
+  function openShot(id){const shot=shots.find(s=>s.id===id);if(!shot)return;activeId=id; $('dialogNumber').textContent='REFERENCE '+String(shots.findIndex(s=>s.id===id)+1).padStart(2,'0');$('dialogImage').src=shot.image;$('dialogImage').alt=shot.title;$('editTitle').textContent=shot.title||'Untitled reference';fields.forEach(key=>{const el=form.elements[key];if(el)el.value=shot[key]??''});$('deleteReference').style.display=shot.seeded?'none':'inline-block';show(overlay);$('shotTitle').focus();}
+  function closeShot(){hide(overlay);activeId=null;}
+  form.addEventListener('submit',e=>{e.preventDefault();const shot=shots.find(s=>s.id===activeId);if(!shot)return;fields.forEach(key=>{if(form.elements[key])shot[key]=form.elements[key].value.trim()});$('editTitle').textContent=shot.title;$('dialogImage').src=shot.image;persist();render();closeShot();});
+  $('deleteReference').addEventListener('click',()=>{const shot=shots.find(s=>s.id===activeId);if(!shot||shot.seeded)return;if(!confirm('Delete this reference from the shot book?'))return;shots=shots.filter(s=>s.id!==activeId);persist();render();closeShot();});
+  $('closeDialog').addEventListener('click',closeShot);$('cancelDialog').addEventListener('click',closeShot);overlay.addEventListener('click',e=>{if(e.target===overlay)closeShot()});
+  $('addReferenceButton').addEventListener('click',()=>{ $('addForm').reset();show(addOverlay);$('newTitle').focus(); });
+  function closeAddDialog(){hide(addOverlay)} $('closeAdd').addEventListener('click',closeAddDialog);$('cancelAdd').addEventListener('click',closeAddDialog);addOverlay.addEventListener('click',e=>{if(e.target===addOverlay)closeAddDialog()});
+  $('addForm').addEventListener('submit',e=>{e.preventDefault();const title=$('newTitle').value.trim(),image=$('newImage').value.trim();if(!title||!image)return;const id='ref-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7);shots.push({id,title,image,scene:'',category:'composition',framing:'',lens:'',movement:'',lighting:'',notes:'',seeded:false});persist();render();closeAddDialog();openShot(id);});
+  $('shotSearch').addEventListener('input',render);
+  document.querySelectorAll('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{activeFilter=btn.dataset.filter;document.querySelectorAll('[data-filter]').forEach(b=>b.classList.toggle('is-active',b===btn));render()}));
+  $('exportButton').addEventListener('click',()=>{const blob=new Blob([JSON.stringify({project:'DANCE DIVISION',document:'SHOT BOOK',exportedAt:new Date().toISOString(),references:shots},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='dance-division-shot-book.json';a.click();URL.revokeObjectURL(url);});
+  $('importButton').addEventListener('click',()=>$('importFile').click());
+  $('importFile').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{const parsed=JSON.parse(await file.text());const incoming=Array.isArray(parsed)?parsed:parsed.references;if(!Array.isArray(incoming))throw new Error('Missing references');if(!confirm('Replace this browser’s shot book with '+incoming.length+' imported references? Export the current version first if you want to keep it.'))return;shots=incoming.filter(s=>s&&typeof s==='object'&&s.id&&s.image).map(s=>({...s,seeded:!!s.seeded}));persist();render();}catch(err){alert('Could not import this file. Choose a shot book JSON export.')}finally{e.target.value='';}});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(overlay.classList.contains('is-open'))closeShot();if(addOverlay.classList.contains('is-open'))closeAddDialog();}if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();$('shotSearch').focus();}});
+  function setupDropdown(toggleId,navId,boundarySelector){const toggle=$(toggleId),nav=$(navId),boundary=document.querySelector(boundarySelector);if(!toggle||!nav||!boundary)return;const close=()=>{toggle.setAttribute('aria-expanded','false');nav.classList.remove('is-dropdown-open')};toggle.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')!=='true';toggle.setAttribute('aria-expanded',String(open));nav.classList.toggle('is-dropdown-open',open)});nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));document.addEventListener('click',e=>{if(!boundary.contains(e.target))close()});document.addEventListener('keydown',e=>{if(e.key==='Escape'){close();toggle.focus()}});const mq=window.matchMedia('(min-width:1251px)');const reset=()=>{if(mq.matches)close()};if(mq.addEventListener)mq.addEventListener('change',reset);else mq.addListener(reset)}setupDropdown('navDropdownToggle','siteNavigation','.section-subheader');setupDropdown('pageDropdownToggle','pageNavigation','.site-header');
+  render();
+})();
+</script>
+<script id="scroll-reveal-headers">
+(() => {
+    const header = document.querySelector('header.site-header');
+    const subheader = document.querySelector('.section-subheader');
+    if (!header) return;
+
+    let previousY = window.scrollY || 0;
+    let scheduled = false;
+    const measure = () => {
+        document.documentElement.style.setProperty('--site-header-height', `${header.getBoundingClientRect().height}px`);
+        if (subheader) {
+            document.documentElement.style.setProperty('--section-subheader-height', `${subheader.getBoundingClientRect().height}px`);
+        }
+    };
+    const update = () => {
+        const currentY = Math.max(0, window.scrollY || 0);
+        const delta = currentY - previousY;
+        const menuOpen = !!document.querySelector('.is-dropdown-open');
+        if (currentY < 80 || menuOpen) {
+            document.body.classList.remove('headers-hidden');
+        } else if (delta > 4 && currentY > 120) {
+            document.body.classList.add('headers-hidden');
+        } else if (delta < -4) {
+            document.body.classList.remove('headers-hidden');
+        }
+        previousY = currentY;
+        scheduled = false;
+    };
+    window.addEventListener('scroll', () => {
+        if (!scheduled) {
+            scheduled = true;
+            window.requestAnimationFrame(update);
+        }
+    }, { passive: true });
+    window.addEventListener('resize', measure, { passive: true });
+    window.addEventListener('load', measure, { once: true });
+    measure();
+})();
+</script>
+</body>
+</html>

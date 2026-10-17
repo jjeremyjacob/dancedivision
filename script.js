@@ -89,17 +89,95 @@ navLinks.forEach(link => {
 
     link.addEventListener("click", event => {
 
-        event.preventDefault();
-
         const target = link.dataset.target;
 
-        if (target) {
-            scrollToSection(target);
+        // Only intercept in-page section links. Page links such as
+        // calendars.html must navigate normally.
+        if (!target) {
+            closeSectionNavigation();
+            return;
         }
+
+        event.preventDefault();
+        scrollToSection(target);
+        closeSectionNavigation();
 
     });
 
 });
+
+
+/* --------------------------------------------------------
+   RESPONSIVE SECTION NAVIGATION
+   -------------------------------------------------------- */
+
+const navDropdownToggle =
+    document.getElementById("navDropdownToggle");
+
+const siteNavigation =
+    document.getElementById("siteNavigation");
+
+function setSectionNavigationOpen(isOpen) {
+
+    if (!navDropdownToggle || !siteNavigation) return;
+
+    navDropdownToggle.setAttribute(
+        "aria-expanded",
+        String(isOpen)
+    );
+
+    // Support the existing stylesheet's common open-state selectors.
+    siteNavigation.classList.toggle("open", isOpen);
+    siteNavigation.classList.toggle("is-open", isOpen);
+    navDropdownToggle.classList.toggle("open", isOpen);
+    navDropdownToggle.classList.toggle("is-open", isOpen);
+
+    const indicator =
+        navDropdownToggle.querySelector(".nav-dropdown-indicator");
+
+    if (indicator) {
+        indicator.textContent = isOpen ? "−" : "+";
+    }
+
+}
+
+function closeSectionNavigation() {
+    setSectionNavigationOpen(false);
+}
+
+if (navDropdownToggle && siteNavigation) {
+
+    navDropdownToggle.addEventListener("click", () => {
+        const isOpen =
+            navDropdownToggle.getAttribute("aria-expanded") === "true";
+
+        setSectionNavigationOpen(!isOpen);
+    });
+
+    document.addEventListener("keydown", event => {
+        if (event.key === "Escape") {
+            closeSectionNavigation();
+        }
+    });
+
+    document.addEventListener("click", event => {
+        if (
+            navDropdownToggle.getAttribute("aria-expanded") === "true" &&
+            !siteNavigation.contains(event.target) &&
+            !navDropdownToggle.contains(event.target)
+        ) {
+            closeSectionNavigation();
+        }
+    });
+
+    window.addEventListener("resize", () => {
+        // Reset the dropdown when returning to the full desktop navigation.
+        if (window.innerWidth > 900) {
+            closeSectionNavigation();
+        }
+    });
+
+}
 
 
 if (headerTitle) {
@@ -3269,6 +3347,84 @@ if (reducedMotion.matches) {
         .add("reduced-motion");
 
 }
+
+
+
+/* ============================================================
+   DESIGN LIGHTBOX
+   ============================================================ */
+
+(() => {
+    const lightbox = document.getElementById("designLightbox");
+    const lightboxImage = document.getElementById("designLightboxImage");
+    const closeButton = document.getElementById("designLightboxClose");
+    const previousButton = document.getElementById("designLightboxPrev");
+    const nextButton = document.getElementById("designLightboxNext");
+    const counter = document.getElementById("designLightboxCounter");
+    const designButtons = Array.from(document.querySelectorAll(".design-image"));
+
+    if (!lightbox || !lightboxImage || !closeButton || !previousButton || !nextButton) return;
+
+    let currentIndex = 0;
+
+    const showImage = (index) => {
+        if (!designButtons.length) return;
+
+        currentIndex = (index + designButtons.length) % designButtons.length;
+
+        const button = designButtons[currentIndex];
+        const thumbnail = button.querySelector("img");
+        const source = button.dataset.designImage || (thumbnail && thumbnail.src);
+
+        lightboxImage.src = source;
+        lightboxImage.alt = thumbnail ? thumbnail.alt : `Design ${currentIndex + 1}`;
+        if (counter) {
+            counter.textContent =
+                `${String(currentIndex + 1).padStart(2, "0")} / ${String(designButtons.length).padStart(2, "0")}`;
+        }
+    };
+
+    const openLightbox = (index) => {
+        showImage(index);
+        lightbox.classList.add("is-open");
+        lightbox.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+        closeButton.focus();
+    };
+
+    const closeLightbox = () => {
+        lightbox.classList.remove("is-open");
+        lightbox.setAttribute("aria-hidden", "true");
+        lightboxImage.src = "";
+        document.body.style.overflow = "";
+    };
+
+    designButtons.forEach((button, index) => {
+        button.addEventListener("click", () => openLightbox(index));
+    });
+
+    previousButton.addEventListener("click", () => showImage(currentIndex - 1));
+    nextButton.addEventListener("click", () => showImage(currentIndex + 1));
+    closeButton.addEventListener("click", closeLightbox);
+
+    lightbox.addEventListener("click", (event) => {
+        if (event.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (!lightbox.classList.contains("is-open")) return;
+
+        if (event.key === "Escape") {
+            closeLightbox();
+        } else if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            showImage(currentIndex - 1);
+        } else if (event.key === "ArrowRight") {
+            event.preventDefault();
+            showImage(currentIndex + 1);
+        }
+    });
+})();
 
 
 })();
