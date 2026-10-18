@@ -1312,7 +1312,6 @@ img {
 
     font-size: 14px;
 }
-
 #characters {
     position: relative;
     width: 100%;
@@ -1321,52 +1320,33 @@ img {
 .character-browser {
     position: relative;
     width: 100%;
-
     display: grid;
-    grid-template-columns:
-        minmax(220px, 280px)
-        minmax(0, 1fr);
-
-    gap: clamp(40px, 6vw, 90px);
-
+    grid-template-columns: minmax(320px, 380px) minmax(0, 1fr);
+    gap: clamp(32px, 5vw, 70px);
     align-items: start;
-
     margin-top: 45px;
 }
 
 .character-stage {
     position: relative;
-
     width: 100%;
-    max-width: 280px;
-
+    max-width: 380px;
     aspect-ratio: 9 / 16;
-
     margin: 0;
-
     overflow: hidden;
-
     background: #e8e6e0;
 }
 
 .character-image {
     position: absolute;
     inset: 0;
-
     width: 100%;
     height: 100%;
-
     display: block;
-
     object-fit: contain;
     object-position: center;
-
     opacity: 0;
-
-    transition:
-        opacity 450ms ease,
-        transform 450ms ease;
-
+    transition: opacity 450ms ease, transform 450ms ease;
     transform: scale(1);
 }
 
@@ -1386,14 +1366,11 @@ img {
 
 .character-number {
     margin-bottom: 8px;
-
     font-family: var(--mono);
     font-size: 10px;
     font-weight: 500;
     line-height: 1;
-
     letter-spacing: 0.08em;
-
     color: #66645f;
 }
 
@@ -1401,7 +1378,6 @@ img {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-
     gap: 25px;
 }
 
@@ -1411,54 +1387,40 @@ img {
 
 .character-role {
     display: block;
-
     margin-bottom: 10px;
-
     font-family: var(--mono);
     font-size: 10px;
     font-weight: 500;
     line-height: 1.4;
-
     letter-spacing: 0.04em;
     text-transform: uppercase;
-
     color: #66645f;
 }
 
 .character-nav {
     display: flex;
     align-items: center;
-
     gap: 14px;
-
     flex-shrink: 0;
-
     font-family: var(--mono);
     font-size: 10px;
     font-weight: 500;
-
     letter-spacing: 0.04em;
 }
 
 .character-nav button {
     appearance: none;
-
     width: auto;
     height: auto;
-
     padding: 0;
     margin: 0;
-
     border: 0;
     background: transparent;
-
     font-family: var(--mono);
     font-size: 16px;
     font-weight: 400;
     line-height: 1;
-
     color: var(--ink);
-
     cursor: pointer;
 }
 
@@ -1470,32 +1432,23 @@ img {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     width: 100%;
-
     margin-top: 35px;
-
     border-top: 1px solid rgba(24, 24, 24, 0.18);
     border-bottom: 1px solid rgba(24, 24, 24, 0.18);
 }
 
 .character-navigation button {
     appearance: none;
-
     width: 50px;
     height: 46px;
-
     padding: 0;
-
     border: 0;
     background: transparent;
-
     font-family: var(--mono);
     font-size: 10px;
     font-weight: 500;
-
     color: #181818;
-
     cursor: pointer;
 }
 
@@ -1507,28 +1460,21 @@ img {
 .character-counter {
     display: flex;
     align-items: center;
-
     gap: 8px;
-
     font-family: var(--mono);
     font-size: 10px;
     font-weight: 500;
-
     letter-spacing: 0.04em;
-
     color: #66645f;
 }
 
 .character-name {
     margin: 28px 0 0;
-
     font-family: var(--sans);
     font-size: clamp(36px, 4vw, 58px);
     font-weight: 500;
     line-height: 0.95;
-
     letter-spacing: -0.04em;
-
     color: #181818;
 }
 
@@ -1538,36 +1484,27 @@ img {
 
 .character-bio {
     max-width: 650px;
-
     margin: 0;
-
     font-family: var(--sans);
     font-size: 16px;
     font-weight: 400;
     line-height: 1.55;
-
     color: #3f3d39;
 }
 
 .character-casting {
     display: flex;
     flex-direction: column;
-
     gap: 8px;
-
     margin-top: 24px;
     padding-top: 18px;
-
     border-top: 1px solid var(--line);
-
     font-family: var(--mono);
     font-size: 10px;
     font-weight: 500;
     line-height: 1.45;
-
     letter-spacing: 0.04em;
     text-transform: uppercase;
-
     color: #66645f;
 }
 
@@ -1576,7 +1513,6 @@ img {
     font-size: 10px;
     font-weight: 500;
     line-height: 1.3;
-
     letter-spacing: 0.06em;
 }
 
@@ -1585,7 +1521,6 @@ img {
     font-size: 15px;
     font-weight: 500;
     line-height: 1.4;
-
     color: var(--ink);
 }
 
@@ -1593,12 +1528,9 @@ img {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     width: 100%;
-
     margin-top: 40px;
     padding-top: 18px;
-
     border-top: 1px solid rgba(24, 24, 24, 0.12);
 }
 
@@ -1607,10 +1539,8 @@ img {
     font-size: 10px;
     font-weight: 500;
     line-height: 1.3;
-
     letter-spacing: 0.04em;
     text-transform: uppercase;
-
     color: #66645f;
 }
 
@@ -1618,121 +1548,132 @@ img {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     margin-top: 12px;
-
     font-family: var(--mono);
     font-size: 10px;
     font-weight: 500;
     line-height: 1;
-
     letter-spacing: 0.05em;
-
     color: var(--muted);
 }
 
 @media (max-width: 1000px) {
     .character-browser {
-            grid-template-columns: 1fr;
-            gap: 35px;
-        }
+        grid-template-columns: minmax(280px, 380px) minmax(0, 1fr);
+        gap: 30px;
+    }
+
     .character-stage {
-            width: min(100%, 280px);
-            max-width: 280px;
-    
-            margin: 0 auto;
-        }
+        max-width: 380px;
+    }
+
+    .character-name {
+        font-size: clamp(32px, 4vw, 48px);
+    }
+
     .character-information {
-            min-height: auto;
-        }
+        min-height: auto;
+    }
+
     .character-footer {
-            margin-top: 40px;
-        }
+        margin-top: 30px;
+    }
 }
 
 @media (max-width: 700px) {
     .character-browser {
-            display: block;
-    
-            margin-top: 30px;
-        }
+        display: block;
+        margin-top: 30px;
+    }
+
     .character-stage {
-            width: 100%;
-            max-width: 360px;
-    
-            height: min(68vh, 620px);
-            min-height: 420px;
-    
-            aspect-ratio: auto;
-    
-            margin: 0 auto;
-        }
+        width: min(100%, 420px);
+        max-width: 420px;
+        height: auto;
+        min-height: 0;
+        aspect-ratio: 9 / 16;
+        margin: 0 auto;
+    }
+
     .character-information {
-            margin-top: 22px;
-        }
+        margin-top: 22px;
+    }
+
     .character-information-top {
-            gap: 15px;
-        }
+        gap: 15px;
+    }
+
     .character-role-wrap {
-            max-width: 70%;
-        }
+        max-width: 70%;
+    }
+
     .character-role {
-            font-size: 9px;
-        }
+        font-size: 9px;
+    }
+
     .character-name {
-            margin:
-                25px 0 0;
-    
-            font-size:
-                clamp(38px, 12vw, 65px);
-        }
+        margin: 25px 0 0;
+        font-size: clamp(38px, 12vw, 65px);
+    }
+
     .character-copy {
-            margin-top: 20px;
-        }
+        margin-top: 20px;
+    }
+
     .character-bio {
-            font-size: 16px;
-            line-height: 1.6;
-        }
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
     .character-casting {
-            margin-top: 18px;
-            font-size: 10px;
-        }
+        margin-top: 18px;
+        font-size: 10px;
+    }
+
     .character-nav {
-            gap: 10px;
-        }
+        gap: 10px;
+    }
+
     .character-nav button {
-            font-size: 16px;
-        }
+        font-size: 16px;
+    }
+
     .character-navigation {
-            margin-top: 26px;
-        }
+        margin-top: 26px;
+    }
+
     .character-navigation button {
-            width: 44px;
-            height: 44px;
-        }
+        width: 44px;
+        height: 44px;
+    }
+
     .character-counter {
-            font-size: 10px;
-        }
+        font-size: 10px;
+    }
+
     .character-footer {
-            margin-top: 20px;
-            padding-top: 16px;
-        }
+        margin-top: 20px;
+        padding-top: 16px;
+    }
+
     .character-footer-name {
-            font-size: 10px;
-        }
+        font-size: 10px;
+    }
 }
 
 @media (max-width: 420px) {
     .character-stage {
-            min-height: 380px;
-            height: 58vh;
-        }
+        width: 100%;
+        max-width: 100%;
+    }
+
     .character-name {
-            font-size: 39px;
-        }
+        font-size: 39px;
+    }
+
     .character-bio {
-            font-size: 15px;
-        }
+        font-size: 15px;
+    }
 }
 
 .chapter-closing {
@@ -3187,3 +3128,177 @@ header.site-header > .page-nav-toggle {
     header.site-header > .page-nav-links { right: 16px; }
     .section-subheader .section-nav-links { right: 16px; }
 }
+
+/* ============================================================
+   DANCE DIVISION — REFINED SECTION TYPOGRAPHY
+   ============================================================ */
+
+.section-header {
+    position: relative;
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 16px;
+    padding: 22px 0 18px;
+    margin-bottom: 30px;
+    border-top: 1px solid rgba(21, 21, 21, 0.65);
+    border-bottom: 1px solid rgba(21, 21, 21, 0.15);
+}
+
+.section-number {
+    font-family: "DM Mono", monospace;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    opacity: 0.55;
+}
+
+.section-title {
+    font-family: "Manrope", sans-serif;
+    font-size: clamp(27px, 3.4vw, 43px);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.055em;
+    text-transform: uppercase;
+}
+
+.section-description {
+    align-self: center;
+    font-family: "DM Mono", monospace;
+    font-size: 9px;
+    font-weight: 300;
+    line-height: 1.5;
+    letter-spacing: 0.055em;
+    text-align: right;
+    text-transform: uppercase;
+    opacity: 0.6;
+}
+
+.section-header::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 34px;
+    height: 1px;
+    background: currentColor;
+}
+
+/* Opening title */
+
+.opening-main h1 {
+    font-size: clamp(70px, 10.5vw, 146px);
+    font-weight: 500;
+    line-height: 0.84;
+    letter-spacing: -0.085em;
+}
+
+.opening-main h1 em {
+    font-family: "Playfair Display", serif;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: -0.075em;
+}
+
+/* Closing title */
+
+.closing-heading h2 {
+    font-size: clamp(48px, 7vw, 94px);
+    font-weight: 500;
+    line-height: 0.94;
+    letter-spacing: -0.065em;
+}
+
+.closing-heading h2 em {
+    font-family: "Playfair Display", serif;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: -0.045em;
+}
+
+/* Sound introduction */
+
+.sound-intro-label {
+    font-family: "DM Mono", monospace;
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.09em;
+}
+
+.sound-intro p {
+    max-width: 650px;
+    font-family: "Playfair Display", serif;
+    font-size: clamp(20px, 2.3vw, 29px);
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+}
+
+/* Restrained interaction */
+
+.section-title,
+.section-number,
+.section-header::after {
+    transition: opacity 220ms ease, width 220ms ease;
+}
+
+@media (hover: hover) {
+    .section-header:hover .section-number {
+        opacity: 0.85;
+    }
+
+    .section-header:hover::after {
+        width: 54px;
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+    .section-header {
+        grid-template-columns: 27px minmax(0, 1fr);
+        gap: 10px;
+        padding: 19px 0 15px;
+        margin-bottom: 23px;
+    }
+
+    .section-number {
+        font-size: 10px;
+    }
+
+    .section-title {
+        font-size: clamp(25px, 7vw, 35px);
+        line-height: 1.08;
+        letter-spacing: -0.05em;
+    }
+
+    .section-description {
+        grid-column: 2;
+        justify-self: start;
+        margin-top: 5px;
+        text-align: left;
+        font-size: 8px;
+    }
+
+    .opening-main h1 {
+        font-size: clamp(62px, 14vw, 100px);
+    }
+
+    .closing-heading h2 {
+        font-size: clamp(45px, 10vw, 68px);
+    }
+
+    .sound-intro p {
+        font-size: 22px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .section-title,
+    .section-number,
+    .section-header::after {
+        transition: none;
+    }
+}
+
