@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Sound — Dance Division</title>
+
+  <meta
+    name="description"
+    content="Dance Division — music, demos and sound studies."
+  >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Manrope:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,1,400&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body class="inner-page sound-page">
+
+  <div class="grain"></div>
+
+
+  <header class="site-header">
+
+    <a
+      href="index.html"
+      class="header-title"
+    >
+      DANCE DIVISION
+    </a>
+
+
+    <nav
+      class="top-navigation"
+      aria-label="Main navigation"
+    >
+
+      <a href="index.html">
+        HOME
+      </a>
+
+      <a href="script.html">
+        SCRIPT
+      </a>
+
+      <a
+        href="sound.html"
+        class="active"
+      >
+        SOUND
+      </a>
+
+      <a href="image.html">
+        IMAGE
+      </a>
+
+      <a href="design.html">
+        DESIGN
+      </a>
+
+    </nav>
+
+
+    <div class="header-status">
+      IN DEVELOPMENT
+    </div>
+
+  </header>
+
+
+
+  <main class="inner-main dark-main">
+
+    <div class="page-number">
+      02
+    </div>
+
+
+    <div class="page-label">
+      SOUND / MUSIC
+    </div>
+
+
+    <section class="sound-page-intro">
+
+      <div class="small-label">
+        ORIGINAL SCORE / DEMOS
+      </div>
+
+
+      <h1>
+        Music before<br>
+        <em>the picture.</em>
+      </h1>
+
+
+      <p>
+        Sound studies, working versions and musical
+        references for the developing narrative.
+      </p>
+
+    </section>
+
+
+
+    <!-- ======================================================
+         MAIN PLAYER
+         ====================================================== -->
+
+    <section class="sound-player">
+
+      <div class="sound-player-header">
+
+        <div>
+
+          <span
+            id="trackNumber"
+            class="track-number"
+          >
+            01
+          </span>
+
+          <span
+            id="trackTitle"
+            class="track-title"
+          >
+            DNS DVSN
+          </span>
+
+        </div>
+
+
+        <span class="audio-status">
+          WORKING VERSION
+        </span>
+
+      </div>
+
+
+
+      <div class="sound-player-main">
+
+        <button
+          id="playButton"
+          class="play-button"
+          aria-label="Play music"
+        >
+
+          <span class="play-icon">
+            ▶
+          </span>
+
+        </button>
+
+
+        <div class="large-waveform">
+
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+
+        </div>
+
+      </div>
+
+
+
+      <div
+        class="audio-progress"
+        id="audioProgress"
+      >
+
+        <div
+          class="audio-progress-fill"
+          id="audioProgressFill"
+        ></div>
+
+      </div>
+
+
+
+      <div class="audio-bottom">
+
+        <span id="audioTime">
+          00:00
+        </span>
+
+        <span id="audioDuration">
+          00:00
+        </span>
+
+      </div>
+
+
+
+      <audio
+        id="audio"
+        preload="metadata"
+      ></audio>
+
+    </section>
+
+
+
+    <!-- ======================================================
+         TRACK LIST
+         ====================================================== -->
+
+    <section class="sound-track-list">
+
+      <button
+        class="sound-track active"
+        type="button"
+      >
+
+        <span>
+          01
+        </span>
+
+        <div>
+
+          <strong>
+            DNS DVSN
+          </strong>
+
+          <small>
+            MUSIC DEMO
+          </small>
+
+        </div>
+
+        <span class="track-action">
+          PLAY
+        </span>
+
+      </button>
+
+
+
+      <button
+        class="sound-track"
+        type="button"
+      >
+
+        <span>
+          02
+        </span>
+
+        <div>
+
+          <strong>
+            EF YOU EN
+          </strong>
+
+          <small>
+            MUSIC DEMO
+          </small>
+
+        </div>
+
+        <span class="track-action">
+          PLAY
+        </span>
+
+      </button>
+
+
+
+      <button
+        class="sound-track"
+        type="button"
+      >
+
+        <span>
+          03
+        </span>
+
+        <div>
+
+          <strong>
+            STAR STAR STAR
+          </strong>
+
+          <small>
+            MUSIC DEMO
+          </small>
+
+        </div>
+
+        <span class="track-action">
+          PLAY
+        </span>
+
+      </button>
+
+    </section>
+
+
+
+    <div class="sound-page-note">
+
+      <span>
+        NOTE / 03
+      </span>
+
+      <p>
+        Music is being developed alongside movement,
+        rather than added after the image.
+      </p>
+
+    </div>
+
+  </main>
+
+
+  <script src="sound.js"></script>
+
+</body>
+
+</html>

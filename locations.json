@@ -1,0 +1,134 @@
+{
+  "project": "DANCE DIVISION",
+  "document": "LOCATIONS",
+  "version": 1,
+  "exportedAt": "2026-10-18T11:12:40.790Z",
+  "locations": [
+    {
+      "id": "location-1",
+      "title": "Residence Hall / Dorms",
+      "image": "images/location-1.webp",
+      "address": "Kaatsbaan",
+      "type": "exterior",
+      "status": "unassessed",
+      "notes": ""
+    },
+    {
+      "id": "location-2",
+      "title": "Gatehouse Apartment",
+      "image": "images/location-2.webp",
+      "address": "Kaatsbaan",
+      "type": "interior",
+      "status": "unassessed",
+      "notes": "Briggs House"
+    },
+    {
+      "id": "location-3",
+      "title": "Residence Building Dorm Room",
+      "image": "images/location-3.webp",
+      "address": "Kaatsbaan",
+      "type": "interior",
+      "status": "unassessed",
+      "notes": "Lucy's Dorm Room"
+    },
+    {
+      "id": "location-4",
+      "title": "Studio Building Entryway",
+      "image": "images/location-4.webp",
+      "address": "Kaatsbaan",
+      "type": "interior",
+      "status": "unassessed",
+      "notes": ""
+    },
+    {
+      "id": "location-5",
+      "title": "Basement Dance Studio",
+      "image": "images/location-5.webp",
+      "address": "Kaatsbaan",
+      "type": "interior",
+      "status": "unassessed",
+      "notes": ""
+    },
+    {
+      "id": "location-6",
+      "title": "Basement Dance Studio",
+      "image": "images/location-6.webp",
+      "address": "Kaatsbaan",
+      "type": "interior",
+      "status": "unassessed",
+      "notes": ""
+    },
+    {
+      "id": "location-7",
+      "title": "South Studio",
+      "image": "images/location-7.webp",
+      "address": "Kaatsbaan",
+      "type": "interior",
+      "status": "unassessed",
+      "notes": ""
+    },
+    {
+      "id": "location-8",
+      "title": "South Studio",
+      "image": "images/location-8.webp",
+      "address": "Kaatsbaan",
+      "type": "interior",
+      "status": "unassessed",
+      "notes": ""
+    },
+    {
+      "id": "location-9",
+      "title": "Theater",
+      "image": "images/location-9.webp",
+      "address": "Kaatsbaan",
+      "type": "interior",
+      "status": "unassessed",
+      "notes": ""
+    },
+    {
+      "id": "location-10",
+      "title": "Theater",
+      "image": "images/location-10.webp",
+      "address": "Kaatsbaan",
+      "type": "interior",
+      "status": "unassessed",
+      "notes": ""
+    },
+    {
+      "id": "location-11",
+      "title": "Theater",
+      "image": "images/location-11.webp",
+      "address": "Kaatsbaan",
+      "type": "interior",
+      "status": "unassessed",
+      "notes": ""
+    },
+    {
+      "id": "location-12",
+      "title": "Theater",
+      "image": "images/location-12.webp",
+      "address": "Kaatsbaan",
+      "type": "interior",
+      "status": "unassessed",
+      "notes": ""
+    },
+    {
+      "id": "location-13",
+      "title": "Theater",
+      "image": "images/location-13.webp",
+      "address": "Kaatsbaan",
+      "type": "interior",
+      "status": "unassessed",
+      "notes": ""
+    },
+    {
+      "title": "Hudson High School Field with Mountains",
+      "image": "images/hudsonfields.mov",
+      "address": "Kaatsbaan",
+      "type": "interior",
+      "status": "unassessed",
+      "notes": "",
+      "id": "location-mvdq7jah-7awda"
+    }
+  ]
+}
