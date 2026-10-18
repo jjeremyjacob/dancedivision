@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f4f3ee">
+<meta name="description" content="DANCE DIVISION — costume and wardrobe reference archive.">
+<title>DANCE DIVISION — Costumes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+:root{--paper:#f4f3ee;--ink:#171714;--muted:#77766f;--line:#d8d7d0;--accent:#b84c35}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink)}
+.site-header{position:sticky!important;top:0;z-index:1100;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:18px 3.2vw;background:var(--paper);border-bottom:1px solid var(--line);font-family:'DM Mono',monospace}
+.header-title{font:500 13px 'DM Mono',monospace;letter-spacing:.08em;white-space:nowrap}
+.header-status{display:flex;align-items:center;gap:8px;font:9px 'DM Mono',monospace;letter-spacing:.07em;color:var(--muted);white-space:nowrap}
+.status-dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.nav-links{display:flex;align-items:center;gap:clamp(12px,1.6vw,25px)}
+.nav-links a{display:inline-flex;gap:7px;color:var(--muted);text-decoration:none;white-space:nowrap;font:9px 'DM Mono',monospace;letter-spacing:.06em}
+.nav-links a:hover,.nav-links a.active{color:var(--ink)}
+.nav-dropdown-toggle{display:none;align-items:center;justify-content:space-between;gap:18px;width:112px;padding:9px 0 9px 10px;border:0;background:transparent;font:10px 'DM Mono',monospace;letter-spacing:.08em;cursor:pointer}
+.nav-dropdown-indicator{font:16px 'DM Mono',monospace}
+.nav-dropdown-toggle[aria-expanded=true] .nav-dropdown-indicator{transform:rotate(45deg)}
+main{width:100%;padding:0 4.2vw 80px}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,330px);gap:40px;align-items:end;padding:56px 0 38px;border-bottom:1px solid var(--ink)}
+.eyebrow,.micro,.meta,.footer,.count{font:10px/1.6 'DM Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
+.eyebrow{color:var(--muted);margin-bottom:16px}
+.hero h1{margin:0;font:400 clamp(58px,10vw,140px)/.82 'Playfair Display',Georgia,serif;letter-spacing:-.075em}
+.copy{font:12px/1.9 'Manrope',sans-serif;color:#4e4d47;max-width:340px}
+.copy p{margin:0 0 12px}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0 20px;border-bottom:1px solid var(--line)}
+.filters,.right{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.filter{border:1px solid var(--ink);background:transparent;color:var(--ink);padding:10px 13px;font:10px 'DM Mono',monospace;letter-spacing:.045em;cursor:pointer}
+.filter:hover,.filter.active{background:var(--ink);color:var(--paper)}
+.search{width:min(230px,55vw);padding:10px 0;border:0;border-bottom:1px solid var(--ink);background:transparent;color:var(--ink);font:11px 'DM Mono',monospace}
+.count{color:var(--muted);white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:26px 10px;padding-top:18px}
+.card{min-width:0;cursor:pointer;outline-offset:4px}
+.image-wrap{position:relative;overflow:hidden;background:#e6e4dc;aspect-ratio:9/16}
+.image-wrap img{width:100%;height:100%;display:block;object-fit:cover;transition:transform 250ms}
+.image-wrap.image-missing:after{content:'IMAGE NOT FOUND';position:absolute;left:8px;right:8px;bottom:8px;padding:7px 5px;background:var(--paper);color:var(--accent);font:8px 'DM Mono',monospace;text-align:center;letter-spacing:.05em;overflow-wrap:anywhere}
+.card:hover img{transform:scale(1.025)}
+.index{position:absolute;top:10px;left:10px;padding:5px 7px;background:var(--paper);font:9px 'DM Mono',monospace}
+.open{position:absolute;right:10px;bottom:10px;width:30px;height:30px;display:grid;place-items:center;background:var(--paper);font:18px 'DM Mono',monospace;opacity:0}
+.card:hover .open,.card:focus-visible .open{opacity:1}
+.card h3{margin:11px 0 4px;font:500 13px/1.35 'Manrope',sans-serif;overflow-wrap:anywhere}
+.meta{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:9px}
+.note{margin-top:7px;color:#5b5a54;font:11px/1.65 'Manrope',sans-serif;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.empty{padding:70px 0;color:var(--muted);font:11px/1.8 'DM Mono',monospace;overflow-wrap:anywhere}
+.footer{display:flex;justify-content:space-between;gap:20px;margin-top:60px;padding-top:14px;border-top:1px solid var(--ink);color:var(--muted)}
+.overlay{position:fixed;inset:0;z-index:20000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(23,23,20,.78)}
+.overlay.open{display:flex}
+.dialog{width:min(1080px,100%);max-height:92vh;overflow:auto;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);background:var(--paper)}
+.dialog-image{min-height:420px;background:#e6e4dc;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.dialog-image img{display:block;width:100%;height:100%;max-height:92vh;object-fit:contain}
+.dialog-image.image-missing:after{content:'IMAGE NOT FOUND — CHECK THE IMAGE PATH IN costumes.json';position:absolute;left:12px;right:12px;bottom:12px;padding:10px;background:var(--paper);color:var(--accent);font:9px/1.6 'DM Mono',monospace;text-align:center}
+.nav-lightbox{position:absolute;top:50%;z-index:2;width:42px;height:42px;border:1px solid #aaa;background:rgba(244,243,238,.92);font:20px 'DM Mono',monospace;cursor:pointer;transform:translateY(-50%)}
+.nav-lightbox:disabled{opacity:.3}
+.prev{left:14px}
+.next{right:14px}
+.dialog-content{padding:34px 32px;min-width:0}
+.dialog-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.micro{color:var(--muted)}
+.close{border:0;background:none;font:30px Arial;cursor:pointer}
+.dialog-title{font:400 clamp(32px,4vw,50px)/.98 'Playfair Display',Georgia,serif;letter-spacing:-.045em;margin:0 0 26px;overflow-wrap:anywhere}
+.details{display:grid;grid-template-columns:1fr 1fr;gap:18px 16px}
+.detail.full{grid-column:1/-1}
+.detail-label{display:block;margin-bottom:5px;color:var(--muted);font:9px 'DM Mono',monospace;letter-spacing:.08em}
+.detail-value{font:12px/1.7 'Manrope',sans-serif;white-space:pre-wrap;overflow-wrap:anywhere}
+@media(max-width:1250px){
+.site-header{position:sticky!important;display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:18px}
+.site-header>.header-title{grid-column:1}
+.site-header>.header-status{grid-column:2}
+.page-nav-toggle{display:inline-flex;grid-column:3}
+.page-nav-links{display:none;position:absolute;top:100%;right:0;z-index:1001;width:240px;padding:8px 0;flex-direction:column;align-items:stretch;background:var(--paper);border:1px solid var(--line)}
+.page-nav-links.is-dropdown-open{display:flex}
+.page-nav-links a{padding:12px 14px}
+.grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.dialog{grid-template-columns:1fr 1fr}
+.dialog-content{padding:26px 22px}
+}
+@media(max-width:700px){
+.site-header{grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto;gap:5px 12px;padding:10px 16px 8px;min-height:64px}
+.site-header>.header-title{grid-column:1;grid-row:1}
+.site-header>.header-status{grid-column:1/-1;grid-row:2;font-size:8px}
+.page-nav-toggle{grid-column:2;grid-row:1}
+.main,main{padding:0 16px 48px}
+.hero{grid-template-columns:1fr;gap:24px;padding:38px 0 26px}
+.hero h1{font-size:clamp(64px,18vw,100px)}
+.toolbar{align-items:flex-start;flex-direction:column}
+.filters,.right{width:100%}
+.right{justify-content:space-between}
+.search{flex:1;width:auto}
+.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 9px}
+.card h3{font-size:12px}
+.open{opacity:1}
+.footer{flex-direction:column;gap:5px}
+.dialog{display:block;max-height:94vh}
+.dialog-image{height:36vh;min-height:180px}
+.dialog-image img{max-height:36vh}
+.dialog-content{padding:22px 18px}
+.dialog-title{font-size:38px}
+.details{grid-template-columns:1fr 1fr}
+}
+@media(prefers-reduced-motion:reduce){
+*,*::before,*::after{transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+<header class="site-header">
+<a class="header-title" href="index.html" style="text-decoration:none;color:inherit">DANCE DIVISION</a>
+<div class="header-status"><span class="status-dot"></span> STATUS: IN DEVELOPMENT</div>
+<button class="nav-dropdown-toggle page-nav-toggle" id="pageToggle" type="button" aria-expanded="false" aria-controls="pageNav"><span>PAGES</span><span class="nav-dropdown-indicator">+</span></button>
+<nav class="nav-links page-nav-links" id="pageNav" aria-label="Project pages">
+    <a href="index.html"><span>01</span> HOME</a>
+    <a href="shotbook.html" class="active" aria-current="page"><span>02</span> SHOT BOOK</a>
+    <a href="calendars.html"><span>03</span> CALENDARS</a>
+            <a href="costumes.html"><span>03</span> COSTUMES</a>
+
+    <a href="locations.html"><span>03</span> LOCATIONS</a>
+</nav>
+</header>
+<main>
+<section class="hero">
+<div>
+<div class="eyebrow">DANCE DIVISION / WARDROBE / VISUAL DEVELOPMENT</div>
+<h1>The <em>Costume</em><br>Book.</h1>
+</div>
+<div class="copy">
+<p>A visual archive for the characters’ wardrobes, silhouettes, textures, and transformations.</p>
+<p>Open any reference to explore its character, episode, palette, and costume notes.</p>
+</div>
+</section>
+<section class="toolbar" aria-label="Costume controls">
+<div class="filters">
+<button class="filter active" data-filter="all">ALL COSTUMES</button>
+<button class="filter" data-filter="character">CHARACTER</button>
+<button class="filter" data-filter="dancewear">DANCEWEAR</button>
+<button class="filter" data-filter="other">OTHER</button>
+</div>
+<div class="right">
+<input class="search" id="search" type="search" placeholder="SEARCH COSTUMES" aria-label="Search costumes">
+<span class="count" id="count">LOADING COSTUMES</span>
+</div>
+</section>
+<section class="grid" id="grid" aria-label="Costume references"></section>
+<div class="empty" id="empty" hidden>NO COSTUMES MATCH THIS SEARCH.<br>Try another term.</div>
+<footer class="footer">
+<span>DANCE DIVISION / COSTUMES</span>
+<span>WARDROBE ARCHIVE / 2026</span>
+<a href="index.html" style="color:inherit;text-decoration:none">← RETURN TO PROJECT INDEX</a>
+</footer>
+</main>
+<div class="overlay" id="overlay" aria-hidden="true">
+<section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+<div class="dialog-image" id="dialogImageWrap">
+<button class="nav-lightbox prev" id="prev" aria-label="Previous costume">←</button>
+<img id="dialogImage" alt="Selected costume reference">
+<button class="nav-lightbox next" id="next" aria-label="Next costume">→</button>
+</div>
+<div class="dialog-content">
+<div class="dialog-top"><span class="micro" id="dialogNumber">COSTUME 001</span><button class="close" id="close" aria-label="Close">×</button></div>
+<h2 class="dialog-title" id="dialogTitle">Costume Reference</h2>
+<div class="details" id="details"></div>
+</div>
+</section>
+</div>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id);
+let costumes=[],filtered=[],filter='all',current=null;
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const cat=v=>({character:'CHARACTER',dancewear:'DANCEWEAR',other:'OTHER'}[v]||'COSTUME');
+
+function render(){
+const q=$('search').value.trim().toLowerCase();
+filtered=costumes.filter(c=>(filter==='all'||c.category===filter)&&[c.title,c.character,c.episode,c.category,c.designer,c.palette,c.notes,c.image].join(' ').toLowerCase().includes(q));
+$('grid').innerHTML=filtered.map((c)=> {
+const i=costumes.findIndex(x=>x.id===c.id)+1;
+return `<article class="card" tabindex="0" role="button" data-id="${esc(c.id)}" aria-label="View ${esc(c.title)}">
+<div class="image-wrap">
+<img src="${esc(c.image)}" alt="${esc(c.title)}" loading="lazy">
+<span class="index">${String(i).padStart(3,'0')}</span><span class="open">↗</span>
+</div>
+<h3>${esc(c.title||'Untitled costume')}</h3>
+<div class="meta"><span>${esc(cat(c.category))}</span><span>${esc(c.character||c.episode||'NO CHARACTER ASSIGNED')}</span></div>
+${c.notes?`<p class="note">${esc(c.notes)}</p>`:''}
+</article>`;
+}).join('');
+$('count').textContent=`${filtered.length} / ${costumes.length} COSTUMES`;
+$('empty').hidden=filtered.length>0;
+$('grid').querySelectorAll('.card').forEach(el=>{
+const img=el.querySelector('img');
+img.addEventListener('error',()=>{
+el.querySelector('.image-wrap').classList.add('image-missing');
+img.alt='Image not found: '+img.getAttribute('src');
+console.error('Costume image not found:',img.getAttribute('src'));
+},{once:true});
+const open=()=>show(el.dataset.id);
+el.addEventListener('click',open);
+el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}});
+});
+}
+
+function update(){
+const i=filtered.findIndex(c=>c.id===current);
+if(i<0)return;
+const c=filtered[i];
+$('dialogNumber').textContent='COSTUME '+String(costumes.findIndex(x=>x.id===c.id)+1).padStart(3,'0');
+$('dialogImage').src=c.image||'';
+$('dialogImage').alt=c.title||'Costume reference';
+$('dialogImageWrap').classList.remove('image-missing');
+$('dialogTitle').textContent=c.title||'Untitled costume';
+const rows=[['CHARACTER',c.character],['EPISODE / SCENE',c.episode],['CATEGORY',cat(c.category)],['DESIGNER',c.designer],['COLOR PALETTE / TEXTURE',c.palette],['COSTUME NOTES',c.notes]];
+$('details').innerHTML=rows.filter(x=>String(x[1]||'').trim()).map(x=>`<div class="detail ${x[0]==='COSTUME NOTES'?'full':''}"><span class="detail-label">${esc(x[0])}</span><div class="detail-value">${esc(x[1])}</div></div>`).join('')||'<div class="detail full"><div class="detail-value">No additional notes.</div></div>';
+$('prev').disabled=i===0;
+$('next').disabled=i===filtered.length-1;
+}
+
+$('dialogImage').addEventListener('error',()=>{
+$('dialogImageWrap').classList.add('image-missing');
+console.error('Costume lightbox image not found:',$('dialogImage').src);
+});
+
+function show(id){current=id;update();$('overlay').classList.add('open');$('overlay').setAttribute('aria-hidden','false');document.body.style.overflow='hidden'}
+function close(){$('overlay').classList.remove('open');$('overlay').setAttribute('aria-hidden','true');document.body.style.overflow='';$('dialogImage').src='';current=null}
+function move(d){const i=filtered.findIndex(c=>c.id===current),c=filtered[i+d];if(c){current=c.id;update()}}
+
+$('close').addEventListener('click',close);
+$('prev').addEventListener('click',()=>move(-1));
+$('next').addEventListener('click',()=>move(1));
+$('overlay').addEventListener('click',e=>{if(e.target===$('overlay'))close()});
+$('search').addEventListener('input',render);
+document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>{
+filter=b.dataset.filter;
+document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===b));
+render();
+}));
+document.addEventListener('keydown',e=>{
+if(e.key==='Escape')close();
+if($('overlay').classList.contains('open')){
+if(e.key==='ArrowLeft')move(-1);
+if(e.key==='ArrowRight')move(1);
+}
+});
+let startX=0;
+$('overlay').addEventListener('touchstart',e=>{startX=e.changedTouches[0].clientX},{passive:true});
+$('overlay').addEventListener('touchend',e=>{let dx=e.changedTouches[0].clientX-startX;if(Math.abs(dx)>50)move(dx<0?1:-1)},{passive:true});
+let lock=false;
+$('overlay').addEventListener('wheel',e=>{
+if(!$('overlay').classList.contains('open')||lock)return;
+e.preventDefault();lock=true;move(e.deltaY>0?1:-1);
+setTimeout(()=>lock=false,300);
+},{passive:false});
+
+const toggle=$('pageToggle'),nav=$('pageNav');
+toggle.addEventListener('click',()=>{
+const open=toggle.getAttribute('aria-expanded')!=='true';
+toggle.setAttribute('aria-expanded',String(open));
+nav.classList.toggle('is-dropdown-open',open);
+});
+nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+toggle.setAttribute('aria-expanded','false');
+nav.classList.remove('is-dropdown-open');
+}));
+document.addEventListener('click',e=>{
+if(!document.querySelector('.site-header').contains(e.target)){
+toggle.setAttribute('aria-expanded','false');
+nav.classList.remove('is-dropdown-open');
+}
+});
+
+fetch('./costumes.json',{cache:'no-store'})
+.then(response=>{
+if(!response.ok)throw new Error('costumes.json returned HTTP '+response.status+'. Check that it is in the same folder as costumes.html.');
+return response.json();
+})
+.then(data=>{
+if(!Array.isArray(data.costumes))throw new Error('costumes.json must contain a costumes array.');
+costumes=data.costumes;
+render();
+console.info('Costume archive loaded:',costumes.length,'references.');
+})
+.catch(error=>{
+console.error('Costume archive loading failed:',error);
+costumes=[];
+render();
+$('empty').hidden=false;
+$('empty').textContent='COSTUME ARCHIVE COULD NOT LOAD: '+error.message;
+$('count').textContent='LOAD ERROR';
+});
+})();
+</script>
+</body>
+</html>
