@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#f4f3ee">
+<title>JOURNAL EDITOR — DANCE DIVISION</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+
+:root{--paper:#f4f3ee;--ink:#151515;--muted:#77766f;--line:rgba(21,21,21,.18);--mono:"DM Mono",monospace;--sans:"Manrope",sans-serif;--serif:"Playfair Display",serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}button,input,textarea,select{font:inherit}button{color:inherit}
+.masthead{min-height:64px;padding:17px 28px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:center;font:10px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.masthead .brand{font:600 12px var(--sans);letter-spacing:.02em;text-decoration:none}.masthead .status{text-align:center;color:var(--muted)}.masthead .right{text-align:right}
+.masthead a{text-decoration:none}.masthead a:hover{text-decoration:underline}
+main{width:min(100% - 56px,1320px);margin:0 auto}
+.kicker{font:10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.hero{padding:clamp(70px,12vw,160px) 0 58px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr minmax(260px,420px);gap:50px;align-items:end}
+h1{font-size:clamp(64px,12vw,160px);line-height:.82;letter-spacing:-.095em;font-weight:500;margin:28px 0 0}
+h1 em{font-family:var(--serif);font-weight:400;letter-spacing:-.08em}
+.hero-copy{font-size:15px;line-height:1.7;max-width:390px;margin:0 0 4px}
+.post-list{padding:0 0 80px}.post{display:grid;grid-template-columns:160px minmax(0,760px) 1fr;gap:30px;padding:36px 0 42px;border-bottom:1px solid var(--line)}
+.post-date,.post-category{font:10px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);line-height:1.7}
+.post-category{text-align:right}
+.post h2{font-size:clamp(27px,4vw,48px);font-weight:500;letter-spacing:-.055em;line-height:1.05;margin:0 0 16px}
+.post-excerpt{font-size:16px;line-height:1.7;max-width:700px;margin:0 0 18px}
+.post-body{font-size:15px;line-height:1.85;max-width:700px;white-space:pre-wrap;overflow-wrap:anywhere}
+.post-body p{margin:0 0 1.2em}.post-body p:last-child{margin-bottom:0}
+.empty{padding:70px 0;color:var(--muted);font:11px var(--mono);letter-spacing:.06em;text-transform:uppercase}
+footer{border-top:1px solid var(--line);padding:20px 28px;display:flex;justify-content:space-between;gap:20px;font:9px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+@media(max-width:700px){.masthead{grid-template-columns:1fr auto;padding:15px 16px}.masthead .status{display:none}.masthead .right{grid-column:2;grid-row:1}main{width:calc(100% - 32px)}.hero{grid-template-columns:1fr;gap:32px;padding-top:80px}.post{grid-template-columns:1fr;gap:10px;padding:28px 0 34px}.post-category{text-align:left}.post h2{margin-top:5px}footer{padding:18px 16px;flex-wrap:wrap}}
+
+main{width:min(100% - 48px,1500px)}.editor-hero{padding:55px 0 28px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:end;gap:24px}.editor-hero h1{font-size:clamp(48px,8vw,92px);margin-top:16px}.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{appearance:none;border:1px solid var(--ink);background:transparent;padding:12px 15px;font:10px var(--mono);letter-spacing:.05em;text-transform:uppercase;cursor:pointer}.btn.primary{background:var(--ink);color:var(--paper)}.btn:hover{opacity:.72}
+.workspace{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:48px;padding:32px 0 80px}.field{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}.field label,.field-label{font:10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}input,textarea,select{width:100%;border:1px solid var(--line);border-radius:0;background:rgba(255,255,255,.28);color:var(--ink);padding:13px 14px;outline:none}input:focus,textarea:focus,select:focus{border-color:var(--ink)}textarea{resize:vertical;line-height:1.7}#body{min-height:330px}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}.editor-list{border-top:1px solid var(--line);margin-top:16px}.entry-row{padding:15px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}.entry-row strong{display:block;font-size:13px;font-weight:600}.entry-row small{display:block;color:var(--muted);font:9px var(--mono);margin-top:5px;text-transform:uppercase}.row-actions{display:flex;gap:5px}.row-actions .btn{padding:8px 9px}.notice{font:10px var(--mono);color:var(--muted);line-height:1.7;margin:12px 0 20px}.preview{border-top:1px solid var(--line);margin-top:25px;padding-top:20px}.preview h2{font-size:clamp(28px,4vw,44px);letter-spacing:-.05em;line-height:1.05;font-weight:500;margin:12px 0}.preview-body{white-space:pre-wrap;font-size:14px;line-height:1.8}.danger{border-color:#9c3c30;color:#9c3c30}
+@media(max-width:850px){.workspace{grid-template-columns:1fr;gap:35px}.editor-hero{align-items:start;flex-direction:column}.two-col{grid-template-columns:1fr}}
+</style></head>
+<body>
+<header class="masthead"><a class="brand" href="index.html">DANCE DIVISION</a><div class="status">EDITOR / LOCAL WORKSPACE</div><div class="right"><a href="journal.html" target="_blank" rel="noopener">VIEW PUBLIC JOURNAL ↗</a></div></header>
+<main>
+<section class="editor-hero"><div><div class="kicker">AUTHORING TOOL / JOURNAL</div><h1>JOURNAL<br><em>EDITOR.</em></h1></div><div class="actions"><button class="btn" id="newPost">+ NEW ENTRY</button><button class="btn primary" id="exportJson">EXPORT JOURNAL.JSON</button></div></section>
+<p class="notice">Edits are saved in this browser as you work. Export journal.json when ready, then upload that file to the same folder as journal.html. Use IMPORT JSON to continue from an existing journal file or to restore a backup. Browser drafts do not automatically publish.</p>
+<div class="workspace">
+<section>
+<div class="kicker" id="formHeading">NEW ENTRY</div>
+<form id="postForm">
+<input type="hidden" id="postId">
+<div class="field"><label for="title">Title</label><input id="title" required maxlength="180" placeholder="Entry title"></div>
+<div class="two-col">
+<div class="field"><label for="date">Date</label><input id="date" type="date"></div>
+<div class="field"><label for="category">Category / label</label><input id="category" maxlength="80" placeholder="FIELD NOTES"></div>
+</div>
+<div class="field"><label for="excerpt">Excerpt (optional)</label><textarea id="excerpt" rows="3" maxlength="500" placeholder="A short introduction shown above the entry."></textarea></div>
+<div class="field"><label for="body">Entry</label><textarea id="body" placeholder="Write your journal entry here. Separate paragraphs with a blank line." required></textarea></div>
+<div class="two-col">
+<div class="field"><label for="status">Publication status</label><select id="status"><option value="draft">Draft — hidden from public journal</option><option value="published">Published — visible on public journal</option></select></div>
+<div class="field"><label for="slug">URL anchor (optional)</label><input id="slug" maxlength="100" placeholder="auto-generated-from-title"></div>
+</div>
+<div class="actions"><button class="btn primary" type="submit">SAVE ENTRY</button><button class="btn" type="button" id="clearForm">CLEAR FORM</button><button class="btn danger" type="button" id="deleteCurrent" hidden>DELETE ENTRY</button></div>
+</form>
+<div class="preview"><div class="kicker">LIVE PREVIEW</div><h2 id="previewTitle">Untitled entry</h2><div class="kicker" id="previewMeta">UNDATED / FIELD NOTES</div><p id="previewExcerpt"></p><div class="preview-body" id="previewBody"></div></div>
+</section>
+<aside>
+<div class="kicker">ENTRIES <span id="entryCount">00</span></div>
+<div class="editor-list" id="entryList"></div>
+<div class="actions" style="margin-top:18px"><button class="btn" id="importJson">IMPORT JOURNAL.JSON</button><input type="file" id="importFile" accept=".json,application/json" hidden><button class="btn" id="downloadBackup">DOWNLOAD BACKUP</button></div>
+<p class="notice">Use ↑ and ↓ to change the order when entries share the same date. Entries otherwise appear newest first on the public page.</p>
+</aside>
+</div>
+</main>
+<footer><span>DANCE DIVISION</span><span>LOCAL AUTHORING TOOL</span><span>END</span></footer>
+<script>
+(()=>{
+'use strict';
+const STORAGE_KEY='danceDivisionJournalDraftsV1';
+const $=id=>document.getElementById(id);
+let posts=[];
+let currentId=null;
+const today=()=>new Date().toISOString().slice(0,10);
+const makeId=()=>('entry-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7));
+const slugify=s=>String(s||'entry').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,90)||'entry';
+const escapeHtml=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function persist(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(posts))}catch(e){alert('Could not save to browser storage. Please export a backup.')}renderList()}
+function readForm(){return {id:currentId||makeId(),slug:$('slug').value.trim()||slugify($('title').value),title:$('title').value.trim(),date:$('date').value,category:$('category').value.trim()||'FIELD NOTES',excerpt:$('excerpt').value.trim(),body:$('body').value,status:$('status').value,updatedAt:new Date().toISOString()}}
+function save(event){if(event)event.preventDefault();if(!$('title').value.trim()||!$('body').value.trim()){alert('Please add a title and entry text.');return}const post=readForm();const index=posts.findIndex(p=>p.id===post.id);if(index>=0)posts[index]=post;else{post.createdAt=post.updatedAt;posts.unshift(post)}currentId=post.id;persist();fillForm(post);$('formHeading').textContent='EDIT ENTRY';$('deleteCurrent').hidden=false}
+function fillForm(p){currentId=p?.id||null;$('postId').value=currentId||'';$('title').value=p?.title||'';$('date').value=p?.date||today();$('category').value=p?.category||'';$('excerpt').value=p?.excerpt||'';$('body').value=p?.body||'';$('status').value=p?.status||'draft';$('slug').value=p?.slug||'';$('formHeading').textContent=currentId?'EDIT ENTRY':'NEW ENTRY';$('deleteCurrent').hidden=!currentId;preview()}
+function clearForm(){fillForm(null);$('date').value=today();$('formHeading').textContent='NEW ENTRY'}
+function preview(){$('previewTitle').textContent=$('title').value||'Untitled entry';$('previewMeta').textContent=( $('date').value||'UNDATED')+' / '+($('category').value||'FIELD NOTES')+' / '+$('status').value.toUpperCase();$('previewExcerpt').textContent=$('excerpt').value;$('previewBody').textContent=$('body').value}
+function renderList(){const list=$('entryList');$('entryCount').textContent=String(posts.length).padStart(2,'0');if(!posts.length){list.innerHTML='<div class="notice">No entries yet. Create your first journal entry above.</div>';return}list.innerHTML=posts.map((p,i)=>'<div class="entry-row"><div><strong>'+escapeHtml(p.title||'Untitled entry')+'</strong><small>'+escapeHtml(p.date||'Undated')+' / '+escapeHtml(p.status||'draft')+'</small></div><div class="row-actions"><button class="btn" data-edit="'+escapeHtml(p.id)+'" aria-label="Edit entry">EDIT</button><button class="btn" data-up="'+escapeHtml(p.id)+'" aria-label="Move entry up" '+(i===0?'disabled':'')+'>↑</button><button class="btn" data-down="'+escapeHtml(p.id)+'" aria-label="Move entry down" '+(i===posts.length-1?'disabled':'')+'>↓</button></div></div>').join('')}
+function loadPost(id){const p=posts.find(x=>x.id===id);if(p)fillForm(p)}
+function deleteCurrent(){if(!currentId)return;const p=posts.find(x=>x.id===currentId);if(!confirm('Delete "'+(p?.title||'this entry')+'"? This cannot be undone unless you have a backup.'))return;posts=posts.filter(x=>x.id!==currentId);persist();clearForm()}
+function move(id,delta){const i=posts.findIndex(p=>p.id===id),j=i+delta;if(i<0||j<0||j>=posts.length)return;[posts[i],posts[j]]=[posts[j],posts[i]];persist()}
+function exportJson(){const payload={site:'DANCE DIVISION',updatedAt:new Date().toISOString(),posts:posts.map(({id,slug,title,date,category,excerpt,body,status,createdAt,updatedAt},order)=>({id,slug,title,date,category,excerpt,body,status,createdAt,updatedAt,order}))};const blob=new Blob([JSON.stringify(payload,null,2)+'\n'],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='journal.json';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url)}
+function importData(data){const incoming=Array.isArray(data)?data:data.posts;if(!Array.isArray(incoming))throw new Error('This JSON file does not contain a posts array.');posts=incoming.map((p,i)=>({...p,id:p.id||makeId(),slug:p.slug||slugify(p.title),title:p.title||'',date:p.date||'',category:p.category||'FIELD NOTES',excerpt:p.excerpt||'',body:p.body||p.content||'',status:p.status||(p.published===false?'draft':'published'),order:p.order??i}));posts.sort((a,b)=>(a.order??0)-(b.order??0));persist();clearForm()}
+$('postForm').addEventListener('submit',save);$('newPost').addEventListener('click',clearForm);$('clearForm').addEventListener('click',clearForm);$('deleteCurrent').addEventListener('click',deleteCurrent);$('exportJson').addEventListener('click',exportJson);$('downloadBackup').addEventListener('click',exportJson);
+['title','date','category','excerpt','body','status','slug'].forEach(id=>$(id).addEventListener('input',preview));
+$('entryList').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.edit)loadPost(b.dataset.edit);if(b.dataset.up)move(b.dataset.up,-1);if(b.dataset.down)move(b.dataset.down,1)});
+$('importJson').addEventListener('click',()=>$('importFile').click());$('importFile').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{const data=JSON.parse(await file.text());if(!confirm('Import will replace the entries currently loaded in this editor. Export a backup first if needed. Continue?'))return;importData(data)}catch(err){alert('Could not import this file: '+err.message)}finally{e.target.value=''}});
+try{const saved=localStorage.getItem(STORAGE_KEY);if(saved){posts=JSON.parse(saved);if(!Array.isArray(posts))posts=[]}}catch(e){posts=[]}
+renderList();clearForm();
+})();
+</script>
+</body></html>

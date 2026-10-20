@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f4f3ee">
+<meta name="description" content="Journal entries and notes from the development of DANCE DIVISION.">
+<title>JOURNAL — DANCE DIVISION</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+:root{--journal-paper:#f4f3ee;--journal-ink:#151515;--journal-muted:#77766f;--journal-line:rgba(21,21,21,.18);--journal-mono:"DM Mono",monospace;--journal-sans:"Manrope",sans-serif;--journal-serif:"Playfair Display",serif}
+.journal-main{width:min(calc(100% - 56px),1320px);margin:0 auto;color:var(--journal-ink)}
+.journal-kicker{font:10px var(--journal-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--journal-muted)}
+.journal-hero{padding:clamp(70px,12vw,160px) 0 58px;border-bottom:1px solid var(--journal-line);display:grid;grid-template-columns:1fr minmax(260px,420px);gap:50px;align-items:end}
+.journal-hero h1{font-family:var(--journal-sans);font-size:clamp(64px,12vw,160px);line-height:.82;letter-spacing:-.095em;font-weight:500;margin:28px 0 0}
+.journal-hero h1 em{font-family:var(--journal-serif);font-weight:400;letter-spacing:-.08em}
+.journal-hero-copy{font-size:15px;line-height:1.7;max-width:390px;margin:0 0 4px}
+.journal-post-list{padding:0 0 80px}.journal-post{display:grid;grid-template-columns:160px minmax(0,760px) 1fr;gap:30px;padding:36px 0 42px;border-bottom:1px solid var(--journal-line)}
+.journal-post-date,.journal-post-category{font:10px var(--journal-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--journal-muted);line-height:1.7}.journal-post-category{text-align:right}
+.journal-post h2{font-family:var(--journal-sans);font-size:clamp(27px,4vw,48px);font-weight:500;letter-spacing:-.055em;line-height:1.05;margin:0 0 16px}
+.journal-post-excerpt{font-size:16px;line-height:1.7;max-width:700px;margin:0 0 18px}.journal-post-body{font-size:15px;line-height:1.85;max-width:700px;overflow-wrap:anywhere}.journal-post-body p{margin:0 0 1.2em}.journal-post-body p:last-child{margin-bottom:0}
+.journal-empty{padding:70px 0;color:var(--journal-muted);font:11px var(--journal-mono);letter-spacing:.06em;text-transform:uppercase}
+.journal-footer{border-top:1px solid var(--journal-line);padding:20px 28px;display:flex;justify-content:space-between;gap:20px;font:9px var(--journal-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--journal-muted)}
+@media(max-width:700px){.journal-main{width:calc(100% - 32px)}.journal-hero{grid-template-columns:1fr;gap:32px;padding-top:80px}.journal-post{grid-template-columns:1fr;gap:10px;padding:28px 0 34px}.journal-post-category{text-align:left}.journal-post h2{margin-top:5px}.journal-footer{padding:18px 16px;flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<header class="site-header">
+    <button class="header-title" type="button" onclick="window.location.href='index.html'">DANCE DIVISION</button>
+    <div class="header-status"><span class="status-dot"></span>STATUS: IN DEVELOPMENT</div>
+    <button class="nav-dropdown-toggle page-nav-toggle" id="pageDropdownToggle" type="button" aria-expanded="false" aria-controls="pageNavigation"><span>PAGES</span><span class="nav-dropdown-indicator" aria-hidden="true">+</span></button>
+    <nav class="nav-links page-nav-links" id="pageNavigation" aria-label="Project pages">
+    <a href="index.html"><span>01</span> HOME</a>
+    <a href="shotbook.html" class="active" aria-current="page"><span>02</span> SHOT BOOK</a>
+    <a href="calendars.html"><span>03</span> CALENDARS</a>
+            <a href="costumes.html"><span>04</span> COSTUMES</a>
+<a href="shotbook.html"><span>05</span> SHOT BOOK</a>
+<a href="journal.html" class="active" aria-current="page"><span>06</span> JOURNAL</a>
+    </nav>
+</header>
+<main class="journal-main">
+<section class="journal-hero"><div><div class="journal-kicker">FIELD NOTES / 00—∞</div><h1>FIELD<br><em>JOURNAL.</em></h1></div><p class="journal-hero-copy">Notes, observations, references, and dispatches from the development of DANCE DIVISION.</p></section>
+<section class="journal-post-list" id="journalPosts" aria-live="polite"><div class="journal-empty">Loading journal…</div></section>
+</main>
+<footer class="journal-footer"><span>DANCE DIVISION</span><span>DEVELOPMENT JOURNAL</span><span id="journalUpdated">END</span></footer>
+<script>
+(()=>{
+'use strict';
+function setupDropdown(toggleId,navId,boundarySelector){const toggle=document.getElementById(toggleId),nav=document.getElementById(navId),boundary=document.querySelector(boundarySelector);if(!toggle||!nav||!boundary)return;const close=()=>{toggle.setAttribute('aria-expanded','false');nav.classList.remove('is-dropdown-open')};toggle.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')!=='true';toggle.setAttribute('aria-expanded',String(open));nav.classList.toggle('is-dropdown-open',open)});nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));document.addEventListener('click',e=>{if(!boundary.contains(e.target))close()});document.addEventListener('keydown',e=>{if(e.key==='Escape'){close();toggle.focus()}});const mq=window.matchMedia('(min-width: 1251px)');const reset=()=>{if(mq.matches)close()};if(mq.addEventListener)mq.addEventListener('change',reset);else mq.addListener(reset)}
+setupDropdown('pageDropdownToggle','pageNavigation','.site-header');
+const root=document.getElementById('journalPosts');
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const dateLabel=s=>{if(!s)return 'UNDATED';const d=new Date(String(s).slice(0,10)+'T12:00:00');return Number.isNaN(d.getTime())?esc(s):d.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}).toUpperCase()};
+const paragraphText=s=>String(s??'').split(/\n\s*\n/).filter(p=>p.trim()).map(p=>'<p>'+esc(p).replace(/\n/g,'<br>')+'</p>').join('');
+async function loadJournal(){
+ try{
+  const response=await fetch(new URL('journal.json',window.location.href),{cache:'no-store'});
+  if(!response.ok)throw new Error('journal.json returned HTTP '+response.status);
+  const data=await response.json();
+  const all=Array.isArray(data)?data:(Array.isArray(data.posts)?data.posts:null);
+  if(!all)throw new Error('journal.json must contain a posts array, or be an array of entries.');
+ const posts=all.filter(p=>{
+    if(!p) return false;
+
+    if(p.status === 'draft' || p.status === 'unpublished') return false;
+    if(p.published === false) return false;
+
+    return true;
+}).sort((a,b)=>
+    (b.date||'').localeCompare(a.date||'') ||
+    (Number(a.order??999999)-Number(b.order??999999)) ||
+    (b.updatedAt||'').localeCompare(a.updatedAt||'')
+);
+  const updated=document.getElementById('journalUpdated');updated.textContent=data.updatedAt?'UPDATED '+String(data.updatedAt).slice(0,10):'END';
+  if(!posts.length){root.innerHTML='<div class="journal-empty">No journal entries have been published yet.</div>';return}
+  root.innerHTML=posts.map((p,i)=>'<article class="journal-post" id="'+esc(p.slug||('entry-'+(i+1)))+'"><div class="journal-post-date">'+dateLabel(p.date)+'</div><div><h2>'+esc(p.title||'Untitled entry')+'</h2>'+(p.excerpt?'<p class="journal-post-excerpt">'+esc(p.excerpt)+'</p>':'')+'<div class="journal-post-body">'+paragraphText(p.body??p.content??'')+'</div></div><div class="journal-post-category">'+esc(p.category||'FIELD NOTES')+'</div></article>').join('');
+ }catch(error){console.error('DANCE DIVISION journal:',error);const local=window.location.protocol==='file:';root.innerHTML='<div class="journal-empty">'+(local?'The journal cannot fetch journal.json when this page is opened directly from your computer. Preview it through GitHub Pages or a local web server.':'The journal could not load journal.json. Confirm that journal.json is in the same folder as journal.html, is valid JSON, and has a posts array. Check the browser console for details.')+'</div>'}
+}
+loadJournal();
+})();
+</script>
+</body>
+</html>
