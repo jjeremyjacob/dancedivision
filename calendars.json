@@ -393,17 +393,129 @@
   ],
   "january": [
     {
+      "id": "067363d5-f913-47d9-b0f9-b49139c288be",
+      "date": "2027-01-08",
+      "title": "CHOREOGRAPHY REHEARSAL at BARD",
+      "time": "",
+      "location": "",
+      "description": ""
+    },
+    {
+      "id": "4eefbbf9-ed57-4de0-ba6a-870643994057",
+      "date": "2027-01-09",
+      "title": "CHOREOGRAPHY REHEARSAL at BARD",
+      "time": "",
+      "location": "",
+      "description": ""
+    },
+    {
+      "id": "1a65950b-da12-4be8-9610-52239351f089",
+      "date": "2027-01-10",
+      "title": "CHOREOGRAPHY REHEARSAL at BARD",
+      "time": "",
+      "location": "",
+      "description": ""
+    },
+    {
       "id": "f4469c6c-7993-4a9b-aa16-9c9e5aba5f36",
       "date": "2027-01-11",
       "title": "DAY ONE KAATSBAAN",
+      "time": "",
+      "location": "",
+      "description": "Load In / Arrival Day"
+    },
+    {
+      "id": "32d9ae07-f0e9-4961-b66f-f0c47f178180",
+      "date": "2027-01-11",
+      "title": "CHOREOGRAPHY REHEARSAL",
+      "time": "",
+      "location": "",
+      "description": ""
+    },
+    {
+      "id": "b6ceaa4c-b6af-4ccb-8958-a002772f149e",
+      "date": "2027-01-11",
+      "title": "CAMERA TESTS",
+      "time": "",
+      "location": "",
+      "description": ""
+    },
+    {
+      "id": "c0c3dfe1-5710-45c7-b7fe-deab1861efdd",
+      "date": "2027-01-12",
+      "title": "FIRST SHOOTING DAY / ADDITIONAL ARRIVALS",
+      "time": "",
+      "location": "",
+      "description": ""
+    },
+    {
+      "id": "99c77476-c255-475c-a9db-84e1fd8d5e2e",
+      "date": "2027-01-15",
+      "title": "END EARLY",
+      "time": "",
+      "location": "",
+      "description": ""
+    },
+    {
+      "id": "01ba2368-064f-48e4-bda5-bdd345c2aa87",
+      "date": "2027-01-16",
+      "title": "DAY OFF",
+      "time": "",
+      "location": "",
+      "description": ""
+    },
+    {
+      "id": "bb846fa0-f1e5-4142-966d-d76fbee87950",
+      "date": "2027-01-17",
+      "title": "START LATE",
+      "time": "",
+      "location": "",
+      "description": ""
+    },
+    {
+      "id": "864a22e0-73cd-4f98-9e45-e7645316d2c7",
+      "date": "2027-01-21",
+      "title": "THEATER TECH/LIGHTS",
+      "time": "",
+      "location": "",
+      "description": ""
+    },
+    {
+      "id": "02109fc6-2a37-4ace-9f7a-1aefc0a25e2f",
+      "date": "2027-01-21",
+      "title": "LARGE GROUP / EXTRAS",
+      "time": "",
+      "location": "",
+      "description": ""
+    },
+    {
+      "id": "492e87f7-4720-48f6-8e42-2b826f724c29",
+      "date": "2027-01-22",
+      "title": "LAST DAY OF MAIN FILMING / CATERING",
+      "time": "",
+      "location": "",
+      "description": ""
+    },
+    {
+      "id": "8dfd7ba2-d2d9-4067-881c-0285ae57b3b1",
+      "date": "2027-01-22",
+      "title": "LARGE GROUP / EXTRAS",
+      "time": "",
+      "location": "",
+      "description": ""
+    },
+    {
+      "id": "118d7960-8272-4eaa-a380-372c48ccf127",
+      "date": "2027-01-23",
+      "title": "ADDITIONAL SHOOTING",
       "time": "",
       "location": "",
       "description": ""
     },
     {
       "id": "8656b311-ade7-4282-b43c-1e77e072f4d4",
-      "date": "2027-01-26",
-      "title": "LAST DAY AVAILABLE KAATSBAAN",
+      "date": "2027-01-24",
+      "title": "LAST DAY AT KAATSBAAN",
       "time": "",
       "location": "",
       "description": ""
