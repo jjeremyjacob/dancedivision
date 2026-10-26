@@ -2176,6 +2176,13 @@ img {
     width: 100%;
 }
 
+.design-grid1 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    width: 100%;
+}
+
 .design-image {
     display: block;
     width: 100%;
