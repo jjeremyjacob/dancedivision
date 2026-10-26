@@ -1,0 +1,961 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f4f3ee">
+<meta name="description" content="Episodes from DANCE DIVISION.">
+<meta property="og:image" content="https://jjeremyjacob.github.io/dancedivision/images/dancedivisionsocial.jpg">
+<title>EPISODES — DANCE DIVISION</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+:root {
+  --films-paper: #f4f3ee;
+  --films-ink: #151515;
+  --films-muted: #77766f;
+  --films-rule: rgba(21,21,21,.18);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--films-paper);
+  color: var(--films-ink);
+}
+
+header.site-header {
+  position: sticky !important;
+  top: 0;
+  z-index: 1100;
+  flex-shrink: 0;
+}
+
+.films-page {
+  padding: 0 clamp(16px,4vw,64px) 30px;
+  min-height: calc(100vh - 80px);
+}
+
+.films-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 20px;
+  padding: 24px 0 18px;
+  border-bottom: 1px solid var(--films-rule);
+}
+
+.films-kicker,
+.films-total,
+.film-index,
+.film-type,
+.film-credit-label,
+.films-footer,
+.film-position,
+.film-time,
+.film-control,
+.film-volume-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  line-height: 1.6;
+}
+
+.films-kicker,
+.films-total,
+.film-index,
+.film-type,
+.film-credit-label,
+.films-footer,
+.film-position,
+.film-time,
+.film-volume-label {
+  color: var(--films-muted);
+}
+
+.films-heading h1 {
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(30px,4vw,55px);
+  font-weight: 500;
+  letter-spacing: -.065em;
+  line-height: 1;
+  margin: 7px 0 0;
+}
+
+.films-layout {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(280px,.85fr);
+  gap: clamp(28px,6vw,96px);
+  align-items: center;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 28px 0 24px;
+}
+
+.film-viewer {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.film-frame {
+  position: relative;
+  width: min(100%, 360px);
+  aspect-ratio: 9 / 16;
+  background: #dedbd3;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.film-frame iframe {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #111;
+}
+
+.film-placeholder {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  white-space: pre-line;
+  color: var(--films-muted);
+  font: 10px/1.9 'DM Mono',monospace;
+  letter-spacing: .04em;
+  pointer-events: none;
+  background: #dedbd3;
+}
+
+.film-frame.has-video .film-placeholder {
+  display: none;
+}
+
+.film-viewer-bottom {
+  width: min(100%,470px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding-top: 12px;
+}
+
+.film-controls {
+  display: flex;
+  gap: 7px;
+}
+
+.film-control {
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--films-rule);
+  border-radius: 0;
+  background: transparent;
+  color: var(--films-ink);
+  cursor: pointer;
+  transition: background .18s,color .18s;
+}
+
+.film-control:hover:not(:disabled) {
+  background: var(--films-ink);
+  color: var(--films-paper);
+}
+
+.film-control:disabled {
+  opacity: .28;
+  cursor: default;
+}
+
+.film-player-controls {
+  width: min(100%, 360px);
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 12px 0 0;
+}
+
+.film-timeline {
+  display: block;
+  width: 100%;
+  height: 14px;
+  margin: 0;
+  padding: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  outline: none;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.film-timeline::-webkit-slider-runnable-track {
+  height: 2px;
+  border: 0;
+  border-radius: 0;
+  background: var(--films-rule);
+}
+
+.film-timeline::-moz-range-track {
+  height: 2px;
+  border: 0;
+  border-radius: 0;
+  background: var(--films-rule);
+}
+
+.film-timeline::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 8px;
+  height: 8px;
+  margin-top: -3px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--films-ink);
+}
+
+.film-timeline::-moz-range-thumb {
+  width: 8px;
+  height: 8px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--films-ink);
+}
+
+.film-player-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.film-player-left,
+.film-player-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.film-player-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  min-height: 25px;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--films-ink);
+  font: 10px 'DM Mono',monospace;
+  cursor: pointer;
+}
+
+.film-player-button:hover {
+  opacity: .55;
+}
+
+.film-time {
+  font-size: 9px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.film-volume {
+  width: 65px;
+  height: 14px;
+  margin: 0;
+  padding: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  outline: none;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.film-volume::-webkit-slider-runnable-track {
+  height: 2px;
+  border: 0;
+  border-radius: 0;
+  background: var(--films-rule);
+}
+
+.film-volume::-moz-range-track {
+  height: 2px;
+  border: 0;
+  border-radius: 0;
+  background: var(--films-rule);
+}
+
+.film-volume::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 7px;
+  height: 7px;
+  margin-top: -2.5px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--films-ink);
+}
+
+.film-volume::-moz-range-thumb {
+  width: 7px;
+  height: 7px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--films-ink);
+}
+
+.film-player-controls button:disabled,
+.film-player-controls input:disabled {
+  opacity: .3;
+  cursor: default;
+}
+
+.film-information {
+  min-width: 0;
+  align-self: center;
+  padding: 18px 0;
+}
+
+.film-information-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--films-rule);
+}
+
+.film-type { text-align: right; }
+
+.film-title {
+  font: 400 clamp(34px,4.5vw,66px)/1.02 'Playfair Display',serif;
+  letter-spacing: -.045em;
+  margin: 25px 0 18px;
+  overflow-wrap: anywhere;
+}
+
+.film-description {
+  max-width: 520px;
+  margin: 0;
+  font: 400 13px/1.9 'Manrope',sans-serif;
+  white-space: pre-line;
+}
+
+.film-credits {
+  margin-top: 36px;
+  border-top: 1px solid var(--films-rule);
+}
+
+.film-credit-row {
+  display: grid;
+  grid-template-columns: minmax(90px,.65fr) minmax(0,1.35fr);
+  gap: 20px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--films-rule);
+}
+
+.film-credit-value {
+  font: 11px/1.75 'Manrope',sans-serif;
+  overflow-wrap: anywhere;
+}
+
+.film-navigation-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 23px;
+  color: var(--films-muted);
+  font: 10px/1.6 'DM Mono',monospace;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.film-progress {
+  height: 2px;
+  margin-top: 17px;
+  background: var(--films-rule);
+  overflow: hidden;
+}
+
+.film-progress-fill {
+  height: 100%;
+  width: 0;
+  background: var(--films-ink);
+  transition: width .2s ease;
+}
+
+.films-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding-top: 15px;
+  border-top: 1px solid var(--films-rule);
+}
+
+@media(max-width:800px) {
+  .films-page { padding: 0 18px 24px; }
+
+  .films-layout {
+    grid-template-columns: minmax(0,1fr);
+    gap: 26px;
+    padding-top: 20px;
+  }
+
+  .film-frame {
+    width: min(100%,430px);
+    max-height: none;
+  }
+
+  .film-viewer-bottom,
+  .film-player-controls {
+    width: min(100%,430px);
+  }
+
+  .film-information { padding: 0 0 12px; }
+
+  .film-title {
+    font-size: clamp(36px,9vw,56px);
+    margin-top: 20px;
+  }
+
+  .film-credits { margin-top: 27px; }
+  .film-navigation-label { padding-top: 20px; }
+}
+
+@media(max-width:420px) {
+  .films-page {
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
+  .film-credit-row {
+    grid-template-columns: 90px minmax(0,1fr);
+    gap: 12px;
+  }
+
+  .film-control { padding: 0 9px; }
+  .films-heading { align-items: start; }
+  .films-total { padding-top: 5px; }
+  .film-volume { width: 48px; }
+  .film-player-left,.film-player-right { gap: 8px; }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <button class="header-title" type="button" onclick="window.location.href='index.html'">DANCE DIVISION</button>
+  <div class="header-status"><span class="status-dot"></span> STATUS: IN DEVELOPMENT</div>
+
+  <button class="nav-dropdown-toggle page-nav-toggle" id="pageDropdownToggle" type="button" aria-expanded="false" aria-controls="pageNavigation">
+    <span>PAGES</span><span class="nav-dropdown-indicator" aria-hidden="true">+</span>
+  </button>
+
+  <nav class="nav-links page-nav-links" id="pageNavigation" aria-label="Project pages">
+    <a href="index.html"><span>01</span> HOME</a>
+    <a href="shotbook.html" class="active" aria-current="page"><span>02</span> SHOT BOOK</a>
+    <a href="calendars.html"><span>03</span> CALENDARS</a>
+            <a href="costumes.html"><span>04</span> COSTUMES</a>
+<a href="locations.html"><span>05</span> LOCATIONS</a>
+<a href="journal.html" class="active" aria-current="page"><span>06</span> JOURNAL</a>
+    <a href="videos.html" class="active" aria-current="page"><span>06</span> EPISODES</a>
+  </nav>
+</header>
+
+<div class="section-subheader" id="sectionSubheader">
+  <span class="section-subheader-label" aria-hidden="true">SECTIONS</span>
+
+  <button class="nav-dropdown-toggle section-nav-toggle" id="navDropdownToggle" type="button" aria-expanded="false" aria-controls="siteNavigation">
+    <span>SECTIONS</span><span class="nav-dropdown-indicator" aria-hidden="true">+</span>
+  </button>
+
+  <nav class="nav-links section-nav-links" id="siteNavigation" aria-label="Site sections">
+    <a href="index.html#information"><span>00</span> INFORMATION</a>
+    <a href="index.html#design"><span>01</span> DESIGN</a>
+    <a href="index.html#script"><span>02</span> SCRIPT</a>
+    <a href="index.html#sound"><span>03</span> SOUND</a>
+    <a href="index.html#characters"><span>04</span> CHARACTERS</a>
+    <a href="index.html#inspiration"><span>06</span> INSPIRATION</a>
+    <a href="index.html#end-notes"><span>09</span> END NOTES</a>
+  </nav>
+</div>
+
+<main class="films-page">
+  <div class="films-heading">
+    <div>
+      <div class="films-kicker">DANCE DIVISION / EPISODES</div>
+      <h1>EPISODES</h1>
+    </div>
+    <div class="films-total"><span id="totalCount">40</span> EPISODES</div>
+  </div>
+
+  <section class="films-layout" aria-label="Episode viewer">
+
+    <div class="film-viewer">
+      <div class="film-frame" id="filmFrame">
+        <div class="film-placeholder" id="filmPlaceholder">ADD VIMEO VIDEO ID</div>
+      </div>
+
+      <div class="film-player-controls">
+        <input class="film-timeline" id="filmTimeline" type="range" min="0" max="1000" value="0" step="1" aria-label="Video timeline" disabled>
+
+        <div class="film-player-bottom">
+          <div class="film-player-left">
+            <button class="film-player-button" id="playButton" type="button" aria-label="Play episode" disabled>▶</button>
+            <span class="film-time"><span id="currentTime">0:00</span> / <span id="durationTime">0:00</span></span>
+          </div>
+
+          <div class="film-player-right">
+            <button class="film-player-button" id="muteButton" type="button" aria-label="Mute" disabled>VOL</button>
+            <input class="film-volume" id="volumeSlider" type="range" min="0" max="1" value="1" step="0.01" aria-label="Volume" disabled>
+          </div>
+        </div>
+      </div>
+
+      <div class="film-viewer-bottom">
+        <div class="film-position"><span id="currentCount">01</span> / <span id="bottomTotal">40</span></div>
+        <div class="film-controls">
+          <button class="film-control" id="previousButton" type="button" aria-label="Previous episode">← PREV</button>
+          <button class="film-control" id="nextButton" type="button" aria-label="Next episode">NEXT →</button>
+        </div>
+      </div>
+    </div>
+
+    <article class="film-information" aria-live="polite" aria-atomic="true">
+      <div class="film-information-top">
+        <div class="film-index" id="filmIndex">EPISODE 01</div>
+        <div class="film-type" id="filmType">VIMEO / 9:16</div>
+      </div>
+
+      <h2 class="film-title" id="filmTitle">Untitled</h2>
+      <p class="film-description" id="filmDescription"></p>
+
+      <div class="film-credits" id="filmCredits"></div>
+
+      <div class="film-navigation-label">
+        <span>EPISODE TIMELINE</span>
+        <span>USE ARROWS TO EXPLORE</span>
+      </div>
+
+      <div class="film-progress" aria-hidden="true">
+        <div class="film-progress-fill" id="progressFill"></div>
+      </div>
+    </article>
+
+  </section>
+
+  <footer class="films-footer">
+    <span>DANCE DIVISION</span>
+    <span>PROJECT DEVELOPMENT / 2026</span>
+  </footer>
+</main>
+
+<script src="https://player.vimeo.com/api/player.js"></script>
+
+
+<script>
+const films = [
+  {
+    vimeo: "1238963725/cbad592380",
+    title: "Episode 01",
+    description: "A short moving image from the DANCE DIVISION archive.",
+    type: "VIMEO / 9:16",
+    credits: [["DIRECTED BY", "Jeremy Jacob"]]
+  },
+  {
+    vimeo: "PASTE_NEXT_VIDEO_ID/HASH",
+    title: "Episode 02",
+    description: "",
+    type: "VIMEO / 9:16",
+    credits: [["DIRECTED BY", "Jeremy Jacob"]]
+  }
+];
+
+const $ = id => document.getElementById(id);
+const frame = $("filmFrame");
+const placeholder = $("filmPlaceholder");
+const timeline = $("filmTimeline");
+const playButton = $("playButton");
+const muteButton = $("muteButton");
+const volumeSlider = $("volumeSlider");
+
+let currentIndex = 0;
+let player = null;
+let playerReady = false;
+let isSeeking = false;
+let lastVolume = 1;
+let touchStartX = 0;
+let touchStartY = 0;
+
+const number = n => String(n).padStart(2, "0");
+
+function formatTime(seconds) {
+  if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
+  const total = Math.floor(seconds);
+  const hours = Math.floor(total / 3600);
+  const minutes = Math.floor((total % 3600) / 60);
+  const secs = total % 60;
+
+  return hours
+    ? `${hours}:${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`
+    : `${minutes}:${String(secs).padStart(2, "0")}`;
+}
+
+function setControlsEnabled(enabled) {
+  timeline.disabled = !enabled;
+  playButton.disabled = !enabled;
+  muteButton.disabled = !enabled;
+  volumeSlider.disabled = !enabled;
+}
+
+function showPlaceholder(message) {
+  placeholder.textContent = message;
+  placeholder.style.display = "flex";
+  frame.classList.remove("has-video");
+}
+
+function clearPlayer() {
+  playerReady = false;
+  isSeeking = false;
+
+  if (player) {
+    player.destroy().catch(() => {});
+    player = null;
+  }
+
+  frame.querySelectorAll("iframe").forEach(iframe => iframe.remove());
+  frame.classList.remove("has-video");
+
+  timeline.value = 0;
+  $("currentTime").textContent = "0:00";
+  $("durationTime").textContent = "0:00";
+
+  playButton.textContent = "▶";
+  playButton.setAttribute("aria-label", "Play episode");
+  muteButton.textContent = "VOL";
+  muteButton.setAttribute("aria-label", "Mute");
+
+  setControlsEnabled(false);
+}
+
+function parseVimeoCode(code) {
+  const parts = String(code || "").trim().split("/");
+  return {
+    id: parts[0] || "",
+    hash: parts[1] || ""
+  };
+}
+
+function makeVimeoEmbed(film) {
+  const { id, hash } = parseVimeoCode(film.vimeo);
+
+  const iframe = document.createElement("iframe");
+  const params = new URLSearchParams({
+    controls: "0",
+    title: "0",
+    byline: "0",
+    portrait: "0",
+    badge: "0",
+    autopause: "1",
+    dnt: "1"
+  });
+
+  if (hash) params.set("h", hash);
+
+  iframe.src = `https://player.vimeo.com/video/${encodeURIComponent(id)}?${params.toString()}`;
+  iframe.title = film.title || "DANCE DIVISION episode";
+  iframe.allow = "autoplay; fullscreen; picture-in-picture; encrypted-media";
+  iframe.allowFullscreen = true;
+  iframe.setAttribute("playsinline", "");
+  iframe.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+
+  return iframe;
+}
+
+function bindPlayerEvents(activePlayer) {
+  activePlayer.on("timeupdate", data => {
+    if (isSeeking) return;
+
+    timeline.value = data.duration
+      ? Math.round(data.seconds / data.duration * 1000)
+      : 0;
+
+    $("currentTime").textContent = formatTime(data.seconds);
+    $("durationTime").textContent = formatTime(data.duration);
+  });
+
+  activePlayer.on("play", () => {
+    playButton.textContent = "Ⅱ";
+    playButton.setAttribute("aria-label", "Pause episode");
+  });
+
+  activePlayer.on("pause", () => {
+    playButton.textContent = "▶";
+    playButton.setAttribute("aria-label", "Play episode");
+  });
+
+  activePlayer.on("ended", () => {
+    playButton.textContent = "▶";
+    playButton.setAttribute("aria-label", "Play episode");
+  });
+
+  activePlayer.on("volumechange", data => {
+    volumeSlider.value = data.volume;
+
+    if (data.volume > 0) lastVolume = data.volume;
+
+    const muted = data.muted || data.volume === 0;
+    muteButton.textContent = muted ? "MUTED" : "VOL";
+    muteButton.setAttribute("aria-label", muted ? "Unmute" : "Mute");
+  });
+}
+
+async function initializePlayer(film, index) {
+  const { id } = parseVimeoCode(film.vimeo);
+
+  if (!/^\d+$/.test(id)) {
+    showPlaceholder("ADD VIMEO VIDEO CODE\n\nFORMAT:\nVIDEO_ID/PRIVACY_HASH");
+    return;
+  }
+
+  if (typeof Vimeo === "undefined" || !Vimeo.Player) {
+    showPlaceholder("VIMEO PLAYER COULD NOT LOAD\n\nCHECK YOUR INTERNET CONNECTION");
+    return;
+  }
+
+  showPlaceholder("LOADING EPISODE");
+
+  const iframe = makeVimeoEmbed(film);
+  frame.appendChild(iframe);
+
+  const activePlayer = new Vimeo.Player(iframe);
+  player = activePlayer;
+
+  try {
+    await activePlayer.ready();
+
+    if (currentIndex !== index || player !== activePlayer) return;
+
+    playerReady = true;
+    setControlsEnabled(true);
+    frame.classList.add("has-video");
+    placeholder.style.display = "none";
+
+    const duration = await activePlayer.getDuration();
+    if (currentIndex !== index || player !== activePlayer) return;
+    $("durationTime").textContent = formatTime(duration);
+
+    const volume = await activePlayer.getVolume();
+    if (currentIndex !== index || player !== activePlayer) return;
+    volumeSlider.value = volume;
+    if (volume > 0) lastVolume = volume;
+
+    bindPlayerEvents(activePlayer);
+  } catch (error) {
+    if (currentIndex === index && player === activePlayer) {
+      clearPlayer();
+      showPlaceholder("UNABLE TO LOAD EPISODE\n\nCHECK THE VIMEO CODE\nAND PRIVACY SETTINGS");
+    }
+  }
+}
+
+function renderFilm(index) {
+  if (!films.length) return;
+
+  currentIndex = Math.max(0, Math.min(index, films.length - 1));
+  clearPlayer();
+
+  const film = films[currentIndex];
+
+  $("filmTitle").textContent = film.title || "Untitled";
+  $("filmDescription").textContent = film.description || "";
+  $("filmDescription").hidden = !film.description;
+  $("filmIndex").textContent = "EPISODE " + number(currentIndex + 1);
+  $("filmType").textContent = film.type || "VIMEO / 9:16";
+
+  $("currentCount").textContent = number(currentIndex + 1);
+  $("totalCount").textContent = films.length;
+  $("bottomTotal").textContent = number(films.length);
+
+  $("progressFill").style.width =
+    ((currentIndex + 1) / films.length * 100) + "%";
+
+  $("previousButton").disabled = currentIndex === 0;
+  $("nextButton").disabled = currentIndex === films.length - 1;
+
+  const credits = $("filmCredits");
+  credits.replaceChildren();
+
+  (film.credits || []).forEach(([label, value]) => {
+    const row = document.createElement("div");
+    row.className = "film-credit-row";
+
+    const labelElement = document.createElement("div");
+    labelElement.className = "film-credit-label";
+    labelElement.textContent = label;
+
+    const valueElement = document.createElement("div");
+    valueElement.className = "film-credit-value";
+    valueElement.textContent = value;
+
+    row.append(labelElement, valueElement);
+    credits.append(row);
+  });
+
+  initializePlayer(film, currentIndex);
+}
+
+playButton.addEventListener("click", async () => {
+  if (!player || !playerReady) return;
+
+  try {
+    if (await player.getPaused()) {
+      await player.play();
+    } else {
+      await player.pause();
+    }
+  } catch (error) {
+    console.warn("Playback could not be changed.", error);
+  }
+});
+
+timeline.addEventListener("input", () => {
+  if (playerReady) isSeeking = true;
+});
+
+timeline.addEventListener("change", async () => {
+  if (!player || !playerReady) return;
+
+  try {
+    const duration = await player.getDuration();
+    const target = duration * Number(timeline.value) / 1000;
+    await player.setCurrentTime(target);
+    $("currentTime").textContent = formatTime(target);
+  } catch (error) {
+    console.warn("Seeking failed.", error);
+  } finally {
+    isSeeking = false;
+  }
+});
+
+volumeSlider.addEventListener("input", async () => {
+  if (!player || !playerReady) return;
+
+  const volume = Number(volumeSlider.value);
+
+  try {
+    await player.setVolume(volume);
+    await player.setMuted(volume === 0);
+    if (volume > 0) lastVolume = volume;
+  } catch (error) {
+    console.warn("Volume could not be changed.", error);
+  }
+});
+
+muteButton.addEventListener("click", async () => {
+  if (!player || !playerReady) return;
+
+  try {
+    const muted = await player.getMuted();
+    const volume = await player.getVolume();
+
+    if (muted || volume === 0) {
+      await player.setVolume(lastVolume || 1);
+      await player.setMuted(false);
+      volumeSlider.value = lastVolume || 1;
+    } else {
+      lastVolume = volume || 1;
+      await player.setMuted(true);
+    }
+  } catch (error) {
+    console.warn("Mute could not be toggled.", error);
+  }
+});
+
+$("previousButton").addEventListener("click", () => {
+  if (currentIndex > 0) renderFilm(currentIndex - 1);
+});
+
+$("nextButton").addEventListener("click", () => {
+  if (currentIndex < films.length - 1) renderFilm(currentIndex + 1);
+});
+
+document.addEventListener("keydown", event => {
+  if (event.target.closest("input,textarea,select,[contenteditable='true'],button")) return;
+
+  if (event.key === "ArrowLeft" && currentIndex > 0) {
+    renderFilm(currentIndex - 1);
+  }
+
+  if (event.key === "ArrowRight" && currentIndex < films.length - 1) {
+    renderFilm(currentIndex + 1);
+  }
+});
+
+frame.addEventListener("touchstart", event => {
+  touchStartX = event.changedTouches[0].clientX;
+  touchStartY = event.changedTouches[0].clientY;
+}, { passive: true });
+
+frame.addEventListener("touchend", event => {
+  const dx = event.changedTouches[0].clientX - touchStartX;
+  const dy = event.changedTouches[0].clientY - touchStartY;
+
+  if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.25) {
+    if (dx < 0 && currentIndex < films.length - 1) {
+      renderFilm(currentIndex + 1);
+    } else if (dx > 0 && currentIndex > 0) {
+      renderFilm(currentIndex - 1);
+    }
+  }
+}, { passive: true });
+
+function setupDropdown(buttonId, navId) {
+  const button = $(buttonId);
+  const nav = $(navId);
+  if (!button || !nav) return;
+
+  button.addEventListener("click", () => {
+    const open = button.getAttribute("aria-expanded") === "true";
+    button.setAttribute("aria-expanded", String(!open));
+    nav.classList.toggle("is-open", !open);
+  });
+}
+
+setupDropdown("pageDropdownToggle", "pageNavigation");
+setupDropdown("navDropdownToggle", "siteNavigation");
+
+renderFilm(0);
+</script>
+
+
+</body>
+</html>
