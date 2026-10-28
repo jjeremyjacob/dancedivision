@@ -1,301 +1,1020 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f4f3ee">
+<title>Design — DANCE DIVISION</title>
+<meta name="description" content="DANCE DIVISION — visual language, quotes, campaign imagery, and motion.">
 
-  <meta charset="UTF-8">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+<style>
+:root {
+    --paper: #f4f3ee;
+    --ink: #151515;
+    --muted: #77766f;
+    --line: rgba(21, 21, 21, 0.22);
+    --mono: "DM Mono", monospace;
+    --sans: "Manrope", sans-serif;
+    --serif: "Playfair Display", serif;
+    --page-pad: 28px;
+}
 
-  <title>Design — Dance Division</title>
+* {
+    box-sizing: border-box;
+}
 
-  <meta
-    name="description"
-    content="Dance Division — visual language, camera, typography, production design and movement."
-  >
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 110px;
+}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+}
 
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
+a {
+    color: inherit;
+    text-decoration: none;
+}
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Manrope:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;1,400&display=swap"
-    rel="stylesheet"
-  >
+button {
+    color: inherit;
+    font: inherit;
+}
 
-  <link rel="stylesheet" href="style.css">
 
+
+main {
+    width: 100%;
+}
+
+.page-intro {
+    padding: 48px var(--page-pad) 54px;
+    border-bottom: 1px solid var(--line);
+}
+
+.eyebrow {
+    margin: 0 0 20px;
+    font-family: var(--mono);
+    font-size: 10px;
+    line-height: 1.5;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.page-intro h1 {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: clamp(56px, 10vw, 148px);
+    font-weight: 400;
+    line-height: 0.9;
+    letter-spacing: -0.075em;
+}
+
+.page-intro h1 em {
+    font-weight: 400;
+}
+
+.intro-bottom {
+    margin-top: 35px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.intro-description {
+    max-width: 440px;
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.intro-index {
+    flex: 0 0 auto;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+}
+
+.design-section {
+    padding: 28px var(--page-pad) 48px;
+    border-bottom: 1px solid var(--line);
+    scroll-margin-top: 115px;
+}
+
+.section-heading {
+    margin: 0 0 26px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.section-heading h2 {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: clamp(30px, 5vw, 64px);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.055em;
+}
+
+.section-number {
+    margin-right: 12px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0;
+    vertical-align: middle;
+    color: var(--muted);
+}
+
+.section-note {
+    flex: 0 0 auto;
+    font-family: var(--mono);
+    font-size: 9px;
+    line-height: 1.5;
+    text-align: right;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.design-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 30px;
+}
+
+.design-image {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: zoom-in;
+    overflow: hidden;
+}
+
+.design-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 350ms ease;
+}
+
+.design-image:hover img {
+    transform: scale(1.015);
+}
+
+#artboards .design-image {
+    background: rgba(21, 21, 21, 0.035);
+}
+
+#artboards .design-image img {
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+}
+
+#quotes .design-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 30px;
+}
+
+#quotes .design-image img {
+    aspect-ratio: 9 / 16;
+    object-fit: cover;
+}
+
+#campaign .design-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px;
+}
+
+#campaign .design-image img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+/* MOTION */
+
+#motion {
+    background: var(--paper);
+}
+
+.motion-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    align-items: start;
+}
+
+.motion-item {
+    min-width: 0;
+}
+
+.motion-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    background: var(--paper);
+}
+
+.motion-frame iframe {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: var(--paper);
+}
+
+.motion-click-toggle {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.motion-click-toggle:focus-visible {
+    outline: 1px solid var(--ink);
+    outline-offset: -4px;
+}
+
+.motion-caption {
+    padding-top: 10px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.motion-title {
+    font-family: var(--serif);
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.motion-index {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--muted);
+}
+
+.motion-note {
+    margin: 18px 0 0;
+    font-family: var(--mono);
+    font-size: 9px;
+    line-height: 1.7;
+    color: var(--muted);
+}
+
+
+/* MINIMAL CUSTOM VIMEO CONTROLS */
+.simple-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0 0;
+    background: var(--paper);
+}
+
+.simple-controls button {
+    flex: 0 0 auto;
+    padding: 0;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 9px;
+    line-height: 1;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+}
+
+.simple-controls button:hover {
+    opacity: 0.55;
+}
+
+.video-progress {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 2px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    background: rgba(21, 21, 21, 0.22);
+    cursor: pointer;
+}
+
+.video-progress::-webkit-slider-runnable-track {
+    height: 2px;
+    background: rgba(21, 21, 21, 0.22);
+}
+
+.video-progress::-webkit-slider-thumb {
+    width: 7px;
+    height: 7px;
+    margin-top: -2.5px;
+    border: 0;
+    border-radius: 50%;
+    appearance: none;
+    -webkit-appearance: none;
+    background: var(--ink);
+}
+
+.video-progress::-moz-range-track {
+    height: 2px;
+    border: 0;
+    background: rgba(21, 21, 21, 0.22);
+}
+
+.video-progress::-moz-range-thumb {
+    width: 7px;
+    height: 7px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--ink);
+}
+
+/* LIGHTBOX */
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    background: rgba(15, 15, 14, 0.94);
+    cursor: zoom-out;
+}
+
+.lightbox.is-open {
+    display: flex;
+}
+
+.lightbox img {
+    display: block;
+    max-width: 100%;
+    max-height: calc(100vh - 60px);
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: white;
+    font-family: var(--mono);
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 58px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: white;
+    font-family: var(--mono);
+    font-size: 38px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.lightbox-prev { left: 18px; }
+.lightbox-next { right: 18px; }
+
+.lightbox-counter {
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,.78);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .08em;
+}
+
+@media (max-width: 600px) {
+    .lightbox { padding: 18px 46px; }
+    .lightbox-nav { width: 34px; font-size: 30px; }
+    .lightbox-prev { left: 5px; }
+    .lightbox-next { right: 5px; }
+    .lightbox-counter { bottom: 10px; }
+}
+
+.site-footer {
+    padding: 18px var(--page-pad);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    font-family: var(--mono);
+    font-size: 9px;
+    line-height: 1.6;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+@media (max-width: 900px) {
+    :root {
+        --page-pad: 20px;
+    }
+
+    #quotes .design-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    :root {
+        --page-pad: 15px;
+    }
+
+    .page-intro {
+        padding-top: 37px;
+        padding-bottom: 35px;
+    }
+
+    .page-intro h1 {
+        font-size: clamp(52px, 15vw, 88px);
+    }
+
+    .intro-bottom {
+        margin-top: 25px;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .design-section {
+        padding-top: 23px;
+        padding-bottom: 30px;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 9px;
+        margin-bottom: 18px;
+    }
+
+    .section-heading h2 {
+        font-size: clamp(32px, 9vw, 48px);
+    }
+
+    .section-note {
+        text-align: left;
+    }
+
+    .design-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 6px;
+    }
+
+    #quotes .design-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 6px;
+    }
+
+    #campaign .design-grid {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+
+    .motion-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .motion-title {
+        font-size: 15px;
+    }
+
+    .lightbox {
+        padding: 15px;
+    }
+
+    .site-footer {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+
+@media (max-width: 360px) {
+    .motion-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .motion-item {
+        max-width: 100%;
+    }
+}
+
+.design-grid,
+.motion-grid {
+    width: 85%;
+    margin-left: 15%;
+    margin-top: 50px;
+    box-sizing: border-box;
+}
+
+/* Keep the editorial inset proportional, but comfortable on smaller screens. */
+@media (max-width: 900px) {
+    .design-grid,
+    .motion-grid {
+        width: calc(100% - clamp(28px, 8vw, 72px));
+        margin-left: clamp(28px, 8vw, 72px);
+        margin-top: 36px;
+    }
+}
+
+@media (max-width: 600px) {
+    .design-grid,
+    .motion-grid {
+        width: calc(100% - clamp(18px, 6vw, 32px));
+        margin-left: clamp(18px, 6vw, 32px);
+        margin-top: 26px;
+    }
+}
+</style>
 </head>
 
+<body>
 
-<body class="inner-page design-page">
+<header class="site-header">
+    <a class="header-title" href="index.html">DANCE DIVISION</a>
+    <div class="header-status"><span class="status-dot" aria-hidden="true"></span><span>IN DEVELOPMENT</span></div>
 
-  <div class="grain"></div>
+    <button class="nav-dropdown-toggle page-nav-toggle" type="button" aria-expanded="false" aria-controls="page-nav-links">
+        PAGES <span class="nav-dropdown-indicator" aria-hidden="true">+</span>
+    </button>
 
-
-  <header class="site-header">
-
-    <a
-      href="index.html"
-      class="header-title"
-    >
-      DANCE DIVISION
-    </a>
-
-
-    <nav
-      class="top-navigation"
-      aria-label="Main navigation"
-    >
-
-      <a href="index.html">
-        HOME
-      </a>
-
-      <a href="script.html">
-        SCRIPT
-      </a>
-
-      <a href="sound.html">
-        SOUND
-      </a>
-
-      <a href="image.html">
-        IMAGE
-      </a>
-
-      <a
-        href="design.html"
-        class="active"
-      >
-        DESIGN
-      </a>
-
+    <nav class="nav-links page-nav-links" id="pageNavigation" aria-label="Project pages">
+    <a href="index.html"><span>01</span> HOME</a>
+    <a href="shotbook.html" ><span>02</span> SHOT BOOK</a>
+    <a href="calendars.html"><span>03</span> CALENDARS</a>
+            <a href="costumes.html"><span>04</span> COSTUMES</a>
+<a href="locations.html"><span>05</span> LOCATIONS</a>
+<a href="design.html" class="active" aria-current="page"><span>05</span> DESIGN</a>
+<a href="journal.html"><span>06</span> JOURNAL</a>
+    <a href="videos.html"><span>06</span> EPISODES</a>
     </nav>
+</header>
 
+<div class="section-subheader">
+    <span class="section-subheader-label">SECTIONS</span>
+    <button class="nav-dropdown-toggle section-nav-toggle" type="button" aria-expanded="false" aria-controls="section-nav-links">
+        SECTIONS <span class="nav-dropdown-indicator" aria-hidden="true">+</span>
+    </button>
+    <nav class="section-nav-links" id="section-nav-links" aria-label="Design sections">
+        <a href="#look"><span>01</span> THE LOOK</a>
+        <a href="#quotes"><span>02</span> QUOTES</a>
+        <a href="#campaign"><span>03</span> CAMPAIGN IMAGERY</a>
+        <a href="#motion"><span>04</span> MOTION</a>
+    </nav>
+</div>
 
-    <div class="header-status">
-      IN DEVELOPMENT
-    </div>
+<main>
+    <section class="page-intro">
+        <p class="eyebrow">DANCE DIVISION / VISUAL DEVELOPMENT / 2026</p>
+        <h1>Visual <em>language.</em></h1>
 
-  </header>
-
-
-
-  <main class="inner-main">
-
-    <div class="page-number">
-      04
-    </div>
-
-
-    <div class="page-label">
-      DESIGN / VISUAL LANGUAGE
-    </div>
-
-
-
-    <section class="design-page-intro">
-
-      <div class="small-label">
-        THE VISUAL WORLD
-      </div>
-
-
-      <h1>
-        Form follows<br>
-        <em>movement.</em>
-      </h1>
-
-
-      <p>
-        The visual language develops alongside the
-        script, sound and physical vocabulary of the work.
-      </p>
-
+        <div class="intro-bottom">
+            <p class="intro-description">
+                Design language for Dance Division.
+            </p>
+            <span class="intro-index">DESIGN ARCHIVE / 01—04</span>
+        </div>
     </section>
 
-
-
-    <!-- ======================================================
-         DESIGN NOTES
-         ====================================================== -->
-
-    <section class="design-notes">
-
-
-      <article class="design-note">
-
-        <div class="design-note-number">
-          01
+    <section class="design-section" id="look">
+        <div class="section-heading">
+            <h2><span class="section-number">01 —</span>THE LOOK</h2>
+            <span class="section-note">ARTBOARDS / 01–15</span>
         </div>
 
-        <div class="design-note-content">
-
-          <div class="design-note-label">
-            VISUAL LANGUAGE
-          </div>
-
-          <h2>
-            Quiet images.<br>
-            <em>Physical spaces.</em>
-          </h2>
-
-          <p>
-            The frame should feel observed rather than
-            constructed. Architecture and bodies occupy
-            the same visual language.
-          </p>
-
+        <div class="design-grid">
+            <button class="design-image" type="button" aria-label="Enlarge artboard 01">
+                <img src="images/artboard1.jpg" alt="DANCE DIVISION artboard 01" loading="lazy">
+            </button>
+            <button class="design-image" type="button" aria-label="Enlarge artboard 02">
+                <img src="images/artboard2.jpg" alt="DANCE DIVISION artboard 02" loading="lazy">
+            </button>
+            <button class="design-image" type="button" aria-label="Enlarge artboard 03">
+                <img src="images/artboard3.jpg" alt="DANCE DIVISION artboard 03" loading="lazy">
+            </button>
+            <button class="design-image" type="button" aria-label="Enlarge artboard 04">
+                <img src="images/artboard4.jpg" alt="DANCE DIVISION artboard 04" loading="lazy">
+            </button>
+            <button class="design-image" type="button" aria-label="Enlarge artboard 05">
+                <img src="images/artboard5.jpg" alt="DANCE DIVISION artboard 05" loading="lazy">
+            </button>
+            <button class="design-image" type="button" aria-label="Enlarge artboard 06">
+                <img src="images/artboard6.jpg" alt="DANCE DIVISION artboard 06" loading="lazy">
+            </button>
+            <button class="design-image" type="button" aria-label="Enlarge artboard 07">
+                <img src="images/artboard7.jpg" alt="DANCE DIVISION artboard 07" loading="lazy">
+            </button>
+            <button class="design-image" type="button" aria-label="Enlarge artboard 08">
+                <img src="images/artboard8.jpg" alt="DANCE DIVISION artboard 08" loading="lazy">
+            </button>
+            <button class="design-image" type="button" aria-label="Enlarge artboard 09">
+                <img src="images/artboard9.jpg" alt="DANCE DIVISION artboard 09" loading="lazy">
+            </button>
+            <button class="design-image" type="button" aria-label="Enlarge artboard 10">
+                <img src="images/artboard10.jpg" alt="DANCE DIVISION artboard 10" loading="lazy">
+            </button>
+            <button class="design-image" type="button" aria-label="Enlarge artboard 11">
+                <img src="images/artboard11.jpg" alt="DANCE DIVISION artboard 11" loading="lazy">
+            </button>
+            <button class="design-image" type="button" aria-label="Enlarge artboard 12">
+                <img src="images/artboard12.jpg" alt="DANCE DIVISION artboard 12" loading="lazy">
+            </button>
+            <button class="design-image" type="button" aria-label="Enlarge artboard 13">
+                <img src="images/artboard13.jpg" alt="DANCE DIVISION artboard 13" loading="lazy">
+            </button>
+            <button class="design-image" type="button" aria-label="Enlarge artboard 14">
+                <img src="images/artboard14.jpg" alt="DANCE DIVISION artboard 14" loading="lazy">
+            </button>
+            <button class="design-image" type="button" aria-label="Enlarge artboard 15">
+                <img src="images/artboard15.jpg" alt="DANCE DIVISION artboard 15" loading="lazy">
+            </button>
         </div>
-
-      </article>
-
-
-
-      <article class="design-note">
-
-        <div class="design-note-number">
-          02
-        </div>
-
-        <div class="design-note-content">
-
-          <div class="design-note-label">
-            CAMERA
-          </div>
-
-          <h2>
-            The camera<br>
-            <em>waits.</em>
-          </h2>
-
-          <p>
-            Movement is not constantly pursued.
-            Static frames create the tension that allows
-            physical movement to become significant.
-          </p>
-
-        </div>
-
-      </article>
-
-
-
-      <article class="design-note">
-
-        <div class="design-note-number">
-          03
-        </div>
-
-        <div class="design-note-content">
-
-          <div class="design-note-label">
-            TYPOGRAPHY
-          </div>
-
-          <h2>
-            Text behaves<br>
-            <em>like image.</em>
-          </h2>
-
-          <p>
-            Large serif typography, restrained mono
-            annotations and generous negative space.
-          </p>
-
-        </div>
-
-      </article>
-
-
-
-      <article class="design-note">
-
-        <div class="design-note-number">
-          04
-        </div>
-
-        <div class="design-note-content">
-
-          <div class="design-note-label">
-            PRODUCTION DESIGN
-          </div>
-
-          <h2>
-            Architecture<br>
-            <em>as choreography.</em>
-          </h2>
-
-          <p>
-            Rooms, thresholds, corridors and exterior
-            spaces become active parts of the movement.
-          </p>
-
-        </div>
-
-      </article>
-
-
-
-      <article class="design-note">
-
-        <div class="design-note-number">
-          05
-        </div>
-
-        <div class="design-note-content">
-
-          <div class="design-note-label">
-            COSTUME / MOVEMENT
-          </div>
-
-          <h2>
-            The body<br>
-            <em>changes the frame.</em>
-          </h2>
-
-          <p>
-            Costume should reveal the movement without
-            explaining it. Texture, silhouette and
-            physical restriction are part of the choreography.
-          </p>
-
-        </div>
-
-      </article>
-
-
     </section>
 
+    <section class="design-section" id="quotes">
+        <div class="section-heading">
+            <h2><span class="section-number">02 —</span>QUOTES</h2>
+            <span class="section-note">PRESS / PRAISE / RESPONSE</span>
+        </div>
 
-
-    <section class="design-statement">
-
-      <div class="design-statement-label">
-        WORKING PRINCIPLE
-      </div>
-
-
-      <h2>
-        NEVER DECORATIVE.<br>
-        <em>ALWAYS PHYSICAL.</em>
-      </h2>
-
+        <div class="design-grid">
+            <button class="design-image" type="button" aria-label="Enlarge quote graphic 01">
+                <img src="images/quote1.jpg" alt="DANCE DIVISION quote graphic 01" loading="lazy">
+            </button>
+            <button class="design-image" type="button" aria-label="Enlarge quote graphic 02">
+                <img src="images/quote2.jpg" alt="DANCE DIVISION quote graphic 02" loading="lazy">
+            </button>
+            <button class="design-image" type="button" aria-label="Enlarge quote graphic 04">
+                <img src="images/quote4.jpg" alt="DANCE DIVISION quote graphic 04" loading="lazy">
+            </button>
+            <button class="design-image" type="button" aria-label="Enlarge quote graphic 05">
+                <img src="images/quote5.jpg" alt="DANCE DIVISION quote graphic 05" loading="lazy">
+            </button>
+            <button class="design-image" type="button" aria-label="Enlarge quote graphic 06">
+                <img src="images/quote6.jpg" alt="DANCE DIVISION quote graphic 06" loading="lazy">
+            </button>
+        </div>
     </section>
 
-  </main>
+    <section class="design-section" id="campaign">
+        <div class="section-heading">
+            <h2><span class="section-number">03 —</span>CAMPAIGN IMAGERY</h2>
+            <span class="section-note">SOCIAL / HORIZONTAL / 16:9</span>
+        </div>
+
+        <div class="design-grid">
+            <button class="design-image" type="button" aria-label="Enlarge campaign image">
+                <img src="images/dancedivisionsocial_h.jpg" alt="DANCE DIVISION campaign image" loading="lazy">
+            </button>
+            <button class="design-image" type="button" aria-label="Enlarge campaign image 02">
+                <img src="images/dancedivisionsocial_h1.jpg" alt="DANCE DIVISION campaign image 02" loading="lazy">
+            </button>
+            <button class="design-image" type="button" aria-label="Enlarge campaign image 03">
+                <img src="images/dancedivisionsocial_h3.jpg" alt="DANCE DIVISION campaign image 03" loading="lazy">
+            </button>
+            <button class="design-image" type="button" aria-label="Enlarge campaign image 04">
+                <img src="images/dancedivisionsocial_h4.jpg" alt="DANCE DIVISION campaign image 04" loading="lazy">
+            </button>
+        </div>
+    </section>
+
+    <section class="design-section" id="motion">
+        <div class="section-heading">
+            <h2><span class="section-number">04 —</span>MOTION</h2>
+            <span class="section-note">MOVING IMAGE / 9:16</span>
+        </div>
+
+        <div class="motion-grid">
+            <div class="motion-item">
+                <div class="motion-frame">
+                    <iframe
+                        src="https://player.vimeo.com/video/1240220891?h=30592d2057&controls=0&title=0&byline=0&portrait=0&transparent=0"
+                        title="DANCE DIVISION motion video 01"
+                        loading="lazy"
+                        allow="autoplay; fullscreen; picture-in-picture"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                    <button class="motion-click-toggle" type="button" aria-label="Play video" title="Play or pause video"></button>
+                </div>
+                <div class="simple-controls">
+                    <button class="play-toggle" type="button" aria-label="Play video">PLAY</button>
+                    <input class="video-progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Video progress">
+                    <button class="volume-toggle" type="button" aria-label="Mute video">SOUND</button>
+                </div>
+                <div class="motion-caption">
+                    <span class="motion-title">Motion Study 01</span>
+                    <span class="motion-index">01 / 03</span>
+                </div>
+            </div>
+
+            <div class="motion-item">
+                <div class="motion-frame">
+                    <iframe
+                        src="https://player.vimeo.com/video/1240220891?h=30592d2057&controls=0&title=0&byline=0&portrait=0&transparent=0"
+                        title="DANCE DIVISION motion video 02"
+                        loading="lazy"
+                        allow="autoplay; fullscreen; picture-in-picture"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                    <button class="motion-click-toggle" type="button" aria-label="Play video" title="Play or pause video"></button>
+                </div>
+                <div class="simple-controls">
+                    <button class="play-toggle" type="button" aria-label="Play video">PLAY</button>
+                    <input class="video-progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Video progress">
+                    <button class="volume-toggle" type="button" aria-label="Mute video">SOUND</button>
+                </div>
+                <div class="motion-caption">
+                    <span class="motion-title">Motion Study 02</span>
+                    <span class="motion-index">02 / 03</span>
+                </div>
+            </div>
+
+            <div class="motion-item">
+                <div class="motion-frame">
+                    <iframe
+                        src="https://player.vimeo.com/video/1240220891?h=30592d2057&controls=0&title=0&byline=0&portrait=0&transparent=0"
+                        title="DANCE DIVISION motion video 03"
+                        loading="lazy"
+                        allow="autoplay; fullscreen; picture-in-picture"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                    <button class="motion-click-toggle" type="button" aria-label="Play video" title="Play or pause video"></button>
+                </div>
+                <div class="simple-controls">
+                    <button class="play-toggle" type="button" aria-label="Play video">PLAY</button>
+                    <input class="video-progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Video progress">
+                    <button class="volume-toggle" type="button" aria-label="Mute video">SOUND</button>
+                </div>
+                <div class="motion-caption">
+                    <span class="motion-title">Motion Study 03</span>
+                    <span class="motion-index">03 / 03</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <span>DANCE DIVISION</span>
+    <span>PROJECT DEVELOPMENT / 2026</span>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <button class="lightbox-close" type="button" aria-label="Close image viewer">×</button>
+    <button class="lightbox-nav lightbox-prev" type="button" aria-label="Previous image">‹</button>
+    <img src="" alt="" id="lightbox-image">
+    <button class="lightbox-nav lightbox-next" type="button" aria-label="Next image">›</button>
+    <div class="lightbox-counter" id="lightbox-counter" aria-live="polite"></div>
+</div>
+
+<script>
+(() => {
+    const menus = [
+        { button: document.querySelector(".page-nav-toggle"), menu: document.getElementById("page-nav-links") },
+        { button: document.querySelector(".section-nav-toggle"), menu: document.getElementById("section-nav-links") }
+    ].filter((item) => item.button && item.menu);
+
+    function closeMenus(except = null) {
+        menus.forEach(({ button, menu }) => {
+            if (menu === except) return;
+            menu.classList.remove("is-dropdown-open");
+            button.setAttribute("aria-expanded", "false");
+        });
+    }
+
+    menus.forEach(({ button, menu }) => {
+        button.addEventListener("click", () => {
+            const opening = !menu.classList.contains("is-dropdown-open");
+            closeMenus(menu);
+            menu.classList.toggle("is-dropdown-open", opening);
+            button.setAttribute("aria-expanded", String(opening));
+        });
+        menu.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => closeMenus()));
+    });
+
+    document.addEventListener("click", (event) => {
+        if (!menus.some(({ button, menu }) => button.contains(event.target) || menu.contains(event.target))) closeMenus();
+    });
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeMenus();
+    });
+})();
+</script>
+
+<script>
+(() => {
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImage = document.getElementById("lightbox-image");
+    const closeButton = lightbox.querySelector(".lightbox-close");
+    const previousButton = lightbox.querySelector(".lightbox-prev");
+    const nextButton = lightbox.querySelector(".lightbox-next");
+    const counter = document.getElementById("lightbox-counter");
+    const imageButtons = Array.from(document.querySelectorAll(".design-image")).filter((button) => button.querySelector("img"));
+    let currentIndex = 0;
+    let previousFocus = null;
+
+    function showImage(index) {
+        currentIndex = (index + imageButtons.length) % imageButtons.length;
+        const image = imageButtons[currentIndex].querySelector("img");
+        lightboxImage.src = image.currentSrc || image.src;
+        lightboxImage.alt = image.alt;
+        counter.textContent = String(currentIndex + 1).padStart(2, "0") + " / " + String(imageButtons.length).padStart(2, "0");
+    }
+
+    imageButtons.forEach((button, index) => {
+        button.addEventListener("click", () => {
+            previousFocus = button;
+            showImage(index);
+            lightbox.classList.add("is-open");
+            document.body.style.overflow = "hidden";
+            closeButton.focus();
+        });
+    });
+
+    function closeLightbox() {
+        lightbox.classList.remove("is-open");
+        lightboxImage.src = "";
+        document.body.style.overflow = "";
+        if (previousFocus) previousFocus.focus();
+    }
+
+    closeButton.addEventListener("click", closeLightbox);
+    previousButton.addEventListener("click", (event) => { event.stopPropagation(); showImage(currentIndex - 1); });
+    nextButton.addEventListener("click", (event) => { event.stopPropagation(); showImage(currentIndex + 1); });
+
+    lightbox.addEventListener("click", (event) => {
+        if (event.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (!lightbox.classList.contains("is-open")) return;
+        if (event.key === "Escape") closeLightbox();
+        if (event.key === "ArrowLeft") showImage(currentIndex - 1);
+        if (event.key === "ArrowRight") showImage(currentIndex + 1);
+    });
+})();
+</script>
 
 
-  <script src="design.js"></script>
+<script src="https://player.vimeo.com/api/player.js"></script>
+<script>
+(() => {
+    document.querySelectorAll(".motion-item").forEach((item) => {
+        const iframe = item.querySelector(".motion-frame iframe");
+        const playButton = item.querySelector(".play-toggle");
+        const progress = item.querySelector(".video-progress");
+        const volumeButton = item.querySelector(".volume-toggle");
+        const clickToggle = item.querySelector(".motion-click-toggle");
+
+        if (!iframe || !playButton || !progress || !volumeButton || !clickToggle || !window.Vimeo) return;
+
+        const player = new Vimeo.Player(iframe);
+        let seeking = false;
+
+        async function togglePlayback() {
+            try {
+                if (await player.getPaused()) {
+                    await player.play();
+                } else {
+                    await player.pause();
+                }
+            } catch (error) {
+                console.error("Unable to control Vimeo playback:", error);
+            }
+        }
+
+        clickToggle.addEventListener("click", togglePlayback);
+
+        playButton.addEventListener("click", async () => {
+            try {
+                if (await player.getPaused()) {
+                    await player.play();
+                } else {
+                    await player.pause();
+                }
+            } catch (error) {
+                console.error("Unable to control Vimeo playback:", error);
+            }
+        });
+
+        player.on("play", () => {
+            playButton.textContent = "PAUSE";
+            playButton.setAttribute("aria-label", "Pause video");
+            clickToggle.setAttribute("aria-label", "Pause video");
+            clickToggle.setAttribute("title", "Pause video");
+        });
+
+        player.on("pause", () => {
+            playButton.textContent = "PLAY";
+            playButton.setAttribute("aria-label", "Play video");
+            clickToggle.setAttribute("aria-label", "Play video");
+            clickToggle.setAttribute("title", "Play video");
+        });
+
+        player.on("ended", () => {
+            playButton.textContent = "REPLAY";
+            playButton.setAttribute("aria-label", "Replay video");
+            clickToggle.setAttribute("aria-label", "Replay video");
+            clickToggle.setAttribute("title", "Replay video");
+        });
+
+        player.on("timeupdate", (data) => {
+            if (!seeking && data.duration) {
+                progress.value = data.percent * 100;
+            }
+        });
+
+        progress.addEventListener("pointerdown", () => {
+            seeking = true;
+        });
+
+        progress.addEventListener("input", async () => {
+            try {
+                const duration = await player.getDuration();
+                if (duration) {
+                    await player.setCurrentTime(duration * Number(progress.value) / 100);
+                }
+            } catch (error) {
+                console.error("Unable to seek Vimeo video:", error);
+            }
+        });
+
+        const stopSeeking = () => {
+            seeking = false;
+        };
+
+        progress.addEventListener("pointerup", stopSeeking);
+        progress.addEventListener("change", stopSeeking);
+        progress.addEventListener("blur", stopSeeking);
+
+        volumeButton.addEventListener("click", async () => {
+            try {
+                const muted = await player.getMuted();
+                await player.setMuted(!muted);
+                volumeButton.textContent = muted ? "SOUND" : "MUTED";
+                volumeButton.setAttribute("aria-label", muted ? "Mute video" : "Unmute video");
+            } catch (error) {
+                console.error("Unable to change Vimeo audio:", error);
+            }
+        });
+    });
+})();
+</script>
 
 </body>
-
 </html>
