@@ -1,602 +1,1593 @@
 /* ============================================================
-DANCE DIVISION
-SCRIPT.JS
-============================================================ */
+   A DOLL'S HOUSE PICTURES
+   SCRIPT.JS
+   ============================================================ */
 
-(() => {
 
+/* ============================================================
+   PROJECT DATA
+   ============================================================ */
 
-"use strict";
+const projects = [
 
-
-/* ========================================================
-   LOADER
-   ======================================================== */
-
-const loader = document.getElementById("loader");
-const loaderPercent = document.getElementById("loaderPercent");
-const loaderProgress = document.getElementById("loaderProgress");
-
-let loaderValue = 0;
-
-function updateLoader(value) {
-
-    loaderValue = Math.min(100, value);
-
-    if (loaderPercent) {
-        loaderPercent.textContent =
-            String(Math.round(loaderValue)).padStart(2, "0");
-    }
-
-    if (loaderProgress) {
-        loaderProgress.style.width = `${loaderValue}%`;
-    }
-}
-
-function finishLoader() {
-
-    updateLoader(100);
-
-    setTimeout(() => {
-
-        if (loader) {
-            loader.classList.add("is-hidden");
-        }
-
-    }, 350);
-}
-
-let loaderInterval = setInterval(() => {
-
-    if (loaderValue < 90) {
-        updateLoader(loaderValue + Math.random() * 8);
-    }
-
-}, 120);
-
-window.addEventListener("load", () => {
-
-    clearInterval(loaderInterval);
-
-    updateLoader(100);
-
-    finishLoader();
-
-});
-
-
-/* ========================================================
-   NAVIGATION
-   ======================================================== */
-
-const navLinks = document.querySelectorAll(".nav-links a");
-const headerTitle = document.querySelector(".header-title");
-
-function scrollToSection(id) {
-
-    const section = document.getElementById(id);
-
-    if (!section) return;
-
-    section.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
-}
-
-
-navLinks.forEach(link => {
-
-    link.addEventListener("click", event => {
-
-        const target = link.dataset.target;
-
-        // Only intercept in-page section links. Page links such as
-        // calendars.html must navigate normally.
-        if (!target) {
-            closeSectionNavigation();
-            return;
-        }
-
-        event.preventDefault();
-        scrollToSection(target);
-        closeSectionNavigation();
-
-    });
-
-});
-
-
-/* --------------------------------------------------------
-   RESPONSIVE SECTION NAVIGATION
-   -------------------------------------------------------- */
-
-const navDropdownToggle =
-    document.getElementById("navDropdownToggle");
-
-const siteNavigation =
-    document.getElementById("siteNavigation");
-
-function setSectionNavigationOpen(isOpen) {
-
-    if (!navDropdownToggle || !siteNavigation) return;
-
-    navDropdownToggle.setAttribute(
-        "aria-expanded",
-        String(isOpen)
-    );
-
-    // Support the existing stylesheet's common open-state selectors.
-    siteNavigation.classList.toggle("open", isOpen);
-    siteNavigation.classList.toggle("is-open", isOpen);
-    navDropdownToggle.classList.toggle("open", isOpen);
-    navDropdownToggle.classList.toggle("is-open", isOpen);
-
-    const indicator =
-        navDropdownToggle.querySelector(".nav-dropdown-indicator");
-
-    if (indicator) {
-        indicator.textContent = isOpen ? "−" : "+";
-    }
-
-}
-
-function closeSectionNavigation() {
-    setSectionNavigationOpen(false);
-}
-
-if (navDropdownToggle && siteNavigation) {
-
-    navDropdownToggle.addEventListener("click", () => {
-        const isOpen =
-            navDropdownToggle.getAttribute("aria-expanded") === "true";
-
-        setSectionNavigationOpen(!isOpen);
-    });
-
-    document.addEventListener("keydown", event => {
-        if (event.key === "Escape") {
-            closeSectionNavigation();
-        }
-    });
-
-    document.addEventListener("click", event => {
-        if (
-            navDropdownToggle.getAttribute("aria-expanded") === "true" &&
-            !siteNavigation.contains(event.target) &&
-            !navDropdownToggle.contains(event.target)
-        ) {
-            closeSectionNavigation();
-        }
-    });
-
-    window.addEventListener("resize", () => {
-        // Reset the dropdown when returning to the full desktop navigation.
-        if (window.innerWidth > 900) {
-            closeSectionNavigation();
-        }
-    });
-
-}
-
-
-if (headerTitle) {
-
-    headerTitle.addEventListener("click", () => {
-        scrollToSection("opening");
-    });
-
-}
-
-
-/* ========================================================
-   CHAPTER INDICATOR
-   ======================================================== */
-
-const chapters = document.querySelectorAll(".chapter");
-const chapterCurrent = document.getElementById("chapterCurrent");
-const chapterProgress = document.getElementById("chapterProgress");
-
-const chapterObserver = new IntersectionObserver(
-    entries => {
-
-        entries.forEach(entry => {
-
-            if (!entry.isIntersecting) return;
-
-            const number =
-                entry.target.dataset.chapter || "00";
-
-            if (chapterCurrent) {
-                chapterCurrent.textContent = number;
-            }
-
-            navLinks.forEach(link => {
-
-                link.classList.toggle(
-                    "active",
-                    link.dataset.target === entry.target.id
-                );
-
-            });
-
-            const index =
-                Array.from(chapters).indexOf(entry.target);
-
-            const progress =
-                chapters.length > 1
-                    ? (index / (chapters.length - 1)) * 100
-                    : 0;
-
-            if (chapterProgress) {
-                chapterProgress.style.width =
-                    `${progress}%`;
-            }
-
-        });
-
-    },
     {
-        threshold: 0.35
+        title: "Stissing House",
+        category: "Social Campaign",
+        type: "vimeo",
+          vimeo: "1226955261",
+    hash: "c019cba0b1",
+        format: "wide",
+        description: "A series of short-form films created for Stissing House in Pine Plains, New York.",
+        credits: [
+            {
+                role: "Creative Direction",
+                names: [
+                    "Jeremy Jacob",
+                    "A Doll's House Pictures"
+                ]
+            }
+        ]
+    },
+
+    {
+        title: "Nike",
+        category: "Social Campaign",
+        type: "vimeo",
+        vimeo: "1226664744",
+        format: "wide",
+        description: "",
+        credits: []
+    },
+
+    {
+        title: "Storm King - Girl Group",
+        category: "Dance Film Highlights",
+        type: "vimeo",
+        vimeo: "1007644295",
+        format: "wide",
+        description: "Girl Group",
+        credits: [
+            {
+                role: "Creative Direction",
+                names: [
+                    "Jeremy Jacob",
+                    "A Doll's House Pictures"
+                ]
+            }
+        ]
+    },
+
+    {
+        title: "Trisha Brown Dance Company",
+        category: "Photography",
+        type: "carousel",
+        images: [
+            "images/TBDC_1.jpg",
+            "images/TBDC_2.jpg",
+            "images/TBDC_3.jpg",
+            "images/TBDC_4.jpg",
+            "images/TBDC_5.jpg",
+            "images/TBDC_6.jpg",
+            "images/TBDC_7.jpg"
+        ],
+        description: "",
+        credits: [
+            {
+                role: "Photography",
+                names: [
+                    "Jeremy Jacob"
+                ]
+            },
+            {
+                role: "For",
+                names: [
+                    "Trisha Brown Dance Company"
+                ]
+            }
+        ]
+    },
+
+
+
+    {
+        title: "Talbott & Arding",
+        category: "Social Film",
+        type: "vimeo",
+        vimeo: "1226060926",
+        format: "wide",
+        description: "A series of short-form films created for Talbott & Arding in Hudson, New York.",
+        credits: [
+            {
+                role: "Creative Direction",
+                names: [
+                    "Jeremy Jacob",
+                    "A Doll's House Pictures"
+                ]
+            }
+        ]
+    },
+    
+          {
+        title: "MOPS",
+        category: "Branding & Web Design",
+        type: "carousel",
+        images: [
+            "images/MOPS1.jpg",
+            "images/MOPS2.jpg",
+            "images/MOPS3.jpg",
+            "images/MOPS4.jpg",
+            "images/MOPS5.jpg"
+        ],
+        description: "",
+        credits: [
+            {
+                role: "Photography",
+                names: [
+                    "Jeremy Jacob"
+                ]
+            },
+   
+        ]
+    },
+
+    {
+        title: "Cole Haan",
+        category: "Social Campaign",
+        type: "vimeo",
+        vimeo: "1227036895",
+        format: "vertical",
+        description: "Cole Haan - Urban Jungle",
+        credits: []
+    },
+
+    {
+        title: "Stissing House",
+        category: "Social Campaign",
+        type: "vimeo",
+        vimeo: "1135735488",
+        hash: "f8b1225c5d",
+        format: "vertical",
+        description: "A series of short-form stories created for Stissing House in Pine Plains, New York.",
+        credits: [
+            {
+                Featuring: "Sticky Toffee",
+                names: [
+                    "Sticky Toffee"
+                ]
+            }
+        ]
+    },
+
+    {
+        title: "Munner Farm",
+        category: "Photography",
+        type: "carousel",
+        images: [
+            "images/MF_1.jpg",
+            "images/MF_2.jpg",
+            "images/MF_3.jpg",
+            "images/MF_4.jpg",
+            "images/MF_5.jpg",
+            "images/MF_6.jpg",
+            "images/MF_7.jpg"
+        ],
+        description: "",
+        credits: [
+            {
+                role: "Photography",
+                names: [
+                    "Jeremy Jacob"
+                ]
+            },
+
+        ]
+    },
+
+    {
+        title: "Storm King - Growth",
+        category: "Performance Film Highlights",
+        type: "vimeo",
+        vimeo: "1122967020",
+        format: "wide",
+        description: "Growth: The Watch",
+        credits: [
+            {
+                role: "Creative Direction",
+                names: [
+                    "Jeremy Jacob",
+                    "A Doll's House Pictures"
+                ]
+            }
+        ]
+    },
+
+    {
+        title: "Romber Works",
+        category: "Profile Film",
+        type: "vimeo",
+        vimeo: "1119062430",
+        format: "wide",
+        description: "Profile on Cabinet Maker Ross Brown of Romber Works in Hudson, New York.",
+        credits: [           {
+                role: "Creative Direction & Creator",
+                names: [
+                    "Jeremy Jacob",
+                    "A Doll's House Pictures"
+                ]
+            }       ]
+    },
+
+        {
+        title: "Bard College",
+        category: "It's Different",
+        type: "vimeo",
+        vimeo: "1229121057",
+            hash: "3f29c53761",
+        format: "wide",
+        description: "",
+        credits: [
+            {
+                role: "Creative Director & Producer",
+                names: [
+                    "Jeremy Jacob"
+                ]
+            },
+            {
+                role: "Written by",
+                names: [
+                    "Savannah Lucas Sanchez"
+                ]
+            },  {
+                role: "Photography, Editing, and Music by",
+                names: [
+                    "Jeremy Jacob"
+                ]
+            },
+            {
+                role: "Sound Recordist",
+                names: [
+                    "Joao De La Cruz"
+                ]
+            }
+                      
+        ]
+    },
+
+    {
+        title: "Lucinda Childs",
+        category: "Campaign",
+        type: "vimeo",
+        vimeo: "1180594270",
+        format: "wide",
+        description: "Fisher Center at Bard",
+        credits: []
+    },
+
+    {
+        title: "Suddenly Last Summer",
+        category: "Promotional Campaign",
+        type: "vimeo",
+        vimeo: "1189497026",
+        format: "wide",
+        description: "Fisher Center at Bard",
+        credits: []
+    },
+
+    /* ========================================================
+       FISHER CENTER EDITORIAL PAGE
+       ======================================================== 
+
+    {
+        title: "Fisher Center",
+        category: "Client Profile",
+        type: "page",
+        page: "fishercenter.html",
+        description: "",
+        credits: []
+    },*/
+
+    {
+        title: "David",
+        category: "Dance Film",
+        type: "vimeo",
+        vimeo: "638919399",
+        format: "wide",
+        description: "American Ballet Theatre",
+        credits: [
+            {
+                role: "Direction",
+                names: [
+                    "Jeremy Jacob"
+                ]
+            },
+            {
+                role: "Choreography",
+                names: [
+                    "Pam Tanowitz"
+                ]
+            },
+            {
+                role: "Photography",
+                names: [
+                    "Daniel Rampulla"
+                ]
+            },
+            {
+                role: "Starring",
+                names: [
+                    "David Hallberg"
+                ]
+            }
+        ]
+    },
+
+    {
+        title: "I was waiting for the echo of a better day",
+        category: "Dance Film Trailer",
+        type: "vimeo",
+        vimeo: "657102461",
+        format: "wide",
+        description: "Fisher Center at Bard",
+        credits: [
+            {
+                role: "Direction",
+                names: [
+                    "Jeremy Jacob"
+                ]
+            },
+            {
+                role: "Choreography",
+                names: [
+                    "Pam Tanowitz"
+                ]
+            },
+            {
+                role: "Photography",
+                names: [
+                    "Daniel Rampulla"
+                ]
+            }
+        ]
+    },
+
+    {
+        title: "J.Crew / Madewell",
+        category: "Prop Styling",
+        type: "carousel",
+        images: [
+            "images/MDWL_1.jpg",
+            "images/MDWL_2.jpg",
+            "images/MDWL_3.jpg",
+            "images/MDWL_4.jpg",
+            "images/MDWL_5.jpg",
+            "images/MDWL_6.jpg",
+            "images/MDWL_7.jpg",
+            "images/MDWL_8.jpg",
+            "images/MDWL_9.jpg",
+            "images/MDWL_10.jpg",
+            "images/MDWL_11.jpg",
+            "images/MDWL_12.jpg",
+            "images/MDWL_13.jpg",
+            "images/MDWL_14.jpg",
+            "images/MDWL_15.jpg",
+            "images/MDWL_16.jpg",
+            "images/MDWL_17.jpg",
+            "images/MDWL_18.jpg",
+            "images/MDWL_19.jpg",
+            "images/MDWL_20.jpg",
+            "images/MDWL_21.jpg",
+            "images/MDWL_22.jpg",
+            "images/MDWL_23.jpg",
+            "images/MDWL_24.jpg",
+            "images/MDWL_25.jpg",
+            "images/MDWL_26.jpg",
+            "images/MDWL_27.jpg",
+            "images/MDWL_28.jpg",
+            "images/MDWL_29.jpg",
+            "images/MDWL_30.jpg",
+            "images/MDWL_31.jpg",
+            "images/MDWL_32.jpg",
+            "images/MDWL_33.jpg",
+            "images/MDWL_34.jpg"
+        ],
+        description: "",
+        credits: [
+            {
+                role: "Prop Styling & Set Design",
+                names: [
+                    "Jeremy Jacob"
+                ]
+            }
+        ]
+    },
+
+    {
+        title: "Dear Merce",
+        category: "Dance Film",
+        type: "vimeo",
+        vimeo: "1226947730",
+        format: "wide",
+        description: "",
+        credits: [
+            {
+                role: "Direction",
+                names: [
+                    "Jeremy Jacob"
+                ]
+            },
+            {
+                role: "Choreography",
+                names: [
+                    "Netta Yerushalmy"
+                ]
+            },
+            {
+                role: "Photography",
+                names: [
+                    "Daniel Rampulla"
+                ]
+            }
+        ]
+    },
+
+    {
+        title: "Good Night",
+        category: "Film",
+        type: "vimeo",
+        vimeo: "1226948282",
+        format: "wide",
+        description: "Works & Process at the Guggenheim",
+        credits: [
+            {
+                role: "Film by",
+                names: [
+                    "Jeremy Jacob"
+                ]
+            },
+            {
+                role: "Text & Choreography",
+                names: [
+                    "Jack Ferver"
+                ]
+            }
+        ]
+    },
+
+    {
+        title: "Gary Graham",
+        category: "Socail Campaign - Dressing",
+        type: "vimeo",
+        vimeo: "816869534",
+        format: "vertical",
+        description: "",
+        credits: []
+    },
+
+    {
+        title: "Stissing House",
+        category: "Social Campaign",
+        type: "vimeo",
+        vimeo: "1110256553",
+        format: "vertical",
+        description: "A series of short-form stories created for Stissing House in Pine Plains, New York.",
+        credits: [
+            {
+                Featuring: "Fish Pie",
+                names: [
+                    "Fish Pie"
+                ]
+            }
+        ]
+    },
+
+    {
+        title: "Radioactive Practice",
+        category: "Film Trailer",
+        type: "vimeo",
+        vimeo: "1226957906",
+        format: "wide",
+        description: "Dance Film",
+        credits: [
+            {
+                role: "Direction",
+                names: [
+                    "Jeremy Jacob"
+                ]
+            },
+            {
+                role: "Choreography",
+                names: [
+                    "Abby Zbikowski"
+                ]
+            },
+            {
+                role: "Photography",
+                names: [
+                    "Jeremy Jacob and Daniel Rampulla"
+                ]
+            }
+        ]
+    },
+
+    {
+        title: "Cole Haan",
+        category: "Social Campaign",
+        type: "vimeo",
+        vimeo: "1227036896",
+        format: "vertical",
+        description: "Cole Haan - His & Hers",
+        credits: []
+    },
+
+    {
+        title: "Stissing House",
+        category: "Social Campaign",
+        type: "vimeo",
+        vimeo: "1135779851",
+        hash: "ce3e333307",
+        format: "vertical",
+        description: "A series of short-form stories created for Stissing House in Pine Plains, New York.",
+        credits: [
+            {
+                Featuring: "Duck",
+                names: [
+                    "Duck"
+                ]
+            }
+        ]
+    },
+
+    {
+        title: "Rodelinda",
+        category: "Promotional Campaign",
+        type: "vimeo",
+        vimeo: "875550517",
+        format: "wide",
+        description: "Hudson Hall",
+        credits: []
+    },
+
+    {
+        title: "Stissing House",
+        category: "Social Campaign",
+        type: "vimeo",
+        vimeo: "1119623841",
+        format: "vertical",
+        description: "A series of short-form stories created for Stissing House in Pine Plains, New York.",
+        credits: [
+            {
+                Featuring: "Cobbler",
+                names: [
+                    "Cobbler"
+                ]
+            }
+        ]
+    },
+
+    {
+        title: "Not The Child",
+        category: "Music Video",
+        type: "vimeo",
+        vimeo: "1226960266",
+        format: "wide",
+        description: "Chris Garneau",
+        credits: []
+    },
+
+    {
+        title: "Little Lad: ANNA",
+        category: "Short Film",
+        type: "vimeo",
+        vimeo: "1227003478",
+        format: "wide",
+        description: "",
+        credits: [
+            {
+                role: "Direction",
+                names: [
+                    "Jeremy Jacob"
+                ]
+            },
+            {
+                role: "Text & Choreography",
+                names: [
+                    "Jack Ferver"
+                ]
+            },
+            {
+                role: "Photography",
+                names: [
+                    "Daniel Rampulla"
+                ]
+            }
+        ]
+    },
+
+    {
+        title: "Pastoral",
+        category: "Promotional Campaign",
+        type: "vimeo",
+        vimeo: "1077279366",
+        format: "wide",
+        description: "Fisher Center at Bard",
+        credits: []
+    },
+
+    {
+        title: "Gary Graham",
+        category: "Socail Campaign - Corsage",
+        type: "vimeo",
+        vimeo: "816869497",
+        format: "vertical",
+        description: "",
+        credits: []
+    },
+
+    {
+        title: "Cole Haan",
+        category: "Social Campaign",
+        type: "vimeo",
+        vimeo: "1227036894",
+        format: "vertical",
+        description: "Cole Haan - Puppy Love",
+        credits: []
+    },
+
+    {
+        title: "Illinoise",
+        category: "Promotional Campaign",
+        type: "vimeo",
+        vimeo: "939996147",
+        format: "wide",
+        description: "Chicago Shakespeare Theater, Park Avenue Armory & Fisher Center at Bard",
+        credits: []
+    },
+
+    {
+        title: "Stissing House",
+        category: "Social Campaign",
+        type: "vimeo",
+        vimeo: "1226973263",
+        hash: "ab87885cfa",
+        format: "vertical",
+        description: "A series of short-form stories created for Stissing House in Pine Plains, New York.",
+        credits: [
+            {
+                Featuring: "Squash",
+                names: [
+                    "Squash"
+                ]
+            }
+        ]
+    },
+
+    {
+        title: "A Doll's House Pictures",
+        category: "The Studio",
+        type: "about",
+        vimeo: "790783764",
+hash: "88211bd923",
+        description: `A Doll’s House Pictures is an independent creative studio founded by Jeremy Jacob, working across film, motion, photography, and design. The studio creates image-driven work shaped by storytelling, atmosphere, and a considered visual language.
+
+Working with brands, artists, and cultural organizations, the studio develops commercial, editorial, and artist-driven projects across moving image and still photography. From campaigns and branded content to experimental films and visual projects, A Doll’s House Pictures brings together creative direction, production, design, and filmmaking with a strong point of view.
+
+Based in the Hudson Valley and working in New York City and beyond, the studio moves between culture, fashion, performance, and commerce, exploring the space where commercial craft and artistic experimentation meet.`,
+        credits: []
     }
-);
+
+];
 
 
-chapters.forEach(chapter => {
-    chapterObserver.observe(chapter);
-});
+/* ============================================================
+   STATE
+   ============================================================ */
+
+let currentProjectIndex = 0;
+
+let currentVimeoPlayer = null;
+let currentVimeoEvents = [];
+let controlTimeout = null;
+
+let currentCarouselIndex = 0;
+let carouselTouchStartX = 0;
+let carouselTouchStartY = 0;
+
+let fisherCleanup = null;
+
+let renderRequestId = 0;
 
 
-/* ========================================================
-   PDF VIEWER
-   ======================================================== */
+/* ============================================================
+   ELEMENTS
+   ============================================================ */
 
-const pdfCanvas =
-    document.getElementById("pdfCanvas");
+const archiveList =
+    document.getElementById("archiveList");
 
-const pdfStage =
-    document.getElementById("pdfStage");
+const archiveTotal =
+    document.getElementById("archiveTotal");
 
-const pdfLoading =
-    document.getElementById("pdfLoading");
-
-const pdfLoadingProgress =
-    document.getElementById("pdfLoadingProgress");
-
-const pdfCurrentPage =
-    document.getElementById("pdfCurrentPage");
-
-const pdfTotalPages =
-    document.getElementById("pdfTotalPages");
-
-const pdfPrev =
-    document.getElementById("pdfPrev");
-
-const pdfNext =
-    document.getElementById("pdfNext");
-
-const pdfFullscreen =
-    document.getElementById("pdfFullscreen");
-
-const pdfHitLeft =
-    document.getElementById("pdfHitLeft");
-
-const pdfHitRight =
-    document.getElementById("pdfHitRight");
-
-let pdfDocument = null;
-let pdfPageNumber = 1;
-let pdfRendering = false;
-let pdfPendingPage = null;
+const projectElement =
+    document.getElementById("project");
 
 
-if (window.pdfjsLib && pdfCanvas && pdfStage) {
+/* ============================================================
+   HELPERS
+   ============================================================ */
 
-    pdfjsLib.GlobalWorkerOptions.workerSrc =
-        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
 
 
-    function getPDFScale(page) {
+function formatNumber(number) {
 
-        const viewport =
-            page.getViewport({
-                scale: 1
-            });
+    return String(number).padStart(2, "0");
 
-        const stageWidth =
-            pdfStage.clientWidth;
+}
 
-        const stageHeight =
-            pdfStage.clientHeight;
 
-        const padding = 20;
+function formatTime(seconds) {
 
-        const availableWidth =
-            Math.max(
-                100,
-                stageWidth - padding
+    if (!Number.isFinite(seconds)) {
+        return "00:00";
+    }
+
+    const total =
+        Math.max(0, Math.floor(seconds));
+
+    const minutes =
+        Math.floor(total / 60);
+
+    const remaining =
+        total % 60;
+
+    return `${String(minutes).padStart(2, "0")}:${String(remaining).padStart(2, "0")}`;
+
+}
+
+
+/* ============================================================
+   FISHER CENTER CLEANUP
+   ============================================================ */
+
+function destroyFisherCenter() {
+
+    if (fisherCleanup) {
+
+        try {
+            fisherCleanup();
+        } catch (error) {
+            console.warn(
+                "Could not clean up Fisher Center.",
+                error
+            );
+        }
+
+        fisherCleanup = null;
+
+    }
+
+}
+
+
+/* ============================================================
+   VIMEO CLEANUP
+   ============================================================ */
+
+function destroyCurrentVimeo() {
+
+    destroyFisherCenter();
+
+    if (controlTimeout) {
+
+        clearTimeout(controlTimeout);
+        controlTimeout = null;
+
+    }
+
+    if (!currentVimeoPlayer) {
+        return;
+    }
+
+    currentVimeoEvents.forEach(event => {
+
+        try {
+
+            currentVimeoPlayer.off(
+                event.name,
+                event.handler
             );
 
-        const availableHeight =
-            Math.max(
-                100,
-                stageHeight - padding
-            );
+        } catch (error) {
 
-        const widthScale =
-            availableWidth / viewport.width;
+            /* Ignore cleanup errors */
 
-        const heightScale =
-            availableHeight / viewport.height;
+        }
 
-        return Math.min(
-            widthScale,
-            heightScale
+    });
+
+    currentVimeoEvents = [];
+
+    try {
+
+        currentVimeoPlayer.destroy();
+
+    } catch (error) {
+
+        /* Ignore cleanup errors */
+
+    }
+
+    currentVimeoPlayer = null;
+
+}
+
+
+/* ============================================================
+   ARCHIVE
+   ============================================================ */
+
+function buildArchive() {
+
+    archiveList.innerHTML = "";
+
+    const numberedProjects =
+        projects.filter(
+            project => project.type !== "about"
         );
-    }
 
+    numberedProjects.forEach((project, index) => {
 
-    async function renderPDFPage(pageNumber) {
+        const projectIndex =
+            projects.indexOf(project);
 
-        if (!pdfDocument) return;
+        const item =
+            document.createElement("button");
 
-        if (pdfRendering) {
+        item.type = "button";
+        item.className = "archive-item";
+        item.dataset.index = projectIndex;
 
-            pdfPendingPage = pageNumber;
+        item.innerHTML = `
+            <span class="archive-number">
+                ${formatNumber(index + 1)}
+            </span>
 
-            return;
-        }
+            <span class="archive-title">
+                ${escapeHTML(project.title)}
+            </span>
 
-        pdfRendering = true;
+            <span class="archive-category">
+                ${escapeHTML(project.category)}
+            </span>
+        `;
 
-        try {
-
-            const page =
-                await pdfDocument.getPage(pageNumber);
-
-            const scale =
-                getPDFScale(page);
-
-            const viewport =
-                page.getViewport({
-                    scale
-                });
-
-            const outputScale =
-                window.devicePixelRatio || 1;
-
-            pdfCanvas.width =
-                Math.floor(
-                    viewport.width * outputScale
-                );
-
-            pdfCanvas.height =
-                Math.floor(
-                    viewport.height * outputScale
-                );
-
-            pdfCanvas.style.width =
-                `${viewport.width}px`;
-
-            pdfCanvas.style.height =
-                `${viewport.height}px`;
-
-            const context =
-                pdfCanvas.getContext("2d");
-
-            context.setTransform(
-                outputScale,
-                0,
-                0,
-                outputScale,
-                0,
-                0
-            );
-
-            await page.render({
-                canvasContext: context,
-                viewport
-            }).promise;
-
-            if (pdfCurrentPage) {
-
-                pdfCurrentPage.textContent =
-                    String(pageNumber).padStart(2, "0");
-
+        item.addEventListener(
+            "click",
+            () => {
+                selectProject(projectIndex);
             }
+        );
 
-            if (pdfTotalPages) {
+        archiveList.appendChild(item);
 
-                pdfTotalPages.textContent =
-                    String(pdfDocument.numPages)
-                        .padStart(2, "0");
+    });
 
+
+    /* --------------------------------------------------------
+       ABOUT
+       -------------------------------------------------------- */
+
+    const aboutProject =
+        projects.find(
+            project => project.type === "about"
+        );
+
+    if (aboutProject) {
+
+        const aboutIndex =
+            projects.indexOf(aboutProject);
+
+        const aboutItem =
+            document.createElement("button");
+
+        aboutItem.type = "button";
+        aboutItem.className =
+            "archive-item archive-about";
+
+        aboutItem.dataset.index =
+            aboutIndex;
+
+        aboutItem.innerHTML = `
+            <span class="archive-number archive-number-empty">
+                &nbsp;
+            </span>
+
+            <span class="archive-title">
+                ${escapeHTML(aboutProject.title)}
+            </span>
+
+            <span class="archive-category">
+                ${escapeHTML(aboutProject.category)}
+            </span>
+        `;
+
+        aboutItem.addEventListener(
+            "click",
+            () => {
+                selectProject(aboutIndex);
             }
+        );
 
-        } catch (error) {
-
-            console.error(
-                "PDF render error:",
-                error
-            );
-
-        } finally {
-
-            pdfRendering = false;
-
-            if (pdfPendingPage !== null) {
-
-                const nextPage =
-                    pdfPendingPage;
-
-                pdfPendingPage = null;
-
-                renderPDFPage(nextPage);
-            }
-
-        }
+        archiveList.appendChild(aboutItem);
 
     }
 
 
-    async function loadPDF() {
+    /* --------------------------------------------------------
+       TOTAL — ABOUT IS NOT COUNTED
+       -------------------------------------------------------- */
 
-        try {
+    archiveTotal.textContent =
+        formatNumber(numberedProjects.length);
 
-            const loadingTask =
-                pdfjsLib.getDocument("script.pdf");
+}
 
-            loadingTask.onProgress =
-                progressData => {
 
-                    if (
-                        progressData.total &&
-                        pdfLoadingProgress
-                    ) {
+/* ============================================================
+   ARCHIVE STATE
+   ============================================================ */
 
-                        const percent =
-                            (
-                                progressData.loaded /
-                                progressData.total
-                            ) * 100;
+function updateArchiveState() {
 
-                        pdfLoadingProgress.style.width =
-                            `${percent}%`;
-                    }
+    const items =
+        archiveList.querySelectorAll(
+            ".archive-item"
+        );
 
-                };
+    items.forEach(item => {
 
-            pdfDocument =
-                await loadingTask.promise;
+        item.classList.toggle(
+            "active",
+            Number(item.dataset.index) === currentProjectIndex
+        );
 
-            if (pdfTotalPages) {
+    });
 
-                pdfTotalPages.textContent =
-                    String(pdfDocument.numPages)
-                        .padStart(2, "0");
-            }
+}
 
-            await renderPDFPage(pdfPageNumber);
 
-            if (pdfLoading) {
-                pdfLoading.classList.add("is-hidden");
-            }
+/* ============================================================
+   PROJECT CREDITS
+   ============================================================ */
 
-        } catch (error) {
+function renderCredits(project) {
 
-            console.error(
-                "Unable to load PDF:",
-                error
-            );
+    if (
+        !project.credits ||
+        !project.credits.length
+    ) {
+        return "";
+    }
 
-            if (pdfLoading) {
+    return `
+        <div class="project-credits">
 
-                pdfLoading.innerHTML = `
-                    <div class="pdf-loading-label">
-                        UNABLE TO LOAD SCRIPT
-                    </div>
+            ${project.credits.map(credit => {
+
+                const role =
+                    credit.role ||
+                    Object.keys(credit)[0] ||
+                    "";
+
+                return `
+                    <span class="project-credit">
+
+                        <span class="credit-role">
+                            ${escapeHTML(role)}
+                        </span>
+
+                        <span class="credit-names">
+                            ${(credit.names || [])
+                                .map(name => escapeHTML(name))
+                                .join(" / ")}
+                        </span>
+
+                    </span>
                 `;
 
+            }).join("")}
+
+        </div>
+    `;
+
+}
+
+
+/* ============================================================
+   PROJECT DESCRIPTION
+   ============================================================ */
+
+function renderDescription(project) {
+
+    if (!project.description) {
+        return "";
+    }
+
+    const description =
+        escapeHTML(project.description)
+            .replace(/\n/g, "<br>");
+
+    return `
+        <div class="project-description">
+            ${description}
+        </div>
+    `;
+
+}
+
+
+/* ============================================================
+   PROJECT INFORMATION
+   ============================================================ */
+
+function renderProjectInfo(project) {
+
+    return `
+        <div class="project-info">
+
+            <h1 class="project-title">
+                ${escapeHTML(project.title)}
+            </h1>
+
+            <div class="project-category">
+                ${escapeHTML(project.category)}
+            </div>
+
+            ${renderDescription(project)}
+
+            ${renderCredits(project)}
+
+        </div>
+    `;
+
+}
+
+
+/* ============================================================
+   VIMEO MARKUP
+   ============================================================ */
+
+function renderVimeoMarkup(project) {
+
+    return `
+        <div class="vimeo-wrap ${project.format === "vertical" ? "vertical" : ""}">
+
+            <div class="vimeo-frame">
+
+<iframe
+    class="project-vimeo"
+
+src="https://player.vimeo.com/video/${encodeURIComponent(project.vimeo)}${project.hash ? `?h=${encodeURIComponent(project.hash)}&` : "?"}transparent=0&controls=0&title=0&byline=0&portrait=0&dnt=1&playsinline=1"
+    allow="autoplay; fullscreen; picture-in-picture"
+    allowfullscreen
+    loading="eager"
+    title="${escapeHTML(project.title)}"
+></iframe>
+
+                <div class="vimeo-controls">
+
+                    <button
+                        class="vimeo-control vimeo-play"
+                        type="button"
+                        aria-label="Play"
+                    >
+                        Play
+                    </button>
+
+                    <span class="vimeo-time">
+                        00:00 / 00:00
+                    </span>
+
+                    <div class="vimeo-progress-wrap">
+
+                        <input
+                            class="vimeo-progress"
+                            type="range"
+                            min="0"
+                            max="100"
+                            value="0"
+                            step="0.1"
+                            aria-label="Video progress"
+                        >
+
+                    </div>
+
+                    <button
+                        class="vimeo-control vimeo-sound"
+                        type="button"
+                        aria-label="Toggle sound"
+                    >
+                        Sound On
+                    </button>
+
+                    <button
+                        class="vimeo-control vimeo-fullscreen"
+                        type="button"
+                        aria-label="Fullscreen"
+                    >
+                        Full
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+
+}
+
+
+/* ============================================================
+   VIMEO CONTROLS
+   ============================================================ */
+
+function showControls(wrapper) {
+
+    if (!wrapper) {
+        return;
+    }
+
+    wrapper.classList.add(
+        "controls-visible"
+    );
+
+    if (controlTimeout) {
+
+        clearTimeout(controlTimeout);
+
+    }
+
+    controlTimeout =
+        setTimeout(() => {
+
+            wrapper.classList.remove(
+                "controls-visible"
+            );
+
+        }, 2200);
+
+}
+
+
+/* ============================================================
+   INITIALIZE VIMEO
+   ============================================================ */
+
+async function initializeVimeo() {
+
+    if (
+        !window.Vimeo ||
+        !projectElement
+    ) {
+        return;
+    }
+
+    const iframe =
+        projectElement.querySelector(
+            ".project-vimeo"
+        );
+
+    const wrapper =
+        projectElement.querySelector(
+            ".vimeo-wrap"
+        );
+
+    const frame =
+        projectElement.querySelector(
+            ".vimeo-frame"
+        );
+
+    if (
+        !iframe ||
+        !wrapper ||
+        !frame
+    ) {
+        return;
+    }
+
+    const player =
+        new Vimeo.Player(iframe);
+
+    currentVimeoPlayer =
+        player;
+
+    const playButton =
+        projectElement.querySelector(
+            ".vimeo-play"
+        );
+
+    const soundButton =
+        projectElement.querySelector(
+            ".vimeo-sound"
+        );
+
+    const fullscreenButton =
+        projectElement.querySelector(
+            ".vimeo-fullscreen"
+        );
+
+    const progress =
+        projectElement.querySelector(
+            ".vimeo-progress"
+        );
+
+    const time =
+        projectElement.querySelector(
+            ".vimeo-time"
+        );
+
+
+    /* --------------------------------------------------------
+       READY
+       -------------------------------------------------------- */
+
+    try {
+
+        await player.ready();
+
+    } catch (error) {
+
+        console.warn(
+            "Vimeo player could not initialize.",
+            error
+        );
+
+        return;
+
+    }
+
+
+    /* --------------------------------------------------------
+       ACTUAL VIDEO RATIO
+       -------------------------------------------------------- */
+
+    try {
+
+        const dimensions =
+            await Promise.all([
+                player.getVideoWidth(),
+                player.getVideoHeight()
+            ]);
+
+        const width =
+            Number(dimensions[0]);
+
+        const height =
+            Number(dimensions[1]);
+
+        if (
+            Number.isFinite(width) &&
+            Number.isFinite(height) &&
+            width > 0 &&
+            height > 0
+        ) {
+
+            frame.style.aspectRatio =
+                `${width} / ${height}`;
+
+            if (height > width) {
+
+                wrapper.classList.add(
+                    "vertical"
+                );
+
+            } else {
+
+                wrapper.classList.remove(
+                    "vertical"
+                );
+
             }
 
         }
 
+    } catch (error) {
+
+        console.warn(
+            "Could not determine Vimeo dimensions.",
+            error
+        );
+
     }
 
 
-    function goToPDFPage(pageNumber) {
+    /* --------------------------------------------------------
+       PLAY / PAUSE
+       -------------------------------------------------------- */
 
-        if (!pdfDocument) return;
+    const togglePlay =
+        async () => {
 
-        if (pageNumber < 1) {
-            pageNumber = 1;
+            try {
+
+                const paused =
+                    await player.getPaused();
+
+                if (paused) {
+
+                    await player.play();
+
+                } else {
+
+                    await player.pause();
+
+                }
+
+                showControls(wrapper);
+
+            } catch (error) {
+
+                console.warn(
+                    "Vimeo playback error.",
+                    error
+                );
+
+            }
+
+        };
+
+
+    /* --------------------------------------------------------
+       PLAY BUTTON
+       -------------------------------------------------------- */
+
+    if (playButton) {
+
+        playButton.addEventListener(
+            "click",
+            event => {
+
+                event.stopPropagation();
+
+                togglePlay();
+
+            }
+        );
+
+    }
+
+
+    /* --------------------------------------------------------
+       CLICK ANYWHERE ON VIDEO
+       -------------------------------------------------------- */
+
+    frame.addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target.closest(
+                    ".vimeo-controls"
+                )
+            ) {
+                return;
+            }
+
+            togglePlay();
+
         }
+    );
 
-        if (pageNumber > pdfDocument.numPages) {
-            pageNumber = pdfDocument.numPages;
+
+    /* --------------------------------------------------------
+       HOVER CONTROLS
+       -------------------------------------------------------- */
+
+    frame.addEventListener(
+        "mousemove",
+        () => {
+
+            showControls(wrapper);
+
         }
-
-        pdfPageNumber = pageNumber;
-
-        renderPDFPage(pdfPageNumber);
-    }
+    );
 
 
-    if (pdfPrev) {
+    frame.addEventListener(
+        "touchstart",
+        () => {
 
-        pdfPrev.addEventListener(
-            "click",
-            () => {
-                goToPDFPage(pdfPageNumber - 1);
+            showControls(wrapper);
+
+        },
+        {
+            passive: true
+        }
+    );
+
+
+    /* --------------------------------------------------------
+       PLAY EVENT
+       -------------------------------------------------------- */
+
+    const onPlay =
+        () => {
+
+            if (!playButton) {
+                return;
             }
-        );
 
-    }
+            playButton.textContent =
+                "Pause";
+
+            playButton.setAttribute(
+                "aria-label",
+                "Pause"
+            );
+
+        };
+
+    player.on(
+        "play",
+        onPlay
+    );
+
+    currentVimeoEvents.push({
+        name: "play",
+        handler: onPlay
+    });
 
 
-    if (pdfNext) {
+    /* --------------------------------------------------------
+       PAUSE EVENT
+       -------------------------------------------------------- */
 
-        pdfNext.addEventListener(
-            "click",
-            () => {
-                goToPDFPage(pdfPageNumber + 1);
+    const onPause =
+        () => {
+
+            if (!playButton) {
+                return;
             }
-        );
 
-    }
+            playButton.textContent =
+                "Play";
+
+            playButton.setAttribute(
+                "aria-label",
+                "Play"
+            );
+
+        };
+
+    player.on(
+        "pause",
+        onPause
+    );
+
+    currentVimeoEvents.push({
+        name: "pause",
+        handler: onPause
+    });
 
 
-    if (pdfHitLeft) {
+    /* --------------------------------------------------------
+       TIME UPDATE
+       -------------------------------------------------------- */
 
-        pdfHitLeft.addEventListener(
-            "click",
-            () => {
-                goToPDFPage(pdfPageNumber - 1);
+    const onTimeUpdate =
+        data => {
+
+            const duration =
+                Number(data.duration) || 0;
+
+            const seconds =
+                Number(data.seconds) || 0;
+
+            if (progress) {
+
+                progress.value =
+                    duration
+                        ? (seconds / duration) * 100
+                        : 0;
+
             }
-        );
 
-    }
+            if (time) {
 
+                time.textContent =
+                    `${formatTime(seconds)} / ${formatTime(duration)}`;
 
-    if (pdfHitRight) {
-
-        pdfHitRight.addEventListener(
-            "click",
-            () => {
-                goToPDFPage(pdfPageNumber + 1);
             }
-        );
 
-    }
+        };
+
+    player.on(
+        "timeupdate",
+        onTimeUpdate
+    );
+
+    currentVimeoEvents.push({
+        name: "timeupdate",
+        handler: onTimeUpdate
+    });
 
 
-    if (pdfFullscreen) {
+    /* --------------------------------------------------------
+       LOADED
+       -------------------------------------------------------- */
 
-        pdfFullscreen.addEventListener(
+    const onLoaded =
+        data => {
+
+            if (!time) {
+                return;
+            }
+
+            time.textContent =
+                `00:00 / ${formatTime(data.duration)}`;
+
+        };
+
+    player.on(
+        "loaded",
+        onLoaded
+    );
+
+    currentVimeoEvents.push({
+        name: "loaded",
+        handler: onLoaded
+    });
+
+
+    /* --------------------------------------------------------
+       VOLUME
+       -------------------------------------------------------- */
+
+    if (soundButton) {
+
+        soundButton.addEventListener(
             "click",
-            async () => {
+            async event => {
 
-                const viewer =
-                    document.getElementById("pdfViewer");
-
-                if (!viewer) return;
+                event.stopPropagation();
 
                 try {
 
-                    if (!document.fullscreenElement) {
+                    const volume =
+                        await player.getVolume();
 
-                        await viewer.requestFullscreen();
+                    if (volume > 0) {
+
+                        await player.setVolume(0);
+
+                        soundButton.textContent =
+                            "Sound Off";
 
                     } else {
 
-                        await document.exitFullscreen();
+                        await player.setVolume(1);
+
+                        soundButton.textContent =
+                            "Sound On";
 
                     }
 
+                    showControls(wrapper);
+
                 } catch (error) {
 
-                    console.error(
-                        "Fullscreen error:",
+                    console.warn(
+                        "Could not change Vimeo volume.",
                         error
                     );
 
@@ -608,2823 +1599,1568 @@ if (window.pdfjsLib && pdfCanvas && pdfStage) {
     }
 
 
-    document.addEventListener(
-        "fullscreenchange",
-        () => {
+    /* --------------------------------------------------------
+       PROGRESS SEEK
+       -------------------------------------------------------- */
 
-            if (pdfDocument) {
+    if (progress) {
 
-                setTimeout(() => {
-                    renderPDFPage(pdfPageNumber);
-                }, 100);
+        progress.addEventListener(
+            "input",
+            async event => {
+
+                event.stopPropagation();
+
+                try {
+
+                    const duration =
+                        await player.getDuration();
+
+                    const percent =
+                        Number(event.target.value) / 100;
+
+                    await player.setCurrentTime(
+                        duration * percent
+                    );
+
+                    showControls(wrapper);
+
+                } catch (error) {
+
+                    console.warn(
+                        "Could not seek Vimeo video.",
+                        error
+                    );
+
+                }
 
             }
-
-        }
-    );
+        );
 
 
-    window.addEventListener(
-        "resize",
-        () => {
+        progress.addEventListener(
+            "click",
+            event => {
 
-            if (pdfDocument) {
-                renderPDFPage(pdfPageNumber);
+                event.stopPropagation();
+
             }
+        );
 
-        }
-    );
-
-
-    loadPDF();
-
-}
-
-
-/* ========================================================
-   SCRIPT ARCHIVE
-   ======================================================== */
-
-const scriptArchive =
-    document.getElementById("scriptArchive");
-
-const scriptArchiveToggle =
-    document.getElementById("scriptArchiveToggle");
-
-
-if (scriptArchive && scriptArchiveToggle) {
-
-    scriptArchiveToggle.addEventListener(
-        "click",
-        () => {
-
-            const isOpen =
-                scriptArchive.classList.toggle("open");
-
-            scriptArchiveToggle.setAttribute(
-                "aria-expanded",
-                String(isOpen)
-            );
-
-        }
-    );
-
-}
-
-
-/* ========================================================
-   INSPIRATION GRID
-   ======================================================== */
-
-const inspirationTrack =
-    document.getElementById("inspirationTrack");
-
-const inspirationCaption =
-    document.getElementById("inspirationCaption");
-
-const inspirationCurrent =
-    document.getElementById("inspirationCurrent");
-
-const inspirationTotal =
-    document.getElementById("inspirationTotal");
-
-
-const INSPIRATION_IMAGE_COUNT = 358;
-
-const INSPIRATION_EXTENSIONS = [
-    "jpg",
-    "jpeg",
-    "gif",
-    "png"
-];
-
-
-const inspirationImages =
-    Array.from(
-        {
-            length:
-                INSPIRATION_IMAGE_COUNT
-        },
-        (_, index) => {
-
-            const number =
-                index + 1;
-
-            return {
-
-                number,
-
-                extensions:
-                    INSPIRATION_EXTENSIONS,
-
-                alt:
-                    `Dance Division inspiration reference ${number}`,
-
-                label:
-                    `${String(number).padStart(3, "0")} / REFERENCE`
-
-            };
-
-        }
-    );
-
-
-let inspirationSlides = [];
-
-let inspirationLightbox = null;
-
-let inspirationLightboxImage = null;
-
-let inspirationLightboxCurrent = null;
-
-let inspirationLightboxTotal = null;
-
-let inspirationLightboxIndex = 0;
-
-
-if (inspirationTotal) {
-
-    inspirationTotal.textContent =
-        String(INSPIRATION_IMAGE_COUNT)
-            .padStart(2, "0");
-
-}
-
-
-/* --------------------------------------------------------
-   CREATE LIGHTBOX
-   -------------------------------------------------------- */
-
-function createInspirationLightbox() {
-
-    if (inspirationLightbox) {
-        return;
     }
 
 
-    inspirationLightbox =
-        document.createElement("div");
+    /* --------------------------------------------------------
+       FULLSCREEN
+       -------------------------------------------------------- */
 
-    inspirationLightbox.className =
-        "inspiration-lightbox";
+    if (fullscreenButton) {
+
+        fullscreenButton.addEventListener(
+            "click",
+            async event => {
+
+                event.stopPropagation();
+
+                try {
+
+                    await player.requestFullscreen();
+
+                } catch (error) {
+
+                    console.warn(
+                        "Could not enter fullscreen.",
+                        error
+                    );
+
+                }
+
+            }
+        );
+
+    }
 
 
-    inspirationLightbox.setAttribute(
-        "aria-hidden",
-        "true"
-    );
+    /* --------------------------------------------------------
+       INITIAL STATE
+       -------------------------------------------------------- */
+
+    try {
+
+        const volume =
+            await player.getVolume();
+
+        if (soundButton) {
+
+            soundButton.textContent =
+                volume > 0
+                    ? "Sound On"
+                    : "Sound Off";
+
+        }
+
+    } catch (error) {
+
+        /* Ignore */
+
+    }
+
+       /* --------------------------------------------------------
+       AUTOPLAY — MUTED, WITH DELAY
+       -------------------------------------------------------- */
+
+    try {
+
+        await player.setVolume(0);
+
+        if (soundButton) {
+            soundButton.textContent = "Sound Off";
+        }
+
+        await new Promise(resolve => {
+            setTimeout(resolve, 400);
+        });
+
+        await player.play();
+
+    } catch (error) {
+
+        console.warn(
+            "Vimeo autoplay was blocked by the browser.",
+            error
+        );
+
+    }
+
+}
 
 
-    inspirationLightbox.innerHTML = `
+/* ============================================================
+   IMAGE
+   ============================================================ */
 
-        <button
-            class="inspiration-lightbox-close"
-            type="button"
-            aria-label="Close image"
-        >
-            ×
-        </button>
+function renderImage(project) {
 
-        <button
-            class="inspiration-lightbox-prev"
-            type="button"
-            aria-label="Previous image"
-        >
-            ←
-        </button>
-
-        <div class="inspiration-lightbox-content">
+    return `
+        <div class="image-project">
 
             <img
-                class="inspiration-lightbox-image"
-                src=""
-                alt=""
+                src="${escapeHTML(project.image)}"
+                alt="${escapeHTML(project.title)}"
+                loading="eager"
             >
 
-            <div class="inspiration-lightbox-info">
+        </div>
+    `;
 
-                <span
-                    class="inspiration-lightbox-current"
+}
+
+
+/* ============================================================
+   CAROUSEL
+   ============================================================ */
+
+function renderCarousel(project) {
+
+    const images =
+        Array.isArray(project.images)
+            ? project.images
+            : [];
+
+    if (!images.length) {
+        return "";
+    }
+
+    currentCarouselIndex = 0;
+
+    return `
+        <div
+            class="image-carousel"
+            data-carousel-count="${images.length}"
+        >
+
+            <div class="carousel-stage">
+
+                <button
+                    class="carousel-arrow carousel-prev"
+                    type="button"
+                    aria-label="Previous image"
                 >
-                    001
-                </span>
+                    <span aria-hidden="true">←</span>
+                </button>
 
-                <span>/</span>
+                <div class="carousel-image-wrap">
 
-                <span
-                    class="inspiration-lightbox-total"
+                    ${images.map((image, index) => `
+
+                        <img
+                            class="carousel-image ${index === 0 ? "active" : ""}"
+                            src="${escapeHTML(image)}"
+                            alt="${escapeHTML(project.title)} — image ${index + 1} of ${images.length}"
+                            data-carousel-index="${index}"
+                            draggable="false"
+                        >
+
+                    `).join("")}
+
+                </div>
+
+                <button
+                    class="carousel-arrow carousel-next"
+                    type="button"
+                    aria-label="Next image"
                 >
-                    343
+                    <span aria-hidden="true">→</span>
+                </button>
+
+            </div>
+
+            <div class="carousel-meta">
+
+                <span class="carousel-counter">
+
+                    <span class="carousel-current">
+                        01
+                    </span>
+
+                    <span class="carousel-separator">
+                        /
+                    </span>
+
+                    <span class="carousel-total">
+                        ${formatNumber(images.length)}
+                    </span>
+
                 </span>
 
             </div>
 
         </div>
-
-        <button
-            class="inspiration-lightbox-next"
-            type="button"
-            aria-label="Next image"
-        >
-            →
-        </button>
-
     `;
 
+}
 
-    document.body.appendChild(
-        inspirationLightbox
+
+/* ============================================================
+   UPDATE CAROUSEL
+   ============================================================ */
+
+function updateCarousel(
+    carousel,
+    index,
+    direction = 0
+) {
+
+    if (!carousel) {
+        return;
+    }
+
+    const images =
+        carousel.querySelectorAll(
+            ".carousel-image"
+        );
+
+    if (!images.length) {
+        return;
+    }
+
+    if (index < 0) {
+        index = images.length - 1;
+    }
+
+    if (index >= images.length) {
+        index = 0;
+    }
+
+    currentCarouselIndex =
+        index;
+
+    images.forEach(
+        (image, imageIndex) => {
+
+            image.classList.toggle(
+                "active",
+                imageIndex === index
+            );
+
+            image.classList.remove(
+                "slide-next",
+                "slide-prev"
+            );
+
+            if (
+                imageIndex === index &&
+                direction !== 0
+            ) {
+
+                image.classList.add(
+                    direction > 0
+                        ? "slide-next"
+                        : "slide-prev"
+                );
+
+            }
+
+        }
     );
 
+    const current =
+        carousel.querySelector(
+            ".carousel-current"
+        );
 
-    inspirationLightboxImage =
-        inspirationLightbox.querySelector(
-            ".inspiration-lightbox-image"
+    if (current) {
+
+        current.textContent =
+            formatNumber(index + 1);
+
+    }
+
+}
+
+
+/* ============================================================
+   INITIALIZE CAROUSEL
+   ============================================================ */
+
+function initializeCarousel() {
+
+    const carousel =
+        projectElement.querySelector(
+            ".image-carousel"
+        );
+
+    if (!carousel) {
+        return;
+    }
+
+    const images =
+        carousel.querySelectorAll(
+            ".carousel-image"
+        );
+
+    const previous =
+        carousel.querySelector(
+            ".carousel-prev"
+        );
+
+    const next =
+        carousel.querySelector(
+            ".carousel-next"
         );
 
 
-    inspirationLightboxCurrent =
-        inspirationLightbox.querySelector(
-            ".inspiration-lightbox-current"
+    /* --------------------------------------------------------
+       NAVIGATION
+       -------------------------------------------------------- */
+
+    const goTo =
+        (index, direction = 0) => {
+
+            updateCarousel(
+                carousel,
+                index,
+                direction
+            );
+
+        };
+
+
+    const nextImage =
+        () => {
+
+            goTo(
+                currentCarouselIndex + 1,
+                1
+            );
+
+        };
+
+
+    const previousImage =
+        () => {
+
+            goTo(
+                currentCarouselIndex - 1,
+                -1
+            );
+
+        };
+
+
+    /* --------------------------------------------------------
+       ARROWS
+       -------------------------------------------------------- */
+
+    if (previous) {
+
+        previous.addEventListener(
+            "click",
+            event => {
+
+                event.stopPropagation();
+
+                previousImage();
+
+            }
         );
-
-
-    inspirationLightboxTotal =
-        inspirationLightbox.querySelector(
-            ".inspiration-lightbox-total"
-        );
-
-
-    const closeButton =
-        inspirationLightbox.querySelector(
-            ".inspiration-lightbox-close"
-        );
-
-
-    const previousButton =
-        inspirationLightbox.querySelector(
-            ".inspiration-lightbox-prev"
-        );
-
-
-    const nextButton =
-        inspirationLightbox.querySelector(
-            ".inspiration-lightbox-next"
-        );
-
-
-    const content =
-        inspirationLightbox.querySelector(
-            ".inspiration-lightbox-content"
-        );
-
-
-    if (inspirationLightboxTotal) {
-
-        inspirationLightboxTotal.textContent =
-            String(INSPIRATION_IMAGE_COUNT)
-                .padStart(3, "0");
 
     }
 
 
-    closeButton.addEventListener(
-        "click",
-        closeInspirationLightbox
-    );
+    if (next) {
 
+        next.addEventListener(
+            "click",
+            event => {
 
-    previousButton.addEventListener(
-        "click",
-        event => {
+                event.stopPropagation();
 
-            event.stopPropagation();
-
-            showInspirationLightboxImage(
-                inspirationLightboxIndex - 1
-            );
-
-        }
-    );
-
-
-    nextButton.addEventListener(
-        "click",
-        event => {
-
-            event.stopPropagation();
-
-            showInspirationLightboxImage(
-                inspirationLightboxIndex + 1
-            );
-
-        }
-    );
-
-
-    inspirationLightbox.addEventListener(
-        "click",
-        event => {
-
-            if (
-                event.target ===
-                inspirationLightbox
-            ) {
-
-                closeInspirationLightbox();
+                nextImage();
 
             }
+        );
 
-        }
-    );
-
-
-    content.addEventListener(
-        "click",
-        event => {
-
-            event.stopPropagation();
-
-        }
-    );
+    }
 
 
-    document.addEventListener(
-        "keydown",
-        event => {
+    /* --------------------------------------------------------
+       CLICK LEFT / RIGHT HALF OF IMAGE
+       -------------------------------------------------------- */
 
-            if (
-                !inspirationLightbox ||
-                !inspirationLightbox.classList.contains(
-                    "open"
-                )
-            ) {
-                return;
-            }
+    images.forEach(image => {
 
+        image.addEventListener(
+            "click",
+            event => {
 
-            if (event.key === "Escape") {
+                event.stopPropagation();
 
-                event.preventDefault();
+                const rect =
+                    image.getBoundingClientRect();
 
-                closeInspirationLightbox();
+                const clickX =
+                    event.clientX - rect.left;
 
-                return;
+                if (
+                    clickX <
+                    rect.width / 2
+                ) {
 
-            }
+                    previousImage();
 
+                } else {
 
-            if (event.key === "ArrowLeft") {
+                    nextImage();
 
-                event.preventDefault();
-
-                showInspirationLightboxImage(
-                    inspirationLightboxIndex - 1
-                );
-
-                return;
+                }
 
             }
+        );
+
+    });
 
 
-            if (event.key === "ArrowRight") {
+    /* --------------------------------------------------------
+       TOUCH / SWIPE
+       -------------------------------------------------------- */
 
-                event.preventDefault();
+    const imageWrap =
+        carousel.querySelector(
+            ".carousel-image-wrap"
+        );
 
-                showInspirationLightboxImage(
-                    inspirationLightboxIndex + 1
-                );
+    if (imageWrap) {
 
+        imageWrap.addEventListener(
+            "touchstart",
+            event => {
+
+                if (!event.touches.length) {
+                    return;
+                }
+
+                carouselTouchStartX =
+                    event.touches[0].clientX;
+
+                carouselTouchStartY =
+                    event.touches[0].clientY;
+
+            },
+            {
+                passive: true
             }
+        );
 
-        }
+
+        imageWrap.addEventListener(
+            "touchend",
+            event => {
+
+                if (!event.changedTouches.length) {
+                    return;
+                }
+
+                const endX =
+                    event.changedTouches[0].clientX;
+
+                const endY =
+                    event.changedTouches[0].clientY;
+
+                const deltaX =
+                    endX - carouselTouchStartX;
+
+                const deltaY =
+                    endY - carouselTouchStartY;
+
+                if (
+                    Math.abs(deltaX) < 40 ||
+                    Math.abs(deltaX) < Math.abs(deltaY)
+                ) {
+                    return;
+                }
+
+                if (deltaX < 0) {
+
+                    nextImage();
+
+                } else {
+
+                    previousImage();
+
+                }
+
+            },
+            {
+                passive: true
+            }
+        );
+
+    }
+
+
+    /* --------------------------------------------------------
+       INITIAL STATE
+       -------------------------------------------------------- */
+
+    updateCarousel(
+        carousel,
+        0,
+        0
     );
 
 }
 
 
-/* --------------------------------------------------------
-   CREATE GRID
-   -------------------------------------------------------- */
+/* ============================================================
+   VIDEO
+   ============================================================ */
 
-function createInspirationGrid() {
+function renderVideo(project) {
 
-    if (!inspirationTrack) {
+    return `
+        <div class="project-media">
+
+            ${renderVimeoMarkup(project)}
+
+        </div>
+    `;
+
+}
+
+
+/* ============================================================
+   TEXT
+   ============================================================ */
+
+function renderText(project) {
+
+    return `
+        <div class="project-text ${escapeHTML(project.style || "editorial")}">
+
+            ${escapeHTML(project.title)}
+
+            ${project.description ? `
+                <div class="text-project-description">
+                    ${escapeHTML(project.description)}
+                </div>
+            ` : ""}
+
+        </div>
+    `;
+
+}
+
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+
+function renderAbout(project) {
+
+    projectElement.innerHTML = `
+        <div class="about-content">
+
+            <div class="about-image about-video">
+
+                <div class="about-video-rotation">
+
+                    <iframe
+                        
+src="https://player.vimeo.com/video/${encodeURIComponent(project.vimeo)}?h=${encodeURIComponent(project.hash)}&transparent=0&autoplay=1&muted=1&loop=1&background=1&controls=0&playsinline=1"
+allow="autoplay; fullscreen; picture-in-picture"
+                        allowfullscreen
+                        title="A Doll's House Pictures"
+                    ></iframe>
+
+                </div>
+
+            </div>
+
+            <div class="about-copy">
+
+                <div class="project-category">
+                    ${escapeHTML(project.category)}
+                </div>
+
+                <h1 class="project-title">
+                    ${escapeHTML(project.title)}
+                </h1>
+
+                <div class="about-description">
+                    ${escapeHTML(project.description)}
+                </div>
+
+                <div class="about-contact">
+
+                    <a
+                        href="https://www.instagram.com/adollshousepictures/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        @adollshousepictures
+                    </a>
+
+                    <a href="mailto:adollshousepictures@gmail.com">
+                        adollshousepictures@gmail.com
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+
+}
+
+
+/* ============================================================
+   LOAD EXTERNAL PROJECT PAGE
+   ============================================================ */
+
+/*
+   fishercenter.html is NOT navigated to.
+
+   Instead, its body is fetched and inserted into the
+   existing #project container in index.html.
+
+   This allows Fisher Center to behave like another project
+   in the archive while keeping its own HTML file.
+*/
+
+async function renderExternalPage(
+    project,
+    requestId
+) {
+
+    if (!project.page) {
+
+        projectElement.innerHTML = `
+            <div class="project-error">
+                Page not specified.
+            </div>
+        `;
+
         return;
+
+    }
+
+    try {
+
+        const response =
+            await fetch(project.page, {
+                cache: "no-cache"
+            });
+
+        if (!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+
+        }
+
+        const html =
+            await response.text();
+
+
+        /*
+           If the user clicked another project while
+           the Fisher page was loading, do nothing.
+        */
+
+        if (
+            requestId !== renderRequestId
+        ) {
+            return;
+        }
+
+
+        const parser =
+            new DOMParser();
+
+        const parsedDocument =
+            parser.parseFromString(
+                html,
+                "text/html"
+            );
+
+        const body =
+            parsedDocument.body;
+
+        if (!body) {
+
+            throw new Error(
+                "Could not find page body."
+            );
+
+        }
+
+
+        /* ----------------------------------------------------
+           INSERT PAGE CONTENT
+           ---------------------------------------------------- */
+
+        projectElement.innerHTML =
+            body.innerHTML;
+
+
+        /* ----------------------------------------------------
+           COPY PAGE STYLES
+           ---------------------------------------------------- */
+
+        const styles =
+            parsedDocument.querySelectorAll(
+                "style"
+            );
+
+        styles.forEach(
+            (sourceStyle, index) => {
+
+                const styleId =
+                    `external-style-${project.title
+                        .toLowerCase()
+                        .replace(/[^a-z0-9]+/g, "-")}-${index}`;
+
+                let existingStyle =
+                    document.getElementById(
+                        styleId
+                    );
+
+                if (!existingStyle) {
+
+                    existingStyle =
+                        document.createElement(
+                            "style"
+                        );
+
+                    existingStyle.id =
+                        styleId;
+
+                    document.head.appendChild(
+                        existingStyle
+                    );
+
+                }
+
+                existingStyle.textContent =
+                    sourceStyle.textContent;
+
+            }
+        );
+
+
+        /* ----------------------------------------------------
+           INITIALIZE FISHER CENTER
+           ---------------------------------------------------- */
+
+        if (
+            project.title === "Fisher Center"
+        ) {
+
+            initializeFisherCenter();
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Could not load external project page.",
+            error
+        );
+
+        projectElement.innerHTML = `
+            <div class="project-error">
+                <h1>${escapeHTML(project.title)}</h1>
+                <p>
+                    This project could not be loaded.
+                </p>
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* ============================================================
+   FISHER CENTER INITIALIZATION
+   ============================================================ */
+
+function initializeFisherCenter() {
+
+    destroyFisherCenter();
+
+
+    const page =
+        projectElement.querySelector(
+            ".fisher-page"
+        );
+
+    if (!page) {
+
+        console.warn(
+            "Fisher Center page root .fisher-page was not found."
+        );
+
+        return;
+
     }
 
 
-    inspirationTrack.innerHTML = "";
+    const gallery =
+        page.querySelector(
+            "#fisherGallery"
+        );
 
-    inspirationSlides = [];
+    const galleryInner =
+        page.querySelector(
+            ".fisher-gallery-inner"
+        );
 
+    const galleryImages =
+        page.querySelectorAll(
+            ".fisher-gallery-image"
+        );
 
-    inspirationImages.forEach(
-        (image, imageIndex) => {
-
-            const slide =
-                document.createElement("button");
-
-
-            slide.type =
-                "button";
-
-
-            slide.className =
-                "inspiration-slide";
-
-
-            slide.dataset.index =
-                String(imageIndex);
+    const galleryCounter =
+        page.querySelector(
+            ".fisher-gallery-counter"
+        );
 
 
-            slide.setAttribute(
-                "aria-label",
-                `Open inspiration image ${image.number}`
-            );
+    if (
+        gallery &&
+        galleryInner &&
+        galleryImages.length
+    ) {
+
+        let ticking = false;
 
 
-            const img =
-                document.createElement("img");
+        const updateGallery =
+            () => {
 
+                ticking = false;
 
-            img.alt =
-                image.alt;
+                const rect =
+                    gallery.getBoundingClientRect();
 
-
-            img.loading =
-                imageIndex < 24
-                    ? "eager"
-                    : "lazy";
-
-
-            img.decoding =
-                "async";
-
-
-            img.draggable =
-                false;
-
-
-            let extensionIndex = 0;
-
-
-            function tryNextExtension() {
+                const scrollDistance =
+                    gallery.offsetHeight -
+                    window.innerHeight;
 
                 if (
-                    extensionIndex >=
-                    image.extensions.length
+                    scrollDistance <= 0
                 ) {
 
-                    console.error(
-                        "Unable to find inspiration image:",
-                        image.number
+                    galleryImages.forEach(
+                        (image, index) => {
+
+                            image.classList.toggle(
+                                "active",
+                                index === 0
+                            );
+
+                        }
                     );
 
-                    slide.classList.add(
-                        "image-missing"
-                    );
+                    if (galleryCounter) {
+
+                        galleryCounter.textContent =
+                            `01 / ${formatNumber(galleryImages.length)}`;
+
+                    }
 
                     return;
 
                 }
 
 
-                const extension =
-                    image.extensions[
-                        extensionIndex
-                    ];
+                /*
+                   The gallery begins when its top reaches
+                   the top of the viewport.
 
+                   Progress then moves from 0 → 1 while the
+                   sticky section remains in place.
+                */
 
-                extensionIndex++;
-
-
-                img.src =
-                    `images/inspiration-${image.number}.${extension}`;
-
-            }
-
-
-            img.addEventListener(
-                "error",
-                () => {
-
-                    tryNextExtension();
-
-                }
-            );
-
-
-            slide.appendChild(
-                img
-            );
-
-
-            const number =
-                document.createElement("span");
-
-
-            number.className =
-                "inspiration-slide-number";
-
-
-            number.textContent =
-                String(image.number)
-                    .padStart(3, "0");
-
-
-            slide.appendChild(
-                number
-            );
-
-
-            slide.addEventListener(
-                "click",
-                () => {
-
-                    openInspirationLightbox(
-                        imageIndex
+                const progress =
+                    Math.max(
+                        0,
+                        Math.min(
+                            1,
+                            -rect.top /
+                            scrollDistance
+                        )
                     );
 
+
+                const imageCount =
+                    galleryImages.length;
+
+                const imagePosition =
+                    progress *
+                    (imageCount - 1);
+
+                const activeIndex =
+                    Math.round(
+                        imagePosition
+                    );
+
+
+                galleryImages.forEach(
+                    (image, index) => {
+
+                        image.classList.toggle(
+                            "active",
+                            index === activeIndex
+                        );
+
+                    }
+                );
+
+
+                if (galleryCounter) {
+
+                    galleryCounter.textContent =
+                        `${formatNumber(activeIndex + 1)} / ${formatNumber(imageCount)}`;
+
                 }
-            );
+
+            };
 
 
-            inspirationTrack.appendChild(
-                slide
-            );
+        const requestGalleryUpdate =
+            () => {
+
+                if (ticking) {
+                    return;
+                }
+
+                ticking = true;
+
+                requestAnimationFrame(
+                    updateGallery
+                );
+
+            };
 
 
-            inspirationSlides.push(
-                slide
-            );
+        window.addEventListener(
+            "scroll",
+            requestGalleryUpdate,
+            {
+                passive: true
+            }
+        );
+
+        window.addEventListener(
+            "resize",
+            requestGalleryUpdate
+        );
 
 
-            tryNextExtension();
+        requestGalleryUpdate();
 
-        }
-    );
+
+        /*
+           Store cleanup function so leaving Fisher Center
+           removes these listeners.
+        */
+
+        fisherCleanup =
+            () => {
+
+                window.removeEventListener(
+                    "scroll",
+                    requestGalleryUpdate
+                );
+
+                window.removeEventListener(
+                    "resize",
+                    requestGalleryUpdate
+                );
+
+            };
+
+    }
+
+
+    /* --------------------------------------------------------
+       FISHER CENTER VIDEOS
+       -------------------------------------------------------- */
+
+    /*
+       Vimeo videos inside fishercenter.html use their own
+       iframe embeds.
+
+       They intentionally do not use the main archive's
+       custom Vimeo controls.
+    */
 
 }
 
 
-/* --------------------------------------------------------
-   OPEN LIGHTBOX
-   -------------------------------------------------------- */
+/* ============================================================
+   RENDER PROJECT
+   ============================================================ */
 
-function openInspirationLightbox(index) {
+async function renderProject(
+    project
+) {
+
+    const requestId =
+        ++renderRequestId;
+
+    destroyCurrentVimeo();
+
+    projectElement.innerHTML = "";
+
+
+    /* --------------------------------------------------------
+       ABOUT
+       -------------------------------------------------------- */
+
+    if (project.type === "about") {
+
+        renderAbout(project);
+
+        return;
+
+    }
+
+
+    /* --------------------------------------------------------
+       EXTERNAL PAGE
+       -------------------------------------------------------- */
+
+    if (project.type === "page") {
+
+        await renderExternalPage(
+            project,
+            requestId
+        );
+
+        return;
+
+    }
+
+
+    /* --------------------------------------------------------
+       VIMEO
+       -------------------------------------------------------- */
+
+    if (project.type === "vimeo") {
+
+        projectElement.insertAdjacentHTML(
+            "beforeend",
+            renderVideo(project)
+        );
+
+        projectElement.insertAdjacentHTML(
+            "beforeend",
+            renderProjectInfo(project)
+        );
+
+    }
+
+
+    /* --------------------------------------------------------
+       IMAGE
+       -------------------------------------------------------- */
+
+    else if (project.type === "image") {
+
+        projectElement.insertAdjacentHTML(
+            "beforeend",
+            `
+                <div class="project-media">
+                    ${renderImage(project)}
+                </div>
+            `
+        );
+
+        projectElement.insertAdjacentHTML(
+            "beforeend",
+            renderProjectInfo(project)
+        );
+
+    }
+
+
+    /* --------------------------------------------------------
+       CAROUSEL
+       -------------------------------------------------------- */
+
+    else if (project.type === "carousel") {
+
+        projectElement.insertAdjacentHTML(
+            "beforeend",
+            `
+                <div class="project-media">
+                    ${renderCarousel(project)}
+                </div>
+            `
+        );
+
+        projectElement.insertAdjacentHTML(
+            "beforeend",
+            renderProjectInfo(project)
+        );
+
+        initializeCarousel();
+
+    }
+
+
+    /* --------------------------------------------------------
+       TEXT
+       -------------------------------------------------------- */
+
+    else if (project.type === "text") {
+
+        projectElement.insertAdjacentHTML(
+            "beforeend",
+            renderText(project)
+        );
+
+    }
+
+
+    /* --------------------------------------------------------
+       INITIALIZE VIMEO
+       -------------------------------------------------------- */
+
+    if (
+        project.type === "vimeo" &&
+        requestId === renderRequestId
+    ) {
+
+        initializeVimeo();
+
+    }
+
+}
+
+
+/* ============================================================
+   PROJECT KEY
+   ============================================================ */
+
+function getProjectKey(project) {
+
+    if (
+        project.type === "vimeo" &&
+        project.vimeo
+    ) {
+
+        return `vimeo:${project.vimeo}`;
+
+    }
+
+    if (
+        project.type === "carousel" &&
+        project.images?.length
+    ) {
+
+        return `carousel:${project.images[0]}`;
+
+    }
+
+    if (
+        project.type === "image" &&
+        project.image
+    ) {
+
+        return `image:${project.image}`;
+
+    }
+
+    if (
+        project.type === "page" &&
+        project.page
+    ) {
+
+        return `page:${project.page}`;
+
+    }
+
+    return `${project.type}:${project.title}`;
+
+}
+
+
+/* ============================================================
+   SELECT PROJECT
+   ============================================================ */
+
+function selectProject(index) {
 
     if (
         index < 0 ||
-        index >= INSPIRATION_IMAGE_COUNT
+        index >= projects.length
+    ) {
+        return;
+    }
+
+    if (
+        index === currentProjectIndex &&
+        projectElement.innerHTML
     ) {
         return;
     }
 
 
-    createInspirationLightbox();
-
-
-    inspirationLightboxIndex =
-        index;
-
-
-    showInspirationLightboxImage(
-        index
+    projectElement.classList.add(
+        "is-changing"
     );
 
 
-    inspirationLightbox.classList.add(
-        "open"
-    );
+    setTimeout(
+        async () => {
 
+            currentProjectIndex =
+                index;
 
-    inspirationLightbox.setAttribute(
-        "aria-hidden",
-        "false"
-    );
+            const project =
+                projects[index];
 
 
-    document.body.classList.add(
-        "inspiration-lightbox-open"
-    );
+            /* ------------------------------------------------
+               REMEMBER PROJECT
+               ------------------------------------------------ */
 
+            try {
 
-    document.body.style.overflow =
-        "hidden";
-
-}
-
-
-/* --------------------------------------------------------
-   SHOW LIGHTBOX IMAGE
-   -------------------------------------------------------- */
-
-function showInspirationLightboxImage(index) {
-
-    if (!inspirationLightboxImage) {
-        return;
-    }
-
-
-    let normalizedIndex =
-        index %
-        INSPIRATION_IMAGE_COUNT;
-
-
-    if (normalizedIndex < 0) {
-
-        normalizedIndex +=
-            INSPIRATION_IMAGE_COUNT;
-
-    }
-
-
-    inspirationLightboxIndex =
-        normalizedIndex;
-
-
-    const image =
-        inspirationImages[
-            inspirationLightboxIndex
-        ];
-
-
-    if (!image) {
-        return;
-    }
-
-
-    inspirationLightboxImage.src =
-        "";
-
-
-    inspirationLightboxImage.alt =
-        image.alt;
-
-
-    let extensionIndex = 0;
-
-
-    function tryNextExtension() {
-
-        if (
-            extensionIndex >=
-            image.extensions.length
-        ) {
-
-            console.error(
-                "Unable to find inspiration image:",
-                image.number
-            );
-
-            return;
-
-        }
-
-
-        const extension =
-            image.extensions[
-                extensionIndex
-            ];
-
-
-        extensionIndex++;
-
-
-        inspirationLightboxImage.src =
-            `images/inspiration-${image.number}.${extension}`;
-
-    }
-
-
-    inspirationLightboxImage.onerror =
-        () => {
-
-            tryNextExtension();
-
-        };
-
-
-    tryNextExtension();
-
-
-    if (inspirationLightboxCurrent) {
-
-        inspirationLightboxCurrent.textContent =
-            String(
-                inspirationLightboxIndex + 1
-            ).padStart(3, "0");
-
-    }
-
-
-    if (inspirationLightboxTotal) {
-
-        inspirationLightboxTotal.textContent =
-            String(
-                INSPIRATION_IMAGE_COUNT
-            ).padStart(3, "0");
-
-    }
-
-
-    if (inspirationCurrent) {
-
-        inspirationCurrent.textContent =
-            String(
-                inspirationLightboxIndex + 1
-            ).padStart(2, "0");
-
-    }
-
-
-    if (inspirationCaption) {
-
-        inspirationCaption.textContent =
-            image.label;
-
-    }
-
-}
-
-
-/* --------------------------------------------------------
-   CLOSE LIGHTBOX
-   -------------------------------------------------------- */
-
-function closeInspirationLightbox() {
-
-    if (!inspirationLightbox) {
-        return;
-    }
-
-
-    inspirationLightbox.classList.remove(
-        "open"
-    );
-
-
-    inspirationLightbox.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-
-    document.body.classList.remove(
-        "inspiration-lightbox-open"
-    );
-
-
-    document.body.style.overflow =
-        "";
-
-}
-
-
-/* --------------------------------------------------------
-   INITIALIZE GRID
-   -------------------------------------------------------- */
-
-if (inspirationTrack) {
-
-    createInspirationGrid();
-
-}
-
-
-/* ========================================================
-   CONTENT REFERENCES
-   ======================================================== */
-
-const inspirationContent = [
-
-    {
-        type:
-            "VERTICAL SERIES",
-
-        description:
-            "ALEXIS BITTAR NARRATIVE SERIES (FASHION).",
-
-        link:
-            "https://www.instagram.com/reel/DcG3as-OCQw/?utm_source=ig_web_copy_link&dlrf=MzRlODBiNWFlZA==&srtk=MzRlODBiNWFlZA=="
-    },
-    
-    {
-        type:
-            "INSTAGRAM REEL",
-
-        description:
-            "EMILY DEFOREST SUNGLASSES.",
-
-        link:
-            "https://www.instagram.com/p/DaWM3k8HdkH/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="
-    },
-
-    {
-        type:
-            "INSTAGRAM REEL",
-
-        description:
-            "ISAAC POWELL CRUISING.",
-
-        link:
-            "https://www.instagram.com/reel/Dap7SnjxNoi/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="
-    },
-
-    {
-        type:
-            "INSTAGRAM REEL",
-
-        description:
-            "TATE JUSTUS DANCING.",
-
-        link:
-            "https://www.instagram.com/tv/CY5Vkm5lN6d/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="
-    },
-
-    {
-        type:
-            "INSTAGRAM REEL",
-
-        description:
-            "JACK FERVER DRAMATUB.",
-
-        link:
-            "https://www.instagram.com/reel/CpWSn_-j2P4/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="
-    },
-
-    {
-        type:
-            "INSTAGRAM REEL",
-
-        description:
-            "YONATAN GEBEYAHU MOLIERING.",
-
-        link:
-            "https://www.instagram.com/reel/DCE791xvB4l/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="
-    },
-
-    {
-        type:
-            "YOUTUBE",
-
-        description:
-            "SMERZ \"DREAMS\" DANCE VIDEO REFERENCE.",
-
-        link:
-            "https://www.youtube.com/watch?v=Tkyn9CyxIIM"
-    },
-
-    {
-        type:
-            "YOUTUBE",
-
-        description:
-            "\"NOUVELLE VAGUE\" NARRATIVE CINEMA VERITE.",
-
-        link:
-            "https://www.youtube.com/watch?v=UufRzKVFseg"
-    },
-
-    {
-        type:
-            "YOUTUBE",
-
-        description:
-            "\"BAND A PART\" DANCING IN CAFE.",
-
-        link:
-            "https://www.youtube.com/watch?v=J1q9G2YmVqI"
-    },
-
-    {
-        type:
-            "YOUTUBE",
-
-        description:
-            "\"PEN15\" TRAILER.",
-
-        link:
-            "https://www.youtube.com/watch?v=VMVoOZ0fKGI"
-    },
-
-    {
-        type:
-            "YOUTUBE",
-
-        description:
-            "\"PRETTY IN PINK\" TRAILER.",
-
-        link:
-            "https://www.youtube.com/watch?v=mRLQUGq8eE8"
-    },
-
-    {
-        type:
-            "YOUTUBE",
-
-        description:
-            "\"THE BREAKFAST CLUB\" TRAILER.",
-
-        link:
-            "https://www.youtube.com/watch?v=BSXBvor47Zs"
-    },
-
-    {
-        type:
-            "YOUTUBE",
-
-        description:
-            "\"EUPHORIA\" TRAILER.",
-
-        link:
-            "https://www.youtube.com/watch?v=UR4Pxgnm-GA"
-    },
-
-    {
-        type:
-            "YOUTUBE",
-
-        description:
-            "\"WE ARE WHO WE ARE\" TRAILER.",
-
-        link:
-            "https://www.youtube.com/watch?v=7DSZaNHckv8"
-    },
-
-    {
-        type:
-            "YOUTUBE",
-
-        description:
-            "\"SUSPIRIA\" 1977 FULL FILM.",
-
-        link:
-            "https://www.youtube.com/watch?v=AmEtccHsw1k"
-    }
-
-];
-
-
-const inspirationReferences =
-    document.getElementById(
-        "inspirationReferences"
-    );
-
-const inspirationReferencesToggle =
-    document.getElementById(
-        "inspirationReferencesToggle"
-    );
-
-const inspirationReferencesCount =
-    document.getElementById(
-        "inspirationReferencesCount"
-    );
-
-const inspirationReferencesIcon =
-    document.getElementById(
-        "inspirationReferencesIcon"
-    );
-
-const inspirationReferenceList =
-    document.getElementById(
-        "inspirationReferenceList"
-    );
-
-
-function buildContentReferences() {
-
-    if (!inspirationReferenceList) {
-        return;
-    }
-
-
-    inspirationReferenceList.innerHTML = "";
-
-
-    inspirationContent.forEach(
-        (item, index) => {
-
-            const link =
-                document.createElement("a");
-
-
-            link.className =
-                "inspiration-reference";
-
-
-            link.href =
-                item.link;
-
-
-            link.target =
-                "_blank";
-
-
-            link.rel =
-                "noopener noreferrer";
-
-
-            const number =
-                document.createElement("span");
-
-
-            number.className =
-                "reference-number";
-
-
-            number.textContent =
-                String(index + 1)
-                    .padStart(2, "0");
-
-
-            const type =
-                document.createElement("span");
-
-
-            type.className =
-                "reference-type";
-
-
-            type.textContent =
-                item.type;
-
-
-            const description =
-                document.createElement("span");
-
-
-            description.className =
-                "reference-description";
-
-
-            description.textContent =
-                item.description;
-
-
-            const arrow =
-                document.createElement("span");
-
-
-            arrow.className =
-                "reference-arrow";
-
-
-            arrow.textContent =
-                "↗";
-
-
-            link.appendChild(number);
-            link.appendChild(type);
-            link.appendChild(description);
-            link.appendChild(arrow);
-
-
-            inspirationReferenceList.appendChild(
-                link
-            );
-
-        }
-    );
-
-
-    if (inspirationReferencesCount) {
-
-        inspirationReferencesCount.textContent =
-            String(inspirationContent.length)
-                .padStart(2, "0");
-
-    }
-
-}
-
-
-buildContentReferences();
-
-
-if (inspirationReferences) {
-
-    inspirationReferences.classList.add("open");
-
-}
-
-
-if (
-    inspirationReferencesToggle &&
-    inspirationReferences
-) {
-
-    inspirationReferencesToggle.addEventListener(
-        "click",
-        () => {
-
-            const isOpen =
-                inspirationReferences.classList
-                    .toggle("open");
-
-
-            inspirationReferencesToggle
-                .setAttribute(
-                    "aria-expanded",
-                    String(isOpen)
+                localStorage.setItem(
+                    "adhp-last-project",
+                    getProjectKey(project)
                 );
 
+            } catch (error) {
 
-            if (inspirationReferencesIcon) {
-
-                inspirationReferencesIcon.textContent =
-                    isOpen
-                        ? "−"
-                        : "+";
+                console.warn(
+                    "Could not save last project.",
+                    error
+                );
 
             }
 
-        }
-    );
 
-}
+            /* ------------------------------------------------
+               RENDER
+               ------------------------------------------------ */
 
+            await renderProject(
+                project
+            );
 
-/* ========================================================
-   CHARACTERS
-   ======================================================== */
 
-const characters = [
+            updateArchiveState();
 
-    {
-        name:
-            "LUCY D'ANGELO",
 
-        role:
-            "DANCE DIVISION STUDENT - JUNIOR",
+            /* ------------------------------------------------
+               KEEP ACTIVE ARCHIVE ITEM VISIBLE
+               ------------------------------------------------ */
 
-        image:
-            "images/character-01-headshot.jpg",
+            const activeItem =
+                archiveList.querySelector(
+                    `.archive-item[data-index="${index}"]`
+                );
 
-        bio:
-            "Lucy is ambitious, driven, competitive, and intensely determined to succeed in realizing childhood dreams. They are a natural organizer and a forceful creative presence, constantly pushing themselves and everyone around them toward something bigger. Lucy wants to be recognized as exceptional and has a deep need to prove that their vision is worthy of attention. Their confidence often masks insecurity, particularly when they feel overshadowed by Frankie’s seemingly effortless talent. Lucy’s ambition can become controlling, and their desire to shape the project—and the people within it—gradually creates tension with those closest to them.",
+            if (activeItem) {
 
-        casting:
-            "Emily DeForest — Actor"
-    },
+                activeItem.scrollIntoView({
+                    block: "nearest",
+                    behavior: "smooth"
+                });
 
+            }
 
-    {
-        name:
-            "FRANKIE FLINT",
 
-        role:
-            "DANCE DIVISION STUDENT - JUNIOR",
+            /* ------------------------------------------------
+               END TRANSITION
+               ------------------------------------------------ */
 
-        image:
-            "images/character-02-headshot.jpg",
+            requestAnimationFrame(
+                () => {
 
-        bio:
-            "Frankie is the kind of magnetic performer one dreams of being. They are effortless. Frankie is returning to school after disappearing at the end of the sophomore spring semester and missing the fall semester. No one knows why... Frankie discovered that her mother (other mother) is the famous Sandrana Bell. Frankie is a magnetic, instinctive, and extraordinarily talented dancer. They possess a natural physicality and confidence that makes their movement appear effortless. Unlike Lucy, Frankie doesn't seem driven by the need to prove themselves. Independent, funny, perceptive, and difficult to control, Frankie has a strong sense of their own identity. They quickly recognize the tensions developing around them and are not afraid to challenge people when something feels wrong. Their presence becomes increasingly important to both the project and Lucy's emotional trajectory.",
-
-        casting:
-            "Sarah Meahl — Actor"
-    },
-
-
-    {
-        name:
-            "JONAH LENTZ",
-
-        role:
-            "FILM DIVISION STUDENT - SENIOR",
-
-        image:
-            "images/character-03-headshot.jpg",
-
-        bio:
-            "Jonah is observant and introverted but overcomes these qualities as they discovery their true place in the world as a filmmaker as this project takes over their life. He understands people through the smallest gestures and often notices what everyone else misses. They are desperate to make a name for themselves before graduating with any prospects. Jonah is a serious, observant senior studying film. They wear glasses and tend toward sensible clothing and practical equipment. Their original purpose within Dance Division is to document the dancers for their thesis. As the project develops, Jonah becomes much more than an observer. They are increasingly drawn into the interpersonal dynamics surrounding the dancers and begin to understand how much is happening beneath the surface. Their camera gives them a unique position: they are simultaneously documenting the story and becoming part of it.",
-
-        casting:
-            "Yonatan Gebeyahu — Actor"
-    },
-
-
-    {
-        name:
-            "JUDE HARRISON",
-
-        role:
-            "DANCE DIVISION STUDENT - JUNIOR",
-
-        image:
-            "images/character-04-headshot.jpg",
-
-        bio:
-            "Jude moves between worlds — a beauty, a talent, and (internallly) a poet. Their physicality carries both control and vulnerability and leads people to take them for granted by only appreciating them superficially. They begin the season dating Lucy but evolve beyond the smallness of that relationship and being to explore other possibilities (they kiss Frankie, bisexual). Jude is talented, charismatic, ambitious, and career-minded. They are deeply invested in the success of Dance Division and initially share Lucy's creative vision and excitement about what the project could become. Their relationship with Lucy is complicated by the pressure of the project and by their own professional ambitions. Jude cares about Lucy but increasingly struggles with the intensity of their relationship. They ultimately offer Lucy genuine encouragement while making clear that their professional goals and personal feelings are not necessarily the same thing.",
-
-        casting:
-            "Isaac Powell — Dancer / Actor / Choreographer"
-    },
-
-
-    {
-        name:
-            "HENRY ZANE",
-
-        role:
-            "DANCE DIVISION PROGRAM DIRECTOR / GRAHAM & DOG OBSESSED / FRANKIE'S FATHER",
-
-        image:
-            "images/character-05-headshot.jpg",
-
-        bio:
-            "Henry is theatrical, complicated and deeply physical. They understand performance as both protection and revelation. A photo of Martha Graham with her dogs hangs on the wall behind their desk. Zane is a demanding, sarcastic, and authoritative professor who controls much of the department's access to studios, resources, and opportunities. They are skeptical of Lucy's ambitions and have little patience for unnecessary theatrics. Despite their strict exterior, Zane understands dance deeply and recognizes genuine talent when they see it. Their complicated history with choreographer Sandrana Bell gives them a personal connection to the larger dance world and helps explain some of their resistance to the people and ideas Lucy is pursuing.",
-
-        casting:
-            "Jack Ferver — Actor / Choreographer / Dancer"
-    },
-
-
-    {
-        name:
-            "BODHI D'ANGELO",
-
-        role:
-            "COMPUTER SCIENCE DIVISION STUDENT - FRESHMAN / LUCY'S BROTHER",
-
-        image:
-            "images/character-06-headshot.jpg",
-
-        bio:
-            "Bodhi is the spiritually enlightenend character who doesn't know everything. Bodhi is Lucy's younger brother and an easygoing, curious, warm presence. They have an analogue soul—someone who is grounded, observant, and genuinely interested in the world around them. Bodhi has a relaxed quality that contrasts with Lucy's intensity. They are loyal and emotionally open without being naive, and their growing connection with Frankie becomes an important part of the story. Bodhi isn't a player; they approach relationships with genuine curiosity and affection.",
-
-        casting:
-            "Peter Smith — Actor"
-    },
-
-
-    {
-        name:
-            "KIM CONRAD",
-
-        role:
-            "FILM MAJOR & DANCE MINOR STUDENT - JUNIOR",
-
-        image:
-            "images/character-07-headshot.jpg",
-
-        bio:
-            "Kim is the most explicitly funny character. Kim is untethered and it keeps her on the outside. She says things like “You’re half black?” (to Frankie) and “I thought you were gay.” (to moser)",
-
-        casting:
-            "Becky Abrams — Actor"
-    },
-
-
-    {
-        name:
-            "SANDRANA BELL",
-
-        role:
-            "FAMOUS CONTEMPORARY CHOREOGRAPHER",
-
-        image:
-            "images/character-08-headshot.jpg",
-
-        bio:
-            "Sandrana is a famous choreographer. After giving birth to Frankie, she gets offered a dance contract in Europe and leaves the child with Louise. In the second season we discover that Sandrana isn't actually evil and that she essentially got pregnant for Louise and it was Louise who insisted Sandrana take the job in Europe. Zane however has never been able to reconcile the fact that Sandrana left. Zane being biologically linked to Frankie through Sandrana, they both becomes ghostly spirits to the life of Frankie.",
-
-        casting:
-            "April Mathis — Actor"
-    },
-
-        {
-        name:
-            "LOUISE FLINT",
-
-        role:
-            "FRANKIE'S MOM - CHEMISTRY TEACHER",
-
-        image:
-            "images/character-15-headshot.jpg",
-
-        bio:
-            "Frankie's Mother. Part of trio of friends with Sandrana and Zane. She is a chemistry teacher at Bardonia and is the one who raised Frankie after Sandrana left.",
-
-        casting:
-            "Erin Markey — Actor"
-    },
-
-
-    {
-        name:
-            "REID & HARRIET",
-
-        role:
-            "FAMOUS CONTEMPORARY DANCE COSTUME DESIGNERS",
-
-        image:
-            "images/character-10-headshot.jpg",
-
-        bio:
-            "Successful costume designers currently in residence at Bardonia.",
-
-        casting:
-            "Reid Bartelme & Harriet Jung"
-    },
-
-
-    {
-        name:
-            "NOMI",
-
-        role:
-            "ZANE'S DOG",
-
-        image:
-            "images/character-11-headshot.jpg",
-
-        bio:
-            "Perfect dog.",
-
-        casting:
-            "Nomi"
-    },
-
-
-    {
-        name:
-            "FILM DIVISION JUNIOR - CAMERA 1",
-
-        role:
-            "DANNY - CAMERA GUY",
-
-        image:
-            "images/character-12-headshot.jpg",
-
-        bio:
-            "Camera person who lives in same house as Bodhi. Daniel Rampulla is the DP of Dance Division.",
-
-        casting:
-            "Daniel Rampulla"
-    },
-
-
-    {
-        name:
-            "SCIENCE DIVISION JUNIOR - AUDIO GUY",
-
-        role:
-            "JAKE - AUDIO GUY",
-
-        image:
-            "images/character-13-headshot.jpg",
-
-        bio:
-            "Audio person who lives in same house as Bodhi.",
-
-        casting:
-            "Jacob Robert van Winkle"
-    },
-
-
-    {
-        name:
-            "FILM DIVISION JUNIOR - CAMERA 2",
-
-        role:
-            "STANLEY - CAMERA GUY",
-
-        image:
-            "images/character-14-headshot.jpg",
-
-        bio:
-            "Camera person who lives in same house as Kim.",
-
-        casting:
-            "Jeremy Jacob - Director"
-    }
-
-];
-
-
-const characterImage =
-    document.getElementById(
-        "characterImage"
-    );
-
-const characterNumber =
-    document.getElementById(
-        "characterNumber"
-    );
-
-const characterRole =
-    document.getElementById(
-        "characterRole"
-    );
-
-const characterName =
-    document.getElementById(
-        "characterName"
-    );
-
-const characterBio =
-    document.getElementById(
-        "characterBio"
-    );
-
-const characterCasting =
-    document.getElementById(
-        "characterCasting"
-    );
-
-const characterFooterName =
-    document.getElementById(
-        "characterFooterName"
-    );
-
-const characterPrev =
-    document.getElementById(
-        "characterPrev"
-    );
-
-const characterNext =
-    document.getElementById(
-        "characterNext"
-    );
-
-const characterCurrent =
-    document.getElementById(
-        "characterCurrent"
-    );
-
-const characterTotal =
-    document.getElementById(
-        "characterTotal"
-    );
-
-
-let characterIndex = 0;
-
-
-if (characterTotal) {
-
-    characterTotal.textContent =
-        String(characters.length)
-            .padStart(2, "0");
-
-}
-
-
-function updateCharacter(index) {
-
-    if (!characters.length) {
-        return;
-    }
-
-
-    characterIndex =
-        (
-            index %
-            characters.length +
-            characters.length
-        ) %
-        characters.length;
-
-
-    const character =
-        characters[characterIndex];
-
-
-    if (characterImage) {
-
-        characterImage.classList.remove(
-            "loaded"
-        );
-
-        characterImage.classList.add(
-            "is-changing"
-        );
-
-
-        const preload =
-            new Image();
-
-
-        preload.onload = () => {
-
-            characterImage.src =
-                character.image;
-
-            characterImage.alt =
-                character.name;
-
-
-            requestAnimationFrame(() => {
-
-                characterImage.classList
-                    .remove(
+                    projectElement.classList.remove(
                         "is-changing"
                     );
 
-                characterImage.classList
-                    .add(
-                        "loaded"
-                    );
-
-            });
-
-        };
-
-
-        preload.onerror = () => {
-
-            console.error(
-                "Unable to load character image:",
-                character.image
+                }
             );
 
-
-            characterImage.src =
-                character.image;
-
-            characterImage.alt =
-                character.name;
-
-
-            characterImage.classList
-                .remove(
-                    "is-changing"
-                );
-
-        };
-
-
-        preload.src =
-            character.image;
-
-    }
-
-
-    if (characterNumber) {
-
-        characterNumber.textContent =
-            String(characterIndex + 1)
-                .padStart(2, "0");
-
-    }
-
-
-    if (characterCurrent) {
-
-        characterCurrent.textContent =
-            String(characterIndex + 1)
-                .padStart(2, "0");
-
-    }
-
-
-    if (characterRole) {
-
-        characterRole.textContent =
-            character.role;
-
-    }
-
-
-    if (characterName) {
-
-        characterName.textContent =
-            character.name;
-
-    }
-
-
-    if (characterBio) {
-
-        characterBio.textContent =
-            character.bio;
-
-    }
-
-
-    if (characterCasting) {
-
-        characterCasting.textContent =
-            character.casting;
-
-    }
-
-
-    if (characterFooterName) {
-
-        characterFooterName.textContent =
-            character.name;
-
-    }
-
-}
-
-
-if (characterPrev) {
-
-    characterPrev.addEventListener(
-        "click",
-        () => {
-
-            updateCharacter(
-                characterIndex - 1
-            );
-
-        }
+        },
+        180
     );
 
 }
 
 
-if (characterNext) {
+/* ============================================================
+   KEYBOARD NAVIGATION
+   ============================================================ */
 
-    characterNext.addEventListener(
-        "click",
-        () => {
+document.addEventListener(
+    "keydown",
+    event => {
 
-            updateCharacter(
-                characterIndex + 1
-            );
+        const tag =
+            document.activeElement
+                ?.tagName
+                ?.toLowerCase();
 
-        }
-    );
+        const isInput =
+            tag === "input" ||
+            tag === "textarea" ||
+            tag === "select";
 
-}
-
-
-if (characterImage) {
-
-    characterImage.addEventListener(
-        "load",
-        () => {
-
-            characterImage.classList.add(
-                "loaded"
-            );
-
-            characterImage.classList.remove(
-                "is-changing"
-            );
-
-        }
-    );
-
-}
-
-
-updateCharacter(0);
-
-
-/* ========================================================
-   LOCATION
-   ======================================================== */
-
-const locationTrack =
-    document.getElementById("locationTrack");
-
-const locationCaption =
-    document.getElementById("locationCaption");
-
-const locationCurrent =
-    document.getElementById("locationCurrent");
-
-const locationTotal =
-    document.getElementById("locationTotal");
-
-const LOCATION_IMAGE_COUNT = 13;
-
-const LOCATION_EXTENSIONS = [
-    "webp",
-    "jpg",
-    "jpeg",
-    "png",
-    "gif"
-];
-
-let locationLightbox = null;
-let locationLightboxImage = null;
-let locationLightboxCurrent = null;
-let locationLightboxTotal = null;
-let locationLightboxIndex = 0;
-
-
-/* --------------------------------------------------------
-   CREATE LOCATION LIGHTBOX
-   -------------------------------------------------------- */
-
-function createLocationLightbox() {
-
-    if (locationLightbox) return;
-
-    locationLightbox =
-        document.createElement("div");
-
-    locationLightbox.className =
-        "inspiration-lightbox location-lightbox";
-
-    locationLightbox.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-    locationLightbox.innerHTML = `
-        <button
-            class="inspiration-lightbox-close"
-            type="button"
-            aria-label="Close image"
-        >×</button>
-
-        <button
-            class="inspiration-lightbox-prev"
-            type="button"
-            aria-label="Previous image"
-        >←</button>
-
-        <div class="inspiration-lightbox-content">
-            <img
-                class="inspiration-lightbox-image"
-                src=""
-                alt=""
-            >
-
-            <div class="inspiration-lightbox-info">
-                <span class="inspiration-lightbox-current">01</span>
-                <span>/</span>
-                <span class="inspiration-lightbox-total">13</span>
-            </div>
-        </div>
-
-        <button
-            class="inspiration-lightbox-next"
-            type="button"
-            aria-label="Next image"
-        >→</button>
-    `;
-
-    document.body.appendChild(locationLightbox);
-
-    locationLightboxImage =
-        locationLightbox.querySelector(
-            ".inspiration-lightbox-image"
-        );
-
-    locationLightboxCurrent =
-        locationLightbox.querySelector(
-            ".inspiration-lightbox-current"
-        );
-
-    locationLightboxTotal =
-        locationLightbox.querySelector(
-            ".inspiration-lightbox-total"
-        );
-
-    locationLightbox.querySelector(
-        ".inspiration-lightbox-total"
-    ).textContent =
-        String(LOCATION_IMAGE_COUNT).padStart(2, "0");
-
-    locationLightbox.querySelector(
-        ".inspiration-lightbox-close"
-    ).addEventListener(
-        "click",
-        closeLocationLightbox
-    );
-
-    locationLightbox.querySelector(
-        ".inspiration-lightbox-prev"
-    ).addEventListener(
-        "click",
-        event => {
-            event.stopPropagation();
-
-            showLocationLightboxImage(
-                locationLightboxIndex - 1
-            );
-        }
-    );
-
-    locationLightbox.querySelector(
-        ".inspiration-lightbox-next"
-    ).addEventListener(
-        "click",
-        event => {
-            event.stopPropagation();
-
-            showLocationLightboxImage(
-                locationLightboxIndex + 1
-            );
-        }
-    );
-
-    locationLightbox.addEventListener(
-        "click",
-        event => {
-            if (event.target === locationLightbox) {
-                closeLocationLightbox();
-            }
-        }
-    );
-
-    locationLightbox.querySelector(
-        ".inspiration-lightbox-content"
-    ).addEventListener(
-        "click",
-        event => event.stopPropagation()
-    );
-
-    document.addEventListener(
-        "keydown",
-        event => {
-
-            if (
-                !locationLightbox ||
-                !locationLightbox.classList.contains("open")
-            ) {
-                return;
-            }
-
-            if (event.key === "Escape") {
-                event.preventDefault();
-                closeLocationLightbox();
-            }
-
-            if (event.key === "ArrowLeft") {
-                event.preventDefault();
-
-                showLocationLightboxImage(
-                    locationLightboxIndex - 1
-                );
-            }
-
-            if (event.key === "ArrowRight") {
-                event.preventDefault();
-
-                showLocationLightboxImage(
-                    locationLightboxIndex + 1
-                );
-            }
-        }
-    );
-}
-
-
-/* --------------------------------------------------------
-   LOAD LOCATION IMAGE
-   -------------------------------------------------------- */
-
-function loadLocationImage(imageElement, number) {
-
-    let extensionIndex = 0;
-
-    imageElement.onerror = () => {
-
-        if (extensionIndex >= LOCATION_EXTENSIONS.length) {
-            imageElement.onerror = null;
-
-            console.error(
-                "Unable to load location image:",
-                number
-            );
-
+        if (isInput) {
             return;
         }
 
-        imageElement.src =
-            `images/location-${number}.${LOCATION_EXTENSIONS[extensionIndex++]}`;
-    };
 
-    imageElement.src =
-        `images/location-${number}.${LOCATION_EXTENSIONS[extensionIndex++]}`;
-}
+        /* ----------------------------------------------------
+           CAROUSEL
+           ---------------------------------------------------- */
 
-
-/* --------------------------------------------------------
-   CREATE LOCATION GRID
-   -------------------------------------------------------- */
-
-function createLocationGrid() {
-
-    if (!locationTrack) return;
-
-    locationTrack.innerHTML = "";
-
-    for (
-        let imageIndex = 0;
-        imageIndex < LOCATION_IMAGE_COUNT;
-        imageIndex++
-    ) {
-
-        const number = imageIndex + 1;
-
-        const slide =
-            document.createElement("button");
-
-        slide.type = "button";
-        slide.className = "location-slide";
-        slide.dataset.index = String(imageIndex);
-
-        slide.setAttribute(
-            "aria-label",
-            `Open location image ${number}`
-        );
-
-        const img =
-            document.createElement("img");
-
-        img.alt = `Dance Division location ${number}`;
-        img.loading = imageIndex < 6 ? "eager" : "lazy";
-        img.decoding = "async";
-        img.draggable = false;
-
-        loadLocationImage(img, number);
-
-        const numberLabel =
-            document.createElement("span");
-
-        numberLabel.className = "location-slide-number";
-
-        numberLabel.textContent =
-            String(number).padStart(2, "0");
-
-        slide.appendChild(img);
-        slide.appendChild(numberLabel);
-
-        slide.addEventListener(
-            "click",
-            () => openLocationLightbox(imageIndex)
-        );
-
-        locationTrack.appendChild(slide);
-    }
-
-    if (locationTotal) {
-        locationTotal.textContent =
-            String(LOCATION_IMAGE_COUNT).padStart(2, "0");
-    }
-
-    if (locationCurrent) {
-        locationCurrent.textContent = "01";
-    }
-
-    if (locationCaption) {
-        locationCaption.textContent = "01 / LOCATION";
-    }
-}
-
-
-/* --------------------------------------------------------
-   OPEN LOCATION LIGHTBOX
-   -------------------------------------------------------- */
-
-function openLocationLightbox(index) {
-
-    createLocationLightbox();
-
-    locationLightboxIndex = index;
-
-    showLocationLightboxImage(index);
-
-    locationLightbox.classList.add("open");
-
-    locationLightbox.setAttribute(
-        "aria-hidden",
-        "false"
-    );
-
-    document.body.classList.add(
-        "inspiration-lightbox-open"
-    );
-
-    document.body.style.overflow = "hidden";
-}
-
-
-/* --------------------------------------------------------
-   SHOW LOCATION LIGHTBOX IMAGE
-   -------------------------------------------------------- */
-
-function showLocationLightboxImage(index) {
-
-    if (!locationLightboxImage) return;
-
-    locationLightboxIndex =
-        (
-            index % LOCATION_IMAGE_COUNT +
-            LOCATION_IMAGE_COUNT
-        ) % LOCATION_IMAGE_COUNT;
-
-    const number = locationLightboxIndex + 1;
-
-    loadLocationImage(
-        locationLightboxImage,
-        number
-    );
-
-    locationLightboxImage.alt =
-        `Dance Division location ${number}`;
-
-    if (locationLightboxCurrent) {
-        locationLightboxCurrent.textContent =
-            String(number).padStart(2, "0");
-    }
-
-    if (locationLightboxTotal) {
-        locationLightboxTotal.textContent =
-            String(LOCATION_IMAGE_COUNT).padStart(2, "0");
-    }
-
-    if (locationCurrent) {
-        locationCurrent.textContent =
-            String(number).padStart(2, "0");
-    }
-
-    if (locationCaption) {
-        locationCaption.textContent =
-            `${String(number).padStart(2, "0")} / LOCATION`;
-    }
-}
-
-
-/* --------------------------------------------------------
-   CLOSE LOCATION LIGHTBOX
-   -------------------------------------------------------- */
-
-function closeLocationLightbox() {
-
-    if (!locationLightbox) return;
-
-    locationLightbox.classList.remove("open");
-
-    locationLightbox.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-    document.body.classList.remove(
-        "inspiration-lightbox-open"
-    );
-
-    document.body.style.overflow = "";
-}
-
-
-/* --------------------------------------------------------
-   INITIALIZE LOCATION
-   -------------------------------------------------------- */
-
-if (locationTrack) {
-    createLocationGrid();
-}
-
-
-/* ========================================================
-   AUDIO
-   ======================================================== */
-
-const audio =
-    document.getElementById("audio");
-
-const playButton =
-    document.getElementById("playButton");
-
-const audioProgress =
-    document.querySelector(".audio-progress");
-
-const audioProgressFill =
-    document.getElementById(
-        "audioProgressFill"
-    );
-
-const audioTime =
-    document.getElementById("audioTime");
-
-const audioDuration =
-    document.getElementById(
-        "audioDuration"
-    );
-
-const trackNumber =
-    document.getElementById("trackNumber");
-
-const trackTitle =
-    document.getElementById("trackTitle");
-
-const audioItems =
-    document.querySelectorAll(
-        ".audio-item"
-    );
-
-
-const tracks = [
-
-    {
-        src:
-            "audio/dns dvsn.mp3",
-
-        title:
-            "DNS DVSN"
-
-    },
-
-    {
-        src:
-            "audio/fun.mp3",
-
-        title:
-            "F U N"
-
-    },
-
-    {
-        src:
-            "audio/starstarstar2.mp3",
-
-        title:
-            "STAR STAR STAR (BEATS VERSION)"
-
-    },
-
-    {
-        src:
-            "audio/star star star.mp3",
-
-        title:
-            "STAR STAR STAR (ACOUSTIC)",
-
-        lyrics: []
-
-    }
-
-];
-
-
-let currentTrackIndex = 0;
-let pendingAutoplay = false;
-
-
-function formatTime(seconds) {
-
-    if (
-        !Number.isFinite(seconds) ||
-        seconds < 0
-    ) {
-        return "00:00";
-    }
-
-
-    const minutes =
-        Math.floor(seconds / 60);
-
-    const remaining =
-        Math.floor(seconds % 60);
-
-
-    return (
-        String(minutes).padStart(2, "0") +
-        ":" +
-        String(remaining).padStart(2, "0")
-    );
-
-}
-
-
-function updateAudioDisplay() {
-
-    const track =
-        tracks[currentTrackIndex];
-
-
-    if (trackNumber) {
-
-        trackNumber.textContent =
-            String(currentTrackIndex + 1)
-                .padStart(2, "0");
-
-    }
-
-
-    if (trackTitle) {
-
-        trackTitle.textContent =
-            track.title;
-
-    }
-
-
-    if (audioTime) {
-
-        audioTime.textContent =
-            formatTime(
-                audio
-                    ? audio.currentTime
-                    : 0
+        const carousel =
+            projectElement.querySelector(
+                ".image-carousel"
             );
 
-    }
+        if (carousel) {
 
+            if (event.key === "ArrowLeft") {
 
-    if (audioDuration) {
+                event.preventDefault();
 
-        audioDuration.textContent =
-            formatTime(
-                audio
-                    ? audio.duration
-                    : 0
-            );
-
-    }
-
-
-    if (audioProgressFill) {
-
-        const percent =
-            audio &&
-            Number.isFinite(audio.duration) &&
-            audio.duration > 0
-
-                ? (
-                    audio.currentTime /
-                    audio.duration
-                ) * 100
-
-                : 0;
-
-
-        audioProgressFill.style.width =
-            `${percent}%`;
-
-    }
-
-
-    audioItems.forEach(
-        (item, index) => {
-
-            item.classList.toggle(
-                "active",
-                index === currentTrackIndex
-            );
-
-        }
-    );
-
-}
-
-
-function updatePlayButton() {
-
-    if (!playButton || !audio) {
-        return;
-    }
-
-
-    playButton.textContent =
-        audio.paused
-            ? "PLAY"
-            : "PAUSE";
-
-}
-
-
-function loadTrack(
-    index,
-    autoplay = false
-) {
-
-    if (!audio) return;
-
-
-    if (
-        index < 0 ||
-        index >= tracks.length
-    ) {
-        return;
-    }
-
-
-    currentTrackIndex =
-        index;
-
-    pendingAutoplay =
-        autoplay;
-
-
-    audio.pause();
-
-
-    audio.removeAttribute("src");
-
-    audio.load();
-
-
-    audio.src =
-        tracks[index].src;
-
-    audio.preload =
-        "metadata";
-
-
-    updateAudioDisplay();
-
-    updateLyrics();
-
-
-    audio.load();
-
-    updatePlayButton();
-
-}
-
-
-if (audio) {
-
-    audio.addEventListener(
-        "loadedmetadata",
-        () => {
-
-            updateAudioDisplay();
-
-        }
-    );
-
-
-    audio.addEventListener(
-        "durationchange",
-        () => {
-
-            updateAudioDisplay();
-
-        }
-    );
-
-
-    audio.addEventListener(
-        "timeupdate",
-        () => {
-
-            updateAudioDisplay();
-
-        }
-    );
-
-
-    audio.addEventListener(
-        "play",
-        () => {
-
-            updatePlayButton();
-
-        }
-    );
-
-
-    audio.addEventListener(
-        "pause",
-        () => {
-
-            updatePlayButton();
-
-        }
-    );
-
-
-    audio.addEventListener(
-        "canplay",
-        () => {
-
-            if (!pendingAutoplay) {
-                return;
-            }
-
-
-            pendingAutoplay =
-                false;
-
-
-            audio.play()
-                .catch(error => {
-
-                    console.warn(
-                        "Audio playback was blocked:",
-                        error
-                    );
-
-                });
-
-        }
-    );
-
-
-    audio.addEventListener(
-        "ended",
-        () => {
-
-            if (
-                currentTrackIndex <
-                tracks.length - 1
-            ) {
-
-                loadTrack(
-                    currentTrackIndex + 1,
-                    true
+                updateCarousel(
+                    carousel,
+                    currentCarouselIndex - 1,
+                    -1
                 );
 
-            } else {
+                return;
 
-                updatePlayButton();
+            }
+
+            if (event.key === "ArrowRight") {
+
+                event.preventDefault();
+
+                updateCarousel(
+                    carousel,
+                    currentCarouselIndex + 1,
+                    1
+                );
+
+                return;
 
             }
 
         }
-    );
 
 
-    audio.addEventListener(
-        "error",
-        () => {
+        /* ----------------------------------------------------
+           VIMEO
+           ---------------------------------------------------- */
 
-            console.error(
-                "Audio error:",
-                audio.error
-            );
+        if (
+            currentVimeoPlayer &&
+            (
+                event.code === "Space" ||
+                event.key === "ArrowLeft" ||
+                event.key === "ArrowRight"
+            )
+        ) {
 
-        }
-    );
+            if (event.code === "Space") {
 
-}
+                event.preventDefault();
 
+                currentVimeoPlayer
+                    .getPaused()
+                    .then(paused => {
 
-if (playButton && audio) {
+                        if (paused) {
 
-    playButton.addEventListener(
-        "click",
-        () => {
+                            currentVimeoPlayer.play();
 
-            if (audio.paused) {
+                        } else {
 
-                audio.play()
-                    .catch(error => {
+                            currentVimeoPlayer.pause();
 
-                        console.warn(
-                            "Playback failed:",
-                            error
-                        );
+                        }
 
                     });
 
-            } else {
+                return;
 
-                audio.pause();
+            }
+
+
+            if (
+                event.key === "ArrowLeft" ||
+                event.key === "ArrowRight"
+            ) {
+
+                event.preventDefault();
+
+                currentVimeoPlayer
+                    .getCurrentTime()
+                    .then(currentTime => {
+
+                        const amount =
+                            event.key === "ArrowLeft"
+                                ? -5
+                                : 5;
+
+                        currentVimeoPlayer
+                            .setCurrentTime(
+                                Math.max(
+                                    0,
+                                    currentTime + amount
+                                )
+                            );
+
+                    });
+
+                return;
 
             }
 
         }
-    );
-
-}
 
 
-audioItems.forEach(
-    (item, index) => {
+        /* ----------------------------------------------------
+           ARCHIVE UP / DOWN
+           ---------------------------------------------------- */
 
-        item.addEventListener(
-            "click",
-            () => {
+        if (event.key === "ArrowUp") {
 
-                const dataTrack =
-                    Number(
-                        item.dataset.track
-                    );
+            event.preventDefault();
 
+            selectProject(
+                currentProjectIndex - 1
+            );
 
-                const targetTrack =
-                    Number.isInteger(dataTrack)
-                        ? dataTrack
-                        : index;
+        }
 
+        else if (event.key === "ArrowDown") {
 
-                loadTrack(
-                    targetTrack,
-                    true
-                );
+            event.preventDefault();
 
-            }
-        );
+            selectProject(
+                currentProjectIndex + 1
+            );
+
+        }
 
     }
 );
 
 
-if (audioProgress && audio) {
-
-    audioProgress.addEventListener(
-        "click",
-        event => {
-
-            if (
-                !Number.isFinite(
-                    audio.duration
-                ) ||
-                audio.duration <= 0
-            ) {
-                return;
-            }
-
-
-            const rect =
-                audioProgress
-                    .getBoundingClientRect();
-
-
-            const ratio =
-                (
-                    event.clientX -
-                    rect.left
-                ) /
-                rect.width;
-
-
-            audio.currentTime =
-                Math.max(
-                    0,
-                    Math.min(
-                        1,
-                        ratio
-                    )
-                ) *
-                audio.duration;
-
-        }
-    );
-
-}
-
-
-if (audio && tracks.length) {
-
-    loadTrack(
-        0,
-        false
-    );
-
-}
-
-
-/* ========================================================
-   LYRICS
-   ======================================================== */
-
-const lyricsPanel =
-    document.getElementById(
-        "lyricsPanel"
-    );
-
-const lyricsToggle =
-    document.getElementById(
-        "lyricsToggle"
-    );
-
-const lyricsTrackNumber =
-    document.getElementById(
-        "lyricsTrackNumber"
-    );
-
-const lyricsToggleIcon =
-    document.getElementById(
-        "lyricsToggleIcon"
-    );
-
-const lyricsInner =
-    document.getElementById(
-        "lyricsInner"
-    );
-
-
-function updateLyrics() {
-
-    if (!lyricsInner) {
-        return;
-    }
-
-
-    const track =
-        tracks[currentTrackIndex];
-
-
-    lyricsInner.innerHTML = "";
-
-
-    if (
-        !track ||
-        !track.lyrics ||
-        track.lyrics.length === 0
-    ) {
-
-        const placeholder =
-            document.createElement(
-                "div"
-            );
-
-        placeholder.className =
-            "lyrics-placeholder";
-
-        placeholder.textContent =
-            "NO LYRICS AVAILABLE.";
-
-        lyricsInner.appendChild(
-            placeholder
-        );
-
-    } else {
-
-        track.lyrics.forEach(
-            line => {
-
-                if (line === "") {
-
-                    const spacer =
-                        document.createElement(
-                            "div"
-                        );
-
-                    spacer.className =
-                        "lyrics-spacer";
-
-                    lyricsInner.appendChild(
-                        spacer
-                    );
-
-                } else {
-
-                    const lyricLine =
-                        document.createElement(
-                            "div"
-                        );
-
-                    lyricLine.className =
-                        "lyrics-line";
-
-                    lyricLine.textContent =
-                        line;
-
-                    lyricsInner.appendChild(
-                        lyricLine
-                    );
-
-                }
-
-            }
-        );
-
-    }
-
-
-    if (lyricsTrackNumber) {
-
-        lyricsTrackNumber.textContent =
-            String(currentTrackIndex + 1)
-                .padStart(2, "0");
-
-    }
-
-}
-
-
-if (
-    lyricsToggle &&
-    lyricsPanel
-) {
-
-    lyricsToggle.addEventListener(
-        "click",
-        () => {
-
-            const isOpen =
-                lyricsPanel.classList
-                    .toggle("open");
-
-
-            lyricsToggle.setAttribute(
-                "aria-expanded",
-                String(isOpen)
-            );
-
-
-            if (lyricsToggleIcon) {
-
-                lyricsToggleIcon.textContent =
-                    isOpen
-                        ? "−"
-                        : "+";
-
-            }
-
-        }
-    );
-
-}
-
-
-updateLyrics();
-
-
-/* ========================================================
-   REDUCED MOTION
-   ======================================================== */
-
-const reducedMotion =
-    window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-    );
-
-
-if (reducedMotion.matches) {
-
-    document.documentElement
-        .classList
-        .add("reduced-motion");
-
-}
-
-
-
 /* ============================================================
-   DESIGN LIGHTBOX
+   INITIALIZE
    ============================================================ */
 
-(() => {
-    const lightbox = document.getElementById("designLightbox");
-    const lightboxImage = document.getElementById("designLightboxImage");
-    const closeButton = document.getElementById("designLightboxClose");
-    const previousButton = document.getElementById("designLightboxPrev");
-    const nextButton = document.getElementById("designLightboxNext");
-    const counter = document.getElementById("designLightboxCounter");
-    const designButtons = Array.from(document.querySelectorAll(".design-image"));
+buildArchive();
 
-    if (!lightbox || !lightboxImage || !closeButton || !previousButton || !nextButton) return;
 
-    let currentIndex = 0;
+const aboutLink = document.getElementById("aboutLink");
 
-    const showImage = (index) => {
-        if (!designButtons.length) return;
+if (aboutLink) {
+    aboutLink.addEventListener("click", event => {
+        event.preventDefault();
 
-        currentIndex = (index + designButtons.length) % designButtons.length;
+        const aboutIndex = projects.findIndex(
+            project => project.type === "about"
+        );
 
-        const button = designButtons[currentIndex];
-        const thumbnail = button.querySelector("img");
-        const source = button.dataset.designImage || (thumbnail && thumbnail.src);
-
-        lightboxImage.src = source;
-        lightboxImage.alt = thumbnail ? thumbnail.alt : `Design ${currentIndex + 1}`;
-        if (counter) {
-            counter.textContent =
-                `${String(currentIndex + 1).padStart(2, "0")} / ${String(designButtons.length).padStart(2, "0")}`;
-        }
-    };
-
-    const openLightbox = (index) => {
-        showImage(index);
-        lightbox.classList.add("is-open");
-        lightbox.setAttribute("aria-hidden", "false");
-        document.body.style.overflow = "hidden";
-        closeButton.focus();
-    };
-
-    const closeLightbox = () => {
-        lightbox.classList.remove("is-open");
-        lightbox.setAttribute("aria-hidden", "true");
-        lightboxImage.src = "";
-        document.body.style.overflow = "";
-    };
-
-    designButtons.forEach((button, index) => {
-        button.addEventListener("click", () => openLightbox(index));
-    });
-
-    previousButton.addEventListener("click", () => showImage(currentIndex - 1));
-    nextButton.addEventListener("click", () => showImage(currentIndex + 1));
-    closeButton.addEventListener("click", closeLightbox);
-
-    lightbox.addEventListener("click", (event) => {
-        if (event.target === lightbox) closeLightbox();
-    });
-
-    document.addEventListener("keydown", (event) => {
-        if (!lightbox.classList.contains("is-open")) return;
-
-        if (event.key === "Escape") {
-            closeLightbox();
-        } else if (event.key === "ArrowLeft") {
-            event.preventDefault();
-            showImage(currentIndex - 1);
-        } else if (event.key === "ArrowRight") {
-            event.preventDefault();
-            showImage(currentIndex + 1);
+        if (aboutIndex !== -1) {
+            selectProject(aboutIndex);
         }
     });
-})();
+}
+
+/* ============================================================
+   ALWAYS OPEN ON ABOUT
+   ============================================================ */
+
+const aboutProjectIndex =
+    projects.findIndex(
+        project => project.type === "about"
+    );
 
 
-})();
+if (aboutProjectIndex !== -1) {
+
+    currentProjectIndex =
+        aboutProjectIndex;
+
+    renderProject(
+        projects[currentProjectIndex]
+    );
+
+    updateArchiveState();
+
+} else {
+
+    console.warn(
+        "About project could not be found."
+    );
+
+    currentProjectIndex = 0;
+
+    renderProject(
+        projects[currentProjectIndex]
+    );
+
+    updateArchiveState();
+
+}
