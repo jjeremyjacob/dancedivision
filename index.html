@@ -18,15 +18,7 @@
 
 
 <script>
-(function () {
-  try {
-    if (sessionStorage.getItem("danceDivisionLoaderShown") === "1") {
-      document.documentElement.classList.add("skip-loader");
-    } else {
-      sessionStorage.setItem("danceDivisionLoaderShown", "1");
-    }
-  } catch (e) {}
-})();
+
 </script>
 
 
@@ -132,12 +124,6 @@ header.site-header > .header-status {
 }
 @media (prefers-reduced-motion: reduce) {
     header.site-header, .section-subheader { transition: none; }
-}
-
-
-html.skip-loader #loader {
-  display: none !important;
-}
 
 
 </style>
@@ -148,36 +134,6 @@ html.skip-loader #loader {
 <body>
 
 
-<!-- ============================================================
-     LOADER
-     ============================================================ -->
-
-<div id="loader" class="loader">
-
-    <div class="loader-inner">
-
-        <div class="loader-top">
-            <span>DANCE DIVISION</span>
-            <span id="loaderPercent">00</span>
-        </div>
-
-        <div class="loader-line">
-
-            <div
-                id="loaderProgress"
-                class="loader-progress"
-            ></div>
-
-        </div>
-
-        <div class="loader-bottom">
-            <span>PROJECT DEVELOPMENT</span>
-            <span>2026</span>
-        </div>
-
-    </div>
-
-</div>
 
 
 <!-- ============================================================
@@ -399,7 +355,7 @@ html.skip-loader #loader {
 
 <div class="opening-meta">
     <span>DIRECTOR OF PHOTOGRAPHY</span>
-    <strong>DANIEL RAMPULLA</strong>
+    <strong>TBD</strong>
 </div>
 
 <div class="opening-meta">
