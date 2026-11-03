@@ -947,17 +947,59 @@ frame.addEventListener("touchend", event => {
 function setupDropdown(buttonId, navId) {
   const button = $(buttonId);
   const nav = $(navId);
+
   if (!button || !nav) return;
 
   button.addEventListener("click", () => {
-    const open = button.getAttribute("aria-expanded") === "true";
-    button.setAttribute("aria-expanded", String(!open));
-    nav.classList.toggle("is-open", !open);
+    const opening = button.getAttribute("aria-expanded") !== "true";
+
+    // Close other dropdowns
+    document.querySelectorAll(".page-nav-links, .section-nav-links")
+      .forEach(menu => {
+        if (menu !== nav) {
+          menu.classList.remove("is-dropdown-open");
+        }
+      });
+
+    document.querySelectorAll(".nav-dropdown-toggle")
+      .forEach(toggle => {
+        if (toggle !== button) {
+          toggle.setAttribute("aria-expanded", "false");
+        }
+      });
+
+    nav.classList.toggle("is-dropdown-open", opening);
+    button.setAttribute("aria-expanded", String(opening));
   });
 }
 
+// Initialize dropdowns
 setupDropdown("pageDropdownToggle", "pageNavigation");
 setupDropdown("navDropdownToggle", "siteNavigation");
+
+// Close dropdowns when clicking outside
+document.addEventListener("click", event => {
+  if (event.target.closest(".page-nav-toggle, .section-nav-toggle, .page-nav-links, .section-nav-links")) {
+    return;
+  }
+
+  document.querySelectorAll(".page-nav-links, .section-nav-links")
+    .forEach(menu => menu.classList.remove("is-dropdown-open"));
+
+  document.querySelectorAll(".nav-dropdown-toggle")
+    .forEach(button => button.setAttribute("aria-expanded", "false"));
+});
+
+// Close dropdowns with Escape
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    document.querySelectorAll(".page-nav-links, .section-nav-links")
+      .forEach(menu => menu.classList.remove("is-dropdown-open"));
+
+    document.querySelectorAll(".nav-dropdown-toggle")
+      .forEach(button => button.setAttribute("aria-expanded", "false"));
+  }
+});
 
 renderFilm(0);
 </script>
