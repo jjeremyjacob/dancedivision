@@ -420,22 +420,22 @@
       "id": "f4469c6c-7993-4a9b-aa16-9c9e5aba5f36",
       "date": "2027-01-11",
       "title": "DAY ONE KAATSBAAN",
-      "time": "",
-      "location": "",
+      "time": "NOON",
+      "location": "KAATSBAAN",
       "description": "Load In / Arrival Day"
     },
     {
       "id": "32d9ae07-f0e9-4961-b66f-f0c47f178180",
       "date": "2027-01-11",
       "title": "CHOREOGRAPHY REHEARSAL",
-      "time": "",
+      "time": "4:00PM",
       "location": "",
       "description": ""
     },
     {
       "id": "b6ceaa4c-b6af-4ccb-8958-a002772f149e",
       "date": "2027-01-11",
-      "title": "CAMERA TESTS",
+      "title": "CAMERA TESTS / MEDIA/FILE SYSTEM",
       "time": "",
       "location": "",
       "description": ""
@@ -449,25 +449,9 @@
       "description": ""
     },
     {
-      "id": "99c77476-c255-475c-a9db-84e1fd8d5e2e",
-      "date": "2027-01-15",
-      "title": "END EARLY",
-      "time": "",
-      "location": "",
-      "description": ""
-    },
-    {
       "id": "01ba2368-064f-48e4-bda5-bdd345c2aa87",
       "date": "2027-01-16",
       "title": "DAY OFF",
-      "time": "",
-      "location": "",
-      "description": ""
-    },
-    {
-      "id": "bb846fa0-f1e5-4142-966d-d76fbee87950",
-      "date": "2027-01-17",
-      "title": "START LATE",
       "time": "",
       "location": "",
       "description": ""
