@@ -586,7 +586,7 @@ main {
     <a class="header-title" href="index.html">DANCE DIVISION</a>
     <div class="header-status"><span class="status-dot" aria-hidden="true"></span><span>IN DEVELOPMENT</span></div>
 
-    <button class="nav-dropdown-toggle page-nav-toggle" type="button" aria-expanded="false" aria-controls="page-nav-links">
+    <button class="nav-dropdown-toggle page-nav-toggle" type="button" aria-expanded="false" aria-controls="pageNavigation">
         PAGES <span class="nav-dropdown-indicator" aria-hidden="true">+</span>
     </button>
 
@@ -834,7 +834,7 @@ main {
 <script>
 (() => {
     const menus = [
-        { button: document.querySelector(".page-nav-toggle"), menu: document.getElementById("page-nav-links") },
+        { button: document.querySelector(".page-nav-toggle"), menu: document.getElementById("pageNavigation") },
         { button: document.querySelector(".section-nav-toggle"), menu: document.getElementById("section-nav-links") }
     ].filter((item) => item.button && item.menu);
 
