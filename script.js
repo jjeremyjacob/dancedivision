@@ -1784,7 +1784,7 @@ const characters = [
             "Frankie is the kind of magnetic performer one dreams of being. They are effortless. Frankie is returning to school after disappearing at the end of the sophomore spring semester and missing the fall semester. No one knows why... Frankie discovered that her mother (other mother) is the famous Sandrana Bell. Frankie is a magnetic, instinctive, and extraordinarily talented dancer. They possess a natural physicality and confidence that makes their movement appear effortless. Unlike Lucy, Frankie doesn't seem driven by the need to prove themselves. Independent, funny, perceptive, and difficult to control, Frankie has a strong sense of their own identity. They quickly recognize the tensions developing around them and are not afraid to challenge people when something feels wrong. Their presence becomes increasingly important to both the project and Lucy's emotional trajectory.",
 
         casting:
-            "Sarah Meahl — Actor"
+            "Ashley Hill — Actor"
     },
 
 
@@ -1820,7 +1820,7 @@ const characters = [
             "Jude moves between worlds — a beauty, a talent, and (internallly) a poet. Their physicality carries both control and vulnerability and leads people to take them for granted by only appreciating them superficially. They begin the season dating Lucy but evolve beyond the smallness of that relationship and being to explore other possibilities (they kiss Frankie, bisexual). Jude is talented, charismatic, ambitious, and career-minded. They are deeply invested in the success of Dance Division and initially share Lucy's creative vision and excitement about what the project could become. Their relationship with Lucy is complicated by the pressure of the project and by their own professional ambitions. Jude cares about Lucy but increasingly struggles with the intensity of their relationship. They ultimately offer Lucy genuine encouragement while making clear that their professional goals and personal feelings are not necessarily the same thing.",
 
         casting:
-            "Isaac Powell — Dancer / Actor / Choreographer"
+            "TBD — Actor"
     },
 
 
@@ -1915,24 +1915,6 @@ const characters = [
 
     {
         name:
-            "REID & HARRIET",
-
-        role:
-            "FAMOUS CONTEMPORARY DANCE COSTUME DESIGNERS",
-
-        image:
-            "images/character-10-headshot.jpg",
-
-        bio:
-            "Successful costume designers currently in residence at Bardonia.",
-
-        casting:
-            "Reid Bartelme & Harriet Jung"
-    },
-
-
-    {
-        name:
             "NOMI",
 
         role:
@@ -1948,23 +1930,6 @@ const characters = [
             "Nomi"
     },
 
-
-    {
-        name:
-            "FILM DIVISION JUNIOR - CAMERA 1",
-
-        role:
-            "DANNY - CAMERA GUY",
-
-        image:
-            "images/character-12-headshot.jpg",
-
-        bio:
-            "Camera person who lives in same house as Bodhi. Daniel Rampulla is the DP of Dance Division.",
-
-        casting:
-            "Daniel Rampulla"
-    },
 
 
     {
