@@ -219,7 +219,7 @@ main {
 .motion-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 14px;
+    gap: 42px 14px;
     align-items: start;
 }
 
@@ -741,83 +741,163 @@ main {
         </div>
     </section>
 
-    <section class="design-section" id="motion">
-        <div class="section-heading">
-            <h2><span class="section-number">04 —</span>MOTION</h2>
-            <span class="section-note">MOVING IMAGE / 9:16</span>
-        </div>
+    
+<section class="design-section" id="motion">
+    <div class="section-heading">
+        <h2><span class="section-number">04 —</span>MOTION</h2>
+        <span class="section-note">MOVING IMAGE / 9:16</span>
+    </div>
 
-        <div class="motion-grid">
-            <div class="motion-item">
-                <div class="motion-frame">
-                    <iframe
-                        src="https://player.vimeo.com/video/1242967741?h=2e3aa2653e&controls=0&title=0&byline=0&portrait=0&transparent=0"
-                        title="DANCE DIVISION motion video 01"
-                        loading="lazy"
-                        allow="autoplay; fullscreen; picture-in-picture"
-                        referrerpolicy="strict-origin-when-cross-origin"
-                        allowfullscreen>
-                    </iframe>
-                    <button class="motion-click-toggle" type="button" aria-label="Play video" title="Play or pause video"></button>
-                </div>
-                <div class="simple-controls">
-                    <button class="play-toggle" type="button" aria-label="Play video">PLAY</button>
-                    <input class="video-progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Video progress">
-                    <button class="volume-toggle" type="button" aria-label="Mute video">SOUND</button>
-                </div>
-                <div class="motion-caption">
-                    <span class="motion-title">Motion Study 01</span>
-                    <span class="motion-index">01 / 03</span>
-                </div>
+    <div class="motion-grid">
+
+        <!-- ROW 01 -->
+
+        <div class="motion-item">
+            <div class="motion-frame">
+                <iframe
+                    src="https://player.vimeo.com/video/1242967741?h=2e3aa2653e&controls=0&title=0&byline=0&portrait=0&transparent=0"
+                    title="DANCE DIVISION motion video 01"
+                    loading="lazy"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen>
+                </iframe>
+                <button class="motion-click-toggle" type="button" aria-label="Play video"></button>
             </div>
-
-            <div class="motion-item">
-                <div class="motion-frame">
-                    <iframe
-                        src="https://player.vimeo.com/video/1245258545?h=77a395ff43&controls=0&title=0&byline=0&portrait=0&transparent=0"
-                        title="DANCE DIVISION motion video 02"
-                        loading="lazy"
-                        allow="autoplay; fullscreen; picture-in-picture"
-                        referrerpolicy="strict-origin-when-cross-origin"
-                        allowfullscreen>
-                    </iframe>
-                    <button class="motion-click-toggle" type="button" aria-label="Play video" title="Play or pause video"></button>
-                </div>
-                <div class="simple-controls">
-                    <button class="play-toggle" type="button" aria-label="Play video">PLAY</button>
-                    <input class="video-progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Video progress">
-                    <button class="volume-toggle" type="button" aria-label="Mute video">SOUND</button>
-                </div>
-                <div class="motion-caption">
-                    <span class="motion-title">Motion Study 02</span>
-                    <span class="motion-index">02 / 03</span>
-                </div>
+            <div class="simple-controls">
+                <button class="play-toggle" type="button">PLAY</button>
+                <input class="video-progress" type="range" min="0" max="100" value="0" step="0.1">
+                <button class="volume-toggle" type="button">SOUND</button>
             </div>
-
-            <div class="motion-item">
-                <div class="motion-frame">
-                    <iframe
-                        src="https://player.vimeo.com/video/1242979300?h=724da50dbd&controls=0&title=0&byline=0&portrait=0&transparent=0"
-                        title="DANCE DIVISION motion video 03"
-                        loading="lazy"
-                        allow="autoplay; fullscreen; picture-in-picture"
-                        referrerpolicy="strict-origin-when-cross-origin"
-                        allowfullscreen>
-                    </iframe>
-                    <button class="motion-click-toggle" type="button" aria-label="Play video" title="Play or pause video"></button>
-                </div>
-                <div class="simple-controls">
-                    <button class="play-toggle" type="button" aria-label="Play video">PLAY</button>
-                    <input class="video-progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Video progress">
-                    <button class="volume-toggle" type="button" aria-label="Mute video">SOUND</button>
-                </div>
-                <div class="motion-caption">
-                    <span class="motion-title">Motion Study 03</span>
-                    <span class="motion-index">03 / 03</span>
-                </div>
+            <div class="motion-caption">
+                <span class="motion-title">Motion Study 01</span>
+                <span class="motion-index">01 / 06</span>
             </div>
         </div>
-    </section>
+
+        <div class="motion-item">
+            <div class="motion-frame">
+                <iframe
+                    src="https://player.vimeo.com/video/1245258545?h=77a395ff43&controls=0&title=0&byline=0&portrait=0&transparent=0"
+                    title="DANCE DIVISION motion video 02"
+                    loading="lazy"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen>
+                </iframe>
+                <button class="motion-click-toggle" type="button" aria-label="Play video"></button>
+            </div>
+            <div class="simple-controls">
+                <button class="play-toggle" type="button">PLAY</button>
+                <input class="video-progress" type="range" min="0" max="100" value="0" step="0.1">
+                <button class="volume-toggle" type="button">SOUND</button>
+            </div>
+            <div class="motion-caption">
+                <span class="motion-title">Motion Study 02</span>
+                <span class="motion-index">02 / 06</span>
+            </div>
+        </div>
+
+        <div class="motion-item">
+            <div class="motion-frame">
+                <iframe
+                    src="https://player.vimeo.com/video/1242979300?h=724da50dbd&controls=0&title=0&byline=0&portrait=0&transparent=0"
+                    title="DANCE DIVISION motion video 03"
+                    loading="lazy"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen>
+                </iframe>
+                <button class="motion-click-toggle" type="button" aria-label="Play video"></button>
+            </div>
+            <div class="simple-controls">
+                <button class="play-toggle" type="button">PLAY</button>
+                <input class="video-progress" type="range" min="0" max="100" value="0" step="0.1">
+                <button class="volume-toggle" type="button">SOUND</button>
+            </div>
+            <div class="motion-caption">
+                <span class="motion-title">Motion Study 03</span>
+                <span class="motion-index">03 / 06</span>
+            </div>
+        </div>
+
+        <!-- ROW 02 -->
+
+        <div class="motion-item">
+            <div class="motion-frame">
+                <iframe
+                    src="https://player.vimeo.com/video/1245423068?h=d5569f82df&controls=0&title=0&byline=0&portrait=0&transparent=0"
+                    title="DANCE DIVISION motion video 04"
+                    loading="lazy"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen>
+                </iframe>
+                <button class="motion-click-toggle" type="button" aria-label="Play video"></button>
+            </div>
+            <div class="simple-controls">
+                <button class="play-toggle" type="button">PLAY</button>
+                <input class="video-progress" type="range" min="0" max="100" value="0" step="0.1">
+                <button class="volume-toggle" type="button">SOUND</button>
+            </div>
+            <div class="motion-caption">
+                <span class="motion-title">Motion Study 04</span>
+                <span class="motion-index">04 / 06</span>
+            </div>
+        </div>
+<!-- 
+        <div class="motion-item">
+            <div class="motion-frame">
+                <iframe
+                    src="https://player.vimeo.com/video/1245258545?h=77a395ff43&controls=0&title=0&byline=0&portrait=0&transparent=0"
+                    title="DANCE DIVISION motion video 05"
+                    loading="lazy"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen>
+                </iframe>
+                <button class="motion-click-toggle" type="button" aria-label="Play video"></button>
+            </div>
+            <div class="simple-controls">
+                <button class="play-toggle" type="button">PLAY</button>
+                <input class="video-progress" type="range" min="0" max="100" value="0" step="0.1">
+                <button class="volume-toggle" type="button">SOUND</button>
+            </div>
+            <div class="motion-caption">
+                <span class="motion-title">Motion Study 05</span>
+                <span class="motion-index">05 / 06</span>
+            </div>
+        </div>
+
+        <div class="motion-item">
+            <div class="motion-frame">
+                <iframe
+                    src="https://player.vimeo.com/video/1242979300?h=724da50dbd&controls=0&title=0&byline=0&portrait=0&transparent=0"
+                    title="DANCE DIVISION motion video 06"
+                    loading="lazy"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen>
+                </iframe>
+                <button class="motion-click-toggle" type="button" aria-label="Play video"></button>
+            </div>
+            <div class="simple-controls">
+                <button class="play-toggle" type="button">PLAY</button>
+                <input class="video-progress" type="range" min="0" max="100" value="0" step="0.1">
+                <button class="volume-toggle" type="button">SOUND</button>
+            </div>
+            <div class="motion-caption">
+                <span class="motion-title">Motion Study 06</span>
+                <span class="motion-index">06 / 06</span>
+            </div>
+        </div>
+
+
+        -->
+
+    </div>
+</section>
+
 </main>
 
 <footer class="site-footer">
