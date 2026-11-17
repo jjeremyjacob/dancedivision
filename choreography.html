@@ -1,0 +1,753 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f4f3ee">
+<meta property="og:image" content="https://jjeremyjacob.github.io/dancedivision/images/dancedivisionsocial.jpg">
+<meta name="description" content="DANCE DIVISION — choreography and movement studies.">
+<title>Choreography — DANCE DIVISION</title>
+
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --paper: #f4f3ee;
+    --ink: #151515;
+    --muted: #77766f;
+    --line: rgba(21, 21, 21, 0.22);
+    --mono: "DM Mono", monospace;
+    --sans: "Manrope", sans-serif;
+    --serif: "Playfair Display", serif;
+    --page-pad: 28px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    color: inherit;
+    font: inherit;
+}
+
+main {
+    width: 100%;
+}
+
+/* INTRO */
+
+.page-intro {
+    padding: 48px var(--page-pad) 54px;
+    border-bottom: 1px solid var(--line);
+}
+
+.eyebrow {
+    margin: 0 0 20px;
+    font-family: var(--mono);
+    font-size: 10px;
+    line-height: 1.5;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.page-intro h1 {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: clamp(56px, 10vw, 148px);
+    font-weight: 400;
+    line-height: 0.9;
+    letter-spacing: -0.075em;
+}
+
+.page-intro h1 em {
+    font-weight: 400;
+}
+
+.intro-bottom {
+    margin-top: 35px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.intro-description {
+    max-width: 440px;
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.intro-index {
+    flex: 0 0 auto;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+}
+
+/* CHOREOGRAPHY */
+
+.choreography-section {
+    padding: 28px var(--page-pad) 48px;
+    background: var(--paper);
+}
+
+.section-heading {
+    margin: 0 0 26px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.section-heading h2 {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: clamp(30px, 5vw, 64px);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.055em;
+}
+
+.section-number {
+    margin-right: 12px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0;
+    vertical-align: middle;
+    color: var(--muted);
+}
+
+.section-note {
+    flex: 0 0 auto;
+    font-family: var(--mono);
+    font-size: 9px;
+    line-height: 1.5;
+    text-align: right;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+/* VIDEO GRID */
+
+.choreography-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 42px 14px;
+    align-items: start;
+    width: 85%;
+    margin-left: 15%;
+    margin-top: 50px;
+    box-sizing: border-box;
+}
+
+.choreography-item {
+    min-width: 0;
+}
+
+.choreography-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    background: var(--paper);
+}
+
+.choreography-frame iframe {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: var(--paper);
+}
+
+.video-click-toggle {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.video-click-toggle:focus-visible {
+    outline: 1px solid var(--ink);
+    outline-offset: -4px;
+}
+
+.video-caption {
+    padding-top: 10px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.video-title {
+    font-family: var(--serif);
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.video-index {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--muted);
+}
+
+/* CUSTOM VIDEO CONTROLS */
+
+.simple-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0 0;
+    background: var(--paper);
+}
+
+.simple-controls button {
+    flex: 0 0 auto;
+    padding: 0;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 9px;
+    line-height: 1;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+}
+
+.simple-controls button:hover {
+    opacity: 0.55;
+}
+
+.simple-controls .fullscreen-toggle {
+    white-space: nowrap;
+}
+
+/* FULLSCREEN */
+
+.choreography-frame:fullscreen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    aspect-ratio: auto;
+    overflow: hidden;
+    background: #000;
+}
+
+.choreography-frame:fullscreen iframe {
+    position: relative;
+    inset: auto;
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    aspect-ratio: 9 / 16;
+    object-fit: contain;
+}
+
+.choreography-frame:-webkit-full-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    aspect-ratio: auto;
+    overflow: hidden;
+    background: #000;
+}
+
+.choreography-frame:-webkit-full-screen iframe {
+    position: relative;
+    inset: auto;
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    aspect-ratio: 9 / 16;
+}
+
+/* VIDEO PROGRESS */
+
+.video-progress {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 2px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    background: rgba(21, 21, 21, 0.22);
+    cursor: pointer;
+}
+
+.video-progress::-webkit-slider-runnable-track {
+    height: 2px;
+    background: rgba(21, 21, 21, 0.22);
+}
+
+.video-progress::-webkit-slider-thumb {
+    width: 7px;
+    height: 7px;
+    margin-top: -2.5px;
+    border: 0;
+    border-radius: 50%;
+    appearance: none;
+    -webkit-appearance: none;
+    background: var(--ink);
+}
+
+.video-progress::-moz-range-track {
+    height: 2px;
+    border: 0;
+    background: rgba(21, 21, 21, 0.22);
+}
+
+.video-progress::-moz-range-thumb {
+    width: 7px;
+    height: 7px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--ink);
+}
+
+/* FOOTER */
+
+.site-footer {
+    padding: 18px var(--page-pad);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    font-family: var(--mono);
+    font-size: 9px;
+    line-height: 1.6;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+    :root {
+        --page-pad: 20px;
+    }
+
+    .choreography-grid {
+        width: calc(100% - clamp(28px, 8vw, 72px));
+        margin-left: clamp(28px, 8vw, 72px);
+        margin-top: 36px;
+    }
+}
+
+@media (max-width: 600px) {
+    :root {
+        --page-pad: 15px;
+    }
+
+    .page-intro {
+        padding-top: 37px;
+        padding-bottom: 35px;
+    }
+
+    .page-intro h1 {
+        font-size: clamp(52px, 15vw, 88px);
+    }
+
+    .intro-bottom {
+        margin-top: 25px;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .choreography-section {
+        padding-top: 23px;
+        padding-bottom: 30px;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 9px;
+        margin-bottom: 18px;
+    }
+
+    .section-heading h2 {
+        font-size: clamp(32px, 9vw, 48px);
+    }
+
+    .section-note {
+        text-align: left;
+    }
+
+    .choreography-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 30px 10px;
+        width: calc(100% - clamp(18px, 6vw, 32px));
+        margin-left: clamp(18px, 6vw, 32px);
+        margin-top: 26px;
+    }
+
+    .video-title {
+        font-size: 15px;
+    }
+
+    .site-footer {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+
+@media (max-width: 360px) {
+    .choreography-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+    <a class="header-title" href="index.html">DANCE DIVISION</a>
+
+    <div class="header-status">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span>IN DEVELOPMENT</span>
+    </div>
+
+    <button class="nav-dropdown-toggle page-nav-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="pageNavigation">
+        PAGES <span class="nav-dropdown-indicator" aria-hidden="true">+</span>
+    </button>
+
+    <nav class="nav-links page-nav-links" id="pageNavigation" aria-label="Project pages">
+        <a href="index.html"><span>01</span> HOME</a>
+        <a href="calendars.html"><span>03</span> CALENDARS</a>
+        <a href="choreography.html" class="active" aria-current="page"><span>07</span> CHOREOGRAPHY</a>
+        <a href="costumes.html"><span>04</span> COSTUMES</a>
+        <a href="design.html"><span>06</span> DESIGN</a>
+        <a href="journal.html"><span>08</span> JOURNAL</a>
+        <a href="locations.html"><span>05</span> LOCATIONS</a>
+        <a href="shotbook.html"><span>02</span> SHOT BOOK</a>
+        <a href="videos.html"><span>09</span> EPISODES</a>
+    </nav>
+</header>
+
+<main>
+
+    <section class="page-intro">
+        <p class="eyebrow">DANCE DIVISION / MOVEMENT DEVELOPMENT / 2026</p>
+
+        <h1>Choreo<em>graphy.</em></h1>
+
+        <div class="intro-bottom">
+            <p class="intro-description">
+                Movement studies and choreography for Dance Division.
+            </p>
+
+            <span class="intro-index">CHOREOGRAPHY ARCHIVE / 01—06</span>
+        </div>
+    </section>
+
+    <section class="choreography-section" id="choreography">
+
+        <div class="section-heading">
+            <h2><span class="section-number">01 —</span>CHOREOGRAPHY</h2>
+            <span class="section-note">MOVING IMAGE / 9:16</span>
+        </div>
+
+        <div class="choreography-grid">
+
+            <!-- VIDEO 01 -->
+
+            <div class="choreography-item">
+                <div class="choreography-frame">
+                    <iframe
+                        src="https://player.vimeo.com/video/1247617288?h=50a8d33a55&controls=0&title=0&byline=0&portrait=0&transparent=0"
+                        title="DANCE DIVISION choreography video 01"
+                        loading="lazy"
+                        allow="autoplay; fullscreen; picture-in-picture"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                    <button class="video-click-toggle" type="button" aria-label="Play video"></button>
+                </div>
+
+                <div class="simple-controls">
+                    <button class="play-toggle" type="button">PLAY</button>
+                    <input class="video-progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Video progress">
+                    <button class="volume-toggle" type="button">SOUND</button>
+                    <button class="fullscreen-toggle" type="button" aria-label="View video fullscreen">FULL</button>
+                </div>
+
+                <div class="video-caption">
+                    <span class="video-title">Dance Division Audition/Core Movement</span>
+                    <span class="video-index">01 / 01</span>
+                </div>
+            </div>
+
+                        <!-- VIDEO 01 -->
+
+            <div class="choreography-item">
+                <div class="choreography-frame">
+                    <iframe
+                        src="https://player.vimeo.com/video/1247617288?h=50a8d33a55&controls=0&title=0&byline=0&portrait=0&transparent=0"
+                        title="DANCE DIVISION choreography video 01"
+                        loading="lazy"
+                        allow="autoplay; fullscreen; picture-in-picture"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                    <button class="video-click-toggle" type="button" aria-label="Play video"></button>
+                </div>
+
+                <div class="simple-controls">
+                    <button class="play-toggle" type="button">PLAY</button>
+                    <input class="video-progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Video progress">
+                    <button class="volume-toggle" type="button">SOUND</button>
+                    <button class="fullscreen-toggle" type="button" aria-label="View video fullscreen">FULL</button>
+                </div>
+
+                <div class="video-caption">
+                    <span class="video-title">Dance Division Audition/Core Movement with Numbered Sections</span>
+                    <span class="video-index">01 / 01</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<footer class="site-footer">
+    <span>DANCE DIVISION</span>
+    <span>PROJECT DEVELOPMENT / 2026</span>
+</footer>
+
+<script>
+/* PAGE NAVIGATION */
+
+(() => {
+    const button = document.querySelector(".page-nav-toggle");
+    const menu = document.getElementById("pageNavigation");
+
+    if (!button || !menu) return;
+
+    function closeMenu() {
+        menu.classList.remove("is-dropdown-open");
+        button.setAttribute("aria-expanded", "false");
+    }
+
+    button.addEventListener("click", () => {
+        const opening = !menu.classList.contains("is-dropdown-open");
+
+        menu.classList.toggle("is-dropdown-open", opening);
+        button.setAttribute("aria-expanded", String(opening));
+    });
+
+    menu.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", closeMenu);
+    });
+
+    document.addEventListener("click", event => {
+        if (!button.contains(event.target) && !menu.contains(event.target)) {
+            closeMenu();
+        }
+    });
+
+    document.addEventListener("keydown", event => {
+        if (event.key === "Escape") closeMenu();
+    });
+})();
+</script>
+
+<script src="https://player.vimeo.com/api/player.js"></script>
+
+<script>
+/* VIMEO PLAYER CONTROLS */
+
+(() => {
+    document.querySelectorAll(".choreography-item").forEach(item => {
+
+        const iframe = item.querySelector("iframe");
+        const playButton = item.querySelector(".play-toggle");
+        const progress = item.querySelector(".video-progress");
+        const volumeButton = item.querySelector(".volume-toggle");
+        const fullscreenButton = item.querySelector(".fullscreen-toggle");
+        const frame = item.querySelector(".choreography-frame");
+        const clickToggle = item.querySelector(".video-click-toggle");
+
+        if (!iframe || !playButton || !progress ||
+            !volumeButton || !fullscreenButton || !frame ||
+            !clickToggle || !window.Vimeo) return;
+
+        const player = new Vimeo.Player(iframe);
+        let seeking = false;
+
+        async function togglePlayback() {
+            try {
+                if (await player.getPaused()) {
+                    await player.play();
+                } else {
+                    await player.pause();
+                }
+            } catch (error) {
+                console.error("Unable to control Vimeo playback:", error);
+            }
+        }
+
+        clickToggle.addEventListener("click", togglePlayback);
+        playButton.addEventListener("click", togglePlayback);
+
+        player.on("play", () => {
+            playButton.textContent = "PAUSE";
+            playButton.setAttribute("aria-label", "Pause video");
+            clickToggle.setAttribute("aria-label", "Pause video");
+        });
+
+        player.on("pause", () => {
+            playButton.textContent = "PLAY";
+            playButton.setAttribute("aria-label", "Play video");
+            clickToggle.setAttribute("aria-label", "Play video");
+        });
+
+        player.on("ended", () => {
+            playButton.textContent = "REPLAY";
+            playButton.setAttribute("aria-label", "Replay video");
+            clickToggle.setAttribute("aria-label", "Replay video");
+        });
+
+        player.on("timeupdate", data => {
+            if (!seeking && data.duration) {
+                progress.value = data.percent * 100;
+            }
+        });
+
+        progress.addEventListener("pointerdown", () => {
+            seeking = true;
+        });
+
+        progress.addEventListener("input", async () => {
+            try {
+                const duration = await player.getDuration();
+
+                if (duration) {
+                    await player.setCurrentTime(
+                        duration * Number(progress.value) / 100
+                    );
+                }
+            } catch (error) {
+                console.error("Unable to seek Vimeo video:", error);
+            }
+        });
+
+        const stopSeeking = () => {
+            seeking = false;
+        };
+
+        progress.addEventListener("pointerup", stopSeeking);
+        progress.addEventListener("change", stopSeeking);
+        progress.addEventListener("blur", stopSeeking);
+
+        volumeButton.addEventListener("click", async () => {
+            try {
+                const muted = await player.getMuted();
+
+                await player.setMuted(!muted);
+
+                volumeButton.textContent = muted ? "SOUND" : "MUTED";
+                volumeButton.setAttribute(
+                    "aria-label",
+                    muted ? "Mute video" : "Unmute video"
+                );
+            } catch (error) {
+                console.error("Unable to change Vimeo audio:", error);
+            }
+        });
+
+        async function toggleFullscreen() {
+            try {
+                if (document.fullscreenElement || document.webkitFullscreenElement) {
+                    if (document.exitFullscreen) {
+                        await document.exitFullscreen();
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    }
+                    return;
+                }
+
+                if (frame.requestFullscreen) {
+                    await frame.requestFullscreen();
+                } else if (frame.webkitRequestFullscreen) {
+                    frame.webkitRequestFullscreen();
+                } else if (iframe.requestFullscreen) {
+                    await iframe.requestFullscreen();
+                }
+            } catch (error) {
+                console.error("Unable to enter fullscreen:", error);
+            }
+        }
+
+        fullscreenButton.addEventListener("click", toggleFullscreen);
+
+        function updateFullscreenLabel() {
+            const isFullscreen =
+                document.fullscreenElement === frame ||
+                document.webkitFullscreenElement === frame;
+
+            fullscreenButton.textContent = isFullscreen ? "EXIT FULL" : "FULL";
+            fullscreenButton.setAttribute(
+                "aria-label",
+                isFullscreen ? "Exit fullscreen" : "View video fullscreen"
+            );
+        }
+
+        document.addEventListener("fullscreenchange", updateFullscreenLabel);
+        document.addEventListener("webkitfullscreenchange", updateFullscreenLabel);
+
+    });
+})();
+</script>
+
+</body>
+</html>
