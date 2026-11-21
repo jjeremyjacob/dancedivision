@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,24 +23,14 @@
         rel="stylesheet"
     >
 
-    <!-- SITE STYLESHEET -->
+    <!-- SITE STYLESHEETS -->
     <link rel="stylesheet" href="style.css">
-
-
-    <style id="persistent-header-overrides">
-        header.site-header {
-            position: sticky !important;
-            top: 0;
-            z-index: 1100;
-            flex-shrink: 0;
-        }
-    </style>
+    <script src="navigation.js" defer></script>
 
     <style>
-
     /* ============================================================
        VARIABLES & GLOBAL STYLES
-       ============================================================ */
+    ============================================================ */
 
     :root {
         --paper: #f4f3ee;
@@ -62,7 +53,7 @@
 
     /* ============================================================
        MAIN LAYOUT
-       ============================================================ */
+    ============================================================ */
 
     main {
         width: 100%;
@@ -74,9 +65,7 @@
         grid-template-columns: minmax(0, 1fr) minmax(220px, 330px);
         gap: 40px;
         align-items: end;
-
         padding: 56px 0 38px;
-
         border-bottom: 1px solid var(--ink);
     }
 
@@ -97,14 +86,12 @@
 
     .hero h1 {
         margin: 0;
-
         font: 400 clamp(58px, 10vw, 140px)/.82 'Playfair Display', Georgia, serif;
         letter-spacing: -.075em;
     }
 
     .copy {
         max-width: 440px;
-
         font: 12px/1.9 'Manrope', sans-serif;
         color: #4e4d47;
     }
@@ -116,16 +103,14 @@
 
     /* ============================================================
        TOOLBAR & FILTERS
-       ============================================================ */
+    ============================================================ */
 
     .toolbar {
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 20px;
-
         padding: 22px 0 20px;
-
         border-bottom: 1px solid var(--line);
     }
 
@@ -139,15 +124,11 @@
 
     .filter {
         padding: 10px 13px;
-
         border: 1px solid var(--ink);
         background: transparent;
-
         color: var(--ink);
-
         font: 10px 'DM Mono', monospace;
         letter-spacing: .045em;
-
         cursor: pointer;
     }
 
@@ -160,13 +141,10 @@
     .search {
         width: min(230px, 55vw);
         padding: 10px 0;
-
         border: 0;
         border-bottom: 1px solid var(--ink);
-
         background: transparent;
         color: var(--ink);
-
         font: 11px 'DM Mono', monospace;
     }
 
@@ -178,19 +156,17 @@
 
     /* ============================================================
        COSTUME GRID
-       ============================================================ */
+    ============================================================ */
 
     .grid {
         display: grid;
         grid-template-columns: repeat(8, minmax(0, 1fr));
         gap: 26px 10px;
-
         padding-top: 18px;
     }
 
     .card {
         min-width: 0;
-
         cursor: pointer;
         outline-offset: 4px;
     }
@@ -198,40 +174,30 @@
     .image-wrap {
         position: relative;
         overflow: hidden;
-
         background: #e6e4dc;
-
         aspect-ratio: 9 / 16;
     }
 
     .image-wrap img {
         display: block;
-
         width: 100%;
         height: 100%;
-
         object-fit: cover;
-
         transition: transform 250ms;
     }
 
     .image-wrap.image-missing::after {
         content: 'IMAGE NOT FOUND';
-
         position: absolute;
         left: 8px;
         right: 8px;
         bottom: 8px;
-
         padding: 7px 5px;
-
         background: var(--paper);
         color: var(--accent);
-
         font: 8px 'DM Mono', monospace;
         text-align: center;
         letter-spacing: .05em;
-
         overflow-wrap: anywhere;
     }
 
@@ -243,32 +209,21 @@
         position: absolute;
         top: 10px;
         left: 10px;
-
         padding: 5px 7px;
-
         background: var(--paper);
-
         font: 9px 'DM Mono', monospace;
     }
-
-    /* Card arrow.
-       This class is intentionally separate from the lightbox state. */
 
     .open {
         position: absolute;
         right: 10px;
         bottom: 10px;
-
         width: 30px;
         height: 30px;
-
         display: grid;
         place-items: center;
-
         background: var(--paper);
-
         font: 18px 'DM Mono', monospace;
-
         opacity: 0;
     }
 
@@ -279,9 +234,7 @@
 
     .card h3 {
         margin: 11px 0 4px;
-
         font: 500 13px/1.35 'Manrope', sans-serif;
-
         overflow-wrap: anywhere;
     }
 
@@ -289,7 +242,6 @@
         display: flex;
         justify-content: space-between;
         gap: 8px;
-
         color: var(--muted);
         font-size: 9px;
     }
@@ -299,62 +251,47 @@
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
-
         margin-top: 7px;
-
         color: #5b5a54;
-
         font: 11px/1.65 'Manrope', sans-serif;
     }
 
     .empty {
         padding: 70px 0;
-
         color: var(--muted);
-
         font: 11px/1.8 'DM Mono', monospace;
     }
 
 
     /* ============================================================
        FOOTER
-       ============================================================ */
+    ============================================================ */
 
     .footer {
         display: flex;
         justify-content: space-between;
         gap: 20px;
-
         margin-top: 60px;
         padding-top: 14px;
-
         border-top: 1px solid var(--ink);
-
         color: var(--muted);
     }
 
 
     /* ============================================================
        LIGHTBOX
-       ============================================================ */
+    ============================================================ */
 
     .overlay {
         position: fixed;
         inset: 0;
         z-index: 20000;
-
         display: none;
         align-items: center;
         justify-content: center;
-
         padding: 20px;
-
         background: rgba(23, 23, 20, .78);
     }
-
-    /* IMPORTANT:
-       is-open controls the overlay.
-       .open is reserved for the card arrow. */
 
     .overlay.is-open {
         display: flex;
@@ -363,35 +300,27 @@
     .dialog {
         display: grid;
         grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr);
-
         width: min(1080px, 100%);
         max-height: 92vh;
-
         overflow: auto;
-
         background: var(--paper);
     }
 
     .dialog-image {
         position: relative;
         overflow: hidden;
-
         display: flex;
         align-items: center;
         justify-content: center;
-
         min-height: 420px;
-
         background: #e6e4dc;
     }
 
     .dialog-image img {
         display: block;
-
         width: 100%;
         height: 100%;
         max-height: 92vh;
-
         object-fit: contain;
     }
 
@@ -399,18 +328,12 @@
         position: absolute;
         top: 50%;
         z-index: 2;
-
         width: 42px;
         height: 42px;
-
         border: 1px solid #aaa;
-
         background: rgba(244, 243, 238, .92);
-
         font: 20px 'DM Mono', monospace;
-
         cursor: pointer;
-
         transform: translateY(-50%);
     }
 
@@ -435,7 +358,6 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-
         margin-bottom: 24px;
     }
 
@@ -446,18 +368,14 @@
     .close {
         border: 0;
         background: none;
-
         font: 30px Arial;
-
         cursor: pointer;
     }
 
     .dialog-title {
         margin: 0 0 26px;
-
         font: 400 clamp(32px, 4vw, 50px)/.98 'Playfair Display', Georgia, serif;
         letter-spacing: -.045em;
-
         overflow-wrap: anywhere;
     }
 
@@ -473,18 +391,14 @@
 
     .detail-label {
         display: block;
-
         margin-bottom: 5px;
-
         color: var(--muted);
-
         font: 9px 'DM Mono', monospace;
         letter-spacing: .08em;
     }
 
     .detail-value {
         font: 12px/1.7 'Manrope', sans-serif;
-
         white-space: pre-wrap;
         overflow-wrap: anywhere;
     }
@@ -492,10 +406,9 @@
 
     /* ============================================================
        TABLET
-       ============================================================ */
+    ============================================================ */
 
     @media (max-width: 1250px) {
-
         .grid {
             grid-template-columns: repeat(4, minmax(0, 1fr));
         }
@@ -512,11 +425,9 @@
 
     /* ============================================================
        MOBILE
-       ============================================================ */
+    ============================================================ */
 
     @media (max-width: 700px) {
-
-        .main,
         main {
             padding: 0 16px 48px;
         }
@@ -524,7 +435,6 @@
         .hero {
             grid-template-columns: 1fr;
             gap: 24px;
-
             padding: 38px 0 26px;
         }
 
@@ -599,10 +509,9 @@
 
     /* ============================================================
        REDUCED MOTION
-       ============================================================ */
+    ============================================================ */
 
     @media (prefers-reduced-motion: reduce) {
-
         *,
         *::before,
         *::after {
@@ -610,73 +519,20 @@
             scroll-behavior: auto !important;
         }
     }
-
     </style>
-
 </head>
-
 
 <body>
 
-
-<!-- ============================================================
-     HEADER
-     ============================================================ -->
-
-<header class="site-header">
-
-    <a class="header-title" href="index.html" style="text-decoration:none;color:inherit">
-        DANCE DIVISION
-    </a>
-
-    <div class="header-status">
-        <span class="status-dot"></span>
-        STATUS: IN DEVELOPMENT
-    </div>
-
-    <button
-        class="nav-dropdown-toggle page-nav-toggle"
-        id="pageDropdownToggle"
-        type="button"
-        aria-expanded="false"
-        aria-controls="pageNavigation"
-    >
-        <span>PAGES</span>
-        <span class="nav-dropdown-indicator" aria-hidden="true">+</span>
-    </button>
-
-    <nav
-        class="nav-links page-nav-links"
-        id="pageNavigation"
-        aria-label="Project pages"
-    >
-        <a href="index.html"><span>01</span> HOME</a>
-<a href="calendars.html"><span>02</span> CALENDARS</a>
-                  <a href="choreography.html"><span>03</span> CHOREOGRAPHY</a>
-        <a href="costumes.html" class="active" aria-current="page"><span>04</span> COSTUMES</a>
-        <a href="design.html"><span>05</span> DESIGN</a>
-        <a href="journal.html"><span>06</span> JOURNAL</a>
-        <a href="locations.html"><span>07</span> LOCATIONS</a>
-        <a href="shotbook.html"><span>08</span> SHOT BOOK</a>
-        <a href="videos.html"><span>09</span> EPISODES</a>
-    </nav>
-
-</header>
-
-
-
 <!-- ============================================================
      MAIN CONTENT
-     ============================================================ -->
+============================================================ -->
 
 <main>
-
-    <!-- HERO -->
 
     <section class="hero">
 
         <div>
-
             <div class="eyebrow">
                 DANCE DIVISION / WARDROBE / VISUAL DEVELOPMENT
             </div>
@@ -685,7 +541,6 @@
                 The <em>Costume</em><br>
                 Book.
             </h1>
-
         </div>
 
         <div class="copy">
@@ -698,8 +553,7 @@
             <p>
                 Costumes should feel worn in, used, thrifted.<br><br>
                 Interior Clothing: Essentials: Thin, light, neutral colors showing skin and suggesting physicality and giving intimacy with characters. These are mainly rehearsal clothes with layers that bridge interior/exterior for scenes inside that aren't rehearsal scenes. Hightened styling of the same clothes for dance numbers.<br><br>
-                Exterior: Big, bulky, oversized, texture and controlled color: Dramatic silhouettes in cold exterior situations, ensuring warmth and contrasting visibility against brown/white(snow). <br><br>
-
+                Exterior: Big, bulky, oversized, texture and controlled color: Dramatic silhouettes in cold exterior situations, ensuring warmth and contrasting visibility against brown/white(snow).<br><br>
                 Jonah and Production/Camera Crew wear mainly black clothing to contrast with the main cast. The black clothing is also a visual cue for the audience to identify them as a behind-the-scenes group. Use variation with: blue denim jeans, dark colored shirts/layers. For exteriors a wider allowance.
             </p>
 
@@ -776,10 +630,7 @@
 
         <span>WARDROBE ARCHIVE / 2026</span>
 
-        <a
-            href="index.html"
-            style="color:inherit;text-decoration:none"
-        >
+        <a href="index.html" style="color:inherit;text-decoration:none">
             ← RETURN TO PROJECT INDEX
         </a>
 
@@ -788,10 +639,9 @@
 </main>
 
 
-
 <!-- ============================================================
      LIGHTBOX
-     ============================================================ -->
+============================================================ -->
 
 <div
     class="overlay"
@@ -831,7 +681,6 @@
 
         </div>
 
-
         <div class="dialog-content">
 
             <div class="dialog-top">
@@ -863,21 +712,16 @@
 </div>
 
 
-
 <!-- ============================================================
-     JAVASCRIPT
-     ============================================================ -->
+     COSTUME ARCHIVE JAVASCRIPT
+============================================================ -->
 
 <script>
-
 (() => {
 
     'use strict';
 
-
-    /* ============================================================
-       ELEMENTS & STATE
-       ============================================================ */
+    /* ELEMENTS & STATE */
 
     const $ = id => document.getElementById(id);
 
@@ -888,12 +732,9 @@
     let current = null;
 
 
-    /* ============================================================
-       UTILITIES
-       ============================================================ */
+    /* UTILITIES */
 
     function esc(value) {
-
         return String(value ?? '').replace(/[&<>"']/g, char => ({
             '&': '&amp;',
             '<': '&lt;',
@@ -901,31 +742,23 @@
             '"': '&quot;',
             "'": '&#39;'
         })[char]);
-
     }
 
 
     function cat(value) {
-
         return {
             character: 'CHARACTER',
             dancewear: 'DANCEWEAR',
             other: 'OTHER'
         }[value] || 'COSTUME';
-
     }
 
 
-    /* ============================================================
-       RENDER COSTUME GRID
-       ============================================================ */
+    /* RENDER COSTUME GRID */
 
     function render() {
 
         const query = $('search').value.trim().toLowerCase();
-
-
-        /* FILTER COSTUMES */
 
         filtered = costumes.filter(c => {
 
@@ -950,8 +783,6 @@
 
         });
 
-
-        /* BUILD GRID */
 
         $('grid').innerHTML = filtered.map(c => {
 
@@ -992,11 +823,9 @@
 
                     </div>
 
-
                     <h3>
                         ${esc(c.title || 'Untitled costume')}
                     </h3>
-
 
                     <div class="meta">
 
@@ -1009,7 +838,6 @@
                         </span>
 
                     </div>
-
 
                     ${
                         c.notes
@@ -1024,13 +852,8 @@
         }).join('');
 
 
-        /* UPDATE COUNT */
-
         $('count').textContent =
             `${filtered.length} / ${costumes.length} COSTUMES`;
-
-
-        /* EMPTY STATE */
 
         $('empty').hidden = filtered.length > 0;
 
@@ -1041,17 +864,13 @@
 
             const open = () => show(el.dataset.id);
 
-
             el.addEventListener('click', open);
-
 
             el.addEventListener('keydown', e => {
 
                 if (e.key === 'Enter' || e.key === ' ') {
-
                     e.preventDefault();
                     open();
-
                 }
 
             });
@@ -1061,9 +880,7 @@
     }
 
 
-    /* ============================================================
-       UPDATE LIGHTBOX CONTENT
-       ============================================================ */
+    /* UPDATE LIGHTBOX CONTENT */
 
     function update() {
 
@@ -1075,8 +892,6 @@
 
         const c = filtered[index];
 
-
-        /* IMAGE & TITLE */
 
         $('dialogNumber').textContent =
             'COSTUME ' +
@@ -1091,26 +906,15 @@
             c.title || 'Untitled costume';
 
 
-        /* DETAIL FIELDS */
-
         const rows = [
-
             ['CHARACTER', c.character],
-
             ['EPISODE / SCENE', c.episode],
-
             ['CATEGORY', cat(c.category)],
-
             ['DESIGNER', c.designer],
-
             ['COLOR PALETTE / TEXTURE', c.palette],
-
             ['COSTUME NOTES', c.notes]
-
         ];
 
-
-        /* BUILD DETAIL CONTENT */
 
         $('details').innerHTML = rows
 
@@ -1143,18 +947,13 @@
             `;
 
 
-        /* NAVIGATION BUTTONS */
-
         $('prev').disabled = index === 0;
-
         $('next').disabled = index === filtered.length - 1;
 
     }
 
 
-    /* ============================================================
-       OPEN LIGHTBOX
-       ============================================================ */
+    /* OPEN LIGHTBOX */
 
     function show(id) {
 
@@ -1163,7 +962,6 @@
         update();
 
         $('overlay').classList.add('is-open');
-
         $('overlay').setAttribute('aria-hidden', 'false');
 
         document.body.style.overflow = 'hidden';
@@ -1171,14 +969,11 @@
     }
 
 
-    /* ============================================================
-       CLOSE LIGHTBOX
-       ============================================================ */
+    /* CLOSE LIGHTBOX */
 
     function close() {
 
         $('overlay').classList.remove('is-open');
-
         $('overlay').setAttribute('aria-hidden', 'true');
 
         document.body.style.overflow = '';
@@ -1190,9 +985,7 @@
     }
 
 
-    /* ============================================================
-       LIGHTBOX NAVIGATION
-       ============================================================ */
+    /* LIGHTBOX NAVIGATION */
 
     function move(direction) {
 
@@ -1203,19 +996,14 @@
         const costume = filtered[index + direction];
 
         if (costume) {
-
             current = costume.id;
-
             update();
-
         }
 
     }
 
 
-    /* ============================================================
-       LIGHTBOX BUTTONS
-       ============================================================ */
+    /* LIGHTBOX BUTTONS */
 
     $('close').addEventListener('click', close);
 
@@ -1229,31 +1017,24 @@
     $('overlay').addEventListener('click', e => {
 
         if (e.target === $('overlay')) {
-
             close();
-
         }
 
     });
 
 
-    /* ============================================================
-       SEARCH
-       ============================================================ */
+    /* SEARCH */
 
     $('search').addEventListener('input', render);
 
 
-    /* ============================================================
-       CATEGORY FILTERS
-       ============================================================ */
+    /* CATEGORY FILTERS */
 
     document.querySelectorAll('[data-filter]').forEach(button => {
 
         button.addEventListener('click', () => {
 
             filter = button.dataset.filter;
-
 
             document.querySelectorAll('[data-filter]').forEach(item => {
 
@@ -1264,7 +1045,6 @@
 
             });
 
-
             render();
 
         });
@@ -1272,31 +1052,22 @@
     });
 
 
-    /* ============================================================
-       KEYBOARD CONTROLS
-       ============================================================ */
+    /* KEYBOARD CONTROLS */
 
     document.addEventListener('keydown', e => {
 
         if (e.key === 'Escape') {
-
             close();
-
         }
-
 
         if ($('overlay').classList.contains('is-open')) {
 
             if (e.key === 'ArrowLeft') {
-
                 move(-1);
-
             }
 
             if (e.key === 'ArrowRight') {
-
                 move(1);
-
             }
 
         }
@@ -1304,19 +1075,13 @@
     });
 
 
-    /* ============================================================
-       TOUCH / SWIPE NAVIGATION
-       ============================================================ */
+    /* TOUCH / SWIPE NAVIGATION */
 
     let startX = 0;
 
-
     $('overlay').addEventListener('touchstart', e => {
-
         startX = e.changedTouches[0].clientX;
-
     }, { passive: true });
-
 
     $('overlay').addEventListener('touchend', e => {
 
@@ -1324,20 +1089,15 @@
             e.changedTouches[0].clientX - startX;
 
         if (Math.abs(distance) > 50) {
-
             move(distance < 0 ? 1 : -1);
-
         }
 
     }, { passive: true });
 
 
-    /* ============================================================
-       MOUSE WHEEL NAVIGATION
-       ============================================================ */
+    /* MOUSE WHEEL NAVIGATION */
 
     let lock = false;
-
 
     $('overlay').addEventListener('wheel', e => {
 
@@ -1348,78 +1108,20 @@
             return;
         }
 
-
         e.preventDefault();
 
         lock = true;
 
         move(e.deltaY > 0 ? 1 : -1);
 
-
         setTimeout(() => {
-
             lock = false;
-
         }, 300);
 
     }, { passive: false });
 
 
-    /* ============================================================
-       PAGE NAVIGATION DROPDOWN
-       ============================================================ */
-
-    const toggle = $('pageDropdownToggle');
-    const nav = $('pageNavigation');
-    const header = document.querySelector('.site-header');
-
-    if (toggle && nav && header) {
-
-        const closeMenu = () => {
-            toggle.setAttribute('aria-expanded', 'false');
-            nav.classList.remove('is-dropdown-open');
-        };
-
-        toggle.addEventListener('click', () => {
-            const open = toggle.getAttribute('aria-expanded') !== 'true';
-
-            toggle.setAttribute('aria-expanded', String(open));
-            nav.classList.toggle('is-dropdown-open', open);
-        });
-
-        nav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', closeMenu);
-        });
-
-        document.addEventListener('click', event => {
-            if (!header.contains(event.target)) {
-                closeMenu();
-            }
-        });
-
-        document.addEventListener('keydown', event => {
-            if (event.key === 'Escape') {
-                closeMenu();
-                toggle.focus();
-            }
-        });
-
-        const desktopQuery = window.matchMedia('(min-width: 1251px)');
-        const resetForViewport = () => {
-            if (desktopQuery.matches) closeMenu();
-        };
-
-        if (desktopQuery.addEventListener) {
-            desktopQuery.addEventListener('change', resetForViewport);
-        } else {
-            desktopQuery.addListener(resetForViewport);
-        }
-    }
-
-
-    /* ============================================================
-       LOAD COSTUME DATA
-       ============================================================ */
+    /* LOAD COSTUME DATA */
 
     fetch('./costumes.json', {
         cache: 'no-store'
@@ -1428,35 +1130,28 @@
         .then(response => {
 
             if (!response.ok) {
-
                 throw new Error(
                     'costumes.json could not be loaded (HTTP ' +
                     response.status +
                     '). Check that it is beside costumes.html.'
                 );
-
             }
 
             return response.json();
 
         })
 
-
         .then(data => {
 
             if (!Array.isArray(data.costumes)) {
-
                 throw new Error(
                     'costumes.json must contain a costumes array.'
                 );
-
             }
-
 
             costumes = data.costumes;
 
             render();
-
 
             console.info(
                 'Costume archive loaded:',
@@ -1466,7 +1161,6 @@
 
         })
 
-
         .catch(error => {
 
             console.error(
@@ -1474,11 +1168,9 @@
                 error
             );
 
-
             costumes = [];
 
             render();
-
 
             $('empty').hidden = false;
 
@@ -1488,9 +1180,7 @@
 
         });
 
-
 })();
-
 </script>
 
 </body>

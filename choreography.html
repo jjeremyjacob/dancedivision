@@ -14,6 +14,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
 
+<script src="navigation.js" defer></script>
+
 <style>
 :root {
     --paper: #f4f3ee;
@@ -445,34 +447,6 @@ main {
 
 <body>
 
-<header class="site-header">
-    <a class="header-title" href="index.html">DANCE DIVISION</a>
-
-    <div class="header-status">
-        <span class="status-dot" aria-hidden="true"></span>
-        <span>IN DEVELOPMENT</span>
-    </div>
-
-    <button class="nav-dropdown-toggle page-nav-toggle"
-            type="button"
-            aria-expanded="false"
-            aria-controls="pageNavigation">
-        PAGES <span class="nav-dropdown-indicator" aria-hidden="true">+</span>
-    </button>
-
-    <nav class="nav-links page-nav-links" id="pageNavigation" aria-label="Project pages">
-        <a href="index.html"><span>01</span> HOME</a>
-        <a href="calendars.html"><span>02</span> CALENDARS</a>
-        <a href="choreography.html" class="active" aria-current="page"><span>03</span> CHOREOGRAPHY</a>
-        <a href="costumes.html"><span>04</span> COSTUMES</a>
-        <a href="design.html"><span>05</span> DESIGN</a>
-        <a href="journal.html"><span>06</span> JOURNAL</a>
-        <a href="locations.html"><span>07</span> LOCATIONS</a>
-        <a href="shotbook.html"><span>08</span> SHOT BOOK</a>
-        <a href="videos.html"><span>09</span> EPISODES</a>
-    </nav>
-</header>
-
 <main>
 
     <section class="page-intro">
@@ -497,8 +471,6 @@ main {
         </div>
 
         <div class="choreography-grid">
-
-            <!-- VIDEO 01 -->
 
             <div class="choreography-item">
                 <div class="choreography-frame">
@@ -526,13 +498,11 @@ main {
                 </div>
             </div>
 
-                        <!-- VIDEO 01 -->
-
             <div class="choreography-item">
                 <div class="choreography-frame">
                     <iframe
                         src="https://player.vimeo.com/video/1247625327?h=42e9fa035d&controls=0&title=0&byline=0&portrait=0&transparent=0"
-                        title="DANCE DIVISION choreography video 01"
+                        title="DANCE DIVISION choreography video 02"
                         loading="lazy"
                         allow="autoplay; fullscreen; picture-in-picture"
                         referrerpolicy="strict-origin-when-cross-origin"
@@ -563,43 +533,6 @@ main {
     <span>DANCE DIVISION</span>
     <span>PROJECT DEVELOPMENT / 2026</span>
 </footer>
-
-<script>
-/* PAGE NAVIGATION */
-
-(() => {
-    const button = document.querySelector(".page-nav-toggle");
-    const menu = document.getElementById("pageNavigation");
-
-    if (!button || !menu) return;
-
-    function closeMenu() {
-        menu.classList.remove("is-dropdown-open");
-        button.setAttribute("aria-expanded", "false");
-    }
-
-    button.addEventListener("click", () => {
-        const opening = !menu.classList.contains("is-dropdown-open");
-
-        menu.classList.toggle("is-dropdown-open", opening);
-        button.setAttribute("aria-expanded", String(opening));
-    });
-
-    menu.querySelectorAll("a").forEach(link => {
-        link.addEventListener("click", closeMenu);
-    });
-
-    document.addEventListener("click", event => {
-        if (!button.contains(event.target) && !menu.contains(event.target)) {
-            closeMenu();
-        }
-    });
-
-    document.addEventListener("keydown", event => {
-        if (event.key === "Escape") closeMenu();
-    });
-})();
-</script>
 
 <script src="https://player.vimeo.com/api/player.js"></script>
 

@@ -2,17 +2,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta property="og:image" content="https://jjeremyjacob.github.io/dancedivision/images/dancedivisionsocial.jpg">
 <meta charset="UTF-8">
+<meta property="og:image" content="https://jjeremyjacob.github.io/dancedivision/images/dancedivisionsocial.jpg">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#f4f3ee">
 <meta name="description" content="DANCE DIVISION — location scouting archive.">
+
 <title>DANCE DIVISION — Locations</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="style.css">
+<script src="navigation.js" defer></script>
 
 <style>
 :root {
@@ -29,8 +32,6 @@ body {
     background: var(--paper);
     color: var(--ink);
 }
-
-.site-header .header-title { cursor: pointer; }
 
 .locations-main {
     width: 100%;
@@ -632,9 +633,7 @@ body {
     letter-spacing: -.065em;
 }
 
-.map-title em {
-    font-weight: 400;
-}
+.map-title em { font-weight: 400; }
 
 .map-intro {
     max-width: 340px;
@@ -709,11 +708,13 @@ body {
     .locations-hero { grid-template-columns: 1fr minmax(190px,280px); }
     .dialog { grid-template-columns: 1fr 1fr; }
     .dialog-content { padding: 26px 22px; }
+
     .editor-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+
     .map-heading-row {
-    grid-template-columns: 1fr minmax(190px,280px);
-    gap: 24px;
-}
+        grid-template-columns: 1fr minmax(190px,280px);
+        gap: 24px;
+    }
 }
 
 @media(max-width:650px) {
@@ -806,27 +807,6 @@ body {
 
 <body>
 
-<header class="site-header">
-    <a class="header-title" href="index.html" style="text-decoration:none;color:inherit">DANCE DIVISION</a>
-    <div class="header-status"><span class="status-dot"></span> STATUS: IN DEVELOPMENT</div>
-
-    <button class="nav-dropdown-toggle page-nav-toggle" id="pageDropdownToggle" type="button" aria-expanded="false" aria-controls="pageNavigation">
-        <span>PAGES</span><span class="nav-dropdown-indicator" aria-hidden="true">+</span>
-    </button>
-
-    <nav class="nav-links page-nav-links" id="pageNavigation" aria-label="Project pages">
-        <a href="index.html"><span>01</span> HOME</a>
-        <a href="calendars.html"><span>02</span> CALENDARS</a>
-                       <a href="choreography.html"><span>03</span> CHOREOGRAPHY</a>
-   <a href="costumes.html"><span>04</span> COSTUMES</a>
-        <a href="design.html"><span>05</span> DESIGN</a>
-        <a href="journal.html"><span>06</span> JOURNAL</a>
-        <a href="locations.html" class="active" aria-current="page"><span>07</span> LOCATIONS</a>
-        <a href="shotbook.html"><span>08</span> SHOT BOOK</a>
-        <a href="videos.html"><span>09</span> EPISODES</a>
-    </nav>
-</header>
-
 <main class="locations-main">
 
     <section class="locations-hero">
@@ -834,6 +814,7 @@ body {
             <div class="eyebrow">DANCE DIVISION / PRODUCTION / SCOUTING ARCHIVE</div>
             <h1 class="hero-title">The <em>Location</em><br>Book.</h1>
         </div>
+
         <div class="hero-copy">
             <p>A visual archive of places for the series: rooms, buildings, streets, landscapes, and spaces with the right character.</p>
         </div>
@@ -846,6 +827,7 @@ body {
             <button class="filter-button" data-filter="exterior" type="button">EXTERIOR</button>
             <button class="filter-button" data-filter="other" type="button">OTHER</button>
         </div>
+
         <div class="toolbar-right">
             <input class="location-search" id="locationSearch" type="search" placeholder="SEARCH LOCATIONS" aria-label="Search locations">
             <span class="location-count" id="locationCount">0 LOCATIONS</span>
@@ -867,8 +849,6 @@ body {
             <p class="map-intro"></p>
         </div>
 
-        <!-- VERTICAL VIDEOS -->
-
         <div class="motion-subsection">
             <div class="motion-label">
                 <span>01 / Vertical</span>
@@ -888,11 +868,13 @@ body {
                         </iframe>
                         <button class="motion-click-toggle" type="button" aria-label="Play video"></button>
                     </div>
+
                     <div class="simple-controls">
                         <button class="play-toggle" type="button" aria-label="Play video">PLAY</button>
                         <input class="video-progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Video progress">
                         <button class="volume-toggle" type="button" aria-label="Unmute video">SOUND</button>
                     </div>
+
                     <div class="motion-caption">
                         <span class="motion-title">November 11th Kaatsbaan Scouting / 10-22mm Lens</span>
                         <span class="motion-index">01 / 01</span>
@@ -900,8 +882,6 @@ body {
                 </article>
             </div>
         </div>
-
-        <!-- HORIZONTAL VIDEOS -->
 
         <div class="motion-subsection">
             <div class="motion-label">
@@ -922,11 +902,13 @@ body {
                         </iframe>
                         <button class="motion-click-toggle" type="button" aria-label="Play video"></button>
                     </div>
+
                     <div class="simple-controls">
                         <button class="play-toggle" type="button" aria-label="Play video">PLAY</button>
                         <input class="video-progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Video progress">
                         <button class="volume-toggle" type="button" aria-label="Unmute video">SOUND</button>
                     </div>
+
                     <div class="motion-caption">
                         <span class="motion-title">November 11th Kaatsbaan Scouting</span>
                         <span class="motion-index">01 / 01</span>
@@ -946,6 +928,7 @@ body {
                 <div class="map-kicker">DANCE DIVISION / PRODUCTION / GEOGRAPHY</div>
                 <h2 class="map-title" id="mapTitle">Location <em>Index.</em></h2>
             </div>
+
             <p class="map-intro">A directory of places connected to the series. Open any entry in Google Maps for the location and directions.</p>
         </div>
 
@@ -1018,6 +1001,7 @@ body {
             <h2 class="dialog-title" id="dialogTitle"></h2>
             <div class="dialog-copy" id="dialogNotes"></div>
             <div class="dialog-meta" id="dialogMeta"></div>
+
             <div class="dialog-nav">
                 <button class="location-button" id="previousLocation" type="button">← PREVIOUS</button>
                 <button class="location-button" id="nextLocation" type="button">NEXT →</button>
@@ -1049,43 +1033,6 @@ body {
     const isVideo = path => /\.(mov|mp4|m4v|webm|ogv)(?:[?#].*)?$/i.test(String(path || ''));
 
     const mediaMarkup = l => `<img src="${esc(l.image)}" alt="${esc(l.title)}" loading="lazy">`;
-
-    function setupDropdown() {
-        const toggle = $('pageDropdownToggle');
-        const nav = $('pageNavigation');
-        const boundary = document.querySelector('.site-header');
-
-        if (!toggle || !nav) return;
-
-        const close = () => {
-            toggle.setAttribute('aria-expanded', 'false');
-            nav.classList.remove('is-dropdown-open');
-        };
-
-        toggle.addEventListener('click', () => {
-            const open = toggle.getAttribute('aria-expanded') !== 'true';
-            toggle.setAttribute('aria-expanded', String(open));
-            nav.classList.toggle('is-dropdown-open', open);
-        });
-
-        nav.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
-
-        document.addEventListener('click', e => {
-            if (!boundary.contains(e.target)) close();
-        });
-
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') close();
-        });
-
-        const mq = window.matchMedia('(min-width:1251px)');
-        const reset = () => {
-            if (mq.matches) close();
-        };
-
-        if (mq.addEventListener) mq.addEventListener('change', reset);
-        else mq.addListener(reset);
-    }
 
     function render() {
         const q = $('locationSearch').value.trim().toLowerCase();
@@ -1216,8 +1163,6 @@ body {
         }
     });
 
-    setupDropdown();
-
     fetch('./locations.json', { cache: 'no-store' })
         .then(r => {
             if (!r.ok) throw Error('Unable to load locations.json');
@@ -1310,6 +1255,7 @@ body {
             progress.addEventListener("input", async () => {
                 try {
                     const duration = await player.getDuration();
+
                     if (duration) {
                         await player.setCurrentTime(duration * Number(progress.value) / 100);
                     }
@@ -1330,6 +1276,7 @@ body {
                 try {
                     const muted = await player.getMuted();
                     await player.setMuted(!muted);
+
                     volumeButton.textContent = muted ? "SOUND" : "MUTED";
                     volumeButton.setAttribute("aria-label", muted ? "Mute video" : "Unmute video");
                 } catch (error) {

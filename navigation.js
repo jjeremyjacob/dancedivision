@@ -10,7 +10,6 @@
 
     /* ========================================================
        01 — NAVIGATION CONFIGURATION
-       Edit this section to update navigation across all pages.
     ======================================================== */
 
     const navigationConfig = {
@@ -24,10 +23,10 @@
             { number: "03", label: "CHOREOGRAPHY", href: "choreography.html" },
             { number: "04", label: "COSTUMES", href: "costumes.html" },
             { number: "05", label: "DESIGN", href: "design.html" },
-            { number: "06", label: "JOURNAL", href: "journal.html" },
-            { number: "07", label: "LOCATIONS", href: "locations.html" },
-            { number: "08", label: "SHOT BOOK", href: "shotbook.html" },
-            { number: "09", label: "EPISODES", href: "videos.html" }
+            { number: "06", label: "EPISODES", href: "episodes.html" },
+            { number: "07", label: "JOURNAL", href: "journal.html" },
+            { number: "08", label: "LOCATIONS", href: "locations.html" },
+            { number: "09", label: "SHOT BOOK", href: "shotbook.html" }
         ],
 
         sections: [
@@ -42,9 +41,17 @@
 
     };
 
+    /* ========================================================
+       02 — CURRENT PAGE
+    ======================================================== */
+
+    const currentPage =
+        window.location.pathname.split("/").pop() || "index.html";
+
+    const showSections = currentPage === "index.html";
 
     /* ========================================================
-       02 — STYLES
+       03 — STYLES
     ======================================================== */
 
     const styles = `
@@ -134,12 +141,9 @@
 
     `;
 
-
     /* ========================================================
-       03 — HTML GENERATION
+       04 — SHARED PAGE HEADER
     ======================================================== */
-
-    const currentPage = window.location.pathname.split("/").pop() || "index.html";
 
     const header = document.createElement("header");
     header.className = "site-header";
@@ -187,63 +191,75 @@
 
     `;
 
+    /* ========================================================
+       05 — HOME PAGE SECTIONS ONLY
+    ======================================================== */
 
-    const subheader = document.createElement("div");
-    subheader.className = "section-subheader";
-    subheader.id = "sectionSubheader";
+    let subheader = null;
 
-    subheader.innerHTML = `
+    if (showSections) {
 
-        <span class="section-subheader-label" aria-hidden="true">
-            SECTIONS
-        </span>
+        subheader = document.createElement("div");
+        subheader.className = "section-subheader";
+        subheader.id = "sectionSubheader";
 
-        <button
-            class="nav-dropdown-toggle section-nav-toggle"
-            id="navDropdownToggle"
-            type="button"
-            aria-expanded="false"
-            aria-controls="siteNavigation"
-        >
-            <span>SECTIONS</span>
-            <span class="nav-dropdown-indicator" aria-hidden="true">+</span>
-        </button>
+        subheader.innerHTML = `
 
-        <nav
-            class="nav-links section-nav-links"
-            id="siteNavigation"
-            aria-label="Site sections"
-        >
+            <span class="section-subheader-label" aria-hidden="true">
+                SECTIONS
+            </span>
 
-            ${navigationConfig.sections.map(section => `
-                <a
-                    href="${section.href}"
-                    data-target="${section.target}"
-                >
-                    <span>${section.number}</span>
-                    ${section.label}
-                </a>
-            `).join("")}
+            <button
+                class="nav-dropdown-toggle section-nav-toggle"
+                id="navDropdownToggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="siteNavigation"
+            >
+                <span>SECTIONS</span>
+                <span class="nav-dropdown-indicator" aria-hidden="true">+</span>
+            </button>
 
-        </nav>
+            <nav
+                class="nav-links section-nav-links"
+                id="siteNavigation"
+                aria-label="Site sections"
+            >
 
-    `;
+                ${navigationConfig.sections.map(section => `
+                    <a
+                        href="${section.href}"
+                        data-target="${section.target}"
+                    >
+                        <span>${section.number}</span>
+                        ${section.label}
+                    </a>
+                `).join("")}
 
+            </nav>
+
+        `;
+
+    }
 
     /* ========================================================
-       04 — INSERT NAVIGATION
+       06 — INSERT NAVIGATION
     ======================================================== */
 
     const main = document.querySelector("main");
 
     if (main) {
+
         document.body.insertBefore(header, main);
-        document.body.insertBefore(subheader, main);
+
+        if (subheader) {
+            document.body.insertBefore(subheader, main);
+        }
+
     }
 
-
     /* ========================================================
-       05 — INJECT CSS
+       07 — INJECT CSS
     ======================================================== */
 
     const styleElement = document.createElement("style");
@@ -251,9 +267,8 @@
     styleElement.textContent = styles;
     document.head.appendChild(styleElement);
 
-
     /* ========================================================
-       06 — DROPDOWN FUNCTIONALITY
+       08 — DROPDOWN FUNCTIONALITY
     ======================================================== */
 
     function setupDropdown(toggleId, navId, boundarySelector) {
@@ -308,11 +323,13 @@
 
     }
 
-    setupDropdown(
-        "navDropdownToggle",
-        "siteNavigation",
-        ".section-subheader"
-    );
+    if (showSections) {
+        setupDropdown(
+            "navDropdownToggle",
+            "siteNavigation",
+            ".section-subheader"
+        );
+    }
 
     setupDropdown(
         "pageDropdownToggle",
@@ -320,57 +337,60 @@
         ".site-header"
     );
 
-
     /* ========================================================
-       07 — ACTIVE SECTION
+       09 — ACTIVE SECTION
+       HOME PAGE ONLY
     ======================================================== */
 
-    const sectionLinks = Array.from(
-        document.querySelectorAll(".section-nav-links a")
-    );
+    if (showSections) {
 
-    const sections = sectionLinks
-        .map(link => document.getElementById(link.dataset.target))
-        .filter(Boolean);
+        const sectionLinks = Array.from(
+            document.querySelectorAll(".section-nav-links a")
+        );
 
-    if ("IntersectionObserver" in window && sections.length) {
+        const sections = sectionLinks
+            .map(link => document.getElementById(link.dataset.target))
+            .filter(Boolean);
 
-        const observer = new IntersectionObserver(entries => {
+        if ("IntersectionObserver" in window && sections.length) {
 
-            const visible = entries
-                .filter(entry => entry.isIntersecting)
-                .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+            const observer = new IntersectionObserver(entries => {
 
-            if (!visible.length) return;
+                const visible = entries
+                    .filter(entry => entry.isIntersecting)
+                    .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
 
-            const activeId = visible[0].target.id;
+                if (!visible.length) return;
 
-            sectionLinks.forEach(link => {
+                const activeId = visible[0].target.id;
 
-                const active = link.dataset.target === activeId;
+                sectionLinks.forEach(link => {
 
-                link.classList.toggle("active", active);
+                    const active = link.dataset.target === activeId;
 
-                if (active) {
-                    link.setAttribute("aria-current", "location");
-                } else {
-                    link.removeAttribute("aria-current");
-                }
+                    link.classList.toggle("active", active);
 
+                    if (active) {
+                        link.setAttribute("aria-current", "location");
+                    } else {
+                        link.removeAttribute("aria-current");
+                    }
+
+                });
+
+            }, {
+                rootMargin: "-20% 0px -60% 0px",
+                threshold: [0, 0.1, 0.25, 0.5]
             });
 
-        }, {
-            rootMargin: "-20% 0px -60% 0px",
-            threshold: [0, 0.1, 0.25, 0.5]
-        });
+            sections.forEach(section => observer.observe(section));
 
-        sections.forEach(section => observer.observe(section));
+        }
 
     }
 
-
     /* ========================================================
-       08 — SCROLL HIDE / REVEAL
+       10 — SCROLL HIDE / REVEAL
     ======================================================== */
 
     let previousY = window.scrollY || 0;
@@ -383,10 +403,12 @@
             `${header.getBoundingClientRect().height}px`
         );
 
-        document.documentElement.style.setProperty(
-            "--section-subheader-height",
-            `${subheader.getBoundingClientRect().height}px`
-        );
+        if (subheader) {
+            document.documentElement.style.setProperty(
+                "--section-subheader-height",
+                `${subheader.getBoundingClientRect().height}px`
+            );
+        }
 
     };
 
