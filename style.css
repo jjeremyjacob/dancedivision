@@ -24,6 +24,7 @@ body {
     font-family: "Manrope", sans-serif;
     font-size: 16px;
     overflow-x: hidden;
+    
 }
 
 button,
@@ -57,6 +58,8 @@ img {
     --muted: #77766f;
     --line: rgba(21, 21, 21, 0.18);
     --line-strong: rgba(21, 21, 21, 0.42);
+    --accent: #ff8fac;
+--accent-soft: #f9a7bc;
 
     --mono:
         "DM Mono",
@@ -3275,3 +3278,43 @@ header.site-header > .page-nav-toggle {
     }
 }
 
+/* PINK ACCENTS */
+
+.status-dot {
+    background: var(--accent);
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--accent);
+}
+
+.section-number {
+    color: var(--accent);
+}
+
+.chapter-progress {
+    background: var(--accent);
+}
+
+::selection {
+    background: var(--accent);
+    color: var(--ink);
+}
+
+.header-title:hover {
+    color: var(--accent);
+}
+
+.header-title,
+.header-title:visited,
+.header-title:hover,
+.header-title:focus,
+.header-title:active {
+    color: var(--ink);
+    text-decoration: none;
+}
+
+.header-title:hover {
+    color: var(--accent);
+}

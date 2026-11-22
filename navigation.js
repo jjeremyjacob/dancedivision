@@ -150,9 +150,9 @@
 
     header.innerHTML = `
 
-        <button class="header-title" type="button">
-            ${navigationConfig.title}
-        </button>
+<a class="header-title" href="index.html">
+    ${navigationConfig.title}
+</a>
 
         <div class="header-status">
             <span class="status-dot"></span>
