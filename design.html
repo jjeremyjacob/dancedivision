@@ -29,6 +29,10 @@
             --sans: "Manrope", sans-serif;
             --serif: "Playfair Display", serif;
             --page-pad: 28px;
+
+            /* MEDIA POSITION */
+            --media-indent: 20%;
+            --media-width: 80%;
         }
 
         * {
@@ -61,6 +65,8 @@
         main {
             width: 100%;
         }
+
+        /* INTRO */
 
         .page-intro {
             padding: 48px var(--page-pad) 54px;
@@ -112,6 +118,8 @@
             color: var(--muted);
         }
 
+        /* SECTIONS */
+
         .design-section {
             padding: 28px var(--page-pad) 48px;
             border-bottom: 1px solid var(--line);
@@ -154,6 +162,15 @@
             color: var(--muted);
         }
 
+        /* MEDIA LAYOUT */
+
+        .design-grid,
+        .motion-grid {
+            width: var(--media-width);
+            margin-left: var(--media-indent);
+            margin-top: 36px;
+        }
+
         .design-grid {
             display: grid;
             grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -182,6 +199,8 @@
             transform: scale(1.015);
         }
 
+        /* ARTBOARDS */
+
         #artboards .design-image {
             background: rgba(21, 21, 21, 0.035);
         }
@@ -190,6 +209,8 @@
             aspect-ratio: 9 / 16;
             object-fit: cover;
         }
+
+        /* QUOTES */
 
         #quotes .design-grid {
             grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -200,6 +221,8 @@
             aspect-ratio: 9 / 16;
             object-fit: cover;
         }
+
+        /* CAMPAIGN */
 
         #campaign .design-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -443,6 +466,8 @@
             letter-spacing: 0.08em;
         }
 
+        /* FOOTER */
+
         .site-footer {
             padding: 18px var(--page-pad);
             display: flex;
@@ -461,17 +486,12 @@
         @media (max-width: 900px) {
             :root {
                 --page-pad: 20px;
+                --media-indent: 25%;
+                --media-width: 75%;
             }
 
             #quotes .design-grid {
                 grid-template-columns: repeat(3, minmax(0, 1fr));
-            }
-
-            .design-grid,
-            .motion-grid {
-                width: calc(100% - clamp(28px, 8vw, 72px));
-                margin-left: clamp(28px, 8vw, 72px);
-                margin-top: 36px;
             }
         }
 
@@ -480,6 +500,8 @@
         @media (max-width: 600px) {
             :root {
                 --page-pad: 15px;
+                --media-indent: 12%;
+                --media-width: 88%;
             }
 
             .page-intro {
@@ -516,6 +538,11 @@
 
             .section-note {
                 text-align: left;
+            }
+
+            .design-grid,
+            .motion-grid {
+                margin-top: 26px;
             }
 
             .design-grid {
@@ -568,13 +595,6 @@
                 flex-direction: column;
                 gap: 5px;
             }
-
-            .design-grid,
-            .motion-grid {
-                width: calc(100% - clamp(18px, 6vw, 32px));
-                margin-left: clamp(18px, 6vw, 32px);
-                margin-top: 26px;
-            }
         }
 
         @media (max-width: 360px) {
@@ -592,6 +612,7 @@
 <body>
 
 <main>
+
     <section class="page-intro">
         <p class="eyebrow">DANCE DIVISION / VISUAL DEVELOPMENT / 2026</p>
         <h1>Visual <em>language.</em></h1>
@@ -604,6 +625,8 @@
         </div>
     </section>
 
+    <!-- 01 / THE LOOK -->
+
     <section class="design-section" id="look">
         <div class="section-heading">
             <h2><span class="section-number">01 —</span>THE LOOK</h2>
@@ -611,6 +634,7 @@
         </div>
 
         <div class="design-grid" id="artboards">
+
             <button class="design-image" type="button" aria-label="Enlarge artboard 01">
                 <img src="images/artboard1.jpg" alt="DANCE DIVISION artboard 01" loading="lazy">
             </button>
@@ -692,8 +716,11 @@
             <button class="design-image" type="button" aria-label="Enlarge artboard 27">
                 <img src="images/artboard27.jpg" alt="DANCE DIVISION artboard 27" loading="lazy">
             </button>
+
         </div>
     </section>
+
+    <!-- 02 / QUOTES -->
 
     <section class="design-section" id="quotes">
         <div class="section-heading">
@@ -702,6 +729,7 @@
         </div>
 
         <div class="design-grid">
+
             <button class="design-image" type="button" aria-label="Enlarge quote graphic 01">
                 <img src="images/quote1.jpg" alt="DANCE DIVISION quote graphic 01" loading="lazy">
             </button>
@@ -717,8 +745,11 @@
             <button class="design-image" type="button" aria-label="Enlarge quote graphic 06">
                 <img src="images/quote6.jpg" alt="DANCE DIVISION quote graphic 06" loading="lazy">
             </button>
+
         </div>
     </section>
+
+    <!-- 03 / CAMPAIGN IMAGERY -->
 
     <section class="design-section" id="campaign">
         <div class="section-heading">
@@ -727,6 +758,7 @@
         </div>
 
         <div class="design-grid">
+
             <button class="design-image" type="button" aria-label="Enlarge campaign image 01">
                 <img src="images/dancedivisionsocial_h.jpg" alt="DANCE DIVISION campaign image 01" loading="lazy">
             </button>
@@ -739,8 +771,11 @@
             <button class="design-image" type="button" aria-label="Enlarge campaign image 04">
                 <img src="images/dancedivisionsocial_h4.jpg" alt="DANCE DIVISION campaign image 04" loading="lazy">
             </button>
+
         </div>
     </section>
+
+    <!-- 04 / MOTION -->
 
     <section class="design-section" id="motion">
         <div class="section-heading">
@@ -890,12 +925,15 @@
 
         </div>
     </section>
+
 </main>
 
 <footer class="site-footer">
     <span>DANCE DIVISION</span>
     <span>PROJECT DEVELOPMENT / 2026</span>
 </footer>
+
+<!-- LIGHTBOX -->
 
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
     <button class="lightbox-close" type="button" aria-label="Close image viewer">×</button>
